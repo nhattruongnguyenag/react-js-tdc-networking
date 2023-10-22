@@ -19,9 +19,9 @@ export default function Router() {
       <BrowserRouter>
         <Routes>
           <Route>
-            <Route index element={<IntroducePage />} />
+            <Route path="/" element={<IntroducePage />} />
             <Route path='dang-nhap' element={<LoginPage />} />
-            <Route path='doanh-nghiep/bai-viet' element={<BusinessDashboardPage />} />
+            <Route index path='doanh-nghiep/bai-viet' element={<BusinessDashboardPage />} />
             <Route path='hoi-thoai' element={<ConversationPage />} />
             <Route path='tin-nhan' element={<ChatPage />} />
             <Route path='cai-dat' element={<SettingPage />} />

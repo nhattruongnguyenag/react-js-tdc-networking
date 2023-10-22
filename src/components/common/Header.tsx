@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppDispatch } from '../../redux/Hook'
@@ -12,9 +14,9 @@ export default function Header() {
 
   return (
     <Fragment>
-      <div className='nav-header shadow-xs border-0 bg-white z-0'>
-        <div className='nav-top'>
-          <Link to='/doanh-nghiep/bai-viet' className=''>
+      <div className='nav-header shadow-xs border-0 bg-white'>
+        <div className='nav-top bg-inherit'>
+          <Link to='/doanh-nghiep/bai-viet'>
             <i className='feather-zap text-success display2-size me-3 ms-0' />
             <span className='d-inline-block fredoka-font ls-3 fw-600 font-xxl logo-text mb-0 text-current'>TDCer</span>
           </Link>
@@ -27,7 +29,7 @@ export default function Header() {
           <span className='menu-search-icon mob-menu me-2'>
             <i className='feather-search text-grey-900 font-sm btn-round-md bg-greylight' />
           </span>
-          <button className='nav-menu me-0 ms-2 ' /> 
+          <button className='nav-menu me-0 ms-2 ' />
         </div>
         <form action='#' className='header-search float-left ms-3'>
           <div className='form-group icon-input mb-0'>
@@ -52,7 +54,7 @@ export default function Header() {
           <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
         </a>
         <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/shop2'>
-          <i className='feather-shopping-bag font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+          <i className='feather-rss font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
         </a>
         <span
           onClick={() => setShowNotificationPopup(!showNotificationPopup)}
