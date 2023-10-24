@@ -16882,4 +16882,35 @@ select.sort {
     }
 }
 
-/*# sourceMappingURL=style.css.map */
+.bg-blue {
+    background-color: #2196f3 !important;
+}
+
+.form-check{
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+}
+
+.txt-blue {
+    color: #2196f3 !important;
+}
+
+.form-group>.gr{
+    display: flex;
+    background-color: #2196f3 !important;
+    border-radius: 10px;
+}
+.loading{
+    position: absolute;
+    z-index: 1;
+    right: 110px;
+    bottom: 55px;
+}
+
+.style2-input:focus{
+    outline-color: transparent;
+    outline-style:solid;
+    box-shadow: 0 0 0 3px #2196f3;
+    transition: 0.1s;
+}
