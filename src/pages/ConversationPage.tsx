@@ -22,7 +22,7 @@ export default function ConversationPage() {
   return (
     <Fragment>
       <Header />
-      <div className='main-content right-chat-active'>
+      <div id='main-content-wrap' className='main-content'>
         <div className='middle-sidebar-bottom'>
           <div className='middle-sidebar-left ps-lg-3 me-0 ms-0 pe-0' style={{ maxWidth: '100%' }}>
             <div className='row'>

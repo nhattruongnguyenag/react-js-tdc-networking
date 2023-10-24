@@ -13,22 +13,22 @@ export default function Router() {
   const { darkMode } = useAppSelector(state => state.TDCSocialNetworkReducer)
 
   return (
-    <div className={classNames('color-theme-blue mont-font loaded',
-      darkMode ? 'theme-dark' : ' theme-light'
-    )}>
-      <BrowserRouter>
-        <Routes>
-          <Route>
-            <Route path="/" element={<IntroducePage />} />
-            <Route path='dang-nhap' element={<LoginPage />} />
-            <Route index path='doanh-nghiep/bai-viet' element={<BusinessDashboardPage />} />
-            <Route path='hoi-thoai' element={<ConversationPage />} />
-            <Route path='nhan-tin' element={<ChatPage />} />
-            <Route path='cai-dat' element={<SettingPage />} />
-            <Route path='*' element={<NoPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+      <div className={classNames('color-theme-blue mont-font loaded',
+        darkMode ? 'theme-dark' : ' theme-light'
+      )}>
+        <BrowserRouter>
+          <Routes>
+            <Route>
+              <Route path="/" element={<IntroducePage />} />
+              <Route path='dang-nhap' element={<LoginPage />} />
+              <Route index path='doanh-nghiep/bai-viet' element={<BusinessDashboardPage />} />
+              <Route path='hoi-thoai' element={<ConversationPage />} />
+              <Route path='nhan-tin' element={<ChatPage />} />
+              <Route path='cai-dat' element={<SettingPage />} />
+              <Route path='*' element={<NoPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
   )
 }

@@ -1,15 +1,12 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import "react-image-lightbox/style.css";
+import { Client, Frame, Message } from "stompjs";
 import Header from "../components/common/Header";
-import { useEffect, useMemo, useRef, useState } from "react"
-import { Client, Frame, Message } from "stompjs"
-import { useAppDispatch, useAppSelector } from "../redux/Hook";
-import { getStompClient } from "../sockets/SocketClient";
-import { setConversationMessages } from "../redux/Slice";
-import { Message as MessageModel } from "../types/Message";
 import MessageItem from "../components/message/MessageItem";
-import FlatList from "flatlist-react/lib";
-import { Gallery } from "react-grid-gallery";
-import { User } from "../types/User";
+import { useAppDispatch, useAppSelector } from "../redux/Hook";
+import { setConversationMessages } from "../redux/Slice";
+import { getStompClient } from "../sockets/SocketClient";
+import { Message as MessageModel } from "../types/Message";
 import { handleUploadImage } from "../utils/UploadUtils";
 
 let stompClient: Client
@@ -122,50 +119,52 @@ export default function ChatPage() {
   return (
     <Fragment>
       <Header />
-      <div className='main-content right-chat-active'>
-        <div className='middle-sidebar-bottom'>
-          <div className='middle-sidebar-left pe-0' style={{ maxWidth: '100%' }}>
-            <div className='row'>
-              <div className='col-lg-12 position-relative'>
-                <div className='chat-wrapper w-100 position-relative  flex-col-reverse scroll-bar theme-dark-bg bg-white pt-0'>
-                  <div className='chat-body p-3 '>
-                    <div className='messages-content pb-5'>
-                      {
-                        conversationMessages.map((item, index) => (
-                          <MessageItem
-                            lastMessageRef={index === conversationMessages.length - 1 ? endMessageRef : undefined}
-                            key={index.toString()}
-                            data={item}
-                          />
-                        ))
-                      }
-                      <div className='clearfix bg-slate-500' />
+      <div className="container">
+        <div className='main-content '>
+          <div className='middle-sidebar-bottom'>
+            <div className='middle-sidebar-left pe-0' style={{ maxWidth: '100%' }}>
+              <div className='row'>
+                <div className='col-lg-12 position-relative'>
+                  <div className='chat-wrapper w-100 position-relative  flex-col-reverse scroll-bar theme-dark-bg bg-white pt-0'>
+                    <div className='chat-body p-3 '>
+                      <div className='messages-content pb-5'>
+                        {
+                          conversationMessages.map((item, index) => (
+                            <MessageItem
+                              lastMessageRef={index === conversationMessages.length - 1 ? endMessageRef : undefined}
+                              key={index.toString()}
+                              data={item}
+                            />
+                          ))
+                        }
+                        <div className='clearfix bg-slate-500' />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className='chat-bottom dark-bg theme-dark-bg p-3 shadow-none' style={{ width: '98%' }}>
-                  <form className='chat-form'>
-                    <button className='bg-grey float-left relative'
-                      type="button"
-                      onClick={() => onBtnUploadImageClick()}>
-                      <i className='ti-image text-grey-600' />
-                    </button>
-                    <input type={'file'} multiple
-                      ref={textInputImagesRef}
-                      className='bg-grey float-left hidden'
-                      onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)} />
-                    <div className='form-group z-50'>
-                      <input type='text'
-                        ref={textInputMessageRef}
-                        className="text-black"
-                        placeholder='@ Tin nhắn...'
-                      />
-                    </div>
-                    <button className='bg-current' type="button"
-                      onClick={() => onBtnSendClick()}>
-                      <i className='ti-arrow-right text-white' />
-                    </button>
-                  </form>
+                  <div className='chat-bottom dark-bg theme-dark-bg p-3 shadow-none' style={{ width: '98%' }}>
+                    <form className='chat-form'>
+                      <button className='bg-grey float-left relative'
+                        type="button"
+                        onClick={() => onBtnUploadImageClick()}>
+                        <i className='ti-image text-grey-600' />
+                      </button>
+                      <input type={'file'} multiple
+                        ref={textInputImagesRef}
+                        className='bg-grey float-left hidden'
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)} />
+                      <div className='form-group z-50'>
+                        <input type='text'
+                          ref={textInputMessageRef}
+                          className="text-black"
+                          placeholder='@ Tin nhắn...'
+                        />
+                      </div>
+                      <button className='bg-current' type="button"
+                        onClick={() => onBtnSendClick()}>
+                        <i className='ti-arrow-right text-white' />
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>

@@ -4,7 +4,7 @@ export default function BusinessDashboardPage() {
   return (
     <>
       <Header />
-      <div id='main-content-wrap' className='right-chat nav-wrap right-scroll-bar mt-2  '>
+      <div id='main-content-wrap' className='right-chat nav-wrap right-scroll-bar mt-2'>
         <div className='middle-sidebar-right-content shadow-xss rounded-xxl bg-white'>
           <div className='section full position-relative feed-body pe-3 ps-4 pt-4'>
             <h4 className='font-xsssss text-grey-500 text-uppercase fw-700 ls-3'>CONTACTS</h4>
@@ -199,7 +199,7 @@ export default function BusinessDashboardPage() {
           </div>
         </div>
       </div>
-      <div className='main-content right-chat-active'>
+      <div className='main-content'>
         <div className='middle-sidebar-bottom'>
           <div className='middle-sidebar-left'>
             <div className='row feed-body'>
