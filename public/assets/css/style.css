@@ -18133,22 +18133,22 @@ select.sort {
 }
 
 /* IntroducePage */
-.bg {
+.bg-intro {
     background-image: url(../images/tdc_bg_splash.jpg);
     background-position: center;
     background-size: cover;
-    height: 880px;
-    width: 100%;
+    height: 700px;
+    position: relative;
 }
 
-div.navbar {
+div.navbar-intro {
     background-color: #ffffff;
     height: 80px;
     position: -webkit-sticky;
     position: sticky;
 }
 
-.btnAll {
+.btnAll-intro {
     border: none;
     color: white;
     padding: 8px 16px;
@@ -18163,33 +18163,33 @@ div.navbar {
     box-shadow: 2px 2px 1px 2px #f1f1f1;
 }
 
-.btn1 {
-    margin-left: 950px;
+.btnReg-intro {
+    float: right;
     background-color: white;
     color: #1a90d0;
     border: 2px solid #1a90d0;
     border-radius: 20px;
 }
 
-.btn1:hover {
+.btnReg-intro:hover {
     background-color: #1a90d0;
     color: white;
 }
 
-.btn2 {
-    margin-right: 50px;
+.btnLog-intro {
+    float: right;
     background-color: white;
     color: #1a90d0;
     border: 2px solid #1a90d0;
     border-radius: 20px;
 }
 
-.btn2:hover {
+.btnLog-intro:hover {
     background-color: #1a90d0;
     color: white;
 }
 
-.btn {
+.btn-intro {
     border: none;
     color: white;
     padding: 8px 16px;
@@ -18203,65 +18203,71 @@ div.navbar {
     border-radius: 100;
 }
 
-.btn3 {
-    margin-left: 600px;
+.btnFindNow-intro {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0);
-    color: #FFF;
+    color: #000000;
     border: 2px solid #1a90d0;
     border-radius: 20px;
 }
 
-.btn3:hover {
+.btnFindNow-intro:hover {
     background-color: #1a90d0;
     color: white;
 }
 
-.gif {
+.gif-intro {
     background-image: url(../images/giphy.gif);
     background-position: center;
     background-size: cover;
     height: 100px;
     width: 100px;
     position: absolute;
-    margin: 100px 1200px;
+    right: 20%;
+    top: 40%;
 }
-.gif1 {
+.gif1-intro {
     background-image: url(../images/giphy.gif);
     background-position: center;
     background-size: cover;
     height: 120px;
     width: 120px;
     position: absolute;
-    margin: 400px 200px;
+    left: 10%;
+    top: 80%;
 }
-.gif2 {
+.gif2-intro {
     background-image: url(../images/giphy.gif);
     background-position: center;
     background-size: cover;
     height: 150px;
     width: 150px;
     position: absolute;
-    margin: 300px 1200px;
+    right: 25%;
+    top: 70%;
 }
-.gif3 {
+.gif3-intro {
     background-image: url(../images/giphy.gif);
     background-position: center;
     background-size: cover;
     height: 200px;
     width: 200px;
     position: absolute;
-    margin-left: 100px;
+    left: 10%;
+    top: 20%;
 }
 
-.logo {
+.logo-intro {
     background-image: url(../images/logo.png);
     height: 300px;
     width: 300px;
-    margin-left: 520px;
+    margin: 0 auto;
     margin-top: 130px;
 }
 
-.tdc {
+.tdc-intro {
     text-align: center;
     font-size: 50px;
     font-style: bold;
@@ -18269,7 +18275,7 @@ div.navbar {
     margin-top: -50px;
 }
 
-.tdc1 {
+.tdc1-intro {
     text-align: center;
     font-size: 20px;
     font-style: bold;
@@ -18277,49 +18283,48 @@ div.navbar {
     margin-top: -20px;
 }
 
-.tdc2 {
+.tdc2-intro {
     text-align: center;
     font-size: 20px;
 }
 
-.bottom {
+.bottom-intro {
     background-color: #ffffff;
     height: 120px;
-    margin-top: 120px;
+    width: 100%;
 }
 
-.title {
+.title-intro {
     padding-top: 10px;
     text-align: center;
 }
 
-.title1 {
-    text-align: center;
+.title1-intro {text-align: center;
 }
 
-.icon {
+.icon-bottom-intro{
+    text-align: center;
+    margin-top: 1%;
+}
+
+.icon-intro {
     height: 20px;
     width: 20px;
+    padding-left: 20px;
 }
 
-.icon1{
-    margin-top: 10px;
-    margin-left: 630px;
-    margin-right: 10px;
-}
-.icon2{
-    margin-top: 10px;
-    margin-right: 10px;
-}
-
-.icon1:hover {
+.icon1-intro:hover {
     color: red;
+    cursor: pointer;
 }
 
-.icon2:hover {
+.icon2-intro:hover {
     color: #1f883d;
+    cursor: pointer;
 }
-.icon3:hover {
+.icon3-intro:hover {
     color: blue;
+    cursor: pointer;
 }
+
 /*# sourceMappingURL=style.css.map */
