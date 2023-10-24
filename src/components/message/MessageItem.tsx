@@ -1,11 +1,11 @@
 import classNames from "classnames"
 import moment from "moment"
 import { Fragment, useMemo, useRef, useState } from "react"
-import { Gallery } from "react-grid-gallery"
-import Lightbox from "react-image-lightbox"
 import { SERVER_ADDRESS } from "../../constants/SystemConstant"
 import { Message } from "../../types/Message"
 import { getRandomInt } from "../../utils/CommonUtls"
+import { Gallery, Item } from 'react-photoswipe-gallery'
+import 'photoswipe/dist/photoswipe.css'
 
 interface MessageItem {
     data: Message
@@ -13,9 +13,11 @@ interface MessageItem {
 }
 
 interface Image {
+    original: string
+    thumbnail: string
     src: string
-    width: number
-    height: number
+    width: string
+    height: string
 }
 
 interface MessageContentProps {
@@ -27,59 +29,56 @@ const MessageContent = (props: MessageContentProps) => {
         return <div className='message-wrap'>{props.data.content}</div>
     }
 
-    const images = props.data.content.split(',').map((url): Image => (
-        {
-            src: url.startsWith('blob') ? url : SERVER_ADDRESS + 'api/images/' + url,
-            width: getRandomInt(480, 512),
-            height: getRandomInt(290, 300)
-        }
-    ))
-
-    const [index, setIndex] = useState(-1);
-    const currentImage = useMemo(() => {
-        return images[index]
-    }, [index])
-    const nextIndex = (index + 1) % images.length;
-    const nextImage = images[nextIndex] || currentImage;
-    const prevIndex = (index + images.length - 1) % images.length;
-    const prevImage = images[prevIndex] || currentImage;
-
-    const handleClick = (index: number, item: Image) => {
-        setIndex(index)
-    }
-    const handleClose = () => {
-        setIndex(-1)
-    }
-    const handleMovePrev = () => {
-        setIndex(prevIndex)
-    }
-    const handleMoveNext = () => {
-        setIndex(nextIndex)
+    const smallItemStyles: React.CSSProperties = {
+        cursor: 'pointer',
+        objectFit: 'cover',
+        width: '640px'
     }
 
+    const images: Image[] = props.data.content.split(',').map((item, index) => ({
+        original: SERVER_ADDRESS + 'api/images/' + item,
+        thumbnail: SERVER_ADDRESS + 'api/images/' + item,
+        src: SERVER_ADDRESS + 'api/images/' + item,
+        width: '1080',
+        height: '960'
+    }))
+
+    let gridTemplateColumns = '320px 320px'
+
+    if (images.length === 1) {
+        gridTemplateColumns = '480px'
+    }
 
     return <div>
-        <div className="flex-1">
-            <Gallery
-                onClick={handleClick}
-                images={images}
-                thumbnailStyle={{ cursor: 'pointer', alignItems: 'flex-end' }}
-                enableImageSelection={false} />
-        </div>
-
-        {Boolean(currentImage) && (
-            <Lightbox
-                mainSrc={currentImage.src}
-                mainSrcThumbnail={currentImage.src}
-                nextSrc={nextImage.src}
-                nextSrcThumbnail={nextImage.src}
-                prevSrc={prevImage.src}
-                prevSrcThumbnail={prevImage.src}
-                onCloseRequest={handleClose}
-                onMovePrevRequest={handleMovePrev}
-                onMoveNextRequest={handleMoveNext}
-            />
-        )}
+        <Gallery>
+            <div style={{
+                display: 'grid',
+                gridAutoRows: '',
+                objectFit: 'cover',
+                gridTemplateColumns: gridTemplateColumns,
+                gridTemplateRows: 'auto',
+                gridGap: 5,
+            }}>
+                {
+                    images.map((item, index) => (
+                        <Item
+                            original={item.original}
+                            thumbnail={item.thumbnail}
+                            width={item.width}
+                            height={item.height}
+                        >
+                            {({ ref, open }) => (
+                                <img
+                                    style={smallItemStyles}
+                                    ref={ref as React.LegacyRef<HTMLImageElement>}
+                                    onClick={open}
+                                    src={item.src} />
+                            )}
+                        </Item>
+                    ))
+                }
+            </div>
+        </Gallery>
     </div>
 }
 

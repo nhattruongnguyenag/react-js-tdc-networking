@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
-import "react-image-lightbox/style.css";
 import { Client, Frame, Message } from "stompjs";
 import Header from "../components/common/Header";
 import MessageItem from "../components/message/MessageItem";
@@ -17,7 +16,7 @@ export default function ChatPage() {
   )
   const dispatch = useAppDispatch()
   const [isLoading, setLoading] = useState(false)
-  const [messageContent, setMessageContent] = useState<string>('')
+  const [btnSendDisable, setBtnSendDisable] = useState<boolean>(true)
   const textInputMessageRef = useRef<HTMLInputElement | null>(null)
   const textInputImagesRef = useRef<HTMLInputElement | null>(null)
   const endMessageRef = useRef<HTMLDivElement | null>(null)
@@ -44,6 +43,7 @@ export default function ChatPage() {
       endMessageRef.current?.scrollIntoView()
       textInputMessageRef.current.value = ''
       textInputMessageRef.current.focus()
+      setBtnSendDisable(true)
     }
   }
 
@@ -116,6 +116,14 @@ export default function ChatPage() {
     }
   }
 
+  const onMessageContentInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value.trim().length > 0) {
+      setBtnSendDisable(false)
+    } else {
+      setBtnSendDisable(true)
+    }
+  }
+
   return (
     <Fragment>
       <Header />
@@ -143,23 +151,28 @@ export default function ChatPage() {
                   </div>
                   <div className='chat-bottom dark-bg theme-dark-bg p-3 shadow-none' style={{ width: '98%' }}>
                     <form className='chat-form'>
-                      <button className='bg-grey float-left relative'
+                      <button className='bg-grey float-left'
                         type="button"
                         onClick={() => onBtnUploadImageClick()}>
                         <i className='ti-image text-grey-600' />
                       </button>
                       <input type={'file'} multiple
                         ref={textInputImagesRef}
-                        className='bg-grey float-left hidden'
+                        className='hidden'
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)} />
-                      <div className='form-group z-50'>
+                      <div className='form-group cursor-pointer'>
                         <input type='text'
                           ref={textInputMessageRef}
                           className="text-black"
                           placeholder='@ Tin nhắn...'
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onMessageContentInputChange(e)}
                         />
                       </div>
-                      <button className='bg-current' type="button"
+                      <button
+                        style={{cursor: 'pointer'}}
+                        disabled={btnSendDisable}
+                        className='bg-current disabled:opacity-50'
+                        type="button"
                         onClick={() => onBtnSendClick()}>
                         <i className='ti-arrow-right text-white' />
                       </button>
