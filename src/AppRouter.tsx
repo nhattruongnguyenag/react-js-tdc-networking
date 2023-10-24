@@ -23,7 +23,7 @@ export default function Router() {
             <Route path='dang-nhap' element={<LoginPage />} />
             <Route index path='doanh-nghiep/bai-viet' element={<BusinessDashboardPage />} />
             <Route path='hoi-thoai' element={<ConversationPage />} />
-            <Route path='tin-nhan' element={<ChatPage />} />
+            <Route path='nhan-tin' element={<ChatPage />} />
             <Route path='cai-dat' element={<SettingPage />} />
             <Route path='*' element={<NoPage />} />
           </Route>
