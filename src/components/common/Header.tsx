@@ -10,6 +10,7 @@ import Navigaion from './Navigation'
 
 export default function Header() {
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
+  const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
 
   return (
@@ -29,7 +30,7 @@ export default function Header() {
           <span className='menu-search-icon mob-menu me-2'>
             <i className='feather-search text-grey-900 font-sm btn-round-md bg-greylight' />
           </span>
-          <button className='nav-menu me-0 ms-2 ' />
+          <button className='nav-menu me-0 ms-2' type='button' onClick={() => setShowMobileNavigation(!showMobleNavigation)} />
         </div>
         <form action='#' className='header-search float-left ms-3'>
           <div className='form-group icon-input mb-0'>
@@ -81,7 +82,7 @@ export default function Header() {
         </Link>
         <Navigaion />
       </div>
-      <MobileNavigation />
+      <MobileNavigation show={showMobleNavigation}/>
       <div id='main-content-wrap' className='right-chat nav-wrap right-scroll-bar mt-2  '>
         <div className='middle-sidebar-right-content shadow-xss rounded-xxl bg-white'>
           <div className='section full position-relative feed-body pe-3 ps-4 pt-4'>

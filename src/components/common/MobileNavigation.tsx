@@ -1,6 +1,11 @@
-export default function MobileNavigation() {
+import classNames from "classnames"
+
+interface MobileNavigationProps {
+  show?: boolean
+}
+export default function MobileNavigation(props: MobileNavigationProps) {
   return (
-    <div className='navigation scroll-bar nav-active'>
+    <div className={classNames('navigation scroll-bar', props.show ? 'nav-active' : '')}>
       <div className='container pe-0 ps-0'>
         <div className='nav-content'>
           <div className='nav-wrap bg-transparent-card rounded-xxl shadow-xss mb-2 mt-2 bg-white pb-1 pt-3'>
