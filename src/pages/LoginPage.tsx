@@ -13,6 +13,7 @@ import { setUserLogin } from '../redux/Slice'
 import { InputTextValidate, isBlank, isEmail, isLengthInRange, isPassword } from '../utils/ValidateUtils'
 import TextValidate from '../components/TextValidate'
 import ReactLoading from 'react-loading'
+import { useNavigate } from 'react-router-dom'
 interface UserLogin {
   emailUser: InputTextValidate
   passwordUser: InputTextValidate
@@ -32,6 +33,7 @@ const isAllFieldsValid = (validate: UserLogin): boolean => {
 
 export default function LoginPage({ navigation }: any) {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const [userLoginRequest, setUserLoginRequest] = useState<UserLoginRequest>({
     email: '',
@@ -164,7 +166,7 @@ export default function LoginPage({ navigation }: any) {
                 sessionStorage.setItem(USER_LOGIN_KEY, JSON.stringify(response.data.data))
                 dispatch(setUserLogin(response.data.data))
                 console.log(response.data.data)
-                alert('Đăng nhập thành công')
+                navigate('/doanh-nghiep/bai-viet')
               }
             })
         })
@@ -263,7 +265,7 @@ export default function LoginPage({ navigation }: any) {
                         type='button'
                         onClick={(e) => onSubmit(e)}
                         
-                        className='form-control style2-input fw-600 bg-blue border-0 p-0 text-center text-white '
+                        className='form-control style2-input fw-600 bg-blue-500 border-0 p-0 text-center text-white '
                       >
                         Login
                       </button>

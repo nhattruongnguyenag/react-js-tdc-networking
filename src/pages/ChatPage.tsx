@@ -4,6 +4,7 @@ import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { Client, Frame, Message } from "stompjs";
 import Header from "../components/common/Header";
 import MessageItem from "../components/message/MessageItem";
+import { USER_LOGIN_KEY } from "../constants/KeyValue";
 import { useAppDispatch, useAppSelector } from "../redux/Hook";
 import { setConversationMessages } from "../redux/Slice";
 import { getStompClient } from "../sockets/SocketClient";
@@ -13,7 +14,7 @@ import { handleUploadImage } from "../utils/UploadUtils";
 let stompClient: Client
 
 export default function ChatPage() {
-  const { userLogin, imagesUpload, selectConversation, conversationMessages } = useAppSelector(
+  const {selectConversation, conversationMessages } = useAppSelector(
     (state) => state.TDCSocialNetworkReducer
   )
   const dispatch = useAppDispatch()

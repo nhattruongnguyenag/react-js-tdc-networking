@@ -1,15 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { faYoutube, faGithub, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export default function IntroducePage() {
+  const navigate = useNavigate()
   return (
     <div>
       <div className='bg-intro'>
         {/* navbar */}
         <div className="navbar-intro">
           <button className='btnAll-intro btnReg-intro'>Đăng kí ngay!</button>
-          <button className='btnAll-intro btnLog-intro'>Đăng nhập!</button>
+          <button className='btnAll-intro btnLog-intro'
+          onClick={() => navigate('/dang-nhap')}>
+            Đăng nhập!
+          </button>
         </div>
         {/* body */}
         <div>
