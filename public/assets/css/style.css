@@ -18137,15 +18137,15 @@ select.sort {
     background-image: url(../images/tdc_bg_splash.jpg);
     background-position: center;
     background-size: cover;
-    height: 700px;
+    height: 800px;
     position: relative;
 }
 
 div.navbar-intro {
     background-color: #ffffff;
-    height: 80px;
-    position: -webkit-sticky;
-    position: sticky;
+    padding: 20px;
+    display: inline-block;
+    width: 100%;
 }
 
 .btnAll-intro {
@@ -18290,8 +18290,8 @@ div.navbar-intro {
 
 .bottom-intro {
     background-color: #ffffff;
-    height: 120px;
     width: 100%;
+    display: inline-block;
 }
 
 .title-intro {
@@ -18326,5 +18326,7 @@ div.navbar-intro {
     color: blue;
     cursor: pointer;
 }
+
+/*# sourceMappingURL=style.css.map */
 
 /*# sourceMappingURL=style.css.map */
