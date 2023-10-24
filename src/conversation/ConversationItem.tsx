@@ -10,7 +10,6 @@ interface ConversationItemProps {
     data: Conversation
 }
 
-
 export default function ConversationItem(props: ConversationItemProps) {
     const dispatch = useAppDispatch()
     const { conversations } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -53,7 +52,7 @@ export default function ConversationItem(props: ConversationItemProps) {
                     {lastMessageContent}
                 </div>
                 {
-                    props.data.countNewMessage >= 0 &&
+                    props.data.countNewMessage > 0 &&
                     <span className='flex items-center justify-center w-7 h-7 rounded-full bg-red-500'>
                         <span className="text-white font-bold">{props.data.countNewMessage}</span>
                     </span>

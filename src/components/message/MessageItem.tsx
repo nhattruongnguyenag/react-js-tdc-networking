@@ -1,11 +1,12 @@
 import classNames from "classnames"
 import moment from "moment"
-import { Fragment, useMemo, useRef, useState } from "react"
-import { SERVER_ADDRESS } from "../../constants/SystemConstant"
-import { Message } from "../../types/Message"
-import { getRandomInt } from "../../utils/CommonUtls"
-import { Gallery, Item } from 'react-photoswipe-gallery'
 import 'photoswipe/dist/photoswipe.css'
+import { Fragment } from "react"
+import { Gallery, Item } from 'react-photoswipe-gallery'
+import { SERVER_ADDRESS } from "../../constants/SystemConstant"
+import { useAppSelector } from "../../redux/Hook"
+import { Message } from "../../types/Message"
+import { getUserLogin } from "../../utils/CommonUtls"
 import { getMessageSectionTitle } from "../../utils/DateTimeUtils"
 
 interface MessageItemProps {
@@ -85,6 +86,7 @@ const MessageContent = (props: MessageContentProps) => {
 }
 
 export default function MessageItem(props: MessageItemProps) {
+    const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
     return (
         <Fragment>
             {
@@ -96,7 +98,7 @@ export default function MessageItem(props: MessageItemProps) {
             <div
                 ref={props.lastMessageRef}
                 className={classNames('message-item',
-                    props.data.sender.id === 1 ? 'outgoing-message' : '')}>
+                    props.data.sender.id === userLogin?.id ? 'outgoing-message' : '')}>
                 <div className='message-user'>
                     <figure className='avatar mb-2 mt-2'>
                         {
@@ -104,7 +106,7 @@ export default function MessageItem(props: MessageItemProps) {
                                 <img src='assets/images/user-12.png' alt='user' className='w-12 me-2' />
                                 :
                                 <div className={classNames('w-12 h-12 flex items-center justify-center me-2 rounded-full bg-gradient-to-r',
-                                    props.data.sender.id === 1 ? 'from-purple-400 to-blue-400' : 'from-green-400 to-blue-400'
+                                    props.data.sender.id === userLogin?.id ? 'from-purple-400 to-blue-400' : 'from-green-400 to-blue-400'
                                 )}>
                                     <span>{props.data.receiver.name[0]}</span>
                                 </div>
@@ -118,7 +120,10 @@ export default function MessageItem(props: MessageItemProps) {
                 {
                     <MessageContent data={props.data} />
                 }
-                <div className="ms-1 mt-2">{props.data.status === 0 ? "Đã nhận" : "Đã xem"}</div>
+                <div className={
+                    classNames('ms-1 mt-2',
+                        props.data.sender.id !== userLogin?.id ? 'hidden' : '')
+                }>{props.data.status === 0 ? "Đã nhận" : "Đã xem"}</div>
             </div>
         </Fragment>
     )
