@@ -9,14 +9,26 @@ import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/transitions/slide.css';
 import Moment from 'react-moment';
 import moment from 'moment';
+import { NotificationModel } from "../types/response/NotificationModel";
+import { useGetNotificationsUserByIdQuery } from "../redux/Service";
 interface NotificationPopupProps {
   show?: boolean
 }
 
 
 export default function NotificationPopup(props: NotificationPopupProps) {
-  const [notificationData, setNotificationData] = useState([])
+  const [notificationData, setNotificationData] = useState<NotificationModel[]>([])
+  const {data, isFetching} = useGetNotificationsUserByIdQuery({
+    id: 12
+  }, {
+    pollingInterval: 1000
+  })
 
+  // useEffect(() => {
+  //   if (data && !isFetching) {
+  //     console.log(data);
+  //   }
+  // }, [data, isFetching])
 
   useEffect(() => {
     axios.post(`${SERVER_ADDRESS}api/notifications/user`, {
@@ -57,44 +69,11 @@ export default function NotificationPopup(props: NotificationPopupProps) {
   }
 
 
-  const time = (props: any) => {
-    // const fromNow = moment(item.createdAt).fromNow();
-    // useEffect(() => {
-    //   const intervalId = setInterval(() => {
-    //     fromNow = (moment(item.createdAt).fromNow());
-    //   }, 60000); // Cập nhật mỗi phút
-
-    //   return () => {
-    //     clearInterval(intervalId);
-    //   };
-    // }, [item.createdAt]);
-  }
-  // function Time(props) {
-
-  // }
-
-  const notificationItems = (item: any) => {
-    // const setTime = () => {
-    //   useEffect(() => {
-        
-
-
-
-    //     const fromNow = moment(item.createdAt).fromNow();
-    //     const intervalId = setInterval((fromNow) => {
-    //       fromNow = (moment(item.createdAt).fromNow());
-    //     }, 60000); // Cập nhật mỗi phút
-
-    //     return () => {
-    //       clearInterval(intervalId);
-    //     };
-    //   }, [item.createdAt]);
-    // }
-
+  const notificationItems = (item: NotificationModel) => {
     return (
       <div
         className='card bg-transparent-card w-100 mb-0 border-0 ps-0 itemNotification'
-        style={{ background: item.status === '0' ? '#f5f5f5' : '#fff', flexDirection: "row", padding: 10 }}
+        style={{ background: item.status == '0' ? '#f5f5f5' : '#fff', flexDirection: "row", padding: 10 }}
         onClick={() => handleIsRead(item.id)}
       >
         <img src='/assets/images/user-8.png' alt='user' style={{ width: 60, height: 60, marginLeft: 10 }} />
@@ -132,7 +111,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
       </div>
       <div className="position-relative scroll-bar theme-dark-bg bg-white pt-0" style={{ height: 700 }}>
         {
-          notificationData.map(notification => notificationItems(notification))
+          data?.data.map(notification => notificationItems(notification))
         }
       </div>
     </div>
