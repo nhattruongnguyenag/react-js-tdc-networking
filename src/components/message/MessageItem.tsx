@@ -6,10 +6,12 @@ import { Message } from "../../types/Message"
 import { getRandomInt } from "../../utils/CommonUtls"
 import { Gallery, Item } from 'react-photoswipe-gallery'
 import 'photoswipe/dist/photoswipe.css'
+import { getMessageSectionTitle } from "../../utils/DateTimeUtils"
 
-interface MessageItem {
+interface MessageItemProps {
     data: Message
     lastMessageRef?: React.LegacyRef<HTMLDivElement>
+    headerVisible?: boolean
 }
 
 interface Image {
@@ -82,16 +84,31 @@ const MessageContent = (props: MessageContentProps) => {
     </div>
 }
 
-export default function MessageItem(props: MessageItem) {
+export default function MessageItem(props: MessageItemProps) {
     return (
         <Fragment>
+            {
+                Boolean(props.headerVisible)
+                && <div className="ms-auto me-auto text-center pt-1 pb-1 mt-16 mb-16 rounded-full border-2 w-2/3 border-gray-400">
+                    {getMessageSectionTitle(props.data.createdAt)}
+                </div>
+            }
             <div
                 ref={props.lastMessageRef}
                 className={classNames('message-item',
                     props.data.sender.id === 1 ? 'outgoing-message' : '')}>
                 <div className='message-user'>
-                    <figure className='avatar'>
-                        <img src='assets/images/user-9.png' alt='avater' />
+                    <figure className='avatar mb-2 mt-2'>
+                        {
+                            props.data.receiver.image ?
+                                <img src='assets/images/user-12.png' alt='user' className='w-12 me-2' />
+                                :
+                                <div className={classNames('w-12 h-12 flex items-center justify-center me-2 rounded-full bg-gradient-to-r',
+                                    props.data.sender.id === 1 ? 'from-purple-400 to-blue-400' : 'from-green-400 to-blue-400'
+                                )}>
+                                    <span>{props.data.receiver.name[0]}</span>
+                                </div>
+                        }
                     </figure>
                     <div>
                         <h5>{props.data.sender.name}</h5>
@@ -101,6 +118,7 @@ export default function MessageItem(props: MessageItem) {
                 {
                     <MessageContent data={props.data} />
                 }
+                <div className="ms-1 mt-2">{props.data.status === 0 ? "Đã nhận" : "Đã xem"}</div>
             </div>
         </Fragment>
     )

@@ -1,4 +1,6 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import classNames from "classnames";
+import moment from "moment";
+import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { Client, Frame, Message } from "stompjs";
 import Header from "../components/common/Header";
 import MessageItem from "../components/message/MessageItem";
@@ -16,10 +18,12 @@ export default function ChatPage() {
   )
   const dispatch = useAppDispatch()
   const [isLoading, setLoading] = useState(false)
+  const [hiddenBtnScrollEnd, setHiddenBtnScrollEnd] = useState<boolean>(true)
   const [btnSendDisable, setBtnSendDisable] = useState<boolean>(true)
   const textInputMessageRef = useRef<HTMLInputElement | null>(null)
   const textInputImagesRef = useRef<HTMLInputElement | null>(null)
   const endMessageRef = useRef<HTMLDivElement | null>(null)
+  const scrollRef = useRef<HTMLDivElement | null>(null)
 
   const senderId = useMemo(() => {
     return selectConversation?.sender?.id
@@ -103,7 +107,6 @@ export default function ChatPage() {
 
         dispatch(setConversationMessages([...conversationMessages, message]))
         handleUploadImage(event.target.files, (response) => {
-          console.log('response', response);
           stompClient.send(`/app/messages/${senderId}/${receiverId}`, {}, JSON.stringify({
             senderId: senderId,
             receiverId: receiverId,
@@ -128,22 +131,48 @@ export default function ChatPage() {
     <Fragment>
       <Header />
       <div className="container">
+        <button
+          style={{ cursor: 'pointer' }}
+          className={classNames('bg-blue-400 w-12 h-12 fixed right-10 top-2/3 z-50',
+          hiddenBtnScrollEnd ? 'hidden' : '')}
+          type="button"
+          onClick={() => endMessageRef.current?.scrollIntoView()}>
+          <i className='ti-arrow-down text-[18px] font-bold text-white' />
+        </button>
         <div className='main-content '>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left pe-0' style={{ maxWidth: '100%' }}>
               <div className='row'>
                 <div className='col-lg-12 position-relative'>
-                  <div className='chat-wrapper w-100 position-relative  flex-col-reverse scroll-bar theme-dark-bg bg-white pt-0'>
+                  <div 
+                  onScroll={(e) => {
+                    const isAtBottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight
+                    setHiddenBtnScrollEnd(isAtBottom)
+                  }}
+                  className='chat-wrapper w-100 position-relative flex-col-reverse scroll-bar theme-dark-bg bg-white pt-0'>
                     <div className='chat-body p-3 '>
                       <div className='messages-content pb-5'>
                         {
-                          conversationMessages.map((item, index) => (
-                            <MessageItem
+                          conversationMessages.map((item, index) => {
+                            const previousMessage = conversationMessages[index - 1]
+                            let dayHeaderVisible = false
+                            if (
+                              index === 0
+                              || (
+                                moment(item.createdAt).format('l') === moment(previousMessage.createdAt).format('l')
+                                && Math.abs(moment(item.createdAt).hours() - moment(previousMessage.createdAt).hours()) > 3
+                              )
+                            ) {
+                              dayHeaderVisible = true
+                            }
+
+                            return <MessageItem
+                              headerVisible={dayHeaderVisible}
                               lastMessageRef={index === conversationMessages.length - 1 ? endMessageRef : undefined}
                               key={index.toString()}
                               data={item}
                             />
-                          ))
+                          })
                         }
                         <div className='clearfix bg-slate-500' />
                       </div>
@@ -169,7 +198,7 @@ export default function ChatPage() {
                         />
                       </div>
                       <button
-                        style={{cursor: 'pointer'}}
+                        style={{ cursor: 'pointer' }}
                         disabled={btnSendDisable}
                         className='bg-current disabled:opacity-50'
                         type="button"
@@ -183,6 +212,7 @@ export default function ChatPage() {
             </div>
           </div>
         </div>
+
       </div>
     </Fragment>
   )
