@@ -11,15 +11,17 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import { NotificationModel } from "../types/response/NotificationModel";
 import { useGetNotificationsUserByIdQuery } from "../redux/Service";
+import { useAppSelector } from "../redux/Hook";
 interface NotificationPopupProps {
   show?: boolean
 }
 
 
 export default function NotificationPopup(props: NotificationPopupProps) {
-  const [notificationData, setNotificationData] = useState<NotificationModel[]>([])
-  const {data, isFetching} = useGetNotificationsUserByIdQuery({
-    id: 12
+  const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer
+  )
+  const { data, isFetching } = useGetNotificationsUserByIdQuery({
+    id: userLogin?.id ?? -1
   }, {
     pollingInterval: 1000
   })
@@ -30,32 +32,23 @@ export default function NotificationPopup(props: NotificationPopupProps) {
     }
   }, [data, isFetching])
 
-  useEffect(() => {
-    axios.post(`${SERVER_ADDRESS}api/notifications/user`, {
-      id: 12
-    })
-      .then(res => {
-        setNotificationData(res.data.data)
-      })
-  }, [])
-
   const handleAllIsRead = () => {
     axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus/all`, {
-      userId: 12
+      userId: userLogin?.id ?? -1
     })
   }
 
   const handleIsRead = (id: number) => {
     axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus`, {
       id: id,
-      userId: 12,
+      userId: userLogin?.id ?? -1,
     })
   }
 
   const handleIsNotRead = (id: number) => {
     axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus/makeNotSeen`, {
       id: id,
-      userId: 12,
+      userId: userLogin?.id ?? -1,
     })
   }
 
@@ -63,7 +56,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
     axios.delete(`${SERVER_ADDRESS}api/notifications`, {
       data: {
         id: id,
-        userId: 12,
+        userId: userLogin?.id ?? -1,
       }
     })
   }
