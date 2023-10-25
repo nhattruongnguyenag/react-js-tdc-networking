@@ -1,8 +1,9 @@
-import { Base } from "../Base";
-import { User } from "../User";
+import { User } from "../User"
 
-export interface NotificationModel extends Base {
-    content: string
-    status: number
-    user: User
+export interface NotificationModel {
+  id: number
+  createdAt: string
+  content: string
+  status: string
+  user: User
 }

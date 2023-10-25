@@ -6,12 +6,21 @@ import { FCMNotificationRequest } from '../types/request/FCMNotificationRequest'
 import { RecruitmentPostRequest } from '../types/request/RecruitmentPostRequest'
 import { MessageResponseData } from '../types/response/MessageResponseData'
 import { SurveyPostRequest } from '../types/SurveyPost'
+import { Data } from '../types/Data'
+import { NotificationModel } from '../types/response/NotificationModel'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['UserLogin'],
   endpoints: (builder) => ({
+    getNotificationsUserById: builder.query<Data<NotificationModel[]>, {id: number}>({
+      query: (data) => ({
+        url: 'api/notifications/user',
+        method: 'POST',
+        body: data
+      })
+    }),
     getConversationsByUserId: builder.query<Conversation[], number>({
       query: (userId) => `api/conversations/${userId}`
     }),
@@ -58,6 +67,7 @@ export const TDCSocialNetworkAPI = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useGetNotificationsUserByIdQuery,
   useGetConversationsByUserIdQuery,
   useAddSurveyPostMutation,
   useSaveDeviceTokenMutation,
