@@ -24,11 +24,11 @@ export default function NotificationPopup(props: NotificationPopupProps) {
     pollingInterval: 1000
   })
 
-  // useEffect(() => {
-  //   if (data && !isFetching) {
-  //     console.log(data);
-  //   }
-  // }, [data, isFetching])
+  useEffect(() => {
+    if (data && !isFetching) {
+      console.log(data);
+    }
+  }, [data, isFetching])
 
   useEffect(() => {
     axios.post(`${SERVER_ADDRESS}api/notifications/user`, {
