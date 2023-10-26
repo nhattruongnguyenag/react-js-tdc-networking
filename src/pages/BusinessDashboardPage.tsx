@@ -284,28 +284,6 @@ export default function BusinessDashboardPage() {
                         aria-hidden='true'
                         style={{ outline: 'none' }}
                       >
-                        <div>
-                          <div tabIndex={-1} style={{ width: '100%', display: 'inline-block' }}>
-                            <div
-                              className='card w125 h200 d-block shadow-xss rounded-xxxl bg-gradiant-bottom mb-3 me-3  mt-0 overflow-hidden border-0'
-                              style={{ backgroundImage: 'url("assets/images/s-1.jpg")' }}
-                            >
-                              <div className='card-body d-block w-100 position-absolute bottom-0 p-3 text-center'>
-                                <figure className='avatar position-relative w50 z-index-1 mb-0 me-auto ms-auto overflow-hidden'>
-                                  <img
-                                    src='/assets/images/user-11.png'
-                                    alt='avater'
-                                    className='rounded-circle w-100 shadow-xss float-right bg-white p-0'
-                                  />
-                                </figure>
-                                <div className='clearfix mt-1' />
-                                <h4 className='fw-600 position-relative z-index-1 ls-1 font-xssss mb-1 mt-2 text-white'>
-                                  Aliqa Macale{' '}
-                                </h4>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                       <div
                         data-index={2}
@@ -495,33 +473,32 @@ export default function BusinessDashboardPage() {
                 <CreateNormalPostModal />
                 {/* Render post */}
                 {
-                  JSON.stringify(data)
-                  // data && data.map((item: any) => (
-                  //   <CustomizePost
-                  //     key={item.id}
-                  //     id={item.id}
-                  //     userId={item.user['id']}
-                  //     name={item.user['name']}
-                  //     avatar={item.user['image']}
-                  //     typeAuthor={'Doanh Nghiệp'}
-                  //     available={null}
-                  //     timeCreatePost={formatDateTime(item.createdAt)}
-                  //     content={item.content}
-                  //     type={item.type}
-                  //     likes={item.likes}
-                  //     comments={item.comment}
-                  //     commentQty={item.commentQuantity}
-                  //     images={item.images}
-                  //     role={item.user['roleCodes']}
-                  //     likeAction={likeAction}
-                  //     location={item.location ?? null}
-                  //     title={item.title ?? null}
-                  //     expiration={item.expiration ?? null}
-                  //     salary={item.salary ?? null}
-                  //     employmentType={item.employmentType ?? null}
-                  //     description={item.description ?? null}
-                  //   />
-                  // ))
+                  data && data.map((item: any) => (
+                    <CustomizePost
+                      key={item.id}
+                      id={item.id}
+                      userId={item.user['id']}
+                      name={item.user['name']}
+                      avatar={item.user['image']}
+                      typeAuthor={'Doanh Nghiệp'}
+                      available={null}
+                      timeCreatePost={formatDateTime(item.createdAt)}
+                      content={item.content}
+                      type={item.type}
+                      likes={item.likes}
+                      comments={item.comment}
+                      commentQty={item.commentQuantity}
+                      images={item.images}
+                      role={item.user['roleCodes']}
+                      likeAction={likeAction}
+                      location={item.location ?? null}
+                      title={item.title ?? null}
+                      expiration={item.expiration ?? null}
+                      salary={item.salary ?? null}
+                      employmentType={item.employmentType ?? null}
+                      description={item.description ?? null}
+                    />
+                  ))
                 }
                 <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4 text-center'>
                   <div className='snippet me-auto ms-auto mt-2' data-title='.dot-typing'>

@@ -14,9 +14,6 @@ const CustomizeBodyPost = (props: PostContentType) => {
             const lineHeight = parseFloat(getComputedStyle(pElement).lineHeight);
             const lines = Math.floor(pHeight / lineHeight);
             number = lines > 4;
-            console.log('====================================');
-            console.log(lines);
-            console.log('====================================');
         }
         return number;
     }

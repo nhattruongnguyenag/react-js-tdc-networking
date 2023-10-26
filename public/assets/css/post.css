@@ -1,0 +1,18 @@
+.body-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.close {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+}
+
+.headerModal {
+  background:'red';
+}

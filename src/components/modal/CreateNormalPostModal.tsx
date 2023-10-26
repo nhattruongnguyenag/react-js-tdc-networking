@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, Modal } from 'react-bootstrap';
 import CreateNormalPost from "../CreateNormalPost";
 import { TEXT_CREATE_NEW_POST, TEXT_CREATE_POST } from "../../constants/StringVietnamese";
-
 function MyVerticallyCenteredModal(props: any) {
     return (
         <Modal
@@ -11,7 +10,11 @@ function MyVerticallyCenteredModal(props: any) {
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton>
+            <Modal.Header>
+                <button
+                    type="button" className="close font-xl" onClick={props.onHide}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <Modal.Title className="font-xss">{TEXT_CREATE_POST}</Modal.Title>
             </Modal.Header>
             <CreateNormalPost />
