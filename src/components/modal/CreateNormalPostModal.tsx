@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import CreateNormalPost from "../CreateNormalPost";
 import { TEXT_CREATE_NEW_POST, TEXT_CREATE_POST } from "../../constants/StringVietnamese";
-function MyVerticallyCenteredModal(props: any) {
+
+export interface MyVerticallyCenteredModalType {
+    show: boolean
+    onHide: () => void
+}
+function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalType) {
     return (
         <Modal
             {...props}
@@ -11,13 +16,18 @@ function MyVerticallyCenteredModal(props: any) {
             centered
         >
             <Modal.Header>
-                <button
-                    type="button" className="close font-xl" onClick={props.onHide}>
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <Modal.Title className="font-xss">{TEXT_CREATE_POST}</Modal.Title>
+                <div className="header-modal">
+                    <Modal.Title className="font-xss">{TEXT_CREATE_POST}</Modal.Title>
+                    <button
+                        style={{ position: 'absolute', top: 0, right: 0 }}
+                        type="button"
+                        className="btn-close-modal-header close font-xl"
+                        onClick={props.onHide}>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </Modal.Header>
-            <CreateNormalPost />
+            <CreateNormalPost onHide={props.onHide} />
         </Modal >
     );
 }

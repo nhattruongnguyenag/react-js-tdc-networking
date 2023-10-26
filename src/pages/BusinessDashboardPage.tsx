@@ -6,11 +6,11 @@ import axios from 'axios';
 import CreateNormalPostModal from '../components/modal/CreateNormalPostModal';
 import { formatDateTime } from '../utils/FormatTime';
 import CustomizePost from '../components/post/CustomizePost';
+import { API_URL_GET_ALL_POST } from '../constants/Path';
 
 export default function BusinessDashboardPage() {
   // -------------------------------------
   // Variable 
-  const urlGetPostApi = SERVER_ADDRESS + 'api/posts';
   const [data, setData] = useState([] as any);
 
   // Start post
@@ -19,9 +19,10 @@ export default function BusinessDashboardPage() {
   }, [])
 
   const getPostsFromApi = () => {
-    axios.get(urlGetPostApi)
+    axios.get(API_URL_GET_ALL_POST)
       .then((response) => {
         setData(response.data.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error(error);

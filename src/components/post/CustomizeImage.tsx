@@ -1,12 +1,17 @@
 import React from 'react'
+import { Images } from '../../types/Images'
 
-const CustomizeImage = () => {
+export interface CustomizeImageType {
+    images: Images[]
+}
+
+const CustomizeImage = (props: CustomizeImageType) => {
     return (
         <>
             <div className='card-body d-block mb-3 p-0'>
                 <div className='row pe-2 ps-2'>
                     <div className='col-sm-12 p-1'>
-                        <img src='/assets/images/t-10.jpg' className='rounded-3 w-100' alt='post' />
+                       {JSON.stringify(props.images)}
                     </div>
                 </div>
             </div>

@@ -1,38 +1,106 @@
-import React, { useState, useRef } from "react"
-import { TEXT_DETAILED_WARNING_CONTENT_NULL, TEXT_PLACEHOLDER_CONTENT_CREATE_POST, TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED, TEXT_CREATE_POST_SUCCESS } from "../constants/StringVietnamese";
+import React, { useState, useRef, useEffect } from "react"
+import { TEXT_DETAILED_WARNING_CONTENT_NULL, TEXT_PLACEHOLDER_CONTENT_CREATE_POST, TEXT_CREATE_POST_FAIL, TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED, TEXT_CREATE_POST_SUCCESS } from "../constants/StringVietnamese";
 import { isBlank, isLengthInRange, isNotBlank } from '../utils/ValidateUtils'
 import { toast } from 'react-toastify';
 import CustomizeToast from "./toast/CustomizeToast";
-import { SERVER_ADDRESS } from "../constants/SystemConstant";
 import { handleUploadImage } from "../utils/UploadUtils";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { max, min } from "moment";
+import { faChevronLeft, faChevronRight, faXmark } from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
+import { API_URL_NORMAL_POST } from "../constants/Path";
+import { TYPE_NORMAL_POST } from "../constants/Variables";
+import { useAppSelector } from "../redux/Hook";
+import { NormalPost } from "../types/NormalPost";
+import { COLOR_BTN_BLUE, COLOR_GREY, COLOR_WHITE } from "../constants/Color";
 
-const CreateNormalPost = () => {
+export interface CreateNormalPostType {
+  onHide: () => void
+}
+const CreateNormalPost = (props: CreateNormalPostType) => {
   // variable
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [content, setContent] = useState<string>('');
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<object[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const [normalPost, setNormalPost] = useState<NormalPost>({
+    userId: userLogin?.id,
+    type: TYPE_NORMAL_POST,
+    groupId: 1,
+    images: undefined,
+    content: undefined
+  });
+
   // Function 
+  useEffect(() => {
+    textAreaRef.current?.focus();
+  }, [])
 
   const handleSubmitEvent = () => {
     if (isNotBlank(content?.trim()) && isLengthInRange(content.trim(), 1, 1024)) {
-      const submitPost = {
-        type: "thong - thuong",
-        images: images,
-        userId: 1,
-        content: content,
+      let fakeNames: string[] = [];
+      if (images) {
+        const promises = images.map((item: any) => {
+          return new Promise<void>((resolve) => {
+            const fileList = new DataTransfer();
+            fileList.items.add(item.file);
+            handleUploadImage(fileList.files, (response) => {
+              fakeNames.push(response.data + '');
+              resolve();
+            });
+          });
+        });
+        Promise.all(promises).then(() => {
+          createNormalPost(fakeNames);
+        });
+      } else {
+        createNormalPost([]);
       }
-      toast.success(TEXT_CREATE_POST_SUCCESS);
-
     } else if (isBlank(content?.trim())) {
       toast.error(TEXT_DETAILED_WARNING_CONTENT_NULL);
     } else {
       toast.error(TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED);
     }
+  }
+
+  // Send data action 
+  const createNormalPost = (fakeImages: string[]) => {
+    normalPost.images = fakeImages;
+    normalPost.content = content;
+    axios.post(API_URL_NORMAL_POST, {
+      type: normalPost.type,
+      groupId: normalPost.groupId,
+      images: normalPost.images,
+      userId: normalPost.userId,
+      content: normalPost.content
+    }).then((response) => {
+      if (response.data.status === 201) {
+        toast.success(TEXT_CREATE_POST_SUCCESS);
+        resetData();
+        disable();
+        setTimeout(() => {
+          props.onHide()
+        }, 2000)
+      } else {
+        toast.success(TEXT_CREATE_POST_FAIL);
+      }
+    }).catch((error) => {
+      toast.error(error);
+    })
+  }
+
+  const disable = () => {
+    buttonRef.current?.setAttribute("disabled", "");
+    textAreaRef.current?.setAttribute("disabled", "");
+    buttonCallPickerImgRef.current?.setAttribute("disabled", "");
+  }
+
+  const resetData = () => {
+    setContent('');
+    setImages([]);
   }
 
   const handleGetFiles = () => {
@@ -41,28 +109,17 @@ const CreateNormalPost = () => {
     }
   };
 
-
   const onFilePickerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
-      const urls: string[] = []
+      let urls: object[] = []
       for (let i = 0; i < event.target.files.length; i++) {
-        urls.push(URL.createObjectURL(event.target.files[i]))
+        urls.push({
+          url: URL.createObjectURL(event.target.files[i]),
+          file: event.target.files[i]
+        })
       }
-      setImages(urls);
-      // Xử lý khi người dùng chọn tệp ảnh
-      // const selectedFiles = event.target.files;
-      // // upload
-      // if (selectedFiles) {
-      //   handleUploadImage(selectedFiles);
-      //   // cho anh vao danh sach
-      //   const fileNames = Array.from(selectedFiles).map((file) => file.name);
-      //   setImages(fileNames);
-      // }
+      images.length != 0 ? setImages([...images, ...urls]) : setImages(urls)
     }
-  }
-
-  const handleDeleteImage = (img: string) => {
-    alert(img);
   }
 
   const scrollLeft = () => {
@@ -81,12 +138,16 @@ const CreateNormalPost = () => {
     }
   };
 
-  // Long click
+  const handleDeleteImage = (img: any) => {
+    const newImages = images.filter((item: any) => item.url !== img.url);
+    setImages(newImages);
+  }
 
   return <>
     <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 pb-3 pe-4 ps-4 pt-4'>
       <div className='card-body position-relative mt-3 p-0'>
         <textarea
+          ref={textAreaRef}
           value={content}
           onChange={(value) => { setContent(value.target.value) }}
           name='message'
@@ -99,26 +160,23 @@ const CreateNormalPost = () => {
       </div>
       <div style={{ position: 'relative' }}>
         {
-          images.length >= 6 && <><div style={{ display: 'flex', justifyContent: 'space-between', position: 'absolute', left: 0, right: 0, bottom: '50%', zIndex: 999 }}>
-            <button onClick={scrollLeft}> <FontAwesomeIcon icon={faArrowLeft} /></button>
-            <button onClick={scrollRight}> <FontAwesomeIcon icon={faArrowRight} /></button>
+          images.length >= 6 && <><div className="container-button-to-left-right">
+            <button onClick={scrollLeft}> <FontAwesomeIcon icon={faChevronLeft} size="2x" color={COLOR_BTN_BLUE} /></button>
+            <button onClick={scrollRight}> <FontAwesomeIcon icon={faChevronRight} size="2x" color={COLOR_BTN_BLUE} /></button>
           </div></>
         }
-        <div style={{ display: 'flex', overflowX: 'hidden' }} id="imageContainer">
+        <div className="image-file-container" id="imageContainer">
           {images.map((item: any, index: any) => (
             <li
               key={item + ''}
-              style={{
-                minWidth: '125px',
-                height: '200px',
-                position: 'relative'
-              }}
-              className='card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
+              className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
             >
-              <img style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} src={item} alt={`Image ${index}`} />
+              <img className="image-file" src={item.url} alt={`Image ${index}`} />
               <button
-                onClick={()=>handleDeleteImage}
-                style={{ position: 'absolute', top: 0, right: 0, width: 20, height: 20, borderRadius: 20, background: '#fff', color: 'black', borderWidth: 1, borderColor: 'blue', display: 'flex', justifyContent: 'center', alignItems: 'center' }}><p>x</p></button>
+                className="btn-delete-image"
+                onClick={() => handleDeleteImage(item)}>
+                <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE}/>
+              </button>
             </li>
           ))}
         </div>
@@ -129,6 +187,7 @@ const CreateNormalPost = () => {
           className='hidden'
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)} />
         <button
+          ref={buttonCallPickerImgRef}
           onClick={handleGetFiles}
           className='d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4'
         >
@@ -142,56 +201,15 @@ const CreateNormalPost = () => {
           aria-expanded='false'
         >
           <button
+            ref={buttonRef}
             onClick={handleSubmitEvent}
             className="btn btn-primary">
             <span className='d-none-xs'>Đăng bài viết</span>
           </button>
-        </div>
-        <div
-          className='dropdown-menu rounded-xxl right-0 border-0 p-4 shadow-lg '
-          aria-labelledby='dropdownMenu4'
-        >
-          <div className='card-body d-flex p-0'>
-            <i className='feather-bookmark text-grey-500 font-lg me-3' />
-            <h4 className='fw-600 text-grey-900 font-xssss pointer me-4 mt-0'>
-              Save Link
-              <span className='d-block font-xsssss fw-500 lh-3 text-grey-500 mt-1'>
-                Add this to your saved items
-              </span>
-            </h4>
-          </div>
-          <div className='card-body d-flex mt-2 p-0'>
-            <i className='feather-alert-circle text-grey-500 font-lg me-3' />
-            <h4 className='fw-600 text-grey-900 font-xssss pointer me-4 mt-0'>
-              Hide Post
-              <span className='d-block font-xsssss fw-500 lh-3 text-grey-500 mt-1'>
-                Save to your saved items
-              </span>
-            </h4>
-          </div>
-          <div className='card-body d-flex mt-2 p-0'>
-            <i className='feather-alert-octagon text-grey-500 font-lg me-3' />
-            <h4 className='fw-600 text-grey-900 font-xssss pointer me-4 mt-0'>
-              Hide all from Group{' '}
-              <span className='d-block font-xsssss fw-500 lh-3 text-grey-500 mt-1'>
-                Save to your saved items
-              </span>
-            </h4>
-          </div>
-          <div className='card-body d-flex mt-2 p-0'>
-            <i className='feather-lock text-grey-500 font-lg me-3' />
-            <h4 className='fw-600 text-grey-900 font-xssss pointer mb-0 me-4 mt-0'>
-              Unfollow Group{' '}
-              <span className='d-block font-xsssss fw-500 lh-3 text-grey-500 mt-1'>
-                Save to your saved items
-              </span>
-            </h4>
-          </div>
         </div>
       </div>
     </div>
     <CustomizeToast />
   </>
 }
-
 export default CreateNormalPost

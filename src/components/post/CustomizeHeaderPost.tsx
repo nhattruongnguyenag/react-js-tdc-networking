@@ -1,6 +1,6 @@
 import React from 'react'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
-import { faCoffee, faAddressBook, faSearch, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { COLOR_BTN_BLUE } from '../../constants/Color';
 import { GO_TO_MENU_ACTIONS, GO_TO_PROFILE_ACTIONS } from '../../constants/Variables';
@@ -24,7 +24,10 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
                     <button
                         onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_PROFILE_ACTIONS)}
                     >
-                        <img src={SERVER_ADDRESS + 'api/images/' + props.avatar} alt='avater' className='rounded-circle w45 shadow-sm' />
+                        <img
+                            src={SERVER_ADDRESS + 'api/images/' + props.avatar}
+                            alt='avatar'
+                            className='avatar-user-header-post shadow-sm' />
                     </button>
                 </figure>
                 <h4 className='fw-700 text-grey-900 font-xssss mt-1'>

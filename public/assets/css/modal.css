@@ -1,0 +1,12 @@
+.header-modal {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.btn-close-modal-header {
+  position: absolute;
+  right: 0%;
+  top: 0%;
+}

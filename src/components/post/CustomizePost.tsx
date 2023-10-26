@@ -89,7 +89,7 @@ const CustomizePost = (props: Post) => {
                 <CustomizeBodyPost
                     content={props.content}
                 />
-                <CustomizeImage />
+                <CustomizeImage images={props.images}/>
                 <CustomizeBottomPost
                     id={props.id}
                     userLoginId={userLogin?.id}

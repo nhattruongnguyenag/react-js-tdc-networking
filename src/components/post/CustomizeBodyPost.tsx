@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { handleDataClassification } from '../../utils/DataClassfications'
+import React, {useRef, useState } from 'react'
 export interface PostContentType {
     content: string
 }
@@ -22,7 +21,7 @@ const CustomizeBodyPost = (props: PostContentType) => {
             <div className='card-body me-lg-5 p-0'>
                 {/* To show  */}
                 {/* To check and hiddent */}
-                <p ref={pRef} className="content-container fw-500 text-grey-500 lh-26 font-xssss w-100 mb-1" style={{ zIndex: -999, visibility:'hidden', position:'absolute'}}>
+                <p ref={pRef} className="content-hidden-post content-container fw-500 text-grey-500 lh-26 font-xssss w-100 mb-1">
                     {
                         props.content
                     }
