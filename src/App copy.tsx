@@ -13,43 +13,47 @@ function App() {
     cursor: 'pointer',
     objectFit: 'cover',
     width: '100%',
-    maxHeight: '100%',
+    maxHeight: '100%'
   }
 
   return (
     <Gallery>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '240px 171px 171px',
-        gridTemplateRows: '114px 114px',
-        gridGap: 12,
-      }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '240px 171px 171px',
+          gridTemplateRows: '114px 114px',
+          gridGap: 12
+        }}
+      >
         <Item
-          original="https://placekitten.com/1024/768?image=1"
-          thumbnail="https://placekitten.com/80/60?image=1"
-          width="1080"
-          height="960"
+          original='https://placekitten.com/1024/768?image=1'
+          thumbnail='https://placekitten.com/80/60?image=1'
+          width='1080'
+          height='960'
         >
           {({ ref, open }) => (
             <img
               style={smallItemStyles}
               ref={ref as React.LegacyRef<HTMLImageElement>}
               onClick={open}
-              src="https://placekitten.com/80/60?image=1" />
+              src='https://placekitten.com/80/60?image=1'
+            />
           )}
         </Item>
         <Item
-          original="https://placekitten.com/1024/768?image=2"
-          thumbnail="https://placekitten.com/80/60?image=2"
-          width="1080"
-          height="960"
+          original='https://placekitten.com/1024/768?image=2'
+          thumbnail='https://placekitten.com/80/60?image=2'
+          width='1080'
+          height='960'
         >
           {({ ref, open }) => (
             <img
               style={smallItemStyles}
               ref={ref as React.LegacyRef<HTMLImageElement>}
               onClick={open}
-              src="https://placekitten.com/80/60?image=2" />
+              src='https://placekitten.com/80/60?image=2'
+            />
           )}
         </Item>
       </div>

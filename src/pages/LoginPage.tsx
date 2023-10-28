@@ -14,7 +14,7 @@ import { InputTextValidate, isBlank, isEmail, isLengthInRange, isPassword } from
 import TextValidate from '../components/TextValidate'
 import ReactLoading from 'react-loading'
 import { useNavigate } from 'react-router-dom'
-import '../style/login.css';
+import '../style/login.css'
 interface UserLogin {
   emailUser: InputTextValidate
   passwordUser: InputTextValidate
@@ -248,11 +248,11 @@ export default function LoginPage() {
                       <button
                         type='button'
                         onClick={(e) => onSubmit(e)}
-                        className='form-control text-center style2-input fw-600 bg-blue border-0 p-0 text-white '
+                        className='form-control style2-input fw-600 bg-blue border-0 p-0 text-center text-white '
                       >
                         Đăng nhập
                       </button>
-                      <div className='loading' style={{display: isLoading? 'flex' : 'none'}}>
+                      <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#0000FF' height={50} width={50} />
                       </div>
                     </div>

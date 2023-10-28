@@ -1,6 +1,7 @@
 import classNames from "classnames"
 import { useCallback, useMemo } from "react"
 import { Link } from "react-router-dom"
+import { SELECTED_CONVERSATION } from "../constants/KeyValue"
 import { useAppDispatch, useAppSelector } from "../redux/Hook"
 import { setSelectConversation } from "../redux/Slice"
 import { Conversation } from "../types/Conversation"
@@ -15,6 +16,7 @@ export default function ConversationItem(props: ConversationItemProps) {
     const { conversations } = useAppSelector((state) => state.TDCSocialNetworkReducer)
 
     const onItemClick = useCallback(() => {
+        sessionStorage.setItem(SELECTED_CONVERSATION, JSON.stringify(props.data))
         dispatch(setSelectConversation(props.data))
     }, [conversations])
 
