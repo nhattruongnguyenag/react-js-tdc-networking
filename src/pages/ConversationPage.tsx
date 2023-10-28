@@ -7,7 +7,7 @@ import { setConversations } from '../redux/Slice'
 import { getUserLogin } from '../utils/CommonUtls'
 
 export default function ConversationPage() {
-  const { conversations, userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
+  const { conversations, userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const dispatch = useAppDispatch()
   const { data, isSuccess } = useGetConversationsByUserIdQuery(userLogin ? userLogin.id : -1, {
     pollingInterval: 1000
@@ -29,12 +29,9 @@ export default function ConversationPage() {
               <div className='col-lg-12'>
                 <div className='chat-wrapper w-100 position-relative scroll-bar theme-dark-bg bg-white p-3'>
                   <ul className='email-message'>
-                    {
-                      conversations.map((item, index) =>
-                        <ConversationItem
-                          key={index.toString()}
-                          data={item} />)
-                    }
+                    {conversations.map((item, index) => (
+                      <ConversationItem key={index.toString()} data={item} />
+                    ))}
                   </ul>
                 </div>
               </div>

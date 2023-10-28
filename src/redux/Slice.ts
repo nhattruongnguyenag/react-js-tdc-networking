@@ -10,7 +10,7 @@ import { ChoiceProps, Question } from '../types/Question'
 import { Student } from '../types/Student'
 import { SurveyPostRequest } from '../types/SurveyPost'
 import { Message } from '../types/Message'
-import { getUserLogin } from '../utils/CommonUtls'
+import { getSelectedConversation, getUserLogin } from '../utils/CommonUtls'
 
 export interface TDCSocialNetworkState {
   darkMode: boolean
@@ -41,7 +41,7 @@ const initialState: TDCSocialNetworkState = {
   imagesUpload: null,
   conversations: [],
   deviceToken: null,
-  selectConversation: null,
+  selectConversation: getSelectedConversation(),
   userLogin: getUserLogin(),
   isOpenModalImage: false,
   isOpenModalComments: false,

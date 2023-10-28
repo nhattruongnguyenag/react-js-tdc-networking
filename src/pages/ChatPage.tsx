@@ -14,7 +14,7 @@ import { handleUploadImage } from "../utils/UploadUtils";
 let stompClient: Client
 
 export default function ChatPage() {
-  const {selectConversation, conversationMessages } = useAppSelector(
+  const { selectConversation, conversationMessages } = useAppSelector(
     (state) => state.TDCSocialNetworkReducer
   )
   const dispatch = useAppDispatch()
@@ -23,7 +23,6 @@ export default function ChatPage() {
   const [btnSendDisable, setBtnSendDisable] = useState<boolean>(true)
   const textInputMessageRef = useRef<HTMLInputElement | null>(null)
   const textInputImagesRef = useRef<HTMLInputElement | null>(null)
-  const endMessageRef = useRef<HTMLDivElement | null>(null)
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   const senderId = useMemo(() => {
@@ -45,7 +44,6 @@ export default function ChatPage() {
       }
 
       stompClient.send(`/app/messages/${senderId}/${receiverId}`, {}, JSON.stringify(message))
-      endMessageRef.current?.scrollIntoView()
       textInputMessageRef.current.value = ''
       textInputMessageRef.current.focus()
       setBtnSendDisable(true)
@@ -53,8 +51,8 @@ export default function ChatPage() {
   }
 
   useEffect(() => {
-    endMessageRef.current?.scrollIntoView()
-  }, [endMessageRef, conversationMessages])
+    scrollRef.current?.scrollIntoView()
+  }, [scrollRef, conversationMessages])
 
   useEffect(() => {
     stompClient = getStompClient()
@@ -71,6 +69,7 @@ export default function ChatPage() {
       setLoading(false)
       const messages = JSON.parse(payload.body) as MessageModel[]
       dispatch(setConversationMessages(messages.reverse()))
+      scrollRef.current?.scrollIntoView()
     }
 
     const onError = (err: string | Frame) => {
@@ -94,6 +93,9 @@ export default function ChatPage() {
         urls.push(URL.createObjectURL(event.target.files[i]))
       }
 
+      console.log(urls);
+
+
       if (selectConversation) {
         let message: MessageModel = {
           content: urls.join(','),
@@ -103,7 +105,7 @@ export default function ChatPage() {
           sender: selectConversation.sender,
           receiver: selectConversation.receiver,
           type: 'images',
-          status: 0
+          status: -1
         }
 
         dispatch(setConversationMessages([...conversationMessages, message]))
@@ -135,9 +137,9 @@ export default function ChatPage() {
         <button
           style={{ cursor: 'pointer' }}
           className={classNames('bg-blue-400 w-12 h-12 fixed right-10 top-2/3 z-50',
-          hiddenBtnScrollEnd ? 'hidden' : '')}
+            hiddenBtnScrollEnd ? 'hidden' : '')}
           type="button"
-          onClick={() => endMessageRef.current?.scrollIntoView()}>
+          onClick={() => scrollRef.current?.scrollIntoView()}>
           <i className='ti-arrow-down text-[18px] font-bold text-white' />
         </button>
         <div className='main-content '>
@@ -145,12 +147,12 @@ export default function ChatPage() {
             <div className='middle-sidebar-left pe-0' style={{ maxWidth: '100%' }}>
               <div className='row'>
                 <div className='col-lg-12 position-relative'>
-                  <div 
-                  onScroll={(e) => {
-                    const isAtBottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight
-                    setHiddenBtnScrollEnd(isAtBottom)
-                  }}
-                  className='chat-wrapper w-100 position-relative flex-col-reverse scroll-bar theme-dark-bg bg-white pt-0'>
+                  <div
+                    onScroll={(e) => {
+                      const isAtBottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight
+                      setHiddenBtnScrollEnd(isAtBottom)
+                    }}
+                    className='chat-wrapper w-100 position-relative flex-col-reverse scroll-bar theme-dark-bg bg-white pt-0'>
                     <div className='chat-body p-3 '>
                       <div className='messages-content pb-5'>
                         {
@@ -169,13 +171,13 @@ export default function ChatPage() {
 
                             return <MessageItem
                               headerVisible={dayHeaderVisible}
-                              lastMessageRef={index === conversationMessages.length - 1 ? endMessageRef : undefined}
                               key={index.toString()}
                               data={item}
                             />
                           })
                         }
-                        <div className='clearfix bg-slate-500' />
+                        <div className="message-item" ref={scrollRef}></div>
+                        <div className='clearfix h-9 bg-slate-500' />
                       </div>
                     </div>
                   </div>

@@ -1,32 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import Header from '../components/common/Header'
-import { SERVER_ADDRESS } from '../constants/SystemConstant';
-import { LikeAction } from '../types/LikeActions';
-import axios from 'axios';
-import CreateNormalPostModal from '../components/modal/CreateNormalPostModal';
-import { formatDateTime } from '../utils/FormatTime';
-import CustomizePost from '../components/post/CustomizePost';
-import { API_URL_GET_ALL_POST } from '../constants/Path';
+import { SERVER_ADDRESS } from '../constants/SystemConstant'
+import { LikeAction } from '../types/LikeActions'
+import axios from 'axios'
+import CreateNormalPostModal from '../components/modal/CreateNormalPostModal'
+import { formatDateTime } from '../utils/FormatTime'
+import CustomizePost from '../components/post/CustomizePost'
+import { API_URL_GET_ALL_POST } from '../constants/Path'
 
 export default function BusinessDashboardPage() {
   // -------------------------------------
-  // Variable 
-  const [data, setData] = useState([] as any);
+  // Variable
+  const [data, setData] = useState([] as any)
 
   // Start post
   useEffect(() => {
-    getPostsFromApi();
+    getPostsFromApi()
   }, [])
 
   const getPostsFromApi = () => {
-    axios.get(API_URL_GET_ALL_POST)
+    axios
+      .get(API_URL_GET_ALL_POST)
       .then((response) => {
-        setData(response.data.data);
-        console.log(response.data);
+        setData(response.data.data)
+        console.log(response.data)
       })
       .catch((error) => {
-        console.error(error);
-      });
+        console.error(error)
+      })
   }
 
   const likeAction = (obj: LikeAction) => {
@@ -284,8 +285,7 @@ export default function BusinessDashboardPage() {
                         tabIndex={-1}
                         aria-hidden='true'
                         style={{ outline: 'none' }}
-                      >
-                      </div>
+                      ></div>
                       <div
                         data-index={2}
                         className='slick-slide'
@@ -472,8 +472,8 @@ export default function BusinessDashboardPage() {
                 {/* Modal */}
                 <CreateNormalPostModal />
                 {/* Render post */}
-                {
-                  data && data.map((item: any) => (
+                {data &&
+                  data.map((item: any) => (
                     <CustomizePost
                       key={item.id}
                       id={item.id}
@@ -498,8 +498,7 @@ export default function BusinessDashboardPage() {
                       employmentType={item.employmentType ?? null}
                       description={item.description ?? null}
                     />
-                  ))
-                }
+                  ))}
                 <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4 text-center'>
                   <div className='snippet me-auto ms-auto mt-2' data-title='.dot-typing'>
                     <div className='stage'>

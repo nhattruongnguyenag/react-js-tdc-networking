@@ -14,7 +14,7 @@ export const TDCSocialNetworkAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['UserLogin'],
   endpoints: (builder) => ({
-    getNotificationsUserById: builder.query<Data<NotificationModel[]>, {id: number}>({
+    getNotificationsUserById: builder.query<Data<NotificationModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/notifications/user',
         method: 'POST',
