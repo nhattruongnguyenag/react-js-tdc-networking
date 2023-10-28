@@ -1,17 +1,17 @@
 import React, { useState, useRef, useEffect } from "react"
-import { TEXT_DETAILED_WARNING_CONTENT_NULL, TEXT_PLACEHOLDER_CONTENT_CREATE_POST, TEXT_CREATE_POST_FAIL, TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED, TEXT_CREATE_POST_SUCCESS } from "../constants/StringVietnamese";
+import { TEXT_DETAILED_WARNING_CONTENT_NULL, TEXT_PLACEHOLDER_CONTENT_CREATE_POST, TEXT_CREATE_POST_FAIL, TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED, TEXT_CREATE_POST_SUCCESS, TEXT_CHAR } from "../constants/StringVietnamese";
 import { isBlank, isLengthInRange, isNotBlank } from '../utils/ValidateUtils'
-import { toast } from 'react-toastify';
-import CustomizeToast from "./toast/CustomizeToast";
 import { handleUploadImage } from "../utils/UploadUtils";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faXmark } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import { API_URL_NORMAL_POST } from "../constants/Path";
-import { TYPE_NORMAL_POST } from "../constants/Variables";
+import { NUMBER_MAX_CHARACTER, NUMBER_MIN_CHARACTER, TYPE_NORMAL_POST } from "../constants/Variables";
 import { useAppSelector } from "../redux/Hook";
 import { NormalPost } from "../types/NormalPost";
-import { COLOR_BTN_BLUE, COLOR_GREY, COLOR_WHITE } from "../constants/Color";
+import { COLOR_BTN_BLUE, COLOR_WHITE } from "../constants/Color";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export interface CreateNormalPostType {
   onHide: () => void
@@ -40,7 +40,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   }, [])
 
   const handleSubmitEvent = () => {
-    if (isNotBlank(content?.trim()) && isLengthInRange(content.trim(), 1, 1024)) {
+    if (isNotBlank(content?.trim()) && isLengthInRange(content.trim(), NUMBER_MIN_CHARACTER, NUMBER_MAX_CHARACTER)) {
       let fakeNames: string[] = [];
       if (images) {
         const promises = images.map((item: any) => {
@@ -62,7 +62,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
     } else if (isBlank(content?.trim())) {
       toast.error(TEXT_DETAILED_WARNING_CONTENT_NULL);
     } else {
-      toast.error(TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED);
+      toast.error(TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED + ' ' + NUMBER_MAX_CHARACTER + ' ' + TEXT_CHAR);
     }
   }
 
@@ -175,7 +175,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
               <button
                 className="btn-delete-image"
                 onClick={() => handleDeleteImage(item)}>
-                <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE}/>
+                <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
               </button>
             </li>
           ))}
@@ -209,7 +209,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
         </div>
       </div>
     </div>
-    <CustomizeToast />
+    <ToastContainer />
   </>
 }
 export default CreateNormalPost

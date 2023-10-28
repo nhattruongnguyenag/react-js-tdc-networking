@@ -34,7 +34,6 @@ function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalType) {
 
 const CreateNormalPostModal = () => {
     const [modalShow, setModalShow] = useState(false);
-
     return (
         <>
             <>

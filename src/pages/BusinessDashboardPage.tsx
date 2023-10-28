@@ -469,7 +469,6 @@ export default function BusinessDashboardPage() {
                     </div>
                   </div>
                 </div>
-                {/* TODO */}
                 {/* Modal */}
                 <CreateNormalPostModal />
                 {/* Render post */}
