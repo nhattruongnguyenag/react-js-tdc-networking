@@ -1,15 +1,10 @@
-import { useState } from 'react'
+import moment from 'moment'
+import { StrictMode } from 'react'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import BusinessDashboardPage from './pages/BusinessDashboardPage'
-import ChatPage from './pages/ChatPage'
-import ConversationPage from './pages/ConversationPage'
-import IntroducePage from './pages/IntroducePage'
-import LoginPage from './pages/LoginPage'
-import NoPage from './pages/NoPage'
-import SettingPage from './pages/SettingPage'
-import { store } from './redux/Store'
 import Router from './AppRouter'
+import { store } from './redux/Store'
+const vi = require('moment/locale/vi')
+moment.locale('vi', vi)
 
 function App() {
   return (
