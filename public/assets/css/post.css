@@ -1,0 +1,86 @@
+/* colors.css */
+:root {
+  --COLOR_GREY: #808080;
+  --COLOR_BLACK: #000000;
+}
+
+.body-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.close {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+}
+
+.headerModal {
+  background: 'red';
+}
+
+.content-hidden-post {
+  z-index: -999;
+  visibility: hidden;
+  position: absolute;
+}
+
+.avatar-user-reacted-list {
+  width: 35px;
+  height: 35px;
+  border-radius: 35px;
+  object-fit: cover;
+}
+
+.avatar-user-header-post {
+  width: 45px;
+  height: 45px;
+  border-radius: 45px;
+  object-fit: cover;
+}
+
+.container-button-to-left-right {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  z-index: 999;
+}
+
+.image-file-container {
+  display: flex;
+  overflow-x: hidden;
+}
+
+.image-wrapper {
+  min-width: 125px;
+  height: 200px;
+  position: relative;
+}
+
+.image-file {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.btn-delete-image {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background: var(--COLOR_GREY);
+  color: var(--COLOR_BLACK);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
