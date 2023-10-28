@@ -1,0 +1,5 @@
+import { SERVER_ADDRESS } from './SystemConstant'
+
+export const API_URL_GET_ALL_POST = SERVER_ADDRESS + 'api/posts'
+export const API_URL_NORMAL_POST = SERVER_ADDRESS + 'api/posts/normal'
+const API_URL_LIKE = SERVER_ADDRESS + 'api/posts/like'
