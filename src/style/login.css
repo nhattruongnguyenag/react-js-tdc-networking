@@ -1,0 +1,23 @@
+.gr{
+    display: flex;
+}
+
+.loading{
+    position: absolute;
+    right: 100px;
+    bottom: 55px;
+}
+
+.txt-blue{
+    color: rgb(59 130 246);
+    font-weight: bold;
+}
+
+.bg-blue{
+    background-color: rgb(59 130 246) !important;
+}
+
+.gr:active{
+    border-radius: 7px;
+    box-shadow: 2px 2px 5px rgb(59 130 246) !important;
+}
