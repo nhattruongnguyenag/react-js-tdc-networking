@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage'
 import NoPage from './pages/NoPage'
 import SettingPage from './pages/SettingPage'
 import { useAppSelector } from './redux/Hook'
+import DetailIntroducePage from './pages/DetailedIntroducePage'
 
 export default function Router() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -17,7 +18,7 @@ export default function Router() {
       <BrowserRouter>
         <Routes>
           <Route>
-            <Route path='/' element={<IntroducePage />} />
+            <Route path='/' element={<DetailIntroducePage />} />
             <Route path='dang-nhap' element={<LoginPage />} />
             <Route index path='doanh-nghiep/bai-viet' element={<BusinessDashboardPage />} />
             <Route path='hoi-thoai' element={<ConversationPage />} />
