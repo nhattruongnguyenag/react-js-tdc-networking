@@ -153,11 +153,11 @@ export default function LoginPage({ navigation }: any) {
       setIsLoading(true)
       axios
         .post<UserLoginRequest, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/login', userLoginRequest)
-        .then((loginResponse) => {
+        .then((loginResponse:any) => {
           const token = loginResponse.data.data.token
           axios
             .get<void, AxiosResponse<Data<Student | Faculty | Business>>>(SERVER_ADDRESS + `api/users/token/${token}`)
-            .then((response) => {
+            .then((response:any) => {
               if (response.status == 200 || checkRemember === true) {
                 setIsLoading(false)
                 sessionStorage.setItem(TOKEN_KEY, JSON.stringify(token))
@@ -168,7 +168,7 @@ export default function LoginPage({ navigation }: any) {
               }
             })
         })
-        .catch((error) => {
+        .catch((error:any) => {
           setIsLoading(false)
           alert('Sai thông tin email hoặc mật khẩu')
         })
