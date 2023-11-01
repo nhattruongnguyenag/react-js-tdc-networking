@@ -1,14 +1,14 @@
-import classNames from "classnames"
-import { url } from "inspector"
-import moment from "moment"
+import classNames from 'classnames'
+import { url } from 'inspector'
+import moment from 'moment'
 import 'photoswipe/dist/photoswipe.css'
-import { Fragment } from "react"
+import { Fragment } from 'react'
 import { Gallery, Item } from 'react-photoswipe-gallery'
-import { SERVER_ADDRESS } from "../../constants/SystemConstant"
-import { useAppSelector } from "../../redux/Hook"
-import { Message } from "../../types/Message"
-import { getUserLogin } from "../../utils/CommonUtls"
-import { getMessageSectionTitle } from "../../utils/DateTimeUtils"
+import { SERVER_ADDRESS } from '../../constants/SystemConstant'
+import { useAppSelector } from '../../redux/Hook'
+import { Message } from '../../types/Message'
+import { getUserLogin } from '../../utils/CommonUtls'
+import { getMessageSectionTitle } from '../../utils/DateTimeUtils'
 
 interface MessageItemProps {
   data: Message
@@ -52,86 +52,80 @@ const MessageContent = (props: MessageContentProps) => {
     gridTemplateColumns = '480px'
   }
 
-  return <div>
-    <Gallery>
-      <div style={{
-        display: 'grid',
-        gridAutoRows: '',
-        objectFit: 'cover',
-        gridTemplateColumns: gridTemplateColumns,
-        gridTemplateRows: 'auto',
-        gridGap: 5,
-      }}>
-        {
-          images.map((item, index) => (
-            <Item
-              original={item.original}
-              thumbnail={item.thumbnail}
-              width={item.width}
-              height={item.height}
-            >
+  return (
+    <div>
+      <Gallery>
+        <div
+          style={{
+            display: 'grid',
+            gridAutoRows: '',
+            objectFit: 'cover',
+            gridTemplateColumns: gridTemplateColumns,
+            gridTemplateRows: 'auto',
+            gridGap: 5
+          }}
+        >
+          {images.map((item, index) => (
+            <Item original={item.original} thumbnail={item.thumbnail} width={item.width} height={item.height}>
               {({ ref, open }) => (
                 <img
                   style={smallItemStyles}
                   ref={ref as React.LegacyRef<HTMLImageElement>}
                   onClick={open}
-                  src={item.src} />
+                  src={item.src}
+                />
               )}
             </Item>
-          ))
-        }
-      </div>
-    </Gallery>
-  </div>
+          ))}
+        </div>
+      </Gallery>
+    </div>
+  )
 }
 
 export default function MessageItem(props: MessageItemProps) {
-  const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
 
   let messageStatus = 'Đang gửi'
 
   if (props.data.status === 0) {
-    messageStatus = "Đã nhận"
+    messageStatus = 'Đã nhận'
   } else if (props.data.status === 1) {
-    messageStatus = "Đã xem"
+    messageStatus = 'Đã xem'
   }
 
   return (
     <Fragment>
-      {
-        Boolean(props.headerVisible)
-        && <div className="ms-auto me-auto text-center pt-1 pb-1 mt-16 mb-16 rounded-full border-2 w-2/3 border-gray-400">
+      {Boolean(props.headerVisible) && (
+        <div className='mb-16 me-auto ms-auto mt-16 w-2/3 rounded-full border-2 border-gray-400 pb-1 pt-1 text-center'>
           {getMessageSectionTitle(props.data.createdAt)}
         </div>
-      }
-      <div
-        className={classNames('message-item',
-          props.data.sender.id === userLogin?.id ? 'outgoing-message' : '')}>
+      )}
+      <div className={classNames('message-item', props.data.sender.id === userLogin?.id ? 'outgoing-message' : '')}>
         <div className='message-user'>
           <figure className='avatar mb-2 mt-2'>
-            {
-              props.data.receiver.image ?
-                <img src='assets/images/user-12.png' alt='user' className='w-12 me-2' />
-                :
-                <div className={classNames('w-12 h-12 flex items-center justify-center me-2 rounded-full bg-gradient-to-r',
+            {props.data.receiver.image ? (
+              <img src='assets/images/user-12.png' alt='user' className='me-2 w-12' />
+            ) : (
+              <div
+                className={classNames(
+                  'me-2 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r',
                   props.data.sender.id === userLogin?.id ? 'from-purple-400 to-blue-400' : 'from-green-400 to-blue-400'
-                )}>
-                  <span>{props.data.receiver.name[0]}</span>
-                </div>
-            }
+                )}
+              >
+                <span>{props.data.receiver.name[0]}</span>
+              </div>
+            )}
           </figure>
           <div>
             <h5>{props.data.sender.name}</h5>
             <div className='time'>{moment(props.data.createdAt).format('hh:mm a')}</div>
           </div>
         </div>
-        {
-          <MessageContent data={props.data} />
-        }
-        <div className={
-          classNames('ms-1 mt-2',
-            props.data.sender.id !== userLogin?.id ? 'hidden' : '')
-        }>{messageStatus}</div>
+        {<MessageContent data={props.data} />}
+        <div className={classNames('ms-1 mt-2', props.data.sender.id !== userLogin?.id ? 'hidden' : '')}>
+          {messageStatus}
+        </div>
       </div>
     </Fragment>
   )
