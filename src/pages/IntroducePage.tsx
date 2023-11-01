@@ -10,7 +10,7 @@ export default function IntroducePage() {
       <div className='bg-intro'>
         {/* navbar */}
         <div className='navbar-intro'>
-          <button className='btnAll-intro btnReg-intro'>Đăng kí ngay!</button>
+          <button className='btnAll-intro btnReg-intro' onClick={() => navigate('/dang-ky')}>Đăng kí ngay!</button>
           <button className='btnAll-intro btnLog-intro' onClick={() => navigate('/dang-nhap')}>
             Đăng nhập!
           </button>
