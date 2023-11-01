@@ -27,6 +27,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "flatlist-react": "^1.5.14",
+    "flowbite-react": "^0.6.4",
     "moment": "^2.29.4",
     "net": "^1.0.2",
     "photoswipe": "^5.4.2",

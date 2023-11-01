@@ -7,7 +7,8 @@ export interface MyVerticallyCenteredModalType {
   show: boolean
   onHide: () => void
 }
-function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalType) {
+
+export function MyVerticallyCenteredModal(props: MyVerticallyCenteredModalType) {
   return (
     <Modal {...props} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
       <Modal.Header>
