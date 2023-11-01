@@ -7,6 +7,7 @@ import { toggleDarkMode } from '../../redux/Slice'
 import NotificationPopup from '../NotificationPopup'
 import MobileNavigation from './MobileNavigation'
 import Navigaion from './Navigation'
+import { BUSINESS_DASHBOARD_PAGE, SEARCH_PAGE } from '../../constants/Page'
 
 export default function Header() {
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
@@ -36,19 +37,13 @@ export default function Header() {
             onClick={() => setShowMobileNavigation(!showMobleNavigation)}
           />
         </div>
-        <form action='#' className='header-search float-left ms-3'>
-          <div className='form-group icon-input mb-0'>
-            <i className='feather-search font-sm text-grey-400' />
-            <input
-              type='text'
-              placeholder='Start typing to search..'
-              className='bg-grey lh-32 font-xssss fw-500 w350 theme-dark-bg rounded-xl border-0 pb-2 pe-3 ps-5 pt-2'
-            />
-          </div>
-        </form>
-        <a aria-current='page' className='menu-icon center-menu-icon active ms-3 p-2 text-center' href='/home'>
+        <Link
+          aria-current='page'
+          className='menu-icon center-menu-icon active ms-3 p-2 text-center'
+          to={BUSINESS_DASHBOARD_PAGE}
+        >
           <i className='feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
+        </Link>
         <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/defaultstorie'>
           <i className='feather-zap font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
         </a>
@@ -61,6 +56,9 @@ export default function Header() {
         <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/shop2'>
           <i className='feather-rss font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
         </a>
+        <Link className='menu-icon center-menu-icon ms-0 p-2 text-center' to={SEARCH_PAGE}>
+          <i className='feather-search font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+        </Link>
         <span
           onClick={() => setShowNotificationPopup(!showNotificationPopup)}
           className='pointer menu-icon ms-auto p-2 text-center '
