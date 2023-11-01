@@ -7,6 +7,7 @@ import CreateNormalPostModal from '../components/modal/CreateNormalPostModal'
 import { formatDateTime } from '../utils/FormatTime'
 import CustomizePost from '../components/post/CustomizePost'
 import { API_URL_GET_ALL_POST } from '../constants/Path'
+import CreatePostSelector from '../components/CreatePostSelector'
 
 export default function BusinessDashboardPage() {
   // -------------------------------------
@@ -470,7 +471,8 @@ export default function BusinessDashboardPage() {
                   </div>
                 </div>
                 {/* Modal */}
-                <CreateNormalPostModal />
+                <CreatePostSelector />
+                {/* <CreateNormalPostModal /> */}
                 {/* Render post */}
                 {data &&
                   data.map((item: any) => (

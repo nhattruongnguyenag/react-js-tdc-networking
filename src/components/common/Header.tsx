@@ -24,14 +24,14 @@ export default function Header() {
           <a className='mob-menu chat-active-btn me-2 ms-auto' href='/defaultmessage'>
             <i className='feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight' />
           </a>
-          <a className='mob-menu me-2' href='/defaultvideo'>
+          {/* <a className='mob-menu me-2' href='/defaultvideo'>
             <i className='feather-video text-grey-900 font-sm btn-round-md bg-greylight' />
-          </a>
+          </a> */}
           <span className='menu-search-icon mob-menu me-2'>
             <i className='feather-search text-grey-900 font-sm btn-round-md bg-greylight' />
           </span>
           <button
-            className='nav-menu me-0 ms-2'
+            className='nav-menu me-feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 0 ms-2'
             type='button'
             onClick={() => setShowMobileNavigation(!showMobleNavigation)}
           />
