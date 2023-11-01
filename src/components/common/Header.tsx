@@ -1,33 +1,39 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Fragment, useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useAppDispatch } from '../../redux/Hook'
 import { toggleDarkMode } from '../../redux/Slice'
 import NotificationPopup from '../NotificationPopup'
 import MobileNavigation from './MobileNavigation'
 import Navigaion from './Navigation'
-import { BUSINESS_DASHBOARD_PAGE, SEARCH_PAGE } from '../../constants/Page'
+import { BUSINESS_DASHBOARD_PAGE, FACULTY_DASHBOARD_PAGE, SEARCH_PAGE, STUDENT_DASHBOARD_PAGE } from '../../constants/Page'
+import classNames from 'classnames'
+import NavItem from './NavItem'
 
 export default function Header() {
+  const location = useLocation()
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    console.log(location.pathname)
+  }, [location])
 
   return (
     <Fragment>
       <div className='nav-header shadow-xs border-0 bg-white'>
         <div className='nav-top bg-inherit'>
-          <Link to='/doanh-nghiep/bai-viet'>
-            <i className='feather-zap text-success display2-size me-3 ms-0' />
-            <span className='d-inline-block fredoka-font ls-3 fw-600 font-xxl logo-text mb-0 text-current'>TDCer</span>
+          <Link to={BUSINESS_DASHBOARD_PAGE}>
+            <img src='/assets/images/app-logo.jpg' width={'200px'}/>
           </Link>
           <a className='mob-menu chat-active-btn me-2 ms-auto' href='/defaultmessage'>
             <i className='feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight' />
           </a>
-          {/* <a className='mob-menu me-2' href='/defaultvideo'>
+          <a className='mob-menu me-2' href='/defaultvideo'>
             <i className='feather-video text-grey-900 font-sm btn-round-md bg-greylight' />
-          </a> */}
+          </a>
           <span className='menu-search-icon mob-menu me-2'>
             <i className='feather-search text-grey-900 font-sm btn-round-md bg-greylight' />
           </span>
@@ -37,28 +43,27 @@ export default function Header() {
             onClick={() => setShowMobileNavigation(!showMobleNavigation)}
           />
         </div>
-        <Link
-          aria-current='page'
-          className='menu-icon center-menu-icon active ms-3 p-2 text-center'
-          to={BUSINESS_DASHBOARD_PAGE}
-        >
+
+        <NavItem to={BUSINESS_DASHBOARD_PAGE}
+          active={BUSINESS_DASHBOARD_PAGE == location.pathname}>
           <i className='feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </Link>
-        <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/defaultstorie'>
-          <i className='feather-zap font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
-        <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/defaultvideo'>
-          <i className='feather-video font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
-        <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/defaultgroup'>
-          <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
-        <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/shop2'>
+        </NavItem>
+
+        <NavItem to={STUDENT_DASHBOARD_PAGE}
+          active={Boolean(STUDENT_DASHBOARD_PAGE == location.pathname)}>
           <i className='feather-rss font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
-        <Link className='menu-icon center-menu-icon ms-0 p-2 text-center' to={SEARCH_PAGE}>
+        </NavItem>
+
+        <NavItem to={FACULTY_DASHBOARD_PAGE + '/cong-nghe-thong-tin'}
+          active={location.pathname.includes(FACULTY_DASHBOARD_PAGE)}>
+          <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+        </NavItem>
+
+        <NavItem to={SEARCH_PAGE}
+          active={SEARCH_PAGE == location.pathname}>
           <i className='feather-search font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </Link>
+        </NavItem>
+
         <span
           onClick={() => setShowNotificationPopup(!showNotificationPopup)}
           className='pointer menu-icon ms-auto p-2 text-center '

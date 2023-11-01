@@ -134,7 +134,8 @@ export default function ChatPage() {
   return (
     <Fragment>
       <Header />
-      <div className='container'>
+
+      <div className='main-content '>
         <button
           style={{ cursor: 'pointer' }}
           className={classNames(
@@ -146,71 +147,69 @@ export default function ChatPage() {
         >
           <i className='ti-arrow-down text-[18px] font-bold text-white' />
         </button>
-        <div className='main-content '>
-          <div className='middle-sidebar-bottom'>
-            <div className='middle-sidebar-left pe-0' style={{ maxWidth: '100%' }}>
-              <div className='row'>
-                <div className='col-lg-12 position-relative'>
-                  <div
-                    onScroll={(e) => {
-                      const isAtBottom =
-                        e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight
-                      setHiddenBtnScrollEnd(isAtBottom)
-                    }}
-                    className='chat-wrapper w-100 position-relative scroll-bar theme-dark-bg flex-col-reverse bg-white pt-0'
-                  >
-                    <div className='chat-body p-3 '>
-                      <div className='messages-content pb-5'>
-                        {conversationMessages.map((item, index) => {
-                          const previousMessage = conversationMessages[index - 1]
-                          let dayHeaderVisible = false
-                          if (
-                            index === 0 ||
-                            (moment(item.createdAt).format('l') === moment(previousMessage.createdAt).format('l') &&
-                              Math.abs(moment(item.createdAt).hours() - moment(previousMessage.createdAt).hours()) > 3)
-                          ) {
-                            dayHeaderVisible = true
-                          }
+        <div className='middle-sidebar-bottom'>
+          <div className='middle-sidebar-left pe-0' style={{ maxWidth: '100%' }}>
+            <div className='row'>
+              <div className='col-lg-12 position-relative'>
+                <div
+                  onScroll={(e) => {
+                    const isAtBottom =
+                      e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight
+                    setHiddenBtnScrollEnd(isAtBottom)
+                  }}
+                  className='chat-wrapper w-100 position-relative scroll-bar theme-dark-bg flex-col-reverse bg-white pt-0'
+                >
+                  <div className='chat-body p-3 '>
+                    <div className='messages-content pb-5'>
+                      {conversationMessages.map((item, index) => {
+                        const previousMessage = conversationMessages[index - 1]
+                        let dayHeaderVisible = false
+                        if (
+                          index === 0 ||
+                          (moment(item.createdAt).format('l') === moment(previousMessage.createdAt).format('l') &&
+                            Math.abs(moment(item.createdAt).hours() - moment(previousMessage.createdAt).hours()) > 3)
+                        ) {
+                          dayHeaderVisible = true
+                        }
 
-                          return <MessageItem headerVisible={dayHeaderVisible} key={index.toString()} data={item} />
-                        })}
-                        <div className='message-item' ref={scrollRef}></div>
-                        <div className='clearfix h-9 bg-slate-500' />
-                      </div>
+                        return <MessageItem headerVisible={dayHeaderVisible} key={index.toString()} data={item} />
+                      })}
+                      <div className='message-item' ref={scrollRef}></div>
+                      <div className='clearfix h-9 bg-slate-500' />
                     </div>
                   </div>
-                  <div className='chat-bottom dark-bg theme-dark-bg p-3 shadow-none' style={{ width: '98%' }}>
-                    <form className='chat-form'>
-                      <button className='bg-grey float-left' type='button' onClick={() => onBtnUploadImageClick()}>
-                        <i className='ti-image text-grey-600' />
-                      </button>
+                </div>
+                <div className='chat-bottom dark-bg theme-dark-bg p-3 shadow-none' style={{width: '97%'}}>
+                  <form className='chat-form'>
+                    <button className='bg-grey float-left' type='button' onClick={() => onBtnUploadImageClick()}>
+                      <i className='ti-image text-grey-600' />
+                    </button>
+                    <input
+                      type={'file'}
+                      multiple
+                      ref={textInputImagesRef}
+                      className='hidden'
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)}
+                    />
+                    <div className='form-group cursor-pointer'>
                       <input
-                        type={'file'}
-                        multiple
-                        ref={textInputImagesRef}
-                        className='hidden'
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)}
+                        type='text'
+                        ref={textInputMessageRef}
+                        className='text-black'
+                        placeholder='@ Tin nhắn...'
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onMessageContentInputChange(e)}
                       />
-                      <div className='form-group cursor-pointer'>
-                        <input
-                          type='text'
-                          ref={textInputMessageRef}
-                          className='text-black'
-                          placeholder='@ Tin nhắn...'
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onMessageContentInputChange(e)}
-                        />
-                      </div>
-                      <button
-                        style={{ cursor: 'pointer' }}
-                        disabled={btnSendDisable}
-                        className='bg-current disabled:opacity-50'
-                        type='button'
-                        onClick={() => onBtnSendClick()}
-                      >
-                        <i className='ti-arrow-right text-white' />
-                      </button>
-                    </form>
-                  </div>
+                    </div>
+                    <button
+                      style={{ cursor: 'pointer' }}
+                      disabled={btnSendDisable}
+                      className='bg-current disabled:opacity-50'
+                      type='button'
+                      onClick={() => onBtnSendClick()}
+                    >
+                      <i className='ti-arrow-right text-white' />
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
