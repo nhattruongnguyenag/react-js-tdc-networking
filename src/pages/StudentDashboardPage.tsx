@@ -1,5 +1,8 @@
 import React from 'react'
+import Header from '../components/common/Header'
 
 export default function StudentDashboardPage() {
-  return <div>StudentDashboardPage</div>
+  return <div>
+    <Header />
+  </div>
 }
