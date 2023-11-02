@@ -1,80 +1,81 @@
-import React, { Fragment, useCallback, useRef, useState, useEffect } from 'react'
-import { Business } from '../types/Business'
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios, { AxiosResponse } from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { Data } from '../types/Data'
+import { Student } from '../types/Student'
 import { Token } from '../types/Token'
+import { Bounce, Slide, ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import {
   InputTextValidate,
   isBlank,
   isContainSpecialCharacter,
   isEmail,
   isLengthInRange,
-  isPassword,
-  isPhone,
-  isTime,
-  isType
+  isPassword
 } from '../utils/ValidateUtils'
 import TextValidate from '../components/TextValidate'
-import { useNavigate } from 'react-router-dom'
-import { handleUploadImage } from '../utils/UploadUtils'
 import ReactLoading from 'react-loading'
-import { LOGIN_PAGE } from '../constants/Page'
+import { handleUploadImage } from '../utils/UploadUtils'
 
-interface RegisterBusiness {
+interface RegisterStudent {
   name: InputTextValidate
   email: InputTextValidate
-  representor: InputTextValidate
-  taxCode: InputTextValidate
-  phone: InputTextValidate
-  address: InputTextValidate
-  activeTime: InputTextValidate
+  studentCode: InputTextValidate
+  major: InputTextValidate
+  facultyName: InputTextValidate
   password: InputTextValidate
   confimPassword: InputTextValidate
 }
 
-const isAllFieldsValid = (validate: RegisterBusiness): boolean => {
-  let key: keyof RegisterBusiness
+const isAllFieldsValid = (validate: RegisterStudent): boolean => {
+  let key: keyof RegisterStudent
 
   for (key in validate) {
     if (validate[key].isError) {
       return false
     }
   }
-
   return true
 }
-export default function BusinessRegistationPage() {
+
+export default function StudentRegistationPage() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [image, setImage] = useState('')
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
-  const [business, setBusiness] = useState<
-    Omit<Business, 'id' | 'status' | 'createdAt' | 'updatedAt' | 'roleCodes' | 'isTyping' | 'isMessageConnect'>
+  const [student, setStudent] = useState<
+    Omit<Student, 'status' | 'roleCodes' | 'createdAt' | 'updatedAt' | 'isTyping' | 'isMessageConnect'>
   >({
+    id: 0,
     password: '',
-    representor: '',
-    phone: '',
-    taxCode: '',
     code: Date.now().toString(),
-    address: '',
-    activeTime: '',
     email: '',
     name: '',
     image: '',
+    facultyName: '',
+    major: '',
+    studentCode: '',
     confimPassword: ''
   })
-  const [timeStart, setTimeStart] = useState('07:00')
-  const [timeEnd, setTimeEnd] = useState('17:00')
-  const [validate, setValidate] = useState<RegisterBusiness>({
+  const [dataRequest, setDataRequest] = useState([
+    {
+      id: '',
+      name: '',
+      majors: [
+        {
+          id: '',
+          name: ''
+        }
+      ]
+    }
+  ])
+  const [dataNganhRequest, setDataNganhRequest] = useState([{ id: '', name: '' }])
+  const [validate, setValidate] = useState<RegisterStudent>({
     name: {
-      textError: 'Tên không được để trống',
-      isVisible: false,
-      isError: true
-    },
-    representor: {
-      textError: 'Tên người đại diện không được để trống',
+      textError: 'Tên sinh viên không được để trống',
       isVisible: false,
       isError: true
     },
@@ -83,23 +84,18 @@ export default function BusinessRegistationPage() {
       isVisible: false,
       isError: true
     },
-    taxCode: {
-      textError: 'Mã số thuế không được để trống',
+    studentCode: {
+      textError: 'Mã số sinh viên không được để trống',
       isVisible: false,
       isError: true
     },
-    address: {
-      textError: 'Địa chỉ không được để trống',
+    facultyName: {
+      textError: 'Tên khoa không được để trống',
       isVisible: false,
       isError: true
     },
-    phone: {
-      textError: 'Số điện thoại không được để trống',
-      isVisible: false,
-      isError: true
-    },
-    activeTime: {
-      textError: 'Thời gian hoạt động không được để trống',
+    major: {
+      textError: 'Tên ngành không được để trống',
       isVisible: false,
       isError: true
     },
@@ -114,7 +110,8 @@ export default function BusinessRegistationPage() {
       isError: true
     }
   })
-  const handleNameChange = useCallback(
+
+  const handleStudentNameChange = useCallback(
     (event: any) => {
       if (isBlank(event.target.value)) {
         setValidate({
@@ -122,7 +119,8 @@ export default function BusinessRegistationPage() {
           name: {
             ...validate.name,
             isError: true,
-            isVisible: true
+            isVisible: true,
+            textError: 'Tên sinh viên không được để trống'
           }
         })
       } else if (isContainSpecialCharacter(event.target.value)) {
@@ -131,8 +129,8 @@ export default function BusinessRegistationPage() {
           name: {
             ...validate.name,
             isError: true,
-            isVisible: true,
-            textError: 'Tên công ty không chứa ký tự đặt biệt'
+            textError: 'Tên sinh viên không được chứa ký tự đặc biệt',
+            isVisible: true
           }
         })
       } else if (!isLengthInRange(event.target.value, 1, 255)) {
@@ -141,12 +139,12 @@ export default function BusinessRegistationPage() {
           name: {
             ...validate.name,
             isError: true,
-            isVisible: true,
-            textError: 'Tên công ty không vượt quá 255 ký tự'
+            textError: 'Tên sinh viên không vượt quá 255 ký tự',
+            isVisible: true
           }
         })
       } else {
-        setBusiness({ ...business, name: event.target.value })
+        setStudent({ ...student, name: event.target.value })
         setValidate({
           ...validate,
           name: {
@@ -159,44 +157,55 @@ export default function BusinessRegistationPage() {
     },
     [validate]
   )
-  const handleRepresentoreChange = useCallback(
+  const handleStudentCodeChange = useCallback(
     (event: any) => {
+      const stCode = new RegExp(/^[0-9]{5}[a-zA-Z]{2}[0-9]{4}$/)
       if (isBlank(event.target.value)) {
         setValidate({
           ...validate,
-          representor: {
-            ...validate.representor,
+          studentCode: {
+            ...validate.studentCode,
             isError: true,
             isVisible: true,
-            textError: 'Tên người đại diện không được để trống'
+            textError: 'Mã số sinh viên không được để trống'
           }
         })
       } else if (isContainSpecialCharacter(event.target.value)) {
         setValidate({
           ...validate,
-          representor: {
-            ...validate.representor,
+          studentCode: {
+            ...validate.studentCode,
             isError: true,
-            textError: 'Tên người đại diện không được chứa ký tự đặc biệt',
-            isVisible: true
+            isVisible: true,
+            textError: 'Mã số sinh viên không được chứa ký tự đặc biệt'
           }
         })
-      } else if (!isLengthInRange(event.target.value, 1, 255)) {
+      } else if (!stCode.test(event.target.value)) {
         setValidate({
           ...validate,
-          representor: {
-            ...validate.representor,
+          studentCode: {
+            ...validate.studentCode,
             isError: true,
-            textError: 'Tên người đại diện không vượt quá 255 ký tự',
-            isVisible: true
+            isVisible: true,
+            textError: 'Mã sinh viên không đúng định dạng'
+          }
+        })
+      } else if (!isLengthInRange(event.target.value, 1, 12)) {
+        setValidate({
+          ...validate,
+          studentCode: {
+            ...validate.studentCode,
+            isError: true,
+            isVisible: true,
+            textError: 'Mã sinh viên không vượt quá 255 ký tự'
           }
         })
       } else {
-        setBusiness({ ...business, representor: event.target.value })
+        setStudent({ ...student, studentCode: event.target.value })
         setValidate({
           ...validate,
-          representor: {
-            ...validate.representor,
+          studentCode: {
+            ...validate.studentCode,
             isError: false,
             isVisible: false
           }
@@ -213,8 +222,8 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError: 'Email không được để trống',
-            isVisible: true
+            isVisible: true,
+            textError: 'Email không được để trống'
           }
         })
       } else if (!isLengthInRange(event.target.value, 1, 255)) {
@@ -223,8 +232,8 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError: 'Email không vượt quá 255 ký tự',
-            isVisible: true
+            isVisible: true,
+            textError: 'Email không vượt quá 255 ký tự'
           }
         })
       } else if (!isEmail(event.target.value)) {
@@ -233,12 +242,12 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError: 'Email sai định dạng',
-            isVisible: true
+            isVisible: true,
+            textError: 'Email sai định dạng'
           }
         })
       } else {
-        setBusiness({ ...business, email: event.target.value })
+        setStudent({ ...student, email: event.target.value })
         setValidate({
           ...validate,
           email: {
@@ -258,9 +267,9 @@ export default function BusinessRegistationPage() {
           ...validate,
           password: {
             ...validate.password,
+            isVisible: true,
             isError: true,
-            textError: 'Mật khẩu không được để trống',
-            isVisible: true
+            textError: 'Mật khẩu không được để trống'
           }
         })
       } else if (!isLengthInRange(event.target.value, 1, 8)) {
@@ -268,9 +277,9 @@ export default function BusinessRegistationPage() {
           ...validate,
           password: {
             ...validate.password,
+            isVisible: true,
             isError: true,
-            textError: 'Mật khẩu không vượt quá 8 ký tự',
-            isVisible: true
+            textError: 'Mật khẩu không vượt quá 8 ký tự'
           }
         })
       } else if (!isPassword(event.target.value)) {
@@ -278,13 +287,13 @@ export default function BusinessRegistationPage() {
           ...validate,
           password: {
             ...validate.password,
+            isVisible: true,
             isError: true,
-            textError: 'Mật khẩu sai định dạng',
-            isVisible: true
+            textError: 'Mật khẩu sai định dạng'
           }
         })
       } else {
-        setBusiness({ ...business, password: event.target.value })
+        setStudent({ ...student, password: event.target.value })
         setValidate({
           ...validate,
           password: {
@@ -304,73 +313,53 @@ export default function BusinessRegistationPage() {
           ...validate,
           confimPassword: {
             ...validate.confimPassword,
+            isVisible: true,
             isError: true,
-            textError: 'Trường nhập lại mật khẩu không được để trống',
-            isVisible: true
+            textError: 'Trường nhập lại mật khẩu không được để trống'
           }
         })
-      } else if (event.target.value != business.password) {
+      } else if (event.target.value != student.password) {
         setValidate({
           ...validate,
           confimPassword: {
             ...validate.confimPassword,
+            isVisible: true,
             isError: true,
-            textError: 'Trường nhập lại mật khẩu phải trùng với mật khẩu',
-            isVisible: true
+            textError: 'Mật khẩu không đúng'
           }
         })
       } else {
-        setBusiness({ ...business, confimPassword: event.target.value })
+        setStudent({ ...student, confimPassword: event.target.value })
         setValidate({
           ...validate,
           confimPassword: {
             ...validate.confimPassword,
-            isError: false,
-            isVisible: false
+            isVisible: false,
+            isError: false
           }
         })
       }
     },
     [validate]
   )
-  const handleTaxCodeChange = useCallback(
+  const handleMajorNameChange = useCallback(
     (event: any) => {
       if (isBlank(event.target.value)) {
         setValidate({
           ...validate,
-          taxCode: {
-            ...validate.taxCode,
+          major: {
+            ...validate.major,
             isError: true,
-            textError: 'Mã số thuế không được để trống',
-            isVisible: true
-          }
-        })
-      } else if (!isLengthInRange(event.target.value, 1, 255)) {
-        setValidate({
-          ...validate,
-          taxCode: {
-            ...validate.taxCode,
-            isError: true,
-            textError: 'Mã số thuế không vượt quá 255 ký tự',
-            isVisible: true
-          }
-        })
-      } else if (!isType(event.target.value)) {
-        setValidate({
-          ...validate,
-          taxCode: {
-            ...validate.taxCode,
-            isError: true,
-            textError: 'Mã số thuế sai định dạng',
-            isVisible: true
+            isVisible: true,
+            textError: 'Tên khoa không được để trống'
           }
         })
       } else {
-        setBusiness({ ...business, taxCode: event.target.value })
+        setStudent({ ...student, major: event.target.value })
         setValidate({
           ...validate,
-          taxCode: {
-            ...validate.taxCode,
+          major: {
+            ...validate.major,
             isError: false,
             isVisible: false
           }
@@ -379,34 +368,24 @@ export default function BusinessRegistationPage() {
     },
     [validate]
   )
-  const handleAddressChange = useCallback(
+  const handleFacultyNameChange = useCallback(
     (event: any) => {
       if (isBlank(event.target.value)) {
         setValidate({
           ...validate,
-          address: {
-            ...validate.address,
+          facultyName: {
+            ...validate.facultyName,
+            isVisible: true,
             isError: true,
-            textError: 'Địa chỉ không được để trống',
-            isVisible: true
-          }
-        })
-      } else if (!isLengthInRange(event.target.value, 1, 255)) {
-        setValidate({
-          ...validate,
-          address: {
-            ...validate.address,
-            isError: true,
-            textError: 'Địa chỉ không vượt quá 255 ký tự',
-            isVisible: true
+            textError: 'Tên khoa không được để trống'
           }
         })
       } else {
-        setBusiness({ ...business, address: event.target.value })
+        setStudent({ ...student, facultyName: event.target.value })
         setValidate({
           ...validate,
-          address: {
-            ...validate.address,
+          facultyName: {
+            ...validate.facultyName,
             isError: false,
             isVisible: false
           }
@@ -415,48 +394,29 @@ export default function BusinessRegistationPage() {
     },
     [validate]
   )
-  const handlePhoneChange = useCallback(
-    (event: any) => {
-      if (isBlank(event.target.value)) {
-        setValidate({
-          ...validate,
-          phone: {
-            ...validate.phone,
-            isError: true,
-            textError: 'Số điện thoại không được để trống',
-            isVisible: true
+
+  useEffect(() => {
+    axios
+      .get(SERVER_ADDRESS + 'api/faculty')
+      .then((response) => {
+        setDataRequest(response.data.data)
+        dataRequest.map((data) => {
+          if (data.name == student.facultyName) {
+            setDataNganhRequest(data.majors)
           }
         })
-      } else if (!isPhone(event.target.value)) {
-        setValidate({
-          ...validate,
-          phone: {
-            ...validate.phone,
-            isError: true,
-            textError: 'Số điện thoại sai định dạng',
-            isVisible: true
-          }
-        })
-      } else {
-        setBusiness({ ...business, phone: event.target.value })
-        setValidate({
-          ...validate,
-          phone: {
-            ...validate.phone,
-            isError: false,
-            isVisible: false
-          }
-        })
-      }
-    },
-    [validate]
-  )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [student])
+
   const onSelectUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
       setImage(URL.createObjectURL(event.target.files[0]))
       handleUploadImage(event.target.files, (response) => {
         console.log(response.data)
-        setBusiness({ ...business, image: response.data[0] })
+        setStudent({ ...student, image: response.data[0] })
       })
     }
   }
@@ -468,46 +428,23 @@ export default function BusinessRegistationPage() {
     }
   }
 
-  useEffect(() => {
-    if (!isTime(timeStart, timeEnd)) {
-      setValidate({
-        ...validate,
-        activeTime: {
-          ...validate.activeTime,
-          isError: true,
-          textError: 'Thời gian hoạt động sai định dạng',
-          isVisible: true
-        }
-      })
-    } else {
-      setBusiness({ ...business, activeTime: timeStart + ' - ' + timeEnd })
-      setValidate({
-        ...validate,
-        activeTime: {
-          ...validate.activeTime,
-          isError: false,
-          isVisible: false
-        }
-      })
-    }
-  }, [timeStart, timeEnd])
-
-  const onSubmit = useCallback(() => {
+  const onSubmit = () => {
     if (isAllFieldsValid(validate)) {
       setIsLoading(true)
       axios
-        .post<Business, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/business/register', business)
+        .post<Student, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/student/register', student)
         .then((response) => {
           setIsLoading(false)
           alert('Đăng ký thành công')
-          navigate(LOGIN_PAGE)
+          navigate('/dang-nhap')
         })
         .catch((error) => {
+          console.log(error)
           setIsLoading(false)
-          alert('Đăng ký thất bại')
+          toast.error('Đăng ký thất bại')
         })
     } else {
-      let key: keyof RegisterBusiness
+      let key: keyof RegisterStudent
 
       for (key in validate) {
         if (validate[key].isError) {
@@ -517,7 +454,7 @@ export default function BusinessRegistationPage() {
 
       setValidate({ ...validate })
     }
-  }, [validate, business])
+  }
 
   return (
     <Fragment>
@@ -527,7 +464,7 @@ export default function BusinessRegistationPage() {
             <a href='/'>
               <i className='feather-zap text-success display1-size me-2 ms-0'> </i>
               <span className='d-inline-block fredoka-font ls-3 fw-600 font-xxl logo-text mb-0 text-current'>
-                TDCer.
+                TDCer
               </span>
             </a>
             <button className='nav-menu me-0 ms-auto'> </button>
@@ -545,15 +482,15 @@ export default function BusinessRegistationPage() {
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
             <div className='card login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
-                <h5 className='fw-700 display1-size display2-md-size mb-4'> Đăng ký doanh nghiệp</h5>
+                <h5 className='fw-700 display1-size display2-md-size mb-4'> Đăng ký sinh viên </h5>
                 <form className='register'>
                   <div className='form-group icon-input mb-3'>
-                    <i className='font-sm ti-direction-alt text-grey-500 pe-0'> </i>
+                    <i className='font-sm ti-user text-grey-500 pe-0'> </i>
                     <input
                       type='text'
-                      onChange={(e) => handleNameChange(e)}
+                      onChange={(e) => handleStudentNameChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Tên doanh nghiệp...'
+                      placeholder='Họ tên sinh viên...'
                       style={{ borderColor: !validate.name?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -563,12 +500,27 @@ export default function BusinessRegistationPage() {
                     />
                   </div>
                   <div className='form-group icon-input mb-3'>
+                    <i className='font-sm ti-pencil-alt text-grey-500 pe-0'> </i>
+                    <input
+                      type='text'
+                      onChange={(e) => handleStudentCodeChange(e)}
+                      className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
+                      placeholder='Mã số sinh viên...'
+                      style={{ borderColor: !validate.studentCode?.isError ? '#228b22' : '#eee' }}
+                    />
+                    <TextValidate
+                      textError={validate.studentCode?.textError}
+                      isError={validate.studentCode?.isError}
+                      isVisible={validate.studentCode?.isVisible}
+                    />
+                  </div>
+                  <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-email text-grey-500 pe-0'> </i>
                     <input
                       type='text'
                       onChange={(e) => handleEmailChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Email...'
+                      placeholder='Địa chỉ Email'
                       style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -577,89 +529,44 @@ export default function BusinessRegistationPage() {
                       isVisible={validate.email?.isVisible}
                     />
                   </div>
-                  <div className='form-group icon-input mb-3'>
-                    <i className='font-sm ti-user text-grey-500 pe-0'> </i>
-                    <input
-                      type='text'
-                      onChange={(e) => handleRepresentoreChange(e)}
-                      className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Họ tên người đại diện'
-                      style={{ borderColor: !validate.representor?.isError ? '#228b22' : '#eee' }}
-                    />
+                  <div className='form-group icon-input display-flex mb-3'>
+                    <i className='font-sm ti-bag text-grey-500 pe-0 '> </i>
+                    <select
+                      className='style2-input form-control font-xsss fw-600 ps-5 pt-0'
+                      onChange={(e) => handleFacultyNameChange(e)}
+                      style={{ borderColor: !validate.facultyName?.isError ? '#228b22' : '#eee' }}
+                    >
+                      <option hidden>Khoa</option>
+                      {dataRequest.map((item, index) => (
+                        <option value={item.name} key={index}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
                     <TextValidate
-                      textError={validate.representor?.textError}
-                      isError={validate.representor?.isError}
-                      isVisible={validate.representor?.isVisible}
+                      textError={validate.facultyName?.textError}
+                      isError={validate.facultyName?.isError}
+                      isVisible={validate.facultyName?.isVisible}
                     />
                   </div>
                   <div className='form-group icon-input mb-3'>
-                    <i className='font-sm ti-pencil-alt text-grey-500 pe-0'> </i>
-                    <input
-                      type='text'
-                      onChange={(e) => handleTaxCodeChange(e)}
-                      className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Mã số thuế...'
-                      style={{ borderColor: !validate.taxCode?.isError ? '#228b22' : '#eee' }}
-                    />
+                    <i className='font-sm ti-briefcase text-grey-500 pe-0'> </i>
+                    <select
+                      className='style2-input form-control font-xsss fw-600 ps-5 pt-0'
+                      onChange={(e) => handleMajorNameChange(e)}
+                      style={{ borderColor: !validate.major?.isError ? '#228b22' : '#eee' }}
+                    >
+                      <option hidden>Ngành</option>
+                      {dataNganhRequest.map((item, index) => (
+                        <option value={item.name} key={index}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
                     <TextValidate
-                      textError={validate.taxCode?.textError}
-                      isError={validate.taxCode?.isError}
-                      isVisible={validate.taxCode?.isVisible}
-                    />
-                  </div>
-                  <div className='form-group icon-input mb-3'>
-                    <i className='font-sm ti-location-pin text-grey-500 pe-0'> </i>
-                    <input
-                      type='text'
-                      onChange={(e) => handleAddressChange(e)}
-                      className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Địa chỉ...'
-                      style={{ borderColor: !validate.address?.isError ? '#228b22' : '#eee' }}
-                    />
-                    <TextValidate
-                      textError={validate.address?.textError}
-                      isError={validate.address?.isError}
-                      isVisible={validate.address?.isVisible}
-                    />
-                  </div>
-                  <div className='form-group icon-input mb-3'>
-                    <i className='font-sm ti-mobile text-grey-500 pe-0'> </i>
-                    <input
-                      type='text'
-                      onChange={(e) => handlePhoneChange(e)}
-                      className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Số điện thoại...'
-                      style={{ borderColor: !validate.phone?.isError ? '#228b22' : '#eee' }}
-                    />
-                    <TextValidate
-                      textError={validate.phone?.textError}
-                      isError={validate.phone?.isError}
-                      isVisible={validate.phone?.isVisible}
-                    />
-                  </div>
-                  <label className='form-group text-grey-600 fw-600'>Thời gian làm việc</label>
-                  <div className='form-group icon-input mb-3'>
-                    <div className='clock'>
-                      <input
-                        type='time'
-                        value={timeStart}
-                        onChange={(e) => setTimeStart(e.target.value)}
-                        style={{ borderColor: !validate.activeTime?.isError ? '#228b22' : '#eee' }}
-                        className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      />
-                      <label className='me-1 ms-1'>đến</label>
-                      <input
-                        type='time'
-                        value={timeEnd}
-                        onChange={(e) => setTimeEnd(e.target.value)}
-                        style={{ borderColor: !validate.activeTime?.isError ? '#228b22' : '#eee' }}
-                        className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      />
-                    </div>
-                    <TextValidate
-                      textError={validate.activeTime?.textError}
-                      isError={validate.activeTime?.isError}
-                      isVisible={validate.activeTime?.isVisible}
+                      textError={validate.major?.textError}
+                      isError={validate.major?.isError}
+                      isVisible={validate.major?.isVisible}
                     />
                   </div>
                   <div className='form-group icon-input mb-3'>
@@ -692,7 +599,7 @@ export default function BusinessRegistationPage() {
                       isVisible={validate.confimPassword?.isVisible}
                     />
                   </div>
-                  <div className='card-body d-flex mt-3 p-0'>
+                  <div className='d-flex mt-3 p-0'>
                     <input
                       type={'file'}
                       multiple
@@ -729,7 +636,7 @@ export default function BusinessRegistationPage() {
                   </div>
                   <h6 className='text-grey-500 font-xsss fw-500 lh-32 mb-0 mt-0'>
                     Đã có tài khoản?
-                    <button className='fw-700 txt-blue ms-1' onClick={() => navigate(LOGIN_PAGE)}>
+                    <button className='fw-700 txt-blue ms-1' onClick={() => navigate('/dang-nhap')}>
                       Đăng nhập
                     </button>
                   </h6>
@@ -739,6 +646,7 @@ export default function BusinessRegistationPage() {
           </div>
         </div>
       </div>
+      <ToastContainer autoClose={5000} transition={Bounce} position='top-right' />
     </Fragment>
   )
 }

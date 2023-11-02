@@ -259,7 +259,7 @@ export default function LoginPage() {
                   </div>
                   <h6 className='text-grey-500 font-xsss fw-500 lh-32 mb-0 mt-0'>
                     Chưa có tài khoản?{' '}
-                    <button type='button' className='txt-blue'>
+                    <button type='button' className='txt-blue' onClick={() => navigate('/dang-ky')}>
                       Đăng ký
                     </button>
                   </h6>

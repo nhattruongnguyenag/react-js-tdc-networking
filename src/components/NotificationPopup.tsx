@@ -27,12 +27,6 @@ export default function NotificationPopup(props: NotificationPopupProps) {
     }
   )
 
-  useEffect(() => {
-    if (data && !isFetching) {
-      console.log(data)
-    }
-  }, [data, isFetching])
-
   const handleAllIsRead = () => {
     axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus/all`, {
       userId: userLogin?.id ?? -1
@@ -65,6 +59,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
   const notificationItems = (item: NotificationModel) => {
     return (
       <div
+        key={item.id}
         className='card bg-transparent-card w-100 itemNotification mb-0 border-0 ps-0'
         style={{ background: item.status == '0' ? '#f5f5f5' : '#fff', flexDirection: 'row', padding: 10 }}
         onClick={() => handleIsRead(item.id)}
@@ -135,4 +130,4 @@ export default function NotificationPopup(props: NotificationPopupProps) {
     </div>
   )
 }
-;<style></style>
+; <style></style>
