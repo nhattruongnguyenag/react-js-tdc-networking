@@ -1,7 +1,7 @@
 export interface NormalPost {
-  userId: number | undefined
-  type: string | undefined
-  groupId: number | undefined
-  images: any[] | undefined
-  content: string | undefined
+  userId: number
+  type: string
+  images: any[]
+  content: string
+  groupId: number
 }
