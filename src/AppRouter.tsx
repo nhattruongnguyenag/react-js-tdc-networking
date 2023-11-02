@@ -16,6 +16,7 @@ import SearchPage from './pages/SearchPage'
 import SettingPage from './pages/SettingPage'
 import StudentDashboardPage from './pages/StudentDashboardPage'
 import { useAppSelector } from './redux/Hook'
+import BusinessRegistationPage from './pages/BusinessRegistationPage'
 import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
 
@@ -38,7 +39,7 @@ export default function Router() {
             <Route path={SEARCH_PAGE} element={<SearchPage />} />
             <Route path={CREATE_RECRUITMENT_POST_PAGE} element={<CreateRecruitmentPostPage />} />
             <Route path={CREATE_SURVEY_POST_PAGE} element={<CreateSurveyPostPage />} />
-            <Route path={REGISTER_BUSINESS_PAGE} element={<RegisterBusinessPage />} />
+            <Route path={REGISTER_BUSINESS_PAGE} element={<BusinessRegistationPage />} />
             <Route path={REGISTER_STUDENT_PAGE} element={<StudentRegistationPage />} />
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
             <Route path='*' element={<NoPage />} />
