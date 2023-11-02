@@ -1,35 +1,49 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Header from '../components/common/Header'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { LikeAction } from '../types/LikeActions'
 import axios from 'axios'
 import CreateNormalPostModal from '../components/modal/CreateNormalPostModal'
-import { formatDateTime } from '../utils/FormatTime'
+import { formatDateTime, numberDayPassed } from '../utils/FormatTime'
 import CustomizePost from '../components/post/CustomizePost'
 import { API_URL_GET_ALL_POST } from '../constants/Path'
 import CreatePostSelector from '../components/CreatePostSelector'
+import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton'
 
 export default function BusinessDashboardPage() {
   // -------------------------------------
   // Variable
   const [data, setData] = useState([] as any)
+  const [isLoading, setIsLoading] = useState(false);
 
   // Start post
+  // const { data, isFetching } = useGetNotificationsUserByIdQuery(
+  //   {
+  //     id: userLogin?.id ?? -1
+  //   },
+  //   {
+  //     pollingInterval: 1000
+  //   }
+  // )
+
+
+
   useEffect(() => {
+    setIsLoading(true)
     getPostsFromApi()
   }, [])
 
-  const getPostsFromApi = () => {
+  const getPostsFromApi = useCallback(() => {
     axios
       .get(API_URL_GET_ALL_POST)
       .then((response) => {
         setData(response.data.data)
-        console.log(response.data)
+        setIsLoading(false)
       })
       .catch((error) => {
         console.error(error)
       })
-  }
+  }, [])
 
   const likeAction = (obj: LikeAction) => {
     // obj.code = TYPE_POST_BUSINESS
@@ -470,9 +484,19 @@ export default function BusinessDashboardPage() {
                     </div>
                   </div>
                 </div>
+                {/* Skeleton */}
+                {
+                  isLoading && <div>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
+                    </div>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
+                    </div>
+                  </div>
+                }
                 {/* Modal */}
                 <CreatePostSelector />
-                {/* <CreateNormalPostModal /> */}
                 {/* Render post */}
                 {data &&
                   data.map((item: any) => (
@@ -484,7 +508,7 @@ export default function BusinessDashboardPage() {
                       avatar={item.user['image']}
                       typeAuthor={'Doanh Nghiệp'}
                       available={null}
-                      timeCreatePost={formatDateTime(item.createdAt)}
+                      timeCreatePost={numberDayPassed(item.createdAt)}
                       content={item.content}
                       type={item.type}
                       likes={item.likes}

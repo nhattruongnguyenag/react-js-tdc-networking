@@ -8,6 +8,7 @@ import { MessageResponseData } from '../types/response/MessageResponseData'
 import { SurveyPostRequest } from '../types/SurveyPost'
 import { Data } from '../types/Data'
 import { NotificationModel } from '../types/response/NotificationModel'
+import { Post } from '../types/Post'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
@@ -73,4 +74,5 @@ export const {
   useSaveDeviceTokenMutation,
   useSendFCMNotificationMutation,
   useAddRecruitmentPostMutation
+  // useGetAllPost
 } = TDCSocialNetworkAPI
