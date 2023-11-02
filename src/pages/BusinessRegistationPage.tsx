@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useRef, useState, useEffect } from 'react'
 import { Business } from '../types/Business'
 import axios, { AxiosResponse } from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
@@ -12,6 +12,7 @@ import {
   isLengthInRange,
   isPassword,
   isPhone,
+  isTime,
   isType
 } from '../utils/ValidateUtils'
 import TextValidate from '../components/TextValidate'
@@ -63,6 +64,8 @@ export default function BusinessRegistationPage() {
     image: '',
     confimPassword: ''
   })
+  const [timeStart, setTimeStart] = useState('07:00')
+  const [timeEnd, setTimeEnd] = useState('17:00')
   const [validate, setValidate] = useState<RegisterBusiness>({
     name: {
       textError: 'Tên không được để trống',
@@ -447,42 +450,6 @@ export default function BusinessRegistationPage() {
     },
     [validate]
   )
-  const handleActiveTimeChange = useCallback(
-    (event: any) => {
-      if (isBlank(event.target.value)) {
-        setValidate({
-          ...validate,
-          activeTime: {
-            ...validate.activeTime,
-            isError: true,
-            textError: 'Thời gian hoạt động không được để trống',
-            isVisible: true
-          }
-        })
-      } else if (!isType(event.target.value)) {
-        setValidate({
-          ...validate,
-          activeTime: {
-            ...validate.activeTime,
-            isError: true,
-            textError: 'Thời gian hoạt động sai định dạng',
-            isVisible: true
-          }
-        })
-      } else {
-        setBusiness({ ...business, activeTime: event.target.value })
-        setValidate({
-          ...validate,
-          activeTime: {
-            ...validate.activeTime,
-            isError: false,
-            isVisible: false
-          }
-        })
-      }
-    },
-    [validate]
-  )
   const onSelectUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
       setImage(URL.createObjectURL(event.target.files[0]))
@@ -499,6 +466,30 @@ export default function BusinessRegistationPage() {
       fileInputRef.current.value = ''
     }
   }
+
+  useEffect(() => {
+    if (!isTime(timeStart, timeEnd)) {
+      setValidate({
+        ...validate,
+        activeTime: {
+          ...validate.activeTime,
+          isError: true,
+          textError: 'Thời gian hoạt động sai định dạng',
+          isVisible: true
+        }
+      })
+    } else {
+      setBusiness({ ...business, activeTime: timeStart + ' - ' + timeEnd })
+      setValidate({
+        ...validate,
+        activeTime: {
+          ...validate.activeTime,
+          isError: false,
+          isVisible: false
+        }
+      })
+    }
+  }, [timeStart, timeEnd])
 
   const onSubmit = useCallback(() => {
     if (isAllFieldsValid(validate)) {
@@ -525,7 +516,10 @@ export default function BusinessRegistationPage() {
 
       setValidate({ ...validate })
     }
-  }, [validate])
+  }, [validate, business])
+
+  console.log(timeStart.toString())
+  console.log(timeEnd.toString())
 
   return (
     <Fragment>
@@ -645,15 +639,25 @@ export default function BusinessRegistationPage() {
                       isVisible={validate.phone?.isVisible}
                     />
                   </div>
+                  <label className='form-group text-grey-600 fw-600'>Thời gian làm việc</label>
                   <div className='form-group icon-input mb-3'>
-                    <i className='font-sm ti-timer text-grey-500 pe-0'> </i>
-                    <input
-                      type='text'
-                      onChange={(e) => handleActiveTimeChange(e)}
-                      className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Thời gian hoạt động...'
-                      style={{ borderColor: !validate.activeTime?.isError ? '#228b22' : '#eee' }}
-                    />
+                    <div className='clock'>
+                      <input
+                        type='time'
+                        value={timeStart}
+                        onChange={(e) => setTimeStart(e.target.value)}
+                        style={{ borderColor: !validate.activeTime?.isError ? '#228b22' : '#eee' }}
+                        className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
+                      />
+                      <label className='me-1 ms-1'>đến</label>
+                      <input
+                        type='time'
+                        value={timeEnd}
+                        onChange={(e) => setTimeEnd(e.target.value)}
+                        style={{ borderColor: !validate.activeTime?.isError ? '#228b22' : '#eee' }}
+                        className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
+                      />
+                    </div>
                     <TextValidate
                       textError={validate.activeTime?.textError}
                       isError={validate.activeTime?.isError}
@@ -674,7 +678,7 @@ export default function BusinessRegistationPage() {
                       isError={validate.password?.isError}
                       isVisible={validate.password?.isVisible}
                     />
-                  </div>{' '}
+                  </div>
                   <div className='form-group icon-input mb-1'>
                     <input
                       type='Password'
@@ -689,7 +693,7 @@ export default function BusinessRegistationPage() {
                       isError={validate.confimPassword?.isError}
                       isVisible={validate.confimPassword?.isVisible}
                     />
-                  </div>{' '}
+                  </div>
                   <div className='card-body d-flex mt-3 p-0'>
                     <input
                       type={'file'}

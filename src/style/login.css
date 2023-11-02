@@ -21,3 +21,20 @@
   border-radius: 7px;
   box-shadow: 2px 2px 5px rgb(59 130 246) !important;
 }
+
+.register{
+  height: 65vh;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.register::-webkit-scrollbar{
+  display: none;
+}
+
+.clock{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
