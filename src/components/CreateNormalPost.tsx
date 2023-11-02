@@ -34,11 +34,11 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [normalPost, setNormalPost] = useState<NormalPost>({
-    userId: userLogin?.id,
+    userId: userLogin?.id ?? -1,
     type: TYPE_NORMAL_POST,
     groupId: 1,
-    images: undefined,
-    content: undefined
+    images: [],
+    content: ''
   })
 
   // Function
@@ -223,7 +223,6 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   )
 }
