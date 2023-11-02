@@ -475,7 +475,7 @@ export default function StudentRegistationPage() {
           <div
             className='col-xl-5 d-none d-xl-block vh-100 bg-image-cover bg-no-repeat p-0'
             style={{
-              backgroundImage: `url("assets/images/login-bg-2.jpg")`
+              backgroundImage: `url("/assets/images/login-bg-2.jpg")`
             }}
           ></div>
 

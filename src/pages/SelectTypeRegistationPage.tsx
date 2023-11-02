@@ -5,6 +5,7 @@ import { FaAngleDoubleLeft } from 'react-icons/fa'
 import '../style/login.css'
 import { Slide, ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { REGISTER_BUSINESS_PAGE, REGISTER_STUDENT_PAGE } from '../constants/Page'
 const data = [
   { name: 'Sinh viên', value: '1' },
   { name: 'Doanh nghiệp', value: '2' }
@@ -17,9 +18,9 @@ export default function SelectTypeRegistationPage() {
   }
   const onSubmit = () => {
     if (dataRegister == '1') {
-      navigate('/dang-ky-sinh-vien')
+      navigate(REGISTER_STUDENT_PAGE)
     } else if (dataRegister == '2') {
-      navigate('/dang-ky-doanh-nghiep')
+      navigate(REGISTER_BUSINESS_PAGE)
     } else {
       toast.warning('Hãy chọn hình thức đăng ký')
     }
@@ -43,7 +44,7 @@ export default function SelectTypeRegistationPage() {
           <div
             className='col-xl-5 d-none d-xl-block vh-100 bg-image-cover bg-no-repeat p-0'
             style={{
-              backgroundImage: `url("assets/images/login-bg-2.jpg")`
+              backgroundImage: `url("/assets/images/login-bg-2.jpg")`
             }}
           ></div>
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
