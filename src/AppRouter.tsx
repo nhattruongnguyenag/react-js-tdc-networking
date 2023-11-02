@@ -1,10 +1,12 @@
 import classNames from 'classnames'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BUSINESS_DASHBOARD_PAGE, CONVERSATION_PAGE, CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE, FACULTY_DASHBOARD_PAGE, LOGIN_PAGE, MESSAGE_PAGE, REGISTER_BUSINESS_PAGE, REGISTER_STUDENT_PAGE, SEARCH_PAGE, SETTING_PAGE, STUDENT_DASHBOARD_PAGE } from './constants/Page'
 import BusinessDashboardPage from './pages/BusinessDashboardPage'
 import ChatPage from './pages/ChatPage'
 import ConversationPage from './pages/ConversationPage'
 import CreateRecruitmentPostPage from './pages/CreateRecruitmentPostPage'
 import CreateSurveyPostPage from './pages/CreateSurveyPostPage'
+import FacultyDashboardPage from './pages/FacultyDashboardPage'
 import IntroducePage from './pages/IntroducePage'
 import LoginPage from './pages/LoginPage'
 import NoPage from './pages/NoPage'
@@ -12,6 +14,7 @@ import RegisterBusinessPage from './pages/RegisterBusinessPage'
 import RegisterStudentPage from './pages/RegisterStudentPage'
 import SearchPage from './pages/SearchPage'
 import SettingPage from './pages/SettingPage'
+import StudentDashboardPage from './pages/StudentDashboardPage'
 import { useAppSelector } from './redux/Hook'
 import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
@@ -25,18 +28,18 @@ export default function Router() {
         <Routes>
           <Route>
             <Route path='/' element={<IntroducePage />} />
-            <Route path='dang-nhap' element={<LoginPage />} />
-            <Route path='dang-ky' element={<SelectTypeRegistationPage />} />
-            <Route path='dang-ky-sinh-vien' element={<StudentRegistationPage />} />
-            <Route index path='doanh-nghiep/bai-viet' element={<BusinessDashboardPage />} />
-            <Route path='hoi-thoai' element={<ConversationPage />} />
-            <Route path='nhan-tin' element={<ChatPage />} />
-            <Route path='cai-dat' element={<SettingPage />} />
-            <Route path='tim-kiem' element={<SearchPage />} />
-            <Route path='them-bai-viet/tuyen-dung' element={<CreateRecruitmentPostPage />} />
-            <Route path='them-bai-viet/khao-sat' element={<CreateSurveyPostPage />} />
-            <Route path='dang-ky/doanh-nghiep' element={<RegisterBusinessPage />} />
-            <Route path='dang-ky/sinh-vien' element={<RegisterStudentPage />} />
+            <Route path={LOGIN_PAGE} element={<LoginPage />} />
+            <Route index path={BUSINESS_DASHBOARD_PAGE.toString()} element={<BusinessDashboardPage />} />
+            <Route path={FACULTY_DASHBOARD_PAGE + '/:code'} element={<FacultyDashboardPage />} />
+            <Route path={STUDENT_DASHBOARD_PAGE} element={<StudentDashboardPage />} />
+            <Route path={CONVERSATION_PAGE} element={<ConversationPage />} />
+            <Route path={MESSAGE_PAGE} element={<ChatPage />} />
+            <Route path={SETTING_PAGE} element={<SettingPage />} />
+            <Route path={SEARCH_PAGE} element={<SearchPage />} />
+            <Route path={CREATE_RECRUITMENT_POST_PAGE} element={<CreateRecruitmentPostPage />} />
+            <Route path={CREATE_SURVEY_POST_PAGE} element={<CreateSurveyPostPage />} />
+            <Route path={REGISTER_BUSINESS_PAGE} element={<RegisterBusinessPage />} />
+            <Route path={REGISTER_STUDENT_PAGE} element={<RegisterStudentPage />} />
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>

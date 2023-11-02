@@ -57,7 +57,7 @@ export default function ConversationItem(props: ConversationItemProps) {
             <span className='font-bold text-white'>{props.data.countNewMessage}</span>
           </span>
         )}
-        <div className='email-time text-grey-500 fw-600'>
+        <div className='font-xssss w-52 text-right text-grey-500 fw-600'>
           {getConversationLastUpdate(props.data?.lastMessageSentAt ?? '')}
         </div>
       </Link>
