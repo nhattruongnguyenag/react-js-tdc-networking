@@ -52,7 +52,7 @@ export default function CustomizeSearch() {
         const onMessageReceived = (payload: any) => {
             setData(JSON.parse(payload.body))
             // console.log(JSON.stringify(data));
-            console.log(JSON.parse(payload.body));
+            // console.log(JSON.parse(payload.body));
         }
         const onError = (err: string | Frame) => {
             console.log(err)
@@ -101,6 +101,19 @@ export default function CustomizeSearch() {
         }
     }
 
+    const handleFollow = (userFollowId: number) => {
+        stompClient.send(
+          `/app/find/user/follow`,
+          {},
+          JSON.stringify({
+            userId: userLogin?.id,
+            type: type,
+            name: search,
+            userFollowId: userFollowId
+          })
+        )
+      }
+
     return (
         <div ref={ref} className='main-content bg-lightblue theme-dark-bg' style={{ height: '100vh' }}>
             <div className='middle-sidebar-bottom'>
@@ -110,7 +123,7 @@ export default function CustomizeSearch() {
                             <div className='card-body p-lg-5 w-100 border-0 p-0' id='card_search'>
                                 <div className='header-search ms-1'>
                                     <div className='form-group icon-input mb-6'>
-                                        <div style={{ paddingBottom: 4 }}>
+                                        <div style={{position: 'absolute', paddingBottom: 20}}>
                                             <i className='feather-search font-sm text-info' />
                                         </div>
                                         <input
@@ -161,7 +174,7 @@ export default function CustomizeSearch() {
                             </div>
                             {/*  */}
                         </div>
-                        <SearchListView data={data} type={type}/>
+                        <SearchListView data={data} type={type} handleFollow={handleFollow}/>
                     </div>
                 </div>
             </div>
