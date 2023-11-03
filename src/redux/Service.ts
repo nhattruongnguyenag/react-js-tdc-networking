@@ -61,6 +61,9 @@ export const TDCSocialNetworkAPI = createApi({
           'Content-type': 'application/json; charset=UTF-8'
         }
       })
+    }),
+    getAllPosts: builder.query<Data<Post[]>, void>({
+      query: () => 'api/posts'
     })
   })
 })
@@ -73,6 +76,6 @@ export const {
   useAddSurveyPostMutation,
   useSaveDeviceTokenMutation,
   useSendFCMNotificationMutation,
-  useAddRecruitmentPostMutation
-  // useGetAllPost
+  useAddRecruitmentPostMutation,
+  useGetAllPostsQuery
 } = TDCSocialNetworkAPI

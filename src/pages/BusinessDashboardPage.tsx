@@ -9,41 +9,26 @@ import CustomizePost from '../components/post/CustomizePost'
 import { API_URL_GET_ALL_POST } from '../constants/Path'
 import CreatePostSelector from '../components/CreatePostSelector'
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton'
+import { useGetAllPostsQuery } from '../redux/Service'
 
 export default function BusinessDashboardPage() {
-  // -------------------------------------
-  // Variable
-  const [data, setData] = useState([] as any)
+
   const [isLoading, setIsLoading] = useState(false);
 
-  // Start post
-  // const { data, isFetching } = useGetNotificationsUserByIdQuery(
-  //   {
-  //     id: userLogin?.id ?? -1
-  //   },
-  //   {
-  //     pollingInterval: 1000
-  //   }
-  // )
-
-
+  const { data, isFetching } = useGetAllPostsQuery(undefined, {
+    pollingInterval: 2000
+  });
 
   useEffect(() => {
     setIsLoading(true)
-    getPostsFromApi()
   }, [])
 
-  const getPostsFromApi = useCallback(() => {
-    axios
-      .get(API_URL_GET_ALL_POST)
-      .then((response) => {
-        setData(response.data.data)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }, [])
+  // Xử lý dữ liệu từ Redux Toolkit Query
+  useEffect(() => {
+    if (data) {
+      setIsLoading(false);
+    }
+  }, [data]);
 
   const likeAction = (obj: LikeAction) => {
     // obj.code = TYPE_POST_BUSINESS
@@ -56,6 +41,32 @@ export default function BusinessDashboardPage() {
   // End post
   // -------------------------------------
 
+  const renderItem = (item: any) => {
+    return <CustomizePost
+      key={item.id}
+      id={item.id}
+      userId={item.user['id']}
+      name={item.user['name']}
+      avatar={item.user['image']}
+      typeAuthor={'Doanh Nghiệp'}
+      available={null}
+      timeCreatePost={numberDayPassed(item.createdAt)}
+      content={item.content}
+      type={item.type}
+      likes={item.likes}
+      comments={item.comment}
+      commentQty={item.commentQuantity}
+      images={item.images}
+      role={item.user['roleCodes']}
+      likeAction={likeAction}
+      location={item.location ?? null}
+      title={item.title ?? null}
+      expiration={item.expiration ?? null}
+      salary={item.salary ?? null}
+      employmentType={item.employmentType ?? null}
+      description={item.description ?? null}
+    />
+  }
   return (
     <>
       <Header />
@@ -495,36 +506,12 @@ export default function BusinessDashboardPage() {
                     </div>
                   </div>
                 }
+
                 {/* Modal */}
                 <CreatePostSelector />
                 {/* Render post */}
-                {data &&
-                  data.map((item: any) => (
-                    <CustomizePost
-                      key={item.id}
-                      id={item.id}
-                      userId={item.user['id']}
-                      name={item.user['name']}
-                      avatar={item.user['image']}
-                      typeAuthor={'Doanh Nghiệp'}
-                      available={null}
-                      timeCreatePost={numberDayPassed(item.createdAt)}
-                      content={item.content}
-                      type={item.type}
-                      likes={item.likes}
-                      comments={item.comment}
-                      commentQty={item.commentQuantity}
-                      images={item.images}
-                      role={item.user['roleCodes']}
-                      likeAction={likeAction}
-                      location={item.location ?? null}
-                      title={item.title ?? null}
-                      expiration={item.expiration ?? null}
-                      salary={item.salary ?? null}
-                      employmentType={item.employmentType ?? null}
-                      description={item.description ?? null}
-                    />
-                  ))}
+                {data?.data.map((item) => renderItem(item))}
+
                 <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4 text-center'>
                   <div className='snippet me-auto ms-auto mt-2' data-title='.dot-typing'>
                     <div className='stage'>
