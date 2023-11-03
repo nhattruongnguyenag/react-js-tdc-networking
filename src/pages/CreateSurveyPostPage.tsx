@@ -1,18 +1,155 @@
-import React from 'react'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Dropdown } from 'flowbite-react'
-import { Link } from 'react-router-dom'
+import { useCallback, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/common/Header'
 import InputTextWithTitle from '../components/common/InputTextWithTitle'
 import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
-import { BUSINESS_DASHBOARD_PAGE } from '../constants/Page'
-import ShortAnswerQuestion from '../components/survey/ShortAnswerQuestion'
+import ValidateTextView from '../components/common/ValidateTextView'
 import MultiQuestionMultiChoice from '../components/survey/MultiQuestionMultiChoice'
 import MultiQuestionOneChoice from '../components/survey/MultiQuestionOneChoice'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+import ShortAnswerQuestion from '../components/survey/ShortAnswerQuestion'
+import { SURVEY_POST_REQUEST } from '../constants/KeyValue'
+import { ADD_QUESTION_PAGE, BUSINESS_DASHBOARD_PAGE, CREATE_SURVEY_POST_PAGE, REVIEW_SURVEY_POST_PAGE } from '../constants/Page'
+import { useAppDispatch, useAppSelector } from '../redux/Hook'
+import { addQuestion, setSurveyPostRequest } from '../redux/Slice'
+import { InputTextValidate, isBlank, isContainSpecialCharacter, isLengthInRange } from '../utils/ValidateUtils'
+
+export const SHORT_ANSWER = 'tra-loi-ngan'
+export const ONE_CHOICE_QUESTION = 'chon-mot-dap-an'
+export const MULTI_CHOICE_QUESTION = 'chon-nhieu-dap-an'
+
+interface CreateSurveyPostValidate {
+  title: InputTextValidate
+  description: InputTextValidate
+}
+
+const isAllFieldsValid = (validate: CreateSurveyPostValidate): boolean => {
+  let key: keyof CreateSurveyPostValidate
+
+  for (key in validate) {
+    if (validate[key].isError) {
+      return false
+    }
+  }
+
+  return true
+}
 
 export default function CreateSurveyPostPage() {
-  const onBtnPublishSurveyPostPress = () => { }
+  const { userLogin, surveyPostRequest } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const [validate, setValidate] = useState<CreateSurveyPostValidate>({
+    title: {
+      textError: 'Tiêu đề không được để trống',
+      isError: true,
+      isVisible: false
+    },
+    description: {
+      textError: 'Mô tả không được để trống',
+      isError: true,
+      isVisible: false
+    }
+  })
+
+  useEffect(() => {
+    dispatch(setSurveyPostRequest({
+      ...surveyPostRequest,
+      userId: userLogin?.id ?? -1,
+      groupId: 1
+    }))
+  }, [])
+
+  const setTitleError = useCallback((error: string) => {
+    setValidate({
+      ...validate,
+      title: {
+        textError: error,
+        isError: true,
+        isVisible: true
+      }
+    })
+    return
+  }, [validate])
+
+  const setDescriptionError = useCallback((error: string) => {
+    setValidate({
+      ...validate,
+      description: {
+        textError: error,
+        isError: true,
+        isVisible: true
+      }
+    })
+    return
+  }, [validate])
+
+  const onTitleChangeText = useCallback(
+    (value: string) => {
+      if (isBlank(value)) {
+        setTitleError("Tiêu đề không được để trống")
+        return
+      }
+
+      dispatch(setSurveyPostRequest({
+        ...surveyPostRequest,
+        title: value
+      }))
+
+      setValidate({
+        ...validate,
+        title: {
+          ...validate.title,
+          isError: false,
+          isVisible: false
+        }
+      })
+    },
+    [surveyPostRequest, validate]
+  )
+
+  const onDescriptionChangeText = useCallback(
+    (value: string) => {
+      if (isBlank(value)) {
+        setDescriptionError("Mô tả không được để trống")
+        return
+      }
+
+      dispatch(setSurveyPostRequest({
+        ...surveyPostRequest,
+        description: value
+      }))
+
+      setValidate({
+        ...validate,
+        description: {
+          ...validate.description,
+          isError: false,
+          isVisible: false
+        }
+      })
+    },
+    [surveyPostRequest, validate]
+  )
+
+  const onBtnAddQuestionClick = () => {
+    if (isAllFieldsValid(validate)) {
+      navigate(ADD_QUESTION_PAGE)
+    } else {
+      let key: keyof CreateSurveyPostValidate
+
+      for (key in validate) {
+        if (validate[key].isError && !validate[key].isVisible) {
+          validate[key].isVisible = true
+        }
+      }
+
+      setValidate({ ...validate })
+    }
+  }
 
   return (
     <>
@@ -28,45 +165,39 @@ export default function CreateSurveyPostPage() {
             </div>
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
               <div className='row'>
-                <InputTextWithTitle title='Tiêu đề' placeholder={'Nhập tiêu đề khảo sát...'} />
+                <InputTextWithTitle
+                  onTextChange={(value) => onTitleChangeText(value)}
+                  title='Tiêu đề'
+                  placeholder={'Nhập tiêu đề khảo sát...'}
+                />
 
-                <TextAreaWithTitle rows={10} placeholder='Nhập mô tả...' title='Mô tả' />
+                <ValidateTextView
+                  textError={validate.title.textError}
+                  isError={validate.title.isError}
+                  isVisible={validate.title.isVisible}
+                />
+
+                <TextAreaWithTitle
+                  onTextChange={(value) => onDescriptionChangeText(value)}
+                  rows={10}
+                  placeholder='Nhập mô tả...'
+                  title='Mô tả' />
+
+                <ValidateTextView
+                  textError={validate.description.textError}
+                  isError={validate.description.isError}
+                  isVisible={validate.description.isVisible}
+                />
               </div>
-
-              <p className='mont-font fw-600 font-xsss text-dark'>Câu hỏi</p>
-
-              <ShortAnswerQuestion />
-              <MultiQuestionMultiChoice />
-              <MultiQuestionOneChoice />
-
-              <div className='flex flex-row items-center justify-between mt-5'>
-                <Dropdown
-                  className='z-50 text-black'
-                  label=''
-                  placement='top'
-                  dismissOnClick={true}
-                  renderTrigger={() => (
-                    <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                      <FontAwesomeIcon style={{ fontSize: 20, marginRight: 10 }} icon={icon({ name: 'plus' })} />
-                      Thêm câu hỏi
-                    </button>
-                  )}
-                >
-                  <Dropdown.Item onClick={() => { }}>Trả lời ngắn</Dropdown.Item>
-                  <Dropdown.Item onClick={() => { }}>Trắc nghiệm</Dropdown.Item>
-                  <Dropdown.Item onClick={() => { }}>Nhiều lựa chọn</Dropdown.Item>
-                </Dropdown>
-
-                <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-centerdark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <FontAwesomeIcon style={{ fontSize: 18, marginRight: 10 }} icon={icon({ name: 'eye', style: 'regular' })} />
-                    <span>Xem lại bài viết</span>
-                </button>
-
-                <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-centerdark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  Hoàn tất
-                  <FontAwesomeIcon style={{ fontSize: 20, marginLeft: 10 }} icon={icon({ name: 'arrow-right' })} />
-                </button>
-              </div>
+              <button
+                onClick={() => onBtnAddQuestionClick()}
+                type="button"
+                className="text-white mt-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-centerdark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <div className='flex items-center'>
+                  <span>Tiếp theo</span>
+                  <FontAwesomeIcon style={{ fontSize: 15, marginLeft: 10 }} icon={icon({ name: 'arrow-right' })} />
+                </div>
+              </button>
             </div>
           </div>
         </div>

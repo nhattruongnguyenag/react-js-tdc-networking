@@ -49,7 +49,7 @@ const isAllFieldsValid = (validate: CreateRecruitmentPostValidate): boolean => {
 }
 
 export default function CreateRecruitmentPostPage() {
-  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
   const [createRecruitmentPostRequest, createRecruitmentPostResponse] = useAddRecruitmentPostMutation()
   const navigate = useNavigate()
   const [validate, setValidate] = useState<CreateRecruitmentPostValidate>({

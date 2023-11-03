@@ -14,17 +14,17 @@ export function isNotContainSpecialCharacter(text: string): boolean {
 }
 
 export function isBlank(text: string): boolean {
-  const pattern = /^[\s]*$/g
+  const pattern = /^[\s ]*$/
   return pattern.test(text)
 }
 
 export function isNotBlank(text: string): boolean {
-  const pattern = /^.+$/g
+  const pattern = /^.+$/
   return pattern.test(text)
 }
 
 export function isLengthInRange(text: string, min: number, max: number): boolean {
-  console.log(`/^.{${min},${max}}$/g`)
+  console.log(`/^.{${min},${max}}$/`)
   const pattern = new RegExp(`^.{${min},${max}}$`)
   return pattern.test(text)
 }

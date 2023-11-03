@@ -7,6 +7,8 @@ interface InputTextWithTitleProps {
   name?: string
   onTextChange?: (value: string) => void
   defaultValue?: string
+  value?: string
+  disabled?: boolean
 }
 
 const InputTextWithTitle = React.forwardRef(
@@ -16,7 +18,9 @@ const InputTextWithTitle = React.forwardRef(
         <div className='form-gorup'>
           <label className='mont-font fw-600 font-xsss text-dark mb-2'>{props.title ?? 'Title'}</label>
           <input
+            value={props.value}
             ref={ref}
+            disabled={Boolean(props.disabled)}
             defaultValue={props.defaultValue}
             onChange={(event) => props.onTextChange && props.onTextChange(event.target.value)}
             placeholder={props.placeholder}

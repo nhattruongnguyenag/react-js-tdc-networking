@@ -6,6 +6,7 @@ interface TextAreaWithTitleProps {
   placeholder?: string
   value?: string
   onTextChange?: (value: string) => void
+  disabled?: boolean
 }
 
 const TextAreaWithTitle = React.forwardRef(
@@ -14,6 +15,8 @@ const TextAreaWithTitle = React.forwardRef(
       <div className='col-lg-12 mt-3'>
         <label className='mont-font fw-600 font-xsss text-dark mb-2'>{props.title ?? 'Title'}</label>
         <textarea
+          disabled={Boolean(props.disabled)}
+          value={props.value}
           ref={ref}
           className='form-control lh-16 mb-0 h-auto p-3'
           rows={props.rows ?? 5}
