@@ -9,6 +9,7 @@ import { RecruitmentPostRequest } from '../types/request/RecruitmentPostRequest'
 import { SurveyConductRequest } from '../types/request/SurveyConductRequest'
 import { MessageResponseData } from '../types/response/MessageResponseData'
 import { NotificationModel } from '../types/response/NotificationModel'
+import { Post } from '../types/Post'
 import { QuestionResponse } from '../types/response/QuestionResponse'
 import { SurveyPostRequest } from '../types/SurveyPost'
 
@@ -67,6 +68,9 @@ export const TDCSocialNetworkAPI = createApi({
         }
       })
     }),
+    getAllPosts: builder.query<Data<Post[]>, void>({
+      query: () => 'api/posts'
+    }),
     addSurveyConductAnswer: builder.mutation<MessageResponseData, SurveyConductRequest>({
       query: (data) => ({
         url: 'api/posts/survey/conduct',
@@ -100,6 +104,7 @@ export const {
   useSaveDeviceTokenMutation,
   useSendFCMNotificationMutation,
   useAddRecruitmentPostMutation,
+  useGetAllPostsQuery,
   useAddSurveyConductAnswerMutation,
   useJobApplyMutation
 } = TDCSocialNetworkAPI

@@ -1,20 +1,18 @@
-import React from 'react'
-import { Images } from '../../types/Images'
+import React from 'react';
+import ImageGallery from 'react-image-gallery';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import { ImageGalleryDisplay } from '../../types/ImageGalleryDispaly';
 
 export interface CustomizeImageType {
-  images: Images[]
+  images: ImageGalleryDisplay[];
 }
 
-const CustomizeImage = (props: CustomizeImageType) => {
+export default function CustomizeImage(props: Readonly<CustomizeImageType>) {
   return (
-    <>
-      <div className='card-body d-block mb-3 p-0'>
-        <div className='row pe-2 ps-2'>
-          <div className='col-sm-12 p-1'>{JSON.stringify(props.images)}</div>
-        </div>
-      </div>
-    </>
-  )
+    <div>
+      {
+        props.images.length != 0 && <ImageGallery items={props.images} />
+      }
+    </div>
+  );
 }
-
-export default CustomizeImage
