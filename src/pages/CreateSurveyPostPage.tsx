@@ -8,9 +8,11 @@ import { BUSINESS_DASHBOARD_PAGE } from '../constants/Page'
 import ShortAnswerQuestion from '../components/survey/ShortAnswerQuestion'
 import MultiQuestionMultiChoice from '../components/survey/MultiQuestionMultiChoice'
 import MultiQuestionOneChoice from '../components/survey/MultiQuestionOneChoice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 export default function CreateSurveyPostPage() {
-  const onBtnPublishSurveyPostPress = () => {}
+  const onBtnPublishSurveyPostPress = () => { }
 
   return (
     <>
@@ -37,34 +39,33 @@ export default function CreateSurveyPostPage() {
               <MultiQuestionMultiChoice />
               <MultiQuestionOneChoice />
 
-              <div className='mt-3'>
+              <div className='flex flex-row items-center justify-between mt-5'>
                 <Dropdown
                   className='z-50 text-black'
                   label=''
                   placement='top'
                   dismissOnClick={true}
                   renderTrigger={() => (
-                    <span className='cursor-pointer rounded-md bg-gradient-to-r from-cyan-600 to-cyan-500 px-4 py-2 text-white'>
+                    <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                      <FontAwesomeIcon style={{ fontSize: 20, marginRight: 10 }} icon={icon({ name: 'plus' })} />
                       Thêm câu hỏi
-                    </span>
+                    </button>
                   )}
                 >
-                  <Dropdown.Item onClick={() => {}}>Trả lời ngắn</Dropdown.Item>
-                  <Dropdown.Item onClick={() => {}}>Trắc nghiệm</Dropdown.Item>
-                  <Dropdown.Item onClick={() => {}}>Nhiều lựa chọn</Dropdown.Item>
+                  <Dropdown.Item onClick={() => { }}>Trả lời ngắn</Dropdown.Item>
+                  <Dropdown.Item onClick={() => { }}>Trắc nghiệm</Dropdown.Item>
+                  <Dropdown.Item onClick={() => { }}>Nhiều lựa chọn</Dropdown.Item>
                 </Dropdown>
-              </div>
 
-              <div className='row'>
-                <div className='col-lg-12 mb-0'>
-                  <button
-                    type='button'
-                    className='font-xsss fw-600 w175 rounded-3 d-inline-block mt-3 bg-current p-3 text-center text-white'
-                    onClick={() => onBtnPublishSurveyPostPress()}
-                  >
-                    Đăng bài viết
-                  </button>
-                </div>
+                <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-centerdark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <FontAwesomeIcon style={{ fontSize: 18, marginRight: 10 }} icon={icon({ name: 'eye', style: 'regular' })} />
+                    <span>Xem lại bài viết</span>
+                </button>
+
+                <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-centerdark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  Hoàn tất
+                  <FontAwesomeIcon style={{ fontSize: 20, marginLeft: 10 }} icon={icon({ name: 'arrow-right' })} />
+                </button>
               </div>
             </div>
           </div>
