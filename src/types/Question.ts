@@ -10,12 +10,7 @@ export interface QuestionProps {
   data?: Question
   dataResponse?: QuestionResponse
   index?: number
-  isDisableDeleteBtn?: boolean
-}
-
-export interface ChoiceProps {
-  index: number
-  data: string
+  reviewMode?: boolean
 }
 
 export type MultiChoiceQuestion = Question

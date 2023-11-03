@@ -7,7 +7,12 @@ import { toggleDarkMode } from '../../redux/Slice'
 import NotificationPopup from '../NotificationPopup'
 import MobileNavigation from './MobileNavigation'
 import Navigaion from './Navigation'
-import { BUSINESS_DASHBOARD_PAGE, FACULTY_DASHBOARD_PAGE, SEARCH_PAGE, STUDENT_DASHBOARD_PAGE } from '../../constants/Page'
+import {
+  BUSINESS_DASHBOARD_PAGE,
+  FACULTY_DASHBOARD_PAGE,
+  SEARCH_PAGE,
+  STUDENT_DASHBOARD_PAGE
+} from '../../constants/Page'
 import classNames from 'classnames'
 import NavItem from './NavItem'
 
@@ -26,7 +31,7 @@ export default function Header() {
       <div className='nav-header shadow-xs border-0 bg-white'>
         <div className='nav-top bg-inherit'>
           <Link to={BUSINESS_DASHBOARD_PAGE}>
-            <img src='/assets/images/app-logo.jpg' width={'200px'}/>
+            <img src='/assets/images/app-logo.jpg' width={'200px'} />
           </Link>
           <a className='mob-menu chat-active-btn me-2 ms-auto' href='/defaultmessage'>
             <i className='feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight' />
@@ -44,23 +49,22 @@ export default function Header() {
           />
         </div>
 
-        <NavItem to={BUSINESS_DASHBOARD_PAGE}
-          active={BUSINESS_DASHBOARD_PAGE == location.pathname}>
+        <NavItem to={BUSINESS_DASHBOARD_PAGE} active={BUSINESS_DASHBOARD_PAGE == location.pathname}>
           <i className='feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
         </NavItem>
 
-        <NavItem to={STUDENT_DASHBOARD_PAGE}
-          active={Boolean(STUDENT_DASHBOARD_PAGE == location.pathname)}>
+        <NavItem to={STUDENT_DASHBOARD_PAGE} active={Boolean(STUDENT_DASHBOARD_PAGE == location.pathname)}>
           <i className='feather-rss font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
         </NavItem>
 
-        <NavItem to={FACULTY_DASHBOARD_PAGE + '/cong-nghe-thong-tin'}
-          active={location.pathname.includes(FACULTY_DASHBOARD_PAGE)}>
+        <NavItem
+          to={FACULTY_DASHBOARD_PAGE + '/cong-nghe-thong-tin'}
+          active={location.pathname.includes(FACULTY_DASHBOARD_PAGE)}
+        >
           <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
         </NavItem>
 
-        <NavItem to={SEARCH_PAGE}
-          active={SEARCH_PAGE == location.pathname}>
+        <NavItem to={SEARCH_PAGE} active={SEARCH_PAGE == location.pathname}>
           <i className='feather-search font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
         </NavItem>
 
