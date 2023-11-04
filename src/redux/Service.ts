@@ -11,7 +11,7 @@ import { MessageResponseData } from '../types/response/MessageResponseData'
 import { NotificationModel } from '../types/response/NotificationModel'
 import { Post } from '../types/Post'
 import { QuestionResponse } from '../types/response/QuestionResponse'
-import { SurveyPostRequest } from '../types/SurveyPost'
+import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',

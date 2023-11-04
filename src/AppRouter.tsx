@@ -1,6 +1,22 @@
 import classNames from 'classnames'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { BUSINESS_DASHBOARD_PAGE, CONVERSATION_PAGE, CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE, FACULTY_DASHBOARD_PAGE, LOGIN_PAGE, MESSAGE_PAGE, REGISTER_BUSINESS_PAGE, REGISTER_PAGE, REGISTER_STUDENT_PAGE, SEARCH_PAGE, SETTING_PAGE, STUDENT_DASHBOARD_PAGE } from './constants/Page'
+import {
+  ADD_QUESTION_PAGE,
+  BUSINESS_DASHBOARD_PAGE,
+  CONVERSATION_PAGE,
+  CREATE_RECRUITMENT_POST_PAGE,
+  CREATE_SURVEY_POST_PAGE,
+  FACULTY_DASHBOARD_PAGE,
+  LOGIN_PAGE,
+  MESSAGE_PAGE,
+  REGISTER_BUSINESS_PAGE,
+  REGISTER_PAGE,
+  REGISTER_STUDENT_PAGE,
+  REVIEW_SURVEY_POST_PAGE,
+  SEARCH_PAGE,
+  SETTING_PAGE,
+  STUDENT_DASHBOARD_PAGE
+} from './constants/Page'
 import BusinessDashboardPage from './pages/BusinessDashboardPage'
 import ChatPage from './pages/ChatPage'
 import ConversationPage from './pages/ConversationPage'
@@ -19,8 +35,10 @@ import { useAppSelector } from './redux/Hook'
 import BusinessRegistationPage from './pages/BusinessRegistationPage'
 import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
+import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
+import AddQuestionPage from './pages/AddQuestionPage'
 
-export default function Router() {
+export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
 
   return (
@@ -39,6 +57,8 @@ export default function Router() {
             <Route path={SEARCH_PAGE} element={<SearchPage />} />
             <Route path={CREATE_RECRUITMENT_POST_PAGE} element={<CreateRecruitmentPostPage />} />
             <Route path={CREATE_SURVEY_POST_PAGE} element={<CreateSurveyPostPage />} />
+            <Route path={ADD_QUESTION_PAGE} element={<AddQuestionPage />} />
+            <Route path={REVIEW_SURVEY_POST_PAGE} element={<ReviewSurveyPostPage />} />
             <Route path={REGISTER_BUSINESS_PAGE} element={<BusinessRegistationPage />} />
             <Route path={REGISTER_STUDENT_PAGE} element={<StudentRegistationPage />} />
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
