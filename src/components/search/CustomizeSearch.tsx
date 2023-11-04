@@ -6,6 +6,8 @@ import SearchListView from '../listviews/SearchListView';
 import { getStompClient } from '../../sockets/SocketClient'
 import { Client, Frame } from 'stompjs';
 import { useAppSelector } from '../../redux/Hook';
+import axios from 'axios';
+import { SERVER_ADDRESS } from '../../constants/SystemConstant';
 
 let stompClient: Client
 export default function CustomizeSearch() {
@@ -27,15 +29,18 @@ export default function CustomizeSearch() {
         value: 'khoa'
     }])
     const [posts, setPost] = useState([{
-        name: 'Bài viết'
+        name: 'Bài viết',
+        value: 'thong-thuong'
     }, {
-        name: 'Khảo sát'
+        name: 'Khảo sát',
+        value: 'khao-sat'
     }, {
-        name: 'Tin tuyển dụng'
+        name: 'Tin tuyển dụng',
+        value: 'tuyen-dung'
     }])
     const [sub, setSub] = useState('user')
     const [subLabel, setSubLabel] = useState('Người dùng')
-    const [type, setType] = useState('sinh-vien')
+    const [type, setType] = useState('')
     const [search, setSearch] = useState('')
     const { conversations, userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
     const [data, setData] = useState([])
@@ -51,8 +56,8 @@ export default function CustomizeSearch() {
         }
         const onMessageReceived = (payload: any) => {
             setData(JSON.parse(payload.body))
-            // console.log(JSON.stringify(data));
-            // console.log(JSON.parse(payload.body));
+            console.log(JSON.parse(payload.body));
+
         }
         const onError = (err: string | Frame) => {
             console.log(err)
@@ -60,42 +65,35 @@ export default function CustomizeSearch() {
         stompClient.connect({}, onConnected, onError)
     }, [])
 
-    const handleSearch = () => {
-        console.log(search);
-        
-        stompClient.send(`/app/find/user/follow`, {}, JSON.stringify({
-            userId: userLogin?.id,
-            type: type,
-            name: search,
-            userFollowId: null
-        }))
-    }
-    // if (sub == 'user') {
-    // }
-    // else {
-    //   axios
-    //     .post(URL, {
-    //       userId: userLogin?.id,
-    //       type: type,
-    //       name: search
-    //     })
-    //     .then((response) => {
-    //       setMasterData(response.data.data)
-    //       console.log(masterData);
+    useEffect(() => {
+        setData([])
+    }, [type, sub])
 
-    //       setQty(masterData.length)
-    //       setSearch('')
-    //     })
-    // }
+    const handleSearch = () => {
+        setSearch('')
+        if (sub == 'user') {
+            stompClient.send(`/app/find/user/follow`, {}, JSON.stringify({
+                userId: userLogin?.id,
+                type: type,
+                name: search,
+                userFollowId: null
+            }))
+        }
+        else {
+            axios
+                .post(`${SERVER_ADDRESS}api/find/post`, {
+                    userId: userLogin?.id,
+                    type: type,
+                    name: search
+                })
+                .then((response) => {
+                    setData(response.data.data)
+                })
+        }
+    }
+
 
     const handleEnter = (event: any) => {
-        // if (ref.current) {
-        //     ref.current.addEventListener('keypress', event => {
-        //         if (event.key == 'Enter') {
-        //             handleSearch()
-        //         }
-        //     })
-        // }
         if (event.key == 'Enter') {
             handleSearch()
         }
@@ -103,16 +101,16 @@ export default function CustomizeSearch() {
 
     const handleFollow = (userFollowId: number) => {
         stompClient.send(
-          `/app/find/user/follow`,
-          {},
-          JSON.stringify({
-            userId: userLogin?.id,
-            type: type,
-            name: search,
-            userFollowId: userFollowId
-          })
+            `/app/find/user/follow`,
+            {},
+            JSON.stringify({
+                userId: userLogin?.id,
+                type: type,
+                name: search,
+                userFollowId: userFollowId
+            })
         )
-      }
+    }
 
     return (
         <div ref={ref} className='main-content bg-lightblue theme-dark-bg' style={{ height: '100vh' }}>
@@ -123,7 +121,7 @@ export default function CustomizeSearch() {
                             <div className='card-body p-lg-5 w-100 border-0 p-0' id='card_search'>
                                 <div className='header-search ms-1'>
                                     <div className='form-group icon-input mb-6'>
-                                        <div style={{position: 'absolute', paddingBottom: 20}}>
+                                        <div style={{ position: 'absolute', paddingBottom: 20 }}>
                                             <i className='feather-search font-sm text-info' />
                                         </div>
                                         <input
@@ -168,16 +166,26 @@ export default function CustomizeSearch() {
                                     {
                                         sub === 'user'
                                             ? (users.map((item, index) => <button key={index} style={{ borderRadius: 50, marginLeft: 20 }} className='btn btn-primary' onClick={() => { setType(item.value) }}>{item.name}</button>))
-                                            : (posts.map((item, index) => <button key={index} style={{ borderRadius: 50, marginLeft: 20 }} className='btn btn-primary' onClick={() => setType(item.name)}>{item.name}</button>))
+                                            : (posts.map((item, index) => <button key={index} style={{ borderRadius: 50, marginLeft: 20 }} className='btn btn-primary' onClick={() => { setType(item.value) }}>{item.name}</button>))
                                     }
                                 </div>
                             </div>
                             {/*  */}
                         </div>
-                        <SearchListView data={data} type={type} handleFollow={handleFollow}/>
+                        <SearchListView data={data} type={sub} handleFollow={handleFollow} />
                     </div>
                 </div>
             </div>
         </div>
     )
 }
+
+
+
+// if (ref.current) {
+//     ref.current.addEventListener('keypress', event => {
+//         if (event.key == 'Enter') {
+//             handleSearch()
+//         }
+//     })
+// }
