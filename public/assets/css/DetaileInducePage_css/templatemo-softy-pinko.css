@@ -856,6 +856,7 @@ blog
   border-radius: 20px;
   position: relative;
   height: 200px;
+  margin-left: 50px;
 }
 
 .blog-post-thumb .blog-content {
