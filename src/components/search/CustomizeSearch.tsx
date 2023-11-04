@@ -150,6 +150,7 @@ export default function CustomizeSearch() {
                                                     <Dropdown.Item
                                                         key={index}
                                                         onClick={() => {
+                                                            setData([])
                                                             setSub(subject.value)
                                                             setSubLabel(subject.label)
                                                         }}
