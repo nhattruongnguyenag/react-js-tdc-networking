@@ -49,7 +49,7 @@ const isAllFieldsValid = (validate: CreateRecruitmentPostValidate): boolean => {
 }
 
 export default function CreateRecruitmentPostPage() {
-  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
   const [createRecruitmentPostRequest, createRecruitmentPostResponse] = useAddRecruitmentPostMutation()
   const navigate = useNavigate()
   const [validate, setValidate] = useState<CreateRecruitmentPostValidate>({
@@ -145,27 +145,30 @@ export default function CreateRecruitmentPostPage() {
     [validate]
   )
 
-  const onExpirationChangeText = useCallback((value: string) => {
-    if (moment().isAfter(moment(value.replace('T', ' ')))) {
-      setValidate({
-        ...validate,
-        expiration: {
-          ...validate.expiration,
-          isError: true,
-          isVisible: true
-        }
-      })
-    } else {
-      setValidate({
-        ...validate,
-        expiration: {
-          ...validate.expiration,
-          isError: false,
-          isVisible: false
-        }
-      })
-    }
-  }, [validate])
+  const onExpirationChangeText = useCallback(
+    (value: string) => {
+      if (moment().isAfter(moment(value.replace('T', ' ')))) {
+        setValidate({
+          ...validate,
+          expiration: {
+            ...validate.expiration,
+            isError: true,
+            isVisible: true
+          }
+        })
+      } else {
+        setValidate({
+          ...validate,
+          expiration: {
+            ...validate.expiration,
+            isError: false,
+            isVisible: false
+          }
+        })
+      }
+    },
+    [validate]
+  )
 
   const onBenefitChangeText = useCallback(
     (value: string) => {
@@ -349,98 +352,113 @@ export default function CreateRecruitmentPostPage() {
               <div className='row'>
                 <InputTextWithTitle
                   onTextChange={(value) => onTitleChangeText(value)}
-                  ref={(ref) => ref ? elementRefs.jobTitle = ref : undefined}
+                  ref={(ref) => (ref ? (elementRefs.jobTitle = ref) : undefined)}
                   title='Tên công việc'
-                  placeholder={'Nhập tên công việc...'} />
+                  placeholder={'Nhập tên công việc...'}
+                />
 
                 <ValidateTextView
                   textError={validate.title.textError}
                   isError={validate.title.isError}
-                  isVisible={validate.title.isVisible} />
+                  isVisible={validate.title.isVisible}
+                />
 
                 <InputTextWithTitle
                   onTextChange={(value) => onEmploymentTypeChangeText(value)}
-                  ref={(ref) => ref ? elementRefs.employmentType = ref : undefined}
+                  ref={(ref) => (ref ? (elementRefs.employmentType = ref) : undefined)}
                   title='Hình thức làm việc'
-                  placeholder={'Nhập hình thức làm việc...'} />
+                  placeholder={'Nhập hình thức làm việc...'}
+                />
 
                 <ValidateTextView
                   textError={validate.employmentType.textError}
                   isError={validate.employmentType.isError}
-                  isVisible={validate.employmentType.isVisible} />
+                  isVisible={validate.employmentType.isVisible}
+                />
 
                 <InputTextWithTitle
                   defaultValue={moment().format('YYYY-MM-DD HH:mm:ss')}
                   onTextChange={(value) => onExpirationChangeText(value)}
-                  ref={(ref) => ref ? elementRefs.expiration = ref : undefined}
+                  ref={(ref) => (ref ? (elementRefs.expiration = ref) : undefined)}
                   title='Thời hạn ứng tuyển'
                   type='datetime-local'
-                  placeholder={'Nhập thời hạn ứng tuyển...'} />
+                  placeholder={'Nhập thời hạn ứng tuyển...'}
+                />
 
                 <ValidateTextView
                   textError={validate.expiration.textError}
                   isError={validate.expiration.isError}
-                  isVisible={validate.expiration.isVisible} />
+                  isVisible={validate.expiration.isVisible}
+                />
 
                 <TextAreaWithTitle
                   onTextChange={(value) => onLocationChangeText(value)}
-                  ref={(ref) => ref ? elementRefs.location = ref : undefined}
+                  ref={(ref) => (ref ? (elementRefs.location = ref) : undefined)}
                   rows={5}
                   placeholder='Nhập địa điểm làm việc...'
-                  title='Địa điểm làm việc' />
+                  title='Địa điểm làm việc'
+                />
 
                 <ValidateTextView
                   textError={validate.location.textError}
                   isError={validate.location.isError}
-                  isVisible={validate.location.isVisible} />
+                  isVisible={validate.location.isVisible}
+                />
 
                 <TextAreaWithTitle
                   onTextChange={(value) => onDescriptionChangeText(value)}
-                  ref={(ref) => ref ? elementRefs.description = ref : undefined}
+                  ref={(ref) => (ref ? (elementRefs.description = ref) : undefined)}
                   rows={10}
                   placeholder={'Nhập mô tả...'}
-                  title='Mô tả công việc' />
+                  title='Mô tả công việc'
+                />
 
                 <InputTextWithTitle
                   onTextChange={(value) => onSalaryChangeText(value)}
-                  ref={(ref) => ref ? elementRefs.salary = ref : undefined}
+                  ref={(ref) => (ref ? (elementRefs.salary = ref) : undefined)}
                   title='Lương'
-                  placeholder={'Nhập mức lương...'} />
+                  placeholder={'Nhập mức lương...'}
+                />
 
                 <ValidateTextView
                   textError={validate.salary.textError}
                   isError={validate.salary.isError}
-                  isVisible={validate.salary.isVisible} />
+                  isVisible={validate.salary.isVisible}
+                />
 
                 <TextAreaWithTitle
                   onTextChange={(value) => onRequirementChangeText(value)}
-                  ref={(ref) => ref ? elementRefs.requirement = ref : undefined}
+                  ref={(ref) => (ref ? (elementRefs.requirement = ref) : undefined)}
                   rows={10}
                   placeholder={'Nhập yêu cầu...'}
-                  title='Yêu cầu' />
+                  title='Yêu cầu'
+                />
 
                 <ValidateTextView
                   textError={validate.requirement.textError}
                   isError={validate.requirement.isError}
-                  isVisible={validate.requirement.isVisible} />
+                  isVisible={validate.requirement.isVisible}
+                />
 
                 <TextAreaWithTitle
                   onTextChange={(value) => onBenefitChangeText(value)}
-                  ref={(ref) => ref ? elementRefs.benefit = ref : undefined}
+                  ref={(ref) => (ref ? (elementRefs.benefit = ref) : undefined)}
                   rows={20}
                   placeholder={'Nhập quyền lợi...'}
-                  title='Quyền lợi' />
+                  title='Quyền lợi'
+                />
 
                 <ValidateTextView
                   textError={validate.benefit.textError}
                   isError={validate.benefit.isError}
-                  isVisible={validate.benefit.isVisible} />
+                  isVisible={validate.benefit.isVisible}
+                />
               </div>
               <div className='row'>
                 <div className='col-lg-12 mb-0'>
                   <button
                     type='button'
-                    className='mt-3 font-xsss fw-600 w175 rounded-3 d-inline-block bg-current p-3 text-center text-white'
+                    className='font-xsss fw-600 w175 rounded-3 d-inline-block mt-3 bg-current p-3 text-center text-white'
                     onClick={() => onBtnPublishRecruitmentPostPress()}
                   >
                     Đăng bài viết

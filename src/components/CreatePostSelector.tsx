@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE } from '../constants/Page'
 import { TEXT_CREATE_NEW_POST } from '../constants/StringVietnamese'
-import CreateNormalPostModal, { MyVerticallyCenteredModal } from './modal/CreateNormalPostModal'
+import { MyVerticallyCenteredModal } from './modal/CreateNormalPostModal'
 
 export default function CreatePostSelector() {
   const [createNormalPostModalShow, setCreateNormalPostModalShow] = useState(false)

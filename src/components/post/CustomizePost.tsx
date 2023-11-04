@@ -1,4 +1,4 @@
-import React, { useCallback} from 'react'
+import React, { useCallback } from 'react'
 import CustomizeHeaderPost from './CustomizeHeaderPost'
 import CustomizeBodyPost from './CustomizeBodyPost'
 import CustomizeBottomPost from './CustomizeBottomPost'
@@ -74,12 +74,12 @@ const CustomizePost = (props: Post) => {
     // )
   }
 
-  const handleClickBtnRecruitmentDetailEvent = (idPost:number) => {
-    alert('click btn detail recruitment'+idPost);
+  const handleClickBtnRecruitmentDetailEvent = (idPost: number) => {
+    alert('click btn detail recruitment' + idPost);
   }
-  
-  const handleClickBtnSurveyDetailEvent = (idPost:number) => {
-    alert('click btn detail survey'+idPost);
+
+  const handleClickBtnSurveyDetailEvent = (idPost: number) => {
+    alert('click btn detail survey' + idPost);
   }
 
   const changeDataToImagGallerys = useCallback(() => {
@@ -89,7 +89,6 @@ const CustomizePost = (props: Post) => {
     }));
     return newImagesGallerys;
   }, [])
-
 
 
   switch (props.type) {

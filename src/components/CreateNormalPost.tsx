@@ -36,7 +36,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   const [normalPost, setNormalPost] = useState<NormalPost>({
     userId: userLogin?.id ?? -1,
     type: TYPE_NORMAL_POST,
-    groupId: 1,
+    groupId: 2,
     images: [],
     content: ''
   })
