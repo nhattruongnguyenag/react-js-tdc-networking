@@ -71,6 +71,15 @@ export const TDCSocialNetworkAPI = createApi({
     getAllPosts: builder.query<Data<Post[]>, void>({
       query: () => 'api/posts'
     }),
+    getFacultyPosts: builder.query<Data<Post[]>, { faculty: string }>({
+      query: (faculty) => `api/posts/group/group_dien_dien_tu`
+    }),
+    getBusinessPosts: builder.query<Data<Post[]>, void>({
+      query: () => 'api/posts/group/group_connect_business'
+    }),
+    getStudentPosts: builder.query<Data<Post[]>, void>({
+      query: () => 'api/posts/group/group_tdc'
+    }),
     addSurveyConductAnswer: builder.mutation<MessageResponseData, SurveyConductRequest>({
       query: (data) => ({
         url: 'api/posts/survey/conduct',
@@ -105,6 +114,9 @@ export const {
   useSendFCMNotificationMutation,
   useAddRecruitmentPostMutation,
   useGetAllPostsQuery,
+  useGetFacultyPostsQuery,
+  useGetBusinessPostsQuery,
+  useGetStudentPostsQuery,
   useAddSurveyConductAnswerMutation,
   useJobApplyMutation
 } = TDCSocialNetworkAPI
