@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import {
   ADD_QUESTION_PAGE,
   BUSINESS_DASHBOARD_PAGE,
@@ -7,6 +7,7 @@ import {
   CREATE_RECRUITMENT_POST_PAGE,
   CREATE_SURVEY_POST_PAGE,
   FACULTY_DASHBOARD_PAGE,
+  FUNCTION_DESCRIPTION_PAGE,
   LOGIN_PAGE,
   MESSAGE_PAGE,
   REGISTER_BUSINESS_PAGE,
@@ -17,26 +18,25 @@ import {
   SETTING_PAGE,
   STUDENT_DASHBOARD_PAGE
 } from './constants/Page'
+import AddQuestionPage from './pages/AddQuestionPage'
 import BusinessDashboardPage from './pages/BusinessDashboardPage'
+import BusinessRegistationPage from './pages/BusinessRegistationPage'
 import ChatPage from './pages/ChatPage'
 import ConversationPage from './pages/ConversationPage'
 import CreateRecruitmentPostPage from './pages/CreateRecruitmentPostPage'
 import CreateSurveyPostPage from './pages/CreateSurveyPostPage'
+import DetailIntroducePage from './pages/DetailedIntroducePage'
 import FacultyDashboardPage from './pages/FacultyDashboardPage'
 import IntroducePage from './pages/IntroducePage'
 import LoginPage from './pages/LoginPage'
 import NoPage from './pages/NoPage'
-import RegisterBusinessPage from './pages/RegisterBusinessPage'
-import RegisterStudentPage from './pages/RegisterStudentPage'
+import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import SearchPage from './pages/SearchPage'
+import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import SettingPage from './pages/SettingPage'
 import StudentDashboardPage from './pages/StudentDashboardPage'
-import { useAppSelector } from './redux/Hook'
-import BusinessRegistationPage from './pages/BusinessRegistationPage'
-import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
-import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
-import AddQuestionPage from './pages/AddQuestionPage'
+import { useAppSelector } from './redux/Hook'
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -62,7 +62,9 @@ export default function AppRouter() {
             <Route path={REGISTER_BUSINESS_PAGE} element={<BusinessRegistationPage />} />
             <Route path={REGISTER_STUDENT_PAGE} element={<StudentRegistationPage />} />
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
+            <Route path={FUNCTION_DESCRIPTION_PAGE} element={<DetailIntroducePage />} />
             <Route path='*' element={<NoPage />} />
+            <Route path='/' element={<IntroducePage />} />
           </Route>
         </Routes>
       </BrowserRouter>
