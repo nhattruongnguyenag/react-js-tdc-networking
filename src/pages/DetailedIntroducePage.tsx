@@ -17,11 +17,11 @@ export default function DetailIntroducePage() {
                 {/* Logo End  */}
                 {/* Menu Start  */}
                 <ul className="nav">
-                  <li><a href="#welcome" className="active">Trang chủ</a></li>
-                  <li><a href="#features">Tổng quan</a></li>
-                  <li><a href="#blog">Các chức năng phụ</a></li>
-                  <li><a href="#blog">Đăng nhập</a></li>
-                  <li><a href="#blog">Đăng kí</a></li>
+                  <li><a href="#welcome" className="active">Mở đầu</a></li>
+                  <li><a href="#features">Chi tiết</a></li>
+                  <li><a href="#blog">Các chức năng khác</a></li>
+                  <li><a href="#footer">Đăng nhập</a></li>
+                  <li><a href="#footer">Đăng kí</a></li>
                 </ul>
                 <a className='menu-trigger'>
                   <span>Menu</span>
@@ -116,7 +116,7 @@ export default function DetailIntroducePage() {
             <div className="col-lg-1"></div>
             <div className="col-lg-6 col-md-12 col-sm-12 align-self-center mobile-top-fix">
               <div className="left-heading">
-                <h2 className="section-title">Giao tiếp với nhau</h2>
+                <h2 className="section-title">Tạo cầu nối với các sinh viên TDC</h2>
               </div>
               <div className="left-text">
                 <p>Nullam sit amet purus libero. Etiam ullamcorper nisl ut augue blandit, at finibus leo
@@ -192,7 +192,7 @@ export default function DetailIntroducePage() {
           <div className="row">
             <div className="col-lg-12">
               <div className="center-heading">
-                <h2 className="section-title">Các chức năng phụ</h2>
+                <h2 className="section-title">Các chức năng khác</h2>
               </div>
             </div>
             <div className="offset-lg-3 col-lg-6">
@@ -263,7 +263,7 @@ export default function DetailIntroducePage() {
 
       {/* Footer Start */}
       <footer>
-        <div className="container">
+        <div className="container" id="footer">
           <div className="row">
             <div className="col-lg-12 col-md-12 col-sm-12">
               <ul className="social">

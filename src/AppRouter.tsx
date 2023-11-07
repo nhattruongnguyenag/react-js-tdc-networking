@@ -20,7 +20,7 @@ export default function Router() {
       <BrowserRouter>
         <Routes>
           <Route>
-            <Route path="/" element={<DetailIntroducePage />} />
+            <Route path="mo-ta-chuc-nang" element={<DetailIntroducePage />} />
             <Route path='dang-nhap' element={<LoginPage />} />
             <Route index path='doanh-nghiep/bai-viet' element={<BusinessDashboardPage />} />
             <Route path='hoi-thoai' element={<ConversationPage />} />
