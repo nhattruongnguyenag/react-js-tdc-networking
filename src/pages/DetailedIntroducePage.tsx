@@ -119,8 +119,7 @@ export default function DetailIntroducePage() {
                 <h2 className="section-title">Tạo cầu nối với các sinh viên TDC</h2>
               </div>
               <div className="left-text">
-                <p>Nullam sit amet purus libero. Etiam ullamcorper nisl ut augue blandit, at finibus leo
-                  efficitur. Nam gravida purus non sapien auctor, ut aliquam magna ullamcorper.</p>
+                <p>Các sinh viên TDC có thể nhắn tin với nhau, trao đổi kinh nghiệm hay chia sẻ những thông tin hữu ích</p>
               </div>
             </div>
           </div>
@@ -142,9 +141,7 @@ export default function DetailIntroducePage() {
                 <h2 className="section-title">Tuyển dụng sinh viên</h2>
               </div>
               <div className="left-text">
-                <p>Aenean pretium, ipsum et porttitor auctor, metus ipsum iaculis nisi, a bibendum lectus libero
-                  vitae urna. Sed id leo eu dolor luctus congue sed eget ipsum. Nunc nec luctus libero. Etiam
-                  quis dolor elit.</p>
+                <p>Doanh nghiệp có thể tuyển dụng sinh viên với một hoặt nhiều bài viết khác nhau trong một khoa bất kì. Bên cạnh đó sinh viên có thể nộp CV hay tham gia một số khảo sát của doanh nghiệp để có cơ hội có một công việc nhất định sau khi ra trường.</p>
               </div>
             </div>
             <div className="col-lg-1"></div>
@@ -171,8 +168,7 @@ export default function DetailIntroducePage() {
                 <h2 className="section-title">Khảo sát chuyên ngành</h2>
               </div>
               <div className="left-text">
-                <p>Nullam sit amet purus libero. Etiam ullamcorper nisl ut augue blandit, at finibus leo
-                  efficitur. Nam gravida purus non sapien auctor, ut aliquam magna ullamcorper.</p>
+                <p>Một số Khoa của trường sẽ tạo ra nhiều khảo sát khác nhau nhằm giúp các sinh viên có cơ hội góp ý. Qua đó giúp các Khoa trở nên hoàn thiện và phù hợp với các sinh viên.</p>
               </div>
             </div>
           </div>
@@ -197,8 +193,7 @@ export default function DetailIntroducePage() {
             </div>
             <div className="offset-lg-3 col-lg-6">
               <div className="center-text">
-                <p>Integer molestie aliquam gravida. Nullam nec arcu finibus, imperdiet nulla vitae, placerat
-                  nibh. Cras maximus venenatis molestie.</p>
+                <p>Dưới đây là một số chức năng khác. Sinh viên có thể tham khảo thêm.</p>
               </div>
             </div>
           </div>
@@ -208,51 +203,45 @@ export default function DetailIntroducePage() {
             <div className="col-lg-4 col-md-6 col-sm-12">
               <div className="blog-post-thumb">
                 <div className="img">
-                <img src="assets/images/blog-item-01.png" alt="" />
+                  <img src="assets/images/taobaiviet.png" alt="" />
                 </div>
                 <div className="blog-content">
                   <h3>
-                    <a href="#">Vivamus ac vehicula dui</a>
+                    <a href="#">Tạo bài viết</a>
                   </h3>
                   <div className="text">
-                    Cras aliquet ligula dui, vitae fermentum velit tincidunt id. Praesent eu finibus nunc.
-                    Nulla in sagittis eros. Aliquam egestas augue.
+                    Mỗi sinh viên cũng có thể tạo bài bài viết cho riêng mình để mọi sinh viên góp ý. 
                   </div>
-                  <a href="#" className="main-button">Read More</a>
                 </div>
               </div>
             </div>
             <div className="col-lg-4 col-md-6 col-sm-12">
               <div className="blog-post-thumb">
                 <div className="img">
-                <img src="assets/images/blog-item-02.png" alt="" />
+                  <img src="assets/images/tuongtac.png" alt="" />
                 </div>
                 <div className="blog-content">
                   <h3>
-                    <a href="#">Phasellus convallis augue</a>
+                    <a href="#">Tăng tương tác</a>
                   </h3>
                   <div className="text">
-                    Aliquam commodo ornare nisl, et scelerisque nisl dignissim ac. Vestibulum finibus urna
-                    ut velit venenatis, vel ultrices sapien mattis.
+                    Các sinh viên đều có thể thả cảm xúc cho các bài viết hoặc bình luận cho các bài viết mà mình quan tâm
                   </div>
-                  <a href="#" className="main-button">Read More</a>
                 </div>
               </div>
             </div>
             <div className="col-lg-4 col-md-6 col-sm-12">
               <div className="blog-post-thumb">
                 <div className="img">
-                <img src="assets/images/blog-item-03.png" alt="" />
+                  <img src="assets/images/baomat.png" alt="" />
                 </div>
                 <div className="blog-content">
                   <h3>
-                    <a href="#">Nam gravida purus non</a>
+                    <a href="#">Thay đổ thông tin tài khoản</a>
                   </h3>
                   <div className="text">
-                    Maecenas eu erat vitae dui convallis consequat vel gravida nulla. Vestibulum finibus
-                    euismod odio, ut tempus enim varius eu.
+                    Mỗi sinh viên đều có một tài khoản cá nhân. Để tránh trường hợp kẻ xấu lợi dụng tài khoản, sinh viên có thể thay đổi thông tin để tăng cường bảo mật.
                   </div>
-                  <a href="#" className="main-button">Read More</a>
                 </div>
               </div>
             </div>
