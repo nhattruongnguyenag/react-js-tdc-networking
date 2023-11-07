@@ -26,7 +26,7 @@ export default function DetailIntroducePage() {
                 {/* Menu Start  */}
                 <ul className='nav'>
                   <li>
-                    <a href='#mo-dau' className={classNames(currentAnchor === '#mo-dau' ? 'active' : '')}>
+                    <a href='#mo-dau' className={classNames(currentAnchor === '#mo-dau' || currentAnchor === '' ? 'active' : '')}>
                       Mở đầu
                     </a>
                   </li>
