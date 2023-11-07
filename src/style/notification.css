@@ -1,0 +1,16 @@
+.itemNotification {
+  padding-top: 10;
+}
+.btn-menu {
+  position: 'absolute';
+  width: 40;
+  height: 35;
+  border-radius: 50;
+  background-color: 'red';
+}
+.listNotification {
+  height: 700;
+}
+.h1a {
+  background-color: 'red';
+}

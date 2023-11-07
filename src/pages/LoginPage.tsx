@@ -13,6 +13,8 @@ import { setUserLogin } from '../redux/Slice'
 import { InputTextValidate, isBlank, isEmail, isLengthInRange, isPassword } from '../utils/ValidateUtils'
 import TextValidate from '../components/TextValidate'
 import ReactLoading from 'react-loading'
+import { useNavigate } from 'react-router-dom'
+import '../style/login.css'
 interface UserLogin {
   emailUser: InputTextValidate
   passwordUser: InputTextValidate
@@ -30,8 +32,9 @@ const isAllFieldsValid = (validate: UserLogin): boolean => {
   return true
 }
 
-export default function LoginPage({ navigation }: any) {
+export default function LoginPage() {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const [userLoginRequest, setUserLoginRequest] = useState<UserLoginRequest>({
     email: '',
@@ -138,37 +141,28 @@ export default function LoginPage({ navigation }: any) {
     }
   }
 
-  const [checkRemember, setCheckRemember] = useState(false)
-  const handleCheckRe = () => {
-    if (!checkRemember) {
-      setCheckRemember(true)
-    } else {
-      setCheckRemember(false)
-    }
-  }
-
   const onSubmit = (event: any) => {
     if (isAllFieldsValid(validate)) {
       event.preventDefault()
       setIsLoading(true)
       axios
         .post<UserLoginRequest, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/login', userLoginRequest)
-        .then((loginResponse:any) => {
+        .then((loginResponse: any) => {
           const token = loginResponse.data.data.token
           axios
             .get<void, AxiosResponse<Data<Student | Faculty | Business>>>(SERVER_ADDRESS + `api/users/token/${token}`)
-            .then((response:any) => {
-              if (response.status == 200 || checkRemember === true) {
+            .then((response) => {
+              if (response.status == 200) {
                 setIsLoading(false)
                 sessionStorage.setItem(TOKEN_KEY, JSON.stringify(token))
                 sessionStorage.setItem(USER_LOGIN_KEY, JSON.stringify(response.data.data))
                 dispatch(setUserLogin(response.data.data))
                 console.log(response.data.data)
-                alert('Đăng nhập thành công')
+                navigate('/doanh-nghiep/bai-viet')
               }
             })
         })
-        .catch((error:any) => {
+        .catch((error: any) => {
           setIsLoading(false)
           alert('Sai thông tin email hoặc mật khẩu')
         })
@@ -193,7 +187,7 @@ export default function LoginPage({ navigation }: any) {
             <a href='/'>
               <i className='feather-zap text-success display1-size me-2 ms-0'></i>
               <span className='d-inline-block fredoka-font ls-3 fw-600 font-xxl logo-text mb-0 text-current'>
-                Tdcer.{' '}
+                TDCer.{' '}
               </span>{' '}
             </a>
             <button className='nav-menu me-0 ms-auto'></button>
@@ -208,8 +202,8 @@ export default function LoginPage({ navigation }: any) {
             <div className='card login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
                 <h2 className='fw-700 display1-size display2-md-size mb-3'>
-                  Login into <br />
-                  your account
+                  Đăng nhập vào <br />
+                  tài khoản của bạn
                 </h2>
                 <form>
                   <div className='form-group icon-input mb-3'>
@@ -217,7 +211,7 @@ export default function LoginPage({ navigation }: any) {
                     <input
                       type='text'
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Your Email Address'
+                      placeholder='Email'
                       onChange={(e) => checkEmailChange(e)}
                     />
                     <TextValidate
@@ -231,7 +225,7 @@ export default function LoginPage({ navigation }: any) {
                     <input
                       type='Password'
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder='Password'
+                      placeholder='Mật khẩu'
                       onChange={(e) => checkPasswordChange(e)}
                     />
                     <TextValidate
@@ -242,17 +236,9 @@ export default function LoginPage({ navigation }: any) {
                     <i className='font-sm ti-lock text-grey-500 pe-0'></i>
                   </div>
                   <div className='form-check mb-3 text-left'>
-                    <input
-                      type='checkbox'
-                      checked={checkRemember}
-                      className='form-check-input mt-1'
-                      id='exampleCheck5'
-                      onChange={() => handleCheckRe()}
-                    />
-                    <label className='form-check-label font-xsss text-grey-500'>Remember me</label>
-                    <a href='/forgot' className='fw-600 font-xsss text-grey-700 float-right'>
-                      Forgot your Password?
-                    </a>
+                    <button type='button' className='fw-600 font-xsss text-grey-700 float-right'>
+                      Quên mật khẩu?
+                    </button>
                   </div>
                 </form>
 
@@ -262,20 +248,19 @@ export default function LoginPage({ navigation }: any) {
                       <button
                         type='button'
                         onClick={(e) => onSubmit(e)}
-                        
                         className='form-control style2-input fw-600 bg-blue border-0 p-0 text-center text-white '
                       >
-                        Login
+                        Đăng nhập
                       </button>
-                      <div className='loading' style={{display: isLoading? 'flex' : 'none'}}>
+                      <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#0000FF' height={50} width={50} />
                       </div>
                     </div>
                   </div>
                   <h6 className='text-grey-500 font-xsss fw-500 lh-32 mb-0 mt-0'>
-                    Don't have account?{' '}
-                    <button type='button' className='txt-blue'>
-                      Register
+                    Chưa có tài khoản?{' '}
+                    <button type='button' className='txt-blue' onClick={() => navigate('/dang-ky')}>
+                      Đăng ký
                     </button>
                   </h6>
                 </div>

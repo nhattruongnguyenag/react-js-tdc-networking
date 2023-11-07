@@ -1,3 +1,5 @@
+import { QuestionResponse } from './response/QuestionResponse'
+
 export interface Question {
   type: string
   title: string
@@ -5,13 +7,10 @@ export interface Question {
 }
 
 export interface QuestionProps {
-  data: Question
-  index: number
-}
-
-export interface ChoiceProps {
-  index: number
-  data: string
+  data?: Question
+  dataResponse?: QuestionResponse
+  index?: number
+  reviewMode?: boolean
 }
 
 export type MultiChoiceQuestion = Question

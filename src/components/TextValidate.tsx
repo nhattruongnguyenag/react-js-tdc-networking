@@ -10,7 +10,7 @@ interface TextValidateProps {
 
 export default function TextValidate(props: TextValidateProps) {
   return (
-    <label style={{color: props.isError ? COLOR_DANGER : COLOR_SUCCESS, display: props.isVisible ? 'flex' : 'none'}}>
+    <label style={{ color: props.isError ? COLOR_DANGER : COLOR_SUCCESS, display: props.isVisible ? 'flex' : 'none' }}>
       {props.isError ? props.textError : ''}
     </label>
   )
