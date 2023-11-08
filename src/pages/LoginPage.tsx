@@ -147,7 +147,7 @@ export default function LoginPage() {
       setIsLoading(true)
       axios
         .post<UserLoginRequest, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/login', userLoginRequest)
-        .then((loginResponse) => {
+        .then((loginResponse: any) => {
           const token = loginResponse.data.data.token
           axios
             .get<void, AxiosResponse<Data<Student | Faculty | Business>>>(SERVER_ADDRESS + `api/users/token/${token}`)
@@ -162,7 +162,7 @@ export default function LoginPage() {
               }
             })
         })
-        .catch((error) => {
+        .catch((error: any) => {
           setIsLoading(false)
           alert('Sai thông tin email hoặc mật khẩu')
         })

@@ -5,7 +5,6 @@ import { COMMENT_ACTION, LIKE_ACTION, SHOW_LIST_USER_REACTED } from '../../const
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import DefaultAvatar from '../common/DefaultAvatar'
 
-
 export interface BottomPostType {
   id: number
   userLoginId: number | undefined
@@ -32,15 +31,13 @@ const CustomizeBottomPost = (props: BottomPostType) => {
   return (
     <div className='card-body d-flex p-0'>
       <div className='emoji-bttn pointer d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss me-2'>
-        <button 
-        className='like-button-bottom-wrapper'
-        onClick={() => props.handleClickBottomBtnEvent(LIKE_ACTION)}>
+        <button className='like-button-bottom-wrapper' onClick={() => props.handleClickBottomBtnEvent(LIKE_ACTION)}>
           {props.isLike ? (
             <i className='feather-thumbs-up bg-primary-gradiant btn-round-xs font-xss me-1 text-white' />
           ) : (
             <i className='feather-thumbs-up btn-round-xs font-xss text-dark me-1' />
           )}
-        {getLikeQty(props.likes)} Like
+          {getLikeQty(props.likes)} Like
         </button>
       </div>
       <button
@@ -58,14 +55,18 @@ const CustomizeBottomPost = (props: BottomPostType) => {
         data-bs-toggle='dropdown'
         aria-expanded='false'
       >
-        {props.likes.map((item, index) => (
-          item.image != null ? <img
-            key={item.id}
-            src={SERVER_ADDRESS + 'api/images/' + item.image}
-            alt='avatar'
-            className='avatar-user-reacted-list shadow-sm me-1'
-          /> : <DefaultAvatar key={item.id} name={item.name} size={35} styleBootstrap={'me-1'} />
-        ))}
+        {props.likes.map((item, index) =>
+          item.image != null ? (
+            <img
+              key={item.id}
+              src={SERVER_ADDRESS + 'api/images/' + item.image}
+              alt='avatar'
+              className='avatar-user-reacted-list me-1 shadow-sm'
+            />
+          ) : (
+            <DefaultAvatar key={item.id} name={item.name} size={35} styleBootstrap={'me-1'} />
+          )
+        )}
       </button>
     </div>
   )

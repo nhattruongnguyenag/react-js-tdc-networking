@@ -12,12 +12,11 @@ import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton'
 import { useGetAllPostsQuery } from '../redux/Service'
 
 export default function BusinessDashboardPage() {
-
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const { data, isFetching } = useGetAllPostsQuery(undefined, {
     pollingInterval: 2000
-  });
+  })
 
   useEffect(() => {
     setIsLoading(true)
@@ -26,9 +25,9 @@ export default function BusinessDashboardPage() {
   // Xử lý dữ liệu từ Redux Toolkit Query
   useEffect(() => {
     if (data) {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  }, [data]);
+  }, [data])
 
   const likeAction = (obj: LikeAction) => {
     // obj.code = TYPE_POST_BUSINESS
@@ -42,30 +41,32 @@ export default function BusinessDashboardPage() {
   // -------------------------------------
 
   const renderItem = (item: any) => {
-    return <CustomizePost
-      key={item.id}
-      id={item.id}
-      userId={item.user['id']}
-      name={item.user['name']}
-      avatar={item.user['image']}
-      typeAuthor={'Doanh Nghiệp'}
-      available={null}
-      timeCreatePost={numberDayPassed(item.createdAt)}
-      content={item.content}
-      type={item.type}
-      likes={item.likes}
-      comments={item.comment}
-      commentQty={item.commentQuantity}
-      images={item.images}
-      role={item.user['roleCodes']}
-      likeAction={likeAction}
-      location={item.location ?? null}
-      title={item.title ?? null}
-      expiration={item.expiration ?? null}
-      salary={item.salary ?? null}
-      employmentType={item.employmentType ?? null}
-      description={item.description ?? null}
-    />
+    return (
+      <CustomizePost
+        key={item.id}
+        id={item.id}
+        userId={item.user['id']}
+        name={item.user['name']}
+        avatar={item.user['image']}
+        typeAuthor={'Doanh Nghiệp'}
+        available={null}
+        timeCreatePost={numberDayPassed(item.createdAt)}
+        content={item.content}
+        type={item.type}
+        likes={item.likes}
+        comments={item.comment}
+        commentQty={item.commentQuantity}
+        images={item.images}
+        role={item.user['roleCodes']}
+        likeAction={likeAction}
+        location={item.location ?? null}
+        title={item.title ?? null}
+        expiration={item.expiration ?? null}
+        salary={item.salary ?? null}
+        employmentType={item.employmentType ?? null}
+        description={item.description ?? null}
+      />
+    )
   }
   return (
     <>
@@ -496,8 +497,8 @@ export default function BusinessDashboardPage() {
                   </div>
                 </div>
                 {/* Skeleton */}
-                {
-                  isLoading && <div>
+                {isLoading && (
+                  <div>
                     <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
                       <CustomizeSkeleton />
                     </div>
@@ -505,7 +506,7 @@ export default function BusinessDashboardPage() {
                       <CustomizeSkeleton />
                     </div>
                   </div>
-                }
+                )}
 
                 {/* Modal */}
                 <CreatePostSelector />

@@ -19,39 +19,40 @@ export interface HeaderPostPropsType {
 
 const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
   return (
-    <div className='card-body d-flex p-0 m-0 w-100'>
+    <div className='card-body d-flex w-100 m-0 p-0'>
       <div className='avatar-wrapper-header'>
-        <button
-          onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_PROFILE_ACTIONS)}
-        >
-          {
-            props.avatar ? <img
+        <button onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_PROFILE_ACTIONS)}>
+          {props.avatar ? (
+            <img
               src={SERVER_ADDRESS + 'api/images/' + props.avatar}
               alt='avatar'
               className='avatar-user-header-post shadow-sm'
-            /> :
-              <DefaultAvatar name={props.name} size={45} styleBootstrap={undefined} />
-          }
+            />
+          ) : (
+            <DefaultAvatar name={props.name} size={45} styleBootstrap={undefined} />
+          )}
         </button>
       </div>
       <div className='text-header-name-wrapper'>
         <h4
           onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_PROFILE_ACTIONS)}
-          className='fw-700 text-grey-900 font-xssss mt-1'>
+          className='fw-700 text-grey-900 font-xssss mt-1'
+        >
           {' '}
           {props.name}{' '}
           <span>
             <FontAwesomeIcon icon={faCheckCircle} size='lg' color={COLOR_BTN_BLUE} />
           </span>{' '}
-          {
-            props.type !== TYPE_RECRUITMENT_POST ? <span className='d-block font-xssss fw-500 lh-3 text-grey-500 mt-1'>{props.timeCreatePost}</span> : null
-          }
+          {props.type !== TYPE_RECRUITMENT_POST ? (
+            <span className='d-block font-xssss fw-500 lh-3 text-grey-500 mt-1'>{props.timeCreatePost}</span>
+          ) : null}
         </h4>
       </div>
       <div className='button-menu-header-wrapper'>
         <button
           className='button-menu'
-          onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_MENU_ACTIONS)}>
+          onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_MENU_ACTIONS)}
+        >
           <i className='ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss' />
         </button>
       </div>
