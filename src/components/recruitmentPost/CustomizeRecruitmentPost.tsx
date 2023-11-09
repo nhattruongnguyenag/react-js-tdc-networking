@@ -23,7 +23,7 @@ export interface RecruitmentPostType {
   expiration: string
   salary: string
   employmentType: string
-  handleClickBtnSeeDetailEvent: (id: number) => void
+  handleClickBtnSeeDetailEvent: (id: number, title: string) => void
 }
 
 export default function CustomizeRecruitmentPost(props: RecruitmentPostType) {
@@ -53,7 +53,7 @@ export default function CustomizeRecruitmentPost(props: RecruitmentPostType) {
           </div>
           <div className='pt-2'>
             <button
-              onClick={() => props.handleClickBtnSeeDetailEvent(props.id)}
+              onClick={() => props.handleClickBtnSeeDetailEvent(props.id, props.title)}
               className='bg-primary-gradiant button-see-more-recruitment'
             >
               Xem chi tiết

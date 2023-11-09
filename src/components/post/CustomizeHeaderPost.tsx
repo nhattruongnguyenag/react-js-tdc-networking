@@ -36,7 +36,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
       <div className='text-header-name-wrapper'>
         <h4
           onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_PROFILE_ACTIONS)}
-          className='fw-700 text-grey-900 font-xssss mt-1'
+          className='cursor-pointer fw-700 text-grey-900 font-xssss mt-1'
         >
           {' '}
           {props.name}{' '}
