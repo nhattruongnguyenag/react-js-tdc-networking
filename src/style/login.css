@@ -142,6 +142,7 @@ h4 {
    padding: 0px 5px;
    margin-left: 20px;
    margin-top: 5px;
+   
 }
 
 .item-recruitment-description::before{
@@ -158,4 +159,9 @@ h4 {
 .btn-recuitment{
    display: flex;
    justify-content: center;
+}
+
+.benefit{
+  display: flex;
+  flex-wrap: wrap;
 }

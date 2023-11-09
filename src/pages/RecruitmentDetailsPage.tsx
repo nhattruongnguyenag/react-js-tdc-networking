@@ -17,6 +17,7 @@ import { formatVietNamCurrency } from '../utils/FormatCurrency'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { formatDateTime } from '../utils/FormatTime'
+import { Item } from 'react-photoswipe-gallery'
 
 export default function RecruitmentDetailsPage() {
   const navigate = useNavigate()
@@ -32,24 +33,30 @@ export default function RecruitmentDetailsPage() {
     requirement: '',
     title: ''
   })
-  let result = ['']
+  const [result, setResult] = useState([dataRecruitmentDetail.benefit])
+  const [description, setDescription] = useState([dataRecruitmentDetail.description])
+  const [requirement, setRequirement] = useState([dataRecruitmentDetail.requirement])
   useEffect(() => {
     if (postId) {
       axios
         .get(SERVER_ADDRESS + `api/posts/recruitment/${postId}`)
         .then((recruitment) => {
           setDataRecruitmentDetail(recruitment.data.data)
-          result = dataRecruitmentDetail.benefit.split(',')
         })
         .catch((error) => {
           console.log(error)
         })
     }
   }, [postId])
-
   const onSubmit = (title: string, postID: number | null) => {
     navigate(`${JOB_APPLY_PAGE}/${slugify(title)}-${postID}`)
   }
+
+  useEffect(() => {
+    setResult(dataRecruitmentDetail.benefit.split(','))
+    setDescription(dataRecruitmentDetail.description.split(','))
+    setRequirement(dataRecruitmentDetail.requirement.split(','))
+  }, [dataRecruitmentDetail.benefit, dataRecruitmentDetail.description, dataRecruitmentDetail.requirement])
 
   return (
     <>
@@ -109,22 +116,29 @@ export default function RecruitmentDetailsPage() {
                 </div>
                 <div className='group-recruitment-content'>
                   <h1 className='fw-700 fs-3 pt-3 text-black'>Phúc lợi</h1>
-
-                  <div className='item-recruitment'>
-                    <p className='fw-500'>{dataRecruitmentDetail.benefit}</p>
+                  <div className='benefit'>
+                    {result.map((item, index) => (
+                      <div className='item-recruitment' key={index}>
+                        <p className='fw-500'>{item}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 <div className='group-recruitment-content'>
                   <h1 className='fw-700 fs-3 pt-3 text-black'>Mô tả công việc</h1>
-                  <div className='item-recruitment-description'>
-                    <p className='fw-500 text-black'>{dataRecruitmentDetail.description}</p>
-                  </div>
-                </div>
+                  {description.map((item, index) => (
+                    <div className='item-recruitment-description' key={index}>
+                      <p className='fw-500 text-black'>{item.replace(/(^|\s)\S/g, l=> l.toUpperCase())}</p>
+                    </div>
+                  ))}
+                </div> 
                 <div className='group-recruitment-content'>
                   <h1 className='fw-700 fs-3 pt-3 text-black'>Yêu cầu</h1>
-                  <div className='item-recruitment-description'>
-                    <p className='fw-500 text-black'>{dataRecruitmentDetail.requirement}</p>
-                  </div>
+                  {requirement.map((item, index) => (
+                    <div className='item-recruitment-description' key={index}>
+                      <p className='fw-500 text-black'>{item.replace(/(^|\s)\S/g, l=> l.toUpperCase())}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className='btn-recuitment mb-0'>
