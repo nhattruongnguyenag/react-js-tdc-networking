@@ -42,7 +42,8 @@ import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import SettingPage from './pages/SettingPage'
 import StudentDashboardPage from './pages/StudentDashboardPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
-import SurveyDetailsPage from './pages/SurveyDetailsPage'
+import SurveyConductPage from './pages/SurveyConductPage'
+import SurveyDetailsPage from './pages/SurveyConductPage'
 import UserDetailsPage from './pages/UserDetailsPage'
 import { useAppSelector } from './redux/Hook'
 
@@ -74,7 +75,7 @@ export default function AppRouter() {
             <Route path={USER_DETAILS_PAGE + '/:slug'} element={<UserDetailsPage />} />
             <Route path={JOB_APPLY_PAGE + '/:slug'} element={<JobApplyPage />} />
             <Route path={RECRUITMENT_DETAILS_PAGE + '/:slug'} element={<RecruitmentDetailsPage />} />
-            <Route path={SURVEY_DETAILS_PAGE + '/:slug'} element={<SurveyDetailsPage />} />
+            <Route path={SURVEY_DETAILS_PAGE + '/:slug'} element={<SurveyConductPage />} />
             <Route path='*' element={<NoPage />} />
             <Route path='/' element={<IntroducePage />} />
           </Route>

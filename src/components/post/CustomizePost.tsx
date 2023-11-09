@@ -193,6 +193,7 @@ const CustomizePost = (props: Post) => {
             image={props.avatar}
             name={props.name}
             type={props.type}
+            isConduct={props.isConduct ?? 0} 
             title={props.title ?? ''}
             handleClickBtnSeeDetailEvent={handleClickBtnSurveyDetailEvent}
             createdAt={props.timeCreatePost}

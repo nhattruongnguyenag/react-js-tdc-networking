@@ -13,6 +13,7 @@ export interface RecruitmentPostType {
   type: string
   title: string
   description: string
+  isConduct: number
   handleClickBtnSeeDetailEvent: (id: number, title: string) => void
 }
 
@@ -26,7 +27,9 @@ export default function CustomizeSurveyPost(props: RecruitmentPostType) {
           onClick={() => props.handleClickBtnSeeDetailEvent(props.id, props.title)}
           className='bg-primary-gradiant button-see-more-recruitment'
         >
-          Xem chi tiết
+          {
+            props.isConduct === 0 ? 'Tiến hành khảo sát' : 'Chỉnh sửa câu trả lời'
+          }
           <FontAwesomeIcon icon={faAnglesRight} size='1x' color={COLOR_WHITE} className='icon-arrow-left' />
         </button>
       </div>
