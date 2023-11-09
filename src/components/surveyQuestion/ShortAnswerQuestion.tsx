@@ -19,7 +19,7 @@ export default function ShortAnswerQuestion(props: ShortAnswerQuestionProps) {
           onChange={(event) => props.onAnswerChangeText && props.onAnswerChangeText(event.target.value)}
           disabled={!Boolean(props.conductMode)}
           placeholder='Câu trả lời'
-          className='px-3 w-full bg-gray-100 bg-inherit py-2' />
+          className='pr-3 w-full bg-gray-100 bg-inherit py-2' />
       </div>
       {Boolean(props.editMode) && <QuestionOptions index={props.index} />}
     </div>
