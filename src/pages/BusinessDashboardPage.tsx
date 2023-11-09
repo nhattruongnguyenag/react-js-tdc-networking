@@ -2,22 +2,25 @@ import { useEffect, useState } from 'react'
 import Header from '../components/common/Header'
 import { numberDayPassed } from '../utils/FormatTime'
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton'
-import { useGetAllPostsQuery, useGetBusinessPostsQuery } from '../redux/Service'
+import { useGetBusinessPostsQuery } from '../redux/Service'
 import { LikeAction } from '../types/LikeActions'
 import { Post } from '../types/Post'
 import { handleDataClassification } from '../utils/DataClassfications'
 import { TYPE_POST_BUSINESS } from '../constants/StringVietnamese'
 import CustomizePost from '../components/post/CustomizePost'
 import CreatePostSelector from '../components/CreatePostSelector'
+import { useAppSelector } from '../redux/Hook'
 
 export default function BusinessDashboardPage() {
-
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState<Post[]>([]);
-  const { data, isFetching } = useGetBusinessPostsQuery(undefined, {
-    pollingInterval: 2000
-  });
-
+  const { data, isFetching } = useGetBusinessPostsQuery(
+    { id: userLogin?.id ?? 0 },
+    {
+      pollingInterval: 2000
+    }
+  );
   useEffect(() => {
     setIsLoading(true)
   }, [])
@@ -510,7 +513,9 @@ export default function BusinessDashboardPage() {
                 }
 
                 {/* Modal */}
-                <CreatePostSelector />
+                {
+                  userLogin?.roleCodes === TYPE_POST_BUSINESS && <CreatePostSelector />
+                }
                 {/* Render post */}
                 {data?.data.map((item) => renderItem(item))}
                 <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4 text-center'>

@@ -12,9 +12,12 @@ import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { useAppSelector } from '../redux/Hook';
 
 export default function StudentDashboardPage() {
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState<Post[]>([]);
-  const { data, isFetching } = useGetStudentPostsQuery(undefined, {
+  const { data, isFetching } = useGetStudentPostsQuery({
+    id: userLogin?.id ?? 0
+  }, {
     pollingInterval: 2000
   });
 
@@ -91,7 +94,9 @@ export default function StudentDashboardPage() {
                 }
 
                 {/* Modal */}
-                <CreatePostSelector />
+                {
+                  userLogin?.roleCodes == TYPE_POST_STUDENT && <CreatePostSelector />
+                }
                 {/* Render post */}
                 {data?.data.map((item) => renderItem(item))}
               </div>

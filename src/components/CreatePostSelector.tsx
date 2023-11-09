@@ -5,10 +5,12 @@ import { CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE } from '../consta
 import { TEXT_CREATE_NEW_POST } from '../constants/StringVietnamese'
 import { MyVerticallyCenteredModal } from './modal/CreateNormalPostModal'
 
-export default function CreatePostSelector() {
+export default function CreatePostSelector({ route }: any) {
   const [createNormalPostModalShow, setCreateNormalPostModalShow] = useState(false)
+  // const { group } = route.params
+  // alert(group)
   const navigate = useNavigate()
-
+  // alert(route)
   return (
     <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 pb-3 pe-4 ps-4 pt-4'>
       <div className='card-body p-0'>
