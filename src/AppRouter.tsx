@@ -8,15 +8,19 @@ import {
   CREATE_SURVEY_POST_PAGE,
   FACULTY_DASHBOARD_PAGE,
   FUNCTION_DESCRIPTION_PAGE,
+  JOB_APPLY_PAGE,
   LOGIN_PAGE,
   MESSAGE_PAGE,
+  RECRUITMENT_DETAILS_PAGE,
   REGISTER_BUSINESS_PAGE,
   REGISTER_PAGE,
   REGISTER_STUDENT_PAGE,
   REVIEW_SURVEY_POST_PAGE,
   SEARCH_PAGE,
   SETTING_PAGE,
-  STUDENT_DASHBOARD_PAGE
+  STUDENT_DASHBOARD_PAGE,
+  SURVEY_DETAILS_PAGE,
+  USER_DETAILS_PAGE
 } from './constants/Page'
 import AddQuestionPage from './pages/AddQuestionPage'
 import BusinessDashboardPage from './pages/BusinessDashboardPage'
@@ -28,14 +32,18 @@ import CreateSurveyPostPage from './pages/CreateSurveyPostPage'
 import DetailIntroducePage from './pages/DetailedIntroducePage'
 import FacultyDashboardPage from './pages/FacultyDashboardPage'
 import IntroducePage from './pages/IntroducePage'
+import JobApplyPage from './pages/JobApplyPage'
 import LoginPage from './pages/LoginPage'
 import NoPage from './pages/NoPage'
+import RecruitmentDetailsPage from './pages/RecruitmentDetailsPage'
 import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import SearchPage from './pages/SearchPage'
 import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import SettingPage from './pages/SettingPage'
 import StudentDashboardPage from './pages/StudentDashboardPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
+import SurveyDetailsPage from './pages/SurveyDetailsPage'
+import UserDetailsPage from './pages/UserDetailsPage'
 import { useAppSelector } from './redux/Hook'
 
 export default function AppRouter() {
@@ -63,6 +71,10 @@ export default function AppRouter() {
             <Route path={REGISTER_STUDENT_PAGE} element={<StudentRegistationPage />} />
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
             <Route path={FUNCTION_DESCRIPTION_PAGE} element={<DetailIntroducePage />} />
+            <Route path={USER_DETAILS_PAGE + '/:slug'} element={<UserDetailsPage />} />
+            <Route path={JOB_APPLY_PAGE + '/:slug'} element={<JobApplyPage />} />
+            <Route path={RECRUITMENT_DETAILS_PAGE + '/:slug'} element={<RecruitmentDetailsPage />} />
+            <Route path={SURVEY_DETAILS_PAGE + '/:slug'} element={<SurveyDetailsPage />} />
             <Route path='*' element={<NoPage />} />
             <Route path='/' element={<IntroducePage />} />
           </Route>

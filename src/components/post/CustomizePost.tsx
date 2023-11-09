@@ -19,14 +19,18 @@ import { ImageGalleryDisplay } from '../../types/ImageGalleryDispaly'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import CustomizeSurveyPost from '../surveyPost/CustomizeSurveyPost'
 import CustomizeRecruitmentPost from '../recruitmentPost/CustomizeRecruitmentPost'
+import { useNavigate } from 'react-router-dom'
+import { RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, USER_DETAILS_PAGE } from '../../constants/Page'
+import { slugify } from '../../utils/CommonUtls'
 
 const CustomizePost = (props: Post) => {
+  const navigate = useNavigate()
   const { userLogin, isOpenModalComments } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   // Header
 
   const handleClickIntoAvatarAndNameAndMenuEvent = (flag: number | null) => {
     if (flag === GO_TO_PROFILE_ACTIONS) {
-      alert('go to profile user have id: ' + props.userId)
+      navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${props.userId}`)
     } else {
       alert('menu')
     }
@@ -82,12 +86,12 @@ const CustomizePost = (props: Post) => {
     // )
   }
 
-  const handleClickBtnRecruitmentDetailEvent = (idPost: number) => {
-    alert('click btn detail recruitment' + idPost)
+  const handleClickBtnRecruitmentDetailEvent = (idPost: number, title: string) => {
+    navigate(`${RECRUITMENT_DETAILS_PAGE}/${slugify(title)}-${idPost}`)
   }
 
-  const handleClickBtnSurveyDetailEvent = (idPost: number) => {
-    alert('click btn detail survey' + idPost)
+  const handleClickBtnSurveyDetailEvent = (idPost: number, title: string) => {
+    navigate(`${SURVEY_DETAILS_PAGE}/${slugify(title)}-${idPost}`)
   }
 
   const changeDataToImagGallerys = useCallback(() => {

@@ -13,7 +13,7 @@ export interface RecruitmentPostType {
   type: string
   title: string
   description: string
-  handleClickBtnSeeDetailEvent: (id: number) => void
+  handleClickBtnSeeDetailEvent: (id: number, title: string) => void
 }
 
 export default function CustomizeSurveyPost(props: RecruitmentPostType) {
@@ -23,7 +23,7 @@ export default function CustomizeSurveyPost(props: RecruitmentPostType) {
       <p className='content-container fw-500 text-grey-500 lh-26 font-xssss w-100 mb-1'>{props.description}</p>
       <div className='pb-2 pt-2'>
         <button
-          onClick={() => props.handleClickBtnSeeDetailEvent(props.id)}
+          onClick={() => props.handleClickBtnSeeDetailEvent(props.id, props.title)}
           className='bg-primary-gradiant button-see-more-recruitment'
         >
           Xem chi tiết
