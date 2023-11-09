@@ -86,3 +86,82 @@ h4 {
   justify-content: center;
   align-items: center;
 }
+
+.bg-recruitment{
+  background-color: #3cb371 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+}
+
+.bg-recruitment:active{
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px #3cb371 !important;
+}
+.main-content{
+   margin-top: 20px;
+}
+
+.item-job-recruitment{
+  display: flex;
+  align-items: baseline;
+  margin-right: 20px;
+}
+
+.group-recruitment{
+  background-color: #E0F4FF;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.border{
+  border-bottom: solid 1px gray;
+}
+
+.item{
+  margin-bottom: 10px;
+}
+
+.item:last-child{
+  margin-bottom: 0px;
+}
+
+.item-recruitment{
+  background-color: #3cb371;
+  width: fit-content;
+  color: #fff;
+  border-radius: 10px;
+  padding: 0px 5px;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.item-recruitment-description{
+   position: relative;
+   border-radius: 10px;
+   padding: 0px 5px;
+   margin-left: 20px;
+   margin-top: 5px;
+   
+}
+
+.item-recruitment-description::before{
+  content: '';
+  width: 4px;
+  height: 4px;
+  background-color: black;
+  position: absolute;
+  border-radius: 50%;
+  left: -5px;
+  top: 14px;
+}
+
+.btn-recuitment{
+   display: flex;
+   justify-content: center;
+}
+
+.benefit{
+  display: flex;
+  flex-wrap: wrap;
+}
