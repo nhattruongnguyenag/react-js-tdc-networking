@@ -1,26 +1,19 @@
-import React, { useEffect } from 'react'
-import { Dropdown } from 'flowbite-react'
-import { Link, useNavigate } from 'react-router-dom'
-import Header from '../components/common/Header'
-import InputTextWithTitle from '../components/common/InputTextWithTitle'
-import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
-import { ADD_QUESTION_PAGE, BUSINESS_DASHBOARD_PAGE, CREATE_SURVEY_POST_PAGE } from '../constants/Page'
-import ShortAnswerQuestion from '../components/survey/ShortAnswerQuestion'
-import MultiQuestionMultiChoice from '../components/survey/MultiQuestionMultiChoice'
-import MultiQuestionOneChoice from '../components/survey/MultiQuestionOneChoice'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
-import { useAppDispatch, useAppSelector } from '../redux/Hook'
-import {
-  addQuestion,
-  defaultSurveyPostRequest,
-  setQuestionValidates,
-  setSurveyPostDescription,
-  setSurveyPostRequest,
-  setSurveyPostTitle
-} from '../redux/Slice'
-import { useAddSurveyPostMutation } from '../redux/Service'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import Header from '../components/common/Header'
+import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestionMultiChoice'
+import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
+import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
+import { ADD_QUESTION_PAGE, BUSINESS_DASHBOARD_PAGE } from '../constants/Page'
+import { useAppDispatch, useAppSelector } from '../redux/Hook'
+import { useAddSurveyPostMutation } from '../redux/Service'
+import {
+  defaultSurveyPostRequest,
+  setQuestionValidates, setSurveyPostRequest
+} from '../redux/Slice'
 
 export const SHORT_ANSWER = 'tra-loi-ngan'
 export const ONE_CHOICE_QUESTION = 'chon-mot-dap-an'
@@ -56,9 +49,7 @@ export default function ReviewSurveyPostPage() {
   }, [addSurveyResult])
 
   const onBtnPublishPostPress = () => {
-    if (surveyPostRequest) {
-      addSurvey(surveyPostRequest)
-    }
+    addSurvey(surveyPostRequest)
   }
 
   return (

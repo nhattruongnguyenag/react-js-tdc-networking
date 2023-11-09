@@ -5,9 +5,9 @@ import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Header from '../components/common/Header'
-import MultiQuestionMultiChoice from '../components/survey/MultiQuestionMultiChoice'
-import MultiQuestionOneChoice from '../components/survey/MultiQuestionOneChoice'
-import ShortAnswerQuestion from '../components/survey/ShortAnswerQuestion'
+import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestionMultiChoice'
+import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
+import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
 import { CREATE_SURVEY_POST_PAGE, REVIEW_SURVEY_POST_PAGE } from '../constants/Page'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { addQuestion, addQuestionValidates, setSurveyPostRequest, updateQuestionTitleValidate } from '../redux/Slice'
@@ -56,7 +56,6 @@ export default function AddQuestionPage() {
   }
 
   const onBtnReviewClick = () => {
-    console.log(surveyPostRequest)
     if (surveyPostRequest.questions.length === 0) {
       toast.error('Bài khảo sát bắt buộc phải có ít nhất 1 câu hỏi')
     } else {
@@ -96,12 +95,12 @@ export default function AddQuestionPage() {
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
               {surveyPostRequest.questions.map((item, index) => {
                 if (item.type === MULTI_CHOICE_QUESTION) {
-                  return <MultiQuestionMultiChoice key={index} index={index} />
+                  return <MultiQuestionMultiChoice editMode key={index} index={index} />
                 } else if (item.type === ONE_CHOICE_QUESTION) {
-                  return <MultiQuestionOneChoice key={index} index={index} />
+                  return <MultiQuestionOneChoice editMode key={index} index={index} />
                 }
 
-                return <ShortAnswerQuestion key={index} index={index} />
+                return <ShortAnswerQuestion editMode key={index} index={index} />
               })}
 
               <div className='mt-5 flex flex-row items-center justify-evenly'>

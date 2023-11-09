@@ -7,9 +7,9 @@ import Header from '../components/common/Header'
 import InputTextWithTitle from '../components/common/InputTextWithTitle'
 import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
 import ValidateTextView from '../components/common/ValidateTextView'
-import MultiQuestionMultiChoice from '../components/survey/MultiQuestionMultiChoice'
-import MultiQuestionOneChoice from '../components/survey/MultiQuestionOneChoice'
-import ShortAnswerQuestion from '../components/survey/ShortAnswerQuestion'
+import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestionMultiChoice'
+import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
+import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
 import { SURVEY_POST_REQUEST } from '../constants/KeyValue'
 import {
   ADD_QUESTION_PAGE,

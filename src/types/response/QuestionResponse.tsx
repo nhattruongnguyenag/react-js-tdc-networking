@@ -4,6 +4,7 @@ export interface QuestionResponse extends Base {
   type: string
   title: string
   choices: Choice[]
+  required: number
 }
 
 interface Choice {
