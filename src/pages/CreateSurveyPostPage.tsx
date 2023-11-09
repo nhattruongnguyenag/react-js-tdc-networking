@@ -180,7 +180,7 @@ export default function CreateSurveyPostPage() {
               </Link>
               <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Thêm khảo sát</h4>
             </div>
-            <div className='card-body p-lg-5 w-100 border-0 p-2'>
+            <div className='card-body p-lg-5 w-100 border-0'>
               <div className='row'>
                 <InputTextWithTitle
                   onTextChange={(value) => onTitleChangeText(value)}
@@ -196,7 +196,7 @@ export default function CreateSurveyPostPage() {
 
                 <TextAreaWithTitle
                   onTextChange={(value) => onDescriptionChangeText(value)}
-                  rows={10}
+                  rows={15}
                   placeholder='Nhập mô tả...'
                   title='Mô tả'
                 />

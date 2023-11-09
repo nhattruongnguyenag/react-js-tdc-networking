@@ -65,6 +65,7 @@ export default function BusinessDashboardPage() {
         salary={item.salary ?? null}
         employmentType={item.employmentType ?? null}
         description={item.description ?? null}
+        isConduct={item.isConduct ?? null}
       />
     )
   }

@@ -56,6 +56,7 @@ export default function SearchListView({ data, type, handleFollow }: SearchListV
                   salary={item.salary ?? null}
                   employmentType={item.employmentType ?? null}
                   description={item.description ?? null}
+                  isConduct={item.isConduct ?? null}
                 />
               ))}
           </>

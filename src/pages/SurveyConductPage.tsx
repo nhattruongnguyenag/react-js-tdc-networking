@@ -42,7 +42,10 @@ export default function SurveyConductPage() {
     const { slug } = useParams()
     const surveyPostId = getIdFromSlug(slug ?? '') ?? -1
 
-    const { data, isFetching, isSuccess } = useGetQuestionsFromSurveyPostQuery(surveyPostId)
+    const { data, isFetching, isSuccess } = useGetQuestionsFromSurveyPostQuery({
+        postId: surveyPostId,
+        userLogin: userLogin?.id ?? -1
+    })
 
     useEffect(() => {
         if (data && isSuccess) {
@@ -59,7 +62,7 @@ export default function SurveyConductPage() {
                 if (tempValidate[index].isError && questionConducts[index].required === 1) {
                     tempValidate[index].isVisible = true
                 }
-                
+
             }
             setValidates(tempValidate)
         }
@@ -240,8 +243,10 @@ export default function SurveyConductPage() {
                                     className='items-centerdark:bg-blue-600 inline-flex rounded-lg bg-blue-700 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                                 >
                                     <div className='flex items-center'>
-                                        <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'plus' })} />
-                                        <span>Hoàn tất</span>
+                                        <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'arrow-right' })} />
+                                        <span>{
+                                            data?.data.isConduct === 0 ? 'Gửi câu trả lời' : 'Chỉnh sửa câu trả lời'
+                                        }</span>
                                     </div>
                                 </button>
                             </div>
