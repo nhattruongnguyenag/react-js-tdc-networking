@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { COLOR_BTN_BLUE } from '../../constants/Color'
 import { GO_TO_MENU_ACTIONS, GO_TO_PROFILE_ACTIONS, TYPE_RECRUITMENT_POST } from '../../constants/Variables'
 import DefaultAvatar from '../common/DefaultAvatar'
+import { TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
 
 export interface HeaderPostPropsType {
   name: string
@@ -40,12 +41,19 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
           className='fw-700 text-grey-900 font-xssss mt-1'>
           {' '}
           {props.name}{' '}
-          <span>
-            <FontAwesomeIcon icon={faCheckCircle} size='lg' color={COLOR_BTN_BLUE} />
-          </span>{' '}
+          {
+            props.role !== TYPE_POST_STUDENT && <span>
+              <FontAwesomeIcon icon={faCheckCircle} size='lg' color={COLOR_BTN_BLUE} />
+            </span>
+          }
+          {' '}
+          {
+            props.role !== TYPE_POST_STUDENT && <span className='typeAuthorShow bg-greylight'>{props.typeAuthor}</span>
+          }
           {
             props.type !== TYPE_RECRUITMENT_POST ? <span className='d-block font-xssss fw-500 lh-3 text-grey-500 mt-1'>{props.timeCreatePost}</span> : null
           }
+
         </h4>
       </div>
       <div className='button-menu-header-wrapper'>

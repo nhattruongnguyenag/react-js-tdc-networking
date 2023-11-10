@@ -21,7 +21,7 @@ export interface RecruitmentPostType {
     handleClickBtnSeeDetailEvent: (id: number) => void
 }
 
-export default function CustomizeRecruitmentPost(props: RecruitmentPostType) {
+export default function CustomizeRecruitmentPost(props: Readonly<RecruitmentPostType>) {
     return (
         <div className='row pt-3 pb-2'>
             <div className='col-md-1'>

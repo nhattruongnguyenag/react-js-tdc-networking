@@ -35,16 +35,8 @@ export default function StudentDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
-    // obj.code = TYPE_POST_BUSINESS
-    // like(obj)
+      
   }
-
-  // const like = useCallback((likeData: LikeAction) => {
-  // stompClient.send(`/app/posts/${likeData.code}/like`, {}, JSON.stringify(likeData))
-  // }, [])
-  // End post
-  // -------------------------------------
-
 
   const renderItem = (item: any) => {
     return <CustomizePost
@@ -95,7 +87,7 @@ export default function StudentDashboardPage() {
 
                 {/* Modal */}
                 {
-                  userLogin?.roleCodes == TYPE_POST_STUDENT && <CreatePostSelector />
+                  userLogin?.roleCodes == TYPE_POST_STUDENT && <CreatePostSelector group={1} />
                 }
                 {/* Render post */}
                 {data?.data.map((item) => renderItem(item))}

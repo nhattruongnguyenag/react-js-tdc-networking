@@ -1,0 +1,56 @@
+:root {
+  --primary-color: #0065ff;
+}
+
+.containerImagesProfileHeader {
+  position: relative;
+  height: 325px;
+}
+
+.avatarHeaderProfile {
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
+  object-fit: cover;
+  bottom: -40px;
+  left: 10px;
+  border-width: 5px;
+  border-color: white;
+  position: absolute;
+}
+
+.containerUserProfileInfo {
+  padding-top: 50px;
+}
+
+.txtNameProfile {
+  font-weight: bold;
+  float: left;
+  font-size: 20px;
+}
+
+.txtInfoBodyProfile {
+  padding-left: 10px;
+  color: black;
+}
+
+.lineOfInfoBodyProfile {
+  display: flex;
+  margin-top: 10px;
+}
+
+.btn-header-profile {
+  width: 100%;
+}
+.btn-react-header-profile {
+  padding: 5px 10px;
+  background: var(--primary-color);
+  border-radius: 5px;
+  margin-right: 50px;
+  color: white;
+  font-weight: bold;
+}
+
+.button-header-profile-react {
+  padding-right: 10px;
+}

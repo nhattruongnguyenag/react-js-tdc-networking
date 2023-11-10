@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import { Fragment, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useAppDispatch } from '../../redux/Hook'
+import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { toggleDarkMode } from '../../redux/Slice'
 import NotificationPopup from '../NotificationPopup'
 import MobileNavigation from './MobileNavigation'
@@ -10,11 +10,13 @@ import Navigaion from './Navigation'
 import {
   BUSINESS_DASHBOARD_PAGE,
   FACULTY_DASHBOARD_PAGE,
+  PROFILE_PAGE,
   SEARCH_PAGE,
   STUDENT_DASHBOARD_PAGE
 } from '../../constants/Page'
 import classNames from 'classnames'
 import NavItem from './NavItem'
+import CustomizeModalComments from '../modal/CustomizeModalComments'
 
 export default function Header() {
   const location = useLocation()

@@ -9,6 +9,7 @@ import {
   FACULTY_DASHBOARD_PAGE,
   LOGIN_PAGE,
   MESSAGE_PAGE,
+  PROFILE_PAGE,
   REGISTER_BUSINESS_PAGE,
   REGISTER_PAGE,
   REGISTER_STUDENT_PAGE,
@@ -37,6 +38,7 @@ import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
 import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import AddQuestionPage from './pages/AddQuestionPage'
+import ProfileScreen from './pages/ProfileScreen'
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -62,6 +64,7 @@ export default function AppRouter() {
             <Route path={REGISTER_BUSINESS_PAGE} element={<BusinessRegistationPage />} />
             <Route path={REGISTER_STUDENT_PAGE} element={<StudentRegistationPage />} />
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
+            <Route path={PROFILE_PAGE} element={<ProfileScreen />} />
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>

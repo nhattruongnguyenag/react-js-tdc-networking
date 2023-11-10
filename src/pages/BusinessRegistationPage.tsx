@@ -64,7 +64,8 @@ export default function BusinessRegistationPage() {
     name: '',
     image: '',
     confimPassword: '',
-    facultyGroupCode: ''
+    facultyGroupCode: '',
+    facultyGroupId: 0
   })
   const [timeStart, setTimeStart] = useState('07:00')
   const [timeEnd, setTimeEnd] = useState('17:00')

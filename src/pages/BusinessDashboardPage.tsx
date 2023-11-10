@@ -10,6 +10,7 @@ import { TYPE_POST_BUSINESS } from '../constants/StringVietnamese'
 import CustomizePost from '../components/post/CustomizePost'
 import CreatePostSelector from '../components/CreatePostSelector'
 import { useAppSelector } from '../redux/Hook'
+import CustomizeModalComments from '../components/modal/CustomizeModalComments'
 
 export default function BusinessDashboardPage() {
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -36,15 +37,10 @@ export default function BusinessDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
-    // obj.code = TYPE_POST_BUSINESS
-    // like(obj)
+    console.log('====================================');
+    console.log('like');
+    console.log('====================================');
   }
-
-  // const like = useCallback((likeData: LikeAction) => {
-  // stompClient.send(`/app/posts/${likeData.code}/like`, {}, JSON.stringify(likeData))
-  // }, [])
-  // End post
-  // -------------------------------------
 
   const renderItem = (item: any) => {
     return <CustomizePost
@@ -512,9 +508,9 @@ export default function BusinessDashboardPage() {
                   </div>
                 }
 
-                {/* Modal */}
+                {/* Modal create  post */}
                 {
-                  userLogin?.roleCodes === TYPE_POST_BUSINESS && <CreatePostSelector />
+                  userLogin?.roleCodes === TYPE_POST_BUSINESS && <CreatePostSelector group={2} />
                 }
                 {/* Render post */}
                 {data?.data.map((item) => renderItem(item))}

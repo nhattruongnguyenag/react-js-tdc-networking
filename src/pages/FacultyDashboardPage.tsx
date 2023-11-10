@@ -39,17 +39,9 @@ export default function FacultyDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
-    // obj.code = TYPE_POST_BUSINESS
-    // like(obj)
+   
   }
-
-  // const like = useCallback((likeData: LikeAction) => {
-  // stompClient.send(`/app/posts/${likeData.code}/like`, {}, JSON.stringify(likeData))
-  // }, [])
-  // End post
-  // -------------------------------------
-
-
+  
   const renderItem = (item: any) => {
     return <CustomizePost
       key={item.id}
@@ -102,7 +94,7 @@ export default function FacultyDashboardPage() {
                   {/* Modal */}
                   {
 
-                    userLogin?.roleCodes !== TYPE_POST_BUSINESS && <CreatePostSelector />
+                    userLogin?.roleCodes !== TYPE_POST_BUSINESS && <CreatePostSelector group={userLogin?.facultyGroupId ?? 0} />
                   }
                   {/* Render post */}
                   {data?.data.map((item) => renderItem(item))}

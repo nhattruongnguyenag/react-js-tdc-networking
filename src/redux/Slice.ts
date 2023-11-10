@@ -4,7 +4,6 @@ import { Business } from '../types/Business'
 import { Conversation } from '../types/Conversation'
 import { Faculty } from '../types/Faculty'
 import { Message } from '../types/Message'
-import { ModalComments } from '../types/ModalComments'
 import { ModalImage } from '../types/ModalImage'
 import { ModalUserReaction } from '../types/ModalUserReaction'
 import { Question } from '../types/Question'
@@ -12,6 +11,7 @@ import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 import { Student } from '../types/Student'
 import { getSelectedConversation, getSurveyPostRequest, getUserLogin } from '../utils/CommonUtls'
 import { InputTextValidate } from '../utils/ValidateUtils'
+import { ModalComments } from '../types/ModalComments'
 
 export interface TDCSocialNetworkState {
   darkMode: boolean
@@ -37,9 +37,9 @@ export interface TDCSocialNetworkState {
 export const defaultSurveyPostRequest: SurveyPostRequest = {
   groupId: -1,
   images: [],
-  title: "",
-  type: "khao-sat",
-  description: "",
+  title: '',
+  type: 'khao-sat',
+  description: '',
   questions: [],
   userId: -1
 }
@@ -101,7 +101,7 @@ export const TDCSocialNetworkSlice = createSlice({
     },
     addQuestion: (state, action: PayloadAction<string>) => {
       const question: Question = {
-        title: "",
+        title: '',
         type: action.payload,
         choices: []
       }
@@ -117,26 +117,26 @@ export const TDCSocialNetworkSlice = createSlice({
     addQuestionValidates: (state, action: PayloadAction<InputTextValidate>) => {
       state.questionTitleValidates.push(action.payload)
     },
-    updateQuestionTitleValidate: (state, action: PayloadAction<{ index: number, validate: InputTextValidate }>) => {
+    updateQuestionTitleValidate: (state, action: PayloadAction<{ index: number; validate: InputTextValidate }>) => {
       state.questionTitleValidates[action.payload.index] = action.payload.validate
     },
     deleteQuestionTitleValidate: (state, action: PayloadAction<{ index: number }>) => {
       state.questionTitleValidates.splice(action.payload.index, 1)
     },
-    updateQuestion: (state, action: PayloadAction<{ index: number, question: Question }>) => {
+    updateQuestion: (state, action: PayloadAction<{ index: number; question: Question }>) => {
       state.surveyPostRequest.questions[action.payload.index] = action.payload.question
     },
     deleteQuestion: (state, action: PayloadAction<number>) => {
       state.surveyPostRequest.questions.splice(action.payload, 1)
     },
     addChoice: (state, action: PayloadAction<{ questionIndex: number }>) => {
-      state.surveyPostRequest.questions[action.payload.questionIndex].choices.push("")
+      state.surveyPostRequest.questions[action.payload.questionIndex].choices.push('')
     },
-    updateChoice: (state, action: PayloadAction<{ questionIndex: number, choiceIndex: number, choice: string }>) => {
+    updateChoice: (state, action: PayloadAction<{ questionIndex: number; choiceIndex: number; choice: string }>) => {
       const { choiceIndex, questionIndex, choice } = action.payload
       state.surveyPostRequest.questions[questionIndex].choices[choiceIndex] = choice
     },
-    deleteChoice: (state, action: PayloadAction<{ questionIndex: number, choiceIndex: number }>) => {
+    deleteChoice: (state, action: PayloadAction<{ questionIndex: number; choiceIndex: number }>) => {
       const { choiceIndex, questionIndex } = action.payload
       state.surveyPostRequest.questions[questionIndex].choices.splice(choiceIndex, 1)
     },

@@ -1,30 +1,43 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import CustomizeHeaderPost from './CustomizeHeaderPost'
 import CustomizeBodyPost from './CustomizeBodyPost'
 import CustomizeBottomPost from './CustomizeBottomPost'
 import CustomizeImage from './CustomizeImage'
 import { Post } from '../../types/Post'
 import { COMMENT_ACTION, GO_TO_PROFILE_ACTIONS, LIKE_ACTION, SHOW_LIST_USER_REACTED, TYPE_NORMAL_POST, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST } from '../../constants/Variables'
-import { useAppSelector } from '../../redux/Hook'
+import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { Like } from '../../types/Like'
 import { ImageGalleryDisplay } from '../../types/ImageGalleryDispaly'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import CustomizeSurveyPost from '../surveyPost/CustomizeSurveyPost'
 import CustomizeRecruitmentPost from '../recruitmentPost/CustomizeRecruitmentPost'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import CustomizeCommentPost from './CustomizeCommentPost'
+import CustomizeCreateCommentsToolbar from '../commentToolbar/CustomizeCreateCommentsToolbar'
+import { useNavigate } from 'react-router-dom'
+import { PROFILE_PAGE } from '../../constants/Page'
 
 const CustomizePost = (props: Post) => {
+  const navigate = useNavigate()
   const { userLogin, isOpenModalComments } = useAppSelector((state) => state.TDCSocialNetworkReducer)
-  // Header
+  const [isOpenComment, setIsOpenComments] = useState(false);
+  const [commentAuthorName, setCommentAuthorName] = useState<string>('');
+  const [dataComments, setDataComments] = useState({
+    postId: props.id,
+    userId: userLogin?.id,
+    content: "",
+    parentCommentId: 0
+  })
+  const dispatch = useAppDispatch()
 
   const handleClickIntoAvatarAndNameAndMenuEvent = (flag: number | null) => {
     if (flag === GO_TO_PROFILE_ACTIONS) {
-      alert('go to profile user have id: ' + props.userId)
+      handleClickToAvatarAndName(props.userId)
     } else {
       alert('menu')
     }
   }
-
-  // Bottom area
 
   const checkLiked = (likes: Like[], userId: number | undefined) => {
     let result = false
@@ -47,22 +60,26 @@ const CustomizePost = (props: Post) => {
   }
 
   const handleClickIntoBtnIconLikeEvent = async () => {
-    alert('click like')
-    // const dataLike: LikeAction = {
-    //   code: '',
-    //   postId: post.id,
-    //   userId: userLogin?.id ?? 0
-    // }
-    // props.likeAction(dataLike)
+    const data = {
+      "postId": props.id,
+      "userId": userLogin?.id
+    }
+    callLikeAPI(data)
+  }
+
+  const callLikeAPI = (data: any) => {
+    axios.post(SERVER_ADDRESS + 'api/posts/like', data)
+      .then((response) => {
+        if (response.data.status !== 201) {
+          toast.error('Lỗi hệ thống vui lòng thử lại sau!')
+        }
+      }).catch((error) => {
+        toast.error('Lỗi hệ thống vui lòng thử lại sau!')
+      })
   }
 
   const handleClickIntoBtnIconComments = () => {
-    alert('click comment')
-    // dispatch(
-    //   openModalComments({
-    //     id: props.id
-    //   })
-    // )
+    setIsOpenComments(!isOpenComment);
   }
 
   const handleClickIntoListUserReactions = () => {
@@ -82,6 +99,24 @@ const CustomizePost = (props: Post) => {
     alert('click btn detail survey' + idPost);
   }
 
+  const handleClickCreateCommentBtnEvent = (content: string) => {
+    dataComments.content = content;
+    callCommentsAPI();
+  }
+
+  const handleClickToCommentReplyEvent = (id: number, name: string) => {
+    dataComments.parentCommentId = id;
+    setCommentAuthorName(name);
+  }
+
+  const handleClickToDeleteCommentsEvent = (id: number) => {
+    callDeleteCommentAPI(id);
+  }
+
+  const handleClickToAvatarAndName = (_userId: number) => {
+    navigate(`/user-profile/${_userId}`);
+  }
+
   const changeDataToImagGallerys = useCallback(() => {
     const newImagesGallerys: ImageGalleryDisplay[] = props.images.map((element) => ({
       original: SERVER_ADDRESS + 'api/images/' + element.uri,
@@ -90,6 +125,44 @@ const CustomizePost = (props: Post) => {
     return newImagesGallerys;
   }, [])
 
+  const callCommentsAPI = () => {
+    axios.post(SERVER_ADDRESS + 'api/posts/comment', {
+      "postId": dataComments.postId,
+      "userId": dataComments.userId,
+      "content": dataComments.content,
+      "parentCommentId": dataComments.parentCommentId
+    })
+      .then((response) => {
+        if (response.data.status === 201) {
+          toast.success('Tạo comment thành công')
+        } else {
+          toast.error('Tạo comment thất bại')
+        }
+      })
+      .catch((error) => {
+        toast.error('Tạo comment thất bại')
+        throw error;
+      })
+    // Reset
+    dataComments.parentCommentId = 0;
+  }
+
+  const callDeleteCommentAPI = (id: number) => {
+    axios.delete(SERVER_ADDRESS + 'api/posts/comment/delete', {
+      data: {
+        commentId: id,
+        postId: props.id,
+        userId: userLogin?.id
+      }
+    })
+      .then((response) => {
+        toast.success('Xóa comment thành công')
+      })
+      .catch((error) => {
+        toast.error('Xóa comment thất bại')
+        throw error;
+      })
+  }
 
   switch (props.type) {
     case TYPE_NORMAL_POST:
@@ -123,6 +196,21 @@ const CustomizePost = (props: Post) => {
             handleClickBottomBtnEvent={handleClickBottomBtnEvent}
             commentQty={props.commentQty}
           />
+          {
+            isOpenComment && <>
+              <CustomizeCommentPost comments={props.comments}
+                handleClickToCommentReplyEvent={handleClickToCommentReplyEvent}
+                handleClickToDeleteCommentsEvent={handleClickToDeleteCommentsEvent}
+                handleClickToAvatarAndName={handleClickToAvatarAndName}
+              />
+              <CustomizeCreateCommentsToolbar
+                image={props.avatar}
+                name={props.name}
+                tagName={commentAuthorName}
+                handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
+              />
+            </>
+          }
         </div>
       )
     case TYPE_RECRUITMENT_POST:
@@ -133,7 +221,7 @@ const CustomizePost = (props: Post) => {
             avatar={props.avatar}
             available={props.available}
             timeCreatePost={props.timeCreatePost}
-            typeAuthor={props.typeAuthor}
+            typeAuthor={'Tuyển dụng'}
             type={props.type}
             role={props.role}
             handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
@@ -164,6 +252,21 @@ const CustomizePost = (props: Post) => {
             handleClickBottomBtnEvent={handleClickBottomBtnEvent}
             commentQty={props.commentQty}
           />
+          {
+            isOpenComment && <>
+              <CustomizeCommentPost comments={props.comments}
+                handleClickToCommentReplyEvent={handleClickToCommentReplyEvent}
+                handleClickToDeleteCommentsEvent={handleClickToDeleteCommentsEvent}
+                handleClickToAvatarAndName={handleClickToAvatarAndName}
+              />
+              <CustomizeCreateCommentsToolbar
+                image={props.avatar}
+                name={props.name}
+                tagName={commentAuthorName}
+                handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
+              />
+            </>
+          }
         </div>
       )
     case TYPE_SURVEY_POST:
@@ -173,7 +276,7 @@ const CustomizePost = (props: Post) => {
           avatar={props.avatar}
           available={props.available}
           timeCreatePost={props.timeCreatePost}
-          typeAuthor={props.typeAuthor}
+          typeAuthor={'Khảo sát'}
           type={props.type}
           role={props.role}
           handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
@@ -201,6 +304,22 @@ const CustomizePost = (props: Post) => {
           handleClickBottomBtnEvent={handleClickBottomBtnEvent}
           commentQty={props.commentQty}
         />
+        {
+          isOpenComment && <>
+            <CustomizeCommentPost
+              comments={props.comments}
+              handleClickToCommentReplyEvent={handleClickToCommentReplyEvent}
+              handleClickToDeleteCommentsEvent={handleClickToDeleteCommentsEvent}
+              handleClickToAvatarAndName={handleClickToAvatarAndName}
+            />
+            <CustomizeCreateCommentsToolbar
+              image={props.avatar}
+              name={props.name}
+              tagName={commentAuthorName}
+              handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
+            />
+          </>
+        }
       </div>
     default:
       return null

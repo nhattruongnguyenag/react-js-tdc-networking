@@ -59,7 +59,8 @@ export default function StudentRegistationPage() {
     major: '',
     studentCode: '',
     confimPassword: '',
-    facultyGroupCode: ''
+    facultyGroupCode: '',
+    facultyGroupId: 0
   })
   const [dataRequest, setDataRequest] = useState([
     {

@@ -89,6 +89,12 @@ export const TDCSocialNetworkAPI = createApi({
         method: 'GET'
       })
     }),
+    getPostsById: builder.query<Data<any[]>, { id: string }>({
+      query: (data) => ({
+        url: `api/posts/user/${data.id}`,
+        method: 'GET'
+      })
+    }),
     addSurveyConductAnswer: builder.mutation<MessageResponseData, SurveyConductRequest>({
       query: (data) => ({
         url: 'api/posts/survey/conduct',
@@ -126,6 +132,7 @@ export const {
   useGetFacultyPostsQuery,
   useGetBusinessPostsQuery,
   useGetStudentPostsQuery,
+  useGetPostsByIdQuery,
   useAddSurveyConductAnswerMutation,
   useJobApplyMutation
 } = TDCSocialNetworkAPI

@@ -1,19 +1,19 @@
 import moment from 'moment'
-import { StrictMode } from 'react'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import AppRouter from './AppRouter'
 import { store } from './redux/Store'
+import CustomizeModalComments from './components/modal/CustomizeModalComments'
+import { useAppSelector } from './redux/Hook'
 const vi = require('moment/locale/vi')
 moment.locale('vi', vi)
 
 function App() {
   return (
     <Provider store={store}>
-      <ToastContainer />
       <AppRouter />
+      <ToastContainer />
     </Provider>
   )
 }
-
 export default App
