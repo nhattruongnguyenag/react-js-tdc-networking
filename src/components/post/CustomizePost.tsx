@@ -16,7 +16,9 @@ import { toast } from 'react-toastify'
 import CustomizeCommentPost from './CustomizeCommentPost'
 import CustomizeCreateCommentsToolbar from '../commentToolbar/CustomizeCreateCommentsToolbar'
 import { useNavigate } from 'react-router-dom'
-import { PROFILE_PAGE } from '../../constants/Page'
+import { RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, USER_DETAILS_PAGE } from '../../constants/Page'
+import { slugify } from '../../utils/CommonUtls'
+import { isBlank } from '../../utils/ValidateUtils'
 
 const CustomizePost = (props: Post) => {
   const navigate = useNavigate()
@@ -84,24 +86,15 @@ const CustomizePost = (props: Post) => {
 
   const handleClickIntoListUserReactions = () => {
     alert('click user reacted')
-    // dispatch(
-    //     openModalUserReaction({
-    //         likes: props.likes
-    //     })
-    // )
-  }
-
-  const handleClickBtnRecruitmentDetailEvent = (idPost: number) => {
-    alert('click btn detail recruitment' + idPost);
-  }
-
-  const handleClickBtnSurveyDetailEvent = (idPost: number) => {
-    alert('click btn detail survey' + idPost);
   }
 
   const handleClickCreateCommentBtnEvent = (content: string) => {
     dataComments.content = content;
-    callCommentsAPI();
+    if (isBlank(dataComments.content.trim())) {
+      toast.error('Nội dung bài bình luận không thể để trống!')
+    } else {
+      callCommentsAPI();
+    }
   }
 
   const handleClickToCommentReplyEvent = (id: number, name: string) => {
@@ -114,15 +107,23 @@ const CustomizePost = (props: Post) => {
   }
 
   const handleClickToAvatarAndName = (_userId: number) => {
-    navigate(`/user-profile/${_userId}`);
+    navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${props.userId}`)
+  }
+
+  const handleClickBtnRecruitmentDetailEvent = (idPost: number, title: string) => {
+    navigate(`${RECRUITMENT_DETAILS_PAGE}/${slugify(title)}-${idPost}`)
+  }
+
+  const handleClickBtnSurveyDetailEvent = (idPost: number, title: string) => {
+    navigate(`${SURVEY_DETAILS_PAGE}/${slugify(title)}-${idPost}`)
   }
 
   const changeDataToImagGallerys = useCallback(() => {
     const newImagesGallerys: ImageGalleryDisplay[] = props.images.map((element) => ({
       original: SERVER_ADDRESS + 'api/images/' + element.uri,
-      thumbnail: SERVER_ADDRESS + 'api/images/' + element.uri,
-    }));
-    return newImagesGallerys;
+      thumbnail: SERVER_ADDRESS + 'api/images/' + element.uri
+    }))
+    return newImagesGallerys
   }, [])
 
   const callCommentsAPI = () => {
@@ -141,7 +142,6 @@ const CustomizePost = (props: Post) => {
       })
       .catch((error) => {
         toast.error('Tạo comment thất bại')
-        throw error;
       })
     // Reset
     dataComments.parentCommentId = 0;
@@ -160,7 +160,6 @@ const CustomizePost = (props: Post) => {
       })
       .catch((error) => {
         toast.error('Xóa comment thất bại')
-        throw error;
       })
   }
 
@@ -182,9 +181,7 @@ const CustomizePost = (props: Post) => {
           {/* Body */}
           <CustomizeBodyPost content={props.content} />
           {/* Image */}
-          {props.images && props.images.length > 0 && (
-            <CustomizeImage images={changeDataToImagGallerys()} />
-          )}
+          {props.images && props.images.length > 0 && <CustomizeImage images={changeDataToImagGallerys()} />}
           {/* Bottom */}
           <CustomizeBottomPost
             id={props.id}
@@ -292,6 +289,7 @@ const CustomizePost = (props: Post) => {
           description={props.description ?? ''}
           typeAuthor={props.typeAuthor ?? ''}
           role={props.role ?? ''}
+          isConduct={0}
         />
         {/* Bottom */}
         <CustomizeBottomPost

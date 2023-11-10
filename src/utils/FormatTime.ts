@@ -1,4 +1,4 @@
-import moment from "moment"
+import moment from 'moment'
 
 export const formatDateTime = (originalDateString: string): any => {
   const originalDate = new Date(originalDateString)

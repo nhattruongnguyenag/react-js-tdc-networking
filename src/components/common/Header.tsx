@@ -24,10 +24,6 @@ export default function Header() {
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    console.log(location.pathname)
-  }, [location])
-
   return (
     <Fragment>
       <div className='nav-header shadow-xs border-0 bg-white'>

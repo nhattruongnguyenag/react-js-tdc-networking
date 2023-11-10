@@ -1,8 +1,9 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBriefcase, faPhone, faEnvelope, faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faBriefcase, faPhone, faEnvelope, faUserPlus, faBars } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 import { COLOR_BLACK, COLOR_WHITE } from '../../constants/Color'
+import { CALL_ACTION, FOLLOW_ACTION, MENU_CLICK_ACTION, MESSENGER_ACTION } from '../../constants/Variables';
 export interface StudentProfileType {
     handleClickButtonEvent: (flag: number) => void,
     position: string,
@@ -16,7 +17,9 @@ export default function CustomizeBodyStudentProfile(props: Readonly<StudentProfi
     return (
         <div>
             <div className='lineOfInfoBodyProfile'>
-                <button className='btn-react-header-profile'>
+                <button
+                    onClick={() => props.handleClickButtonEvent(MESSENGER_ACTION)}
+                    className='btn-react-header-profile'>
                     <FontAwesomeIcon
                         icon={faFacebookMessenger}
                         size='xl'
@@ -24,19 +27,31 @@ export default function CustomizeBodyStudentProfile(props: Readonly<StudentProfi
                         className='button-header-profile-react' />
                     Nhắn tin
                 </button>
-                <button className='btn-react-header-profile'>
+                <button
+                    onClick={() => props.handleClickButtonEvent(CALL_ACTION)}
+                    className='btn-react-header-profile'>
                     <FontAwesomeIcon icon={faPhone}
                         size='xl'
                         color={COLOR_WHITE}
                         className='button-header-profile-react' />
                     Gọi điện
                 </button>
-                <button className='btn-react-header-profile'>
+                <button
+                    onClick={() => props.handleClickButtonEvent(FOLLOW_ACTION)}
+                    className='btn-react-header-profile'>
                     <FontAwesomeIcon icon={faUserPlus}
                         size='xl'
                         color={COLOR_WHITE}
                         className='button-header-profile-react' />
                     Theo dõi
+                </button>
+                <button
+                    onClick={() => props.handleClickButtonEvent(MENU_CLICK_ACTION)}
+                    className='btn-react-header-profile-menu'>
+                    <FontAwesomeIcon icon={faBars}
+                        size='xl'
+                        color={COLOR_WHITE}
+                        className='button-header-profile-react-menu' />
                 </button>
             </div>
             <div className='lineOfInfoBodyProfile'>

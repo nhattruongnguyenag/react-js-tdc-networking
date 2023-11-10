@@ -1,18 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Post } from '../types/Post';
+import React, { useEffect, useState } from 'react'
 import { numberDayPassed } from '../utils/FormatTime';
 import Header from '../components/common/Header';
-import { useGetFacultyPostsQuery, useGetPostsByIdQuery } from '../redux/Service';
+import { useGetPostsByIdQuery } from '../redux/Service';
 import { LikeAction } from '../types/LikeActions';
 import CustomizePost from '../components/post/CustomizePost';
 import { useAppSelector } from '../redux/Hook';
 import CustomizeProfile from '../components/profile/CustomizeProfile';
-import axios from 'axios';
-import { API_URL_GET_POST_BY_USER_ID } from '../constants/Path';
 import { useParams } from 'react-router-dom';
 import CreatePostSelector from '../components/CreatePostSelector';
-import { handleDataClassification } from '../utils/DataClassfications';
-import { TYPE_POST_STUDENT } from '../constants/StringVietnamese';
 
 export default function ProfileScreen() {
     const { _userId } = useParams();
@@ -45,7 +40,7 @@ export default function ProfileScreen() {
             }
         }
     }, [data]);
-    
+
     const likeAction = (obj: LikeAction) => {
 
     }
@@ -74,7 +69,7 @@ export default function ProfileScreen() {
                 salary={item.salary ?? null}
                 employmentType={item.employmentType ?? null}
                 description={item.description ?? null}
-            />
+                isConduct={null} />
         )
     }
 

@@ -15,18 +15,18 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
 
     const handleClickButtonEvent = (flag: number) => {
         if (flag === MESSENGER_ACTION) {
-            console.log('chat');
+            alert('chat');
         } else if (flag === FOLLOW_ACTION) {
-            console.log('follow');
+            alert('follow');
         } else if (flag === CALL_ACTION) {
-            console.log('call');
+            alert('call');
         } else {
             handleClickIntoButtonMenu3dotEvent();
         }
     }
 
     const handleClickIntoButtonMenu3dotEvent = () => {
-
+        alert('menu')
     }
 
     const handleClickIntoHeaderComponentEvent = (flag: number) => {

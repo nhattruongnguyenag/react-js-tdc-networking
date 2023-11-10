@@ -7,11 +7,16 @@ import Header from '../components/common/Header'
 import InputTextWithTitle from '../components/common/InputTextWithTitle'
 import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
 import ValidateTextView from '../components/common/ValidateTextView'
-import MultiQuestionMultiChoice from '../components/survey/MultiQuestionMultiChoice'
-import MultiQuestionOneChoice from '../components/survey/MultiQuestionOneChoice'
-import ShortAnswerQuestion from '../components/survey/ShortAnswerQuestion'
+import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestionMultiChoice'
+import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
+import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
 import { SURVEY_POST_REQUEST } from '../constants/KeyValue'
-import { ADD_QUESTION_PAGE, BUSINESS_DASHBOARD_PAGE, CREATE_SURVEY_POST_PAGE, REVIEW_SURVEY_POST_PAGE } from '../constants/Page'
+import {
+  ADD_QUESTION_PAGE,
+  BUSINESS_DASHBOARD_PAGE,
+  CREATE_SURVEY_POST_PAGE,
+  REVIEW_SURVEY_POST_PAGE
+} from '../constants/Page'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { addQuestion, setSurveyPostRequest } from '../redux/Slice'
 import { InputTextValidate, isBlank, isContainSpecialCharacter, isLengthInRange } from '../utils/ValidateUtils'
@@ -56,48 +61,58 @@ export default function CreateSurveyPostPage() {
   })
 
   useEffect(() => {
-    dispatch(setSurveyPostRequest({
-      ...surveyPostRequest,
-      userId: userLogin?.id ?? -1,
-      groupId: 1
-    }))
+    dispatch(
+      setSurveyPostRequest({
+        ...surveyPostRequest,
+        userId: userLogin?.id ?? -1,
+        groupId: 1
+      })
+    )
   }, [])
 
-  const setTitleError = useCallback((error: string) => {
-    setValidate({
-      ...validate,
-      title: {
-        textError: error,
-        isError: true,
-        isVisible: true
-      }
-    })
-    return
-  }, [validate])
+  const setTitleError = useCallback(
+    (error: string) => {
+      setValidate({
+        ...validate,
+        title: {
+          textError: error,
+          isError: true,
+          isVisible: true
+        }
+      })
+      return
+    },
+    [validate]
+  )
 
-  const setDescriptionError = useCallback((error: string) => {
-    setValidate({
-      ...validate,
-      description: {
-        textError: error,
-        isError: true,
-        isVisible: true
-      }
-    })
-    return
-  }, [validate])
+  const setDescriptionError = useCallback(
+    (error: string) => {
+      setValidate({
+        ...validate,
+        description: {
+          textError: error,
+          isError: true,
+          isVisible: true
+        }
+      })
+      return
+    },
+    [validate]
+  )
 
   const onTitleChangeText = useCallback(
     (value: string) => {
       if (isBlank(value)) {
-        setTitleError("Tiêu đề không được để trống")
+        setTitleError('Tiêu đề không được để trống')
         return
       }
 
-      dispatch(setSurveyPostRequest({
-        ...surveyPostRequest,
-        title: value
-      }))
+      dispatch(
+        setSurveyPostRequest({
+          ...surveyPostRequest,
+          title: value
+        })
+      )
 
       setValidate({
         ...validate,
@@ -114,14 +129,16 @@ export default function CreateSurveyPostPage() {
   const onDescriptionChangeText = useCallback(
     (value: string) => {
       if (isBlank(value)) {
-        setDescriptionError("Mô tả không được để trống")
+        setDescriptionError('Mô tả không được để trống')
         return
       }
 
-      dispatch(setSurveyPostRequest({
-        ...surveyPostRequest,
-        description: value
-      }))
+      dispatch(
+        setSurveyPostRequest({
+          ...surveyPostRequest,
+          description: value
+        })
+      )
 
       setValidate({
         ...validate,
@@ -163,7 +180,7 @@ export default function CreateSurveyPostPage() {
               </Link>
               <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Thêm khảo sát</h4>
             </div>
-            <div className='card-body p-lg-5 w-100 border-0 p-2'>
+            <div className='card-body p-lg-5 w-100 border-0'>
               <div className='row'>
                 <InputTextWithTitle
                   onTextChange={(value) => onTitleChangeText(value)}
@@ -179,9 +196,10 @@ export default function CreateSurveyPostPage() {
 
                 <TextAreaWithTitle
                   onTextChange={(value) => onDescriptionChangeText(value)}
-                  rows={10}
+                  rows={15}
                   placeholder='Nhập mô tả...'
-                  title='Mô tả' />
+                  title='Mô tả'
+                />
 
                 <ValidateTextView
                   textError={validate.description.textError}
@@ -191,8 +209,9 @@ export default function CreateSurveyPostPage() {
               </div>
               <button
                 onClick={() => onBtnAddQuestionClick()}
-                type="button"
-                className="text-white mt-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-centerdark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                type='button'
+                className='items-centerdark:bg-blue-600 mt-3 inline-flex rounded-lg bg-blue-700 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+              >
                 <div className='flex items-center'>
                   <span>Tiếp theo</span>
                   <FontAwesomeIcon style={{ fontSize: 15, marginLeft: 10 }} icon={icon({ name: 'arrow-right' })} />

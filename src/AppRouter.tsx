@@ -7,37 +7,45 @@ import {
   CREATE_RECRUITMENT_POST_PAGE,
   CREATE_SURVEY_POST_PAGE,
   FACULTY_DASHBOARD_PAGE,
+  FUNCTION_DESCRIPTION_PAGE,
+  JOB_APPLY_PAGE,
   LOGIN_PAGE,
   MESSAGE_PAGE,
   PROFILE_PAGE,
+  RECRUITMENT_DETAILS_PAGE,
   REGISTER_BUSINESS_PAGE,
   REGISTER_PAGE,
   REGISTER_STUDENT_PAGE,
   REVIEW_SURVEY_POST_PAGE,
   SEARCH_PAGE,
   SETTING_PAGE,
-  STUDENT_DASHBOARD_PAGE
+  STUDENT_DASHBOARD_PAGE,
+  SURVEY_DETAILS_PAGE,
+  USER_DETAILS_PAGE
 } from './constants/Page'
+import AddQuestionPage from './pages/AddQuestionPage'
 import BusinessDashboardPage from './pages/BusinessDashboardPage'
+import BusinessRegistationPage from './pages/BusinessRegistationPage'
 import ChatPage from './pages/ChatPage'
 import ConversationPage from './pages/ConversationPage'
 import CreateRecruitmentPostPage from './pages/CreateRecruitmentPostPage'
 import CreateSurveyPostPage from './pages/CreateSurveyPostPage'
+import DetailIntroducePage from './pages/DetailedIntroducePage'
 import FacultyDashboardPage from './pages/FacultyDashboardPage'
 import IntroducePage from './pages/IntroducePage'
+import JobApplyPage from './pages/JobApplyPage'
 import LoginPage from './pages/LoginPage'
 import NoPage from './pages/NoPage'
-import RegisterBusinessPage from './pages/RegisterBusinessPage'
-import RegisterStudentPage from './pages/RegisterStudentPage'
+import RecruitmentDetailsPage from './pages/RecruitmentDetailsPage'
 import SearchPage from './pages/SearchPage'
+import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import SettingPage from './pages/SettingPage'
 import StudentDashboardPage from './pages/StudentDashboardPage'
-import { useAppSelector } from './redux/Hook'
-import BusinessRegistationPage from './pages/BusinessRegistationPage'
-import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
 import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
-import AddQuestionPage from './pages/AddQuestionPage'
+import SurveyConductPage from './pages/SurveyConductPage'
+import UserDetailsPage from './pages/UserDetailsPage'
+import { useAppSelector } from './redux/Hook'
 import ProfileScreen from './pages/ProfileScreen'
 
 export default function AppRouter() {
@@ -64,8 +72,13 @@ export default function AppRouter() {
             <Route path={REGISTER_BUSINESS_PAGE} element={<BusinessRegistationPage />} />
             <Route path={REGISTER_STUDENT_PAGE} element={<StudentRegistationPage />} />
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
-            <Route path={PROFILE_PAGE} element={<ProfileScreen />} />
+            <Route path={FUNCTION_DESCRIPTION_PAGE} element={<DetailIntroducePage />} />
+            <Route path={USER_DETAILS_PAGE + '/:slug'} element={<UserDetailsPage />} />
+            <Route path={JOB_APPLY_PAGE + '/:slug'} element={<JobApplyPage />} />
+            <Route path={RECRUITMENT_DETAILS_PAGE + '/:slug'} element={<RecruitmentDetailsPage />} />
+            <Route path={SURVEY_DETAILS_PAGE + '/:slug'} element={<SurveyConductPage />} />
             <Route path='*' element={<NoPage />} />
+            <Route path='/' element={<IntroducePage />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -35,7 +35,7 @@ export default function StudentDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
-      
+
   }
 
   const renderItem = (item: any) => {
@@ -62,6 +62,7 @@ export default function StudentDashboardPage() {
       salary={item.salary ?? null}
       employmentType={item.employmentType ?? null}
       description={item.description ?? null}
+      isConduct={null}
     />
   }
 

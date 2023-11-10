@@ -14,8 +14,8 @@
   object-fit: cover;
   bottom: -40px;
   left: 10px;
-  border-width: 5px;
-  border-color: white;
+  border-width: 15px;
+  border-color: #ffff;
   position: absolute;
 }
 
@@ -52,5 +52,13 @@
 }
 
 .button-header-profile-react {
-  padding-right: 10px;
+  padding-right: 6px;
+}
+
+.btn-react-header-profile-menu {
+  padding: 5px 10px;
+  background: var(--primary-color);
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
 }

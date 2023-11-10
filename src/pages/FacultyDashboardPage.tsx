@@ -39,9 +39,9 @@ export default function FacultyDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
-   
+
   }
-  
+
   const renderItem = (item: any) => {
     return <CustomizePost
       key={item.id}
@@ -66,6 +66,7 @@ export default function FacultyDashboardPage() {
       salary={item.salary ?? null}
       employmentType={item.employmentType ?? null}
       description={item.description ?? null}
+      isConduct={null}
     />
   }
 
