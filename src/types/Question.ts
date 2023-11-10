@@ -4,13 +4,15 @@ export interface Question {
   type: string
   title: string
   choices: string[]
+  required: number
 }
 
 export interface QuestionProps {
-  data?: Question
-  dataResponse?: QuestionResponse
   index?: number
+  dataResponse?: QuestionResponse
+  editMode?: boolean
   reviewMode?: boolean
+  conductMode?: boolean
 }
 
 export type MultiChoiceQuestion = Question
