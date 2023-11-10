@@ -17,13 +17,14 @@ import { formatVietNamCurrency } from '../utils/FormatCurrency'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { formatDateTime } from '../utils/FormatTime'
-import { Item } from 'react-photoswipe-gallery'
+import { useAppSelector } from '../redux/Hook'
 
 export default function RecruitmentDetailsPage() {
   const navigate = useNavigate()
   const { slug } = useParams()
   const postId = getIdFromSlug(slug ?? '')
-  const [dataRecruitmentDetail, setDataRecruitmentDetail] = useState({
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const [data, setData] = useState({
     salary: '',
     expiration: '',
     location: '',
@@ -33,30 +34,33 @@ export default function RecruitmentDetailsPage() {
     requirement: '',
     title: ''
   })
-  const [result, setResult] = useState([dataRecruitmentDetail.benefit])
-  const [description, setDescription] = useState([dataRecruitmentDetail.description])
-  const [requirement, setRequirement] = useState([dataRecruitmentDetail.requirement])
+  const [result, setResult] = useState([data.benefit])
+  const [description, setDescription] = useState([data.description])
+  const [requirement, setRequirement] = useState([data.requirement])
+
   useEffect(() => {
     if (postId) {
       axios
-        .get(SERVER_ADDRESS + `api/posts/recruitment/${postId}`)
+        .get(SERVER_ADDRESS + `api/posts/recruitment?postId=${postId}&&userLogin=${userLogin?.id}`)
         .then((recruitment) => {
-          setDataRecruitmentDetail(recruitment.data.data)
+          setData(recruitment.data.data)
+          console.log(`id : ${postId} + ${userLogin?.id}`)
         })
         .catch((error) => {
           console.log(error)
         })
     }
   }, [postId])
-  const onSubmit = (title: string, postID: number | null) => {
+
+  const handleBtnJobApply = (title: string, postID: number | null) => {
     navigate(`${JOB_APPLY_PAGE}/${slugify(title)}-${postID}`)
   }
 
   useEffect(() => {
-    setResult(dataRecruitmentDetail.benefit.split(','))
-    setDescription(dataRecruitmentDetail.description.split(','))
-    setRequirement(dataRecruitmentDetail.requirement.split(','))
-  }, [dataRecruitmentDetail.benefit, dataRecruitmentDetail.description, dataRecruitmentDetail.requirement])
+    setResult(data.benefit.split(','))
+    setDescription(data.description.split(','))
+    setRequirement(data.requirement.split(','))
+  }, [data.benefit, data.description, data.requirement])
 
   return (
     <>
@@ -77,7 +81,7 @@ export default function RecruitmentDetailsPage() {
                     <h2 className='fw-700 text-black'>Vị trí tuyển dụng</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faRankingStar} color={COLOR_GREY} />
-                      <p className='ml-4'>{dataRecruitmentDetail.title}</p>
+                      <p className='ml-4'>{data.title}</p>
                     </div>
                     <div className='border'></div>
                   </div>
@@ -85,7 +89,7 @@ export default function RecruitmentDetailsPage() {
                     <h2 className='fw-700 text-black'>Hình thức tuyển dụng</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faBriefcase} color={COLOR_GREY} />
-                      <p className='ml-4'>{dataRecruitmentDetail.employmentType}</p>
+                      <p className='ml-4'>{data.employmentType}</p>
                     </div>
                     <div className='border'></div>
                   </div>
@@ -93,7 +97,7 @@ export default function RecruitmentDetailsPage() {
                     <h2 className='fw-700 text-black'>Lương</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faMoneyCheckDollar} color={COLOR_GREY} />
-                      <p className='ml-4'>{formatVietNamCurrency(dataRecruitmentDetail.salary)} vnd</p>
+                      <p className='ml-4'>{formatVietNamCurrency(data.salary)} vnd</p>
                     </div>
                     <div className='border'></div>
                   </div>
@@ -101,7 +105,7 @@ export default function RecruitmentDetailsPage() {
                     <h2 className='fw-700 text-black'>Thời hạn ứng tuyển</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
-                      <p className='ml-4'>{formatDateTime(dataRecruitmentDetail.expiration)}</p>
+                      <p className='ml-4'>{formatDateTime(data.expiration)}</p>
                     </div>
                     <div className='border'></div>
                   </div>
@@ -109,7 +113,7 @@ export default function RecruitmentDetailsPage() {
                     <h2 className='fw-700 text-black'>Địa chỉ làm việc</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faMapLocation} color={COLOR_GREY} />
-                      <p className='ml-4'>{dataRecruitmentDetail.location}</p>
+                      <p className='ml-4'>{data.location}</p>
                     </div>
                     <div className='border'></div>
                   </div>
@@ -117,35 +121,41 @@ export default function RecruitmentDetailsPage() {
                 <div className='group-recruitment-content'>
                   <h1 className='fw-700 fs-3 pt-3 text-black'>Phúc lợi</h1>
                   <div className='benefit'>
-                    {result.map((item, index) => (
-                      <div className='item-recruitment' key={index}>
-                        <p className='fw-500'>{item}</p>
-                      </div>
-                    ))}
+                    {result
+                      .filter((item) => item !== '')
+                      .map((item, index) => (
+                        <div className='item-recruitment' key={index}>
+                          <p className='fw-500'>{item}</p>
+                        </div>
+                      ))}
                   </div>
                 </div>
                 <div className='group-recruitment-content'>
                   <h1 className='fw-700 fs-3 pt-3 text-black'>Mô tả công việc</h1>
-                  {description.map((item, index) => (
-                    <div className='item-recruitment-description' key={index}>
-                      <p className='fw-500 text-black'>{item.replace(/(^|\s)\S/g, l=> l.toUpperCase())}</p>
-                    </div>
-                  ))}
-                </div> 
+                  {description
+                    .filter((item) => item !== '')
+                    .map((item, index) => (
+                      <div className='item-recruitment-description' key={index}>
+                        <p className='fw-500 text-black'>{item.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}</p>
+                      </div>
+                    ))}
+                </div>
                 <div className='group-recruitment-content'>
                   <h1 className='fw-700 fs-3 pt-3 text-black'>Yêu cầu</h1>
-                  {requirement.map((item, index) => (
-                    <div className='item-recruitment-description' key={index}>
-                      <p className='fw-500 text-black'>{item.replace(/(^|\s)\S/g, l=> l.toUpperCase())}</p>
-                    </div>
-                  ))}
+                  {requirement
+                    .filter((item) => item !== '')
+                    .map((item, index) => (
+                      <div className='item-recruitment-description' key={index}>
+                        <p className='fw-500 text-black'>{item.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}</p>
+                      </div>
+                    ))}
                 </div>
               </div>
               <div className='btn-recuitment mb-0'>
                 <button
                   type='button'
                   className='font-xsss fw-600 w175 bg-recruitment mt-3 p-3 text-center text-white'
-                  onClick={() => onSubmit(dataRecruitmentDetail.title, postId)}
+                  onClick={() => handleBtnJobApply(data.title, postId)}
                 >
                   Nộp đơn ứng tuyển
                 </button>
