@@ -147,7 +147,7 @@ export default function LoginPage() {
       setIsLoading(true)
       axios
         .post<UserLoginRequest, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/login', userLoginRequest)
-        .then((loginResponse) => {
+        .then((loginResponse: any) => {
           const token = loginResponse.data.data.token
           axios
             .get<void, AxiosResponse<Data<Student | Faculty | Business>>>(SERVER_ADDRESS + `api/users/token/${token}`)
@@ -162,7 +162,7 @@ export default function LoginPage() {
               }
             })
         })
-        .catch((error) => {
+        .catch((error: any) => {
           setIsLoading(false)
           alert('Sai thông tin email hoặc mật khẩu')
         })
@@ -259,7 +259,7 @@ export default function LoginPage() {
                   </div>
                   <h6 className='text-grey-500 font-xsss fw-500 lh-32 mb-0 mt-0'>
                     Chưa có tài khoản?{' '}
-                    <button type='button' className='txt-blue'>
+                    <button type='button' className='txt-blue' onClick={() => navigate('/dang-ky')}>
                       Đăng ký
                     </button>
                   </h6>

@@ -1,25 +1,37 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Fragment, useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useAppDispatch } from '../../redux/Hook'
 import { toggleDarkMode } from '../../redux/Slice'
 import NotificationPopup from '../NotificationPopup'
 import MobileNavigation from './MobileNavigation'
 import Navigaion from './Navigation'
+import {
+  BUSINESS_DASHBOARD_PAGE,
+  FACULTY_DASHBOARD_PAGE,
+  SEARCH_PAGE,
+  STUDENT_DASHBOARD_PAGE
+} from '../../constants/Page'
+import classNames from 'classnames'
+import NavItem from './NavItem'
 
 export default function Header() {
+  const location = useLocation()
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    console.log(location.pathname)
+  }, [location])
 
   return (
     <Fragment>
       <div className='nav-header shadow-xs border-0 bg-white'>
         <div className='nav-top bg-inherit'>
-          <Link to='/doanh-nghiep/bai-viet'>
-            <i className='feather-zap text-success display2-size me-3 ms-0' />
-            <span className='d-inline-block fredoka-font ls-3 fw-600 font-xxl logo-text mb-0 text-current'>TDCer</span>
+          <Link to={BUSINESS_DASHBOARD_PAGE}>
+            <img src='/assets/images/app-logo.jpg' width={'200px'} />
           </Link>
           <a className='mob-menu chat-active-btn me-2 ms-auto' href='/defaultmessage'>
             <i className='feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight' />
@@ -31,36 +43,31 @@ export default function Header() {
             <i className='feather-search text-grey-900 font-sm btn-round-md bg-greylight' />
           </span>
           <button
-            className='nav-menu me-0 ms-2'
+            className='nav-menu me-feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 0 ms-2'
             type='button'
             onClick={() => setShowMobileNavigation(!showMobleNavigation)}
           />
         </div>
-        <form action='#' className='header-search float-left ms-3'>
-          <div className='form-group icon-input mb-0'>
-            <i className='feather-search font-sm text-grey-400' />
-            <input
-              type='text'
-              placeholder='Start typing to search..'
-              className='bg-grey lh-32 font-xssss fw-500 w350 theme-dark-bg rounded-xl border-0 pb-2 pe-3 ps-5 pt-2'
-            />
-          </div>
-        </form>
-        <a aria-current='page' className='menu-icon center-menu-icon active ms-3 p-2 text-center' href='/home'>
+
+        <NavItem to={BUSINESS_DASHBOARD_PAGE} active={BUSINESS_DASHBOARD_PAGE == location.pathname}>
           <i className='feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
-        <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/defaultstorie'>
-          <i className='feather-zap font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
-        <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/defaultvideo'>
-          <i className='feather-video font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
-        <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/defaultgroup'>
-          <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
-        <a className='menu-icon center-menu-icon ms-0 p-2 text-center' href='/shop2'>
+        </NavItem>
+
+        <NavItem to={STUDENT_DASHBOARD_PAGE} active={Boolean(STUDENT_DASHBOARD_PAGE == location.pathname)}>
           <i className='feather-rss font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </a>
+        </NavItem>
+
+        <NavItem
+          to={FACULTY_DASHBOARD_PAGE + '/cong-nghe-thong-tin'}
+          active={location.pathname.includes(FACULTY_DASHBOARD_PAGE)}
+        >
+          <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+        </NavItem>
+
+        <NavItem to={SEARCH_PAGE} active={SEARCH_PAGE == location.pathname}>
+          <i className='feather-search font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+        </NavItem>
+
         <span
           onClick={() => setShowNotificationPopup(!showNotificationPopup)}
           className='pointer menu-icon ms-auto p-2 text-center '

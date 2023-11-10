@@ -17,7 +17,7 @@ const CustomizeBodyPost = (props: PostContentType) => {
     return number
   }
   return (
-    <>
+    <div className='text-content-body-wrapper'>
       <div className='card-body me-lg-5 p-0'>
         {/* To show  */}
         {/* To check and hiddent */}
@@ -47,7 +47,7 @@ const CustomizeBodyPost = (props: PostContentType) => {
           </button>
         )}
       </div>
-    </>
+    </div>
   )
 }
 

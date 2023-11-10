@@ -1,20 +1,22 @@
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { createSlice } from '@reduxjs/toolkit'
-import { Faculty } from '../types/Faculty'
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
+import { SHORT_ANSWER } from '../pages/CreateSurveyPostPage'
 import { Business } from '../types/Business'
 import { Conversation } from '../types/Conversation'
+import { Faculty } from '../types/Faculty'
+import { Message } from '../types/Message'
 import { ModalComments } from '../types/ModalComments'
 import { ModalImage } from '../types/ModalImage'
 import { ModalUserReaction } from '../types/ModalUserReaction'
-import { ChoiceProps, Question } from '../types/Question'
+import { Question } from '../types/Question'
+import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 import { Student } from '../types/Student'
-import { SurveyPostRequest } from '../types/SurveyPost'
-import { Message } from '../types/Message'
-import { getSelectedConversation, getUserLogin } from '../utils/CommonUtls'
+import { getSelectedConversation, getSurveyPostRequest, getUserLogin } from '../utils/CommonUtls'
+import { InputTextValidate } from '../utils/ValidateUtils'
 
 export interface TDCSocialNetworkState {
   darkMode: boolean
-  surveyPostRequest: SurveyPostRequest | null
+  surveyPostRequest: SurveyPostRequest
+  questionTitleValidates: InputTextValidate[]
   choices: string[]
   questions: Question[]
   imagesUpload: string[] | null
@@ -32,10 +34,21 @@ export interface TDCSocialNetworkState {
   updatePost: boolean
 }
 
+export const defaultSurveyPostRequest: SurveyPostRequest = {
+  groupId: -1,
+  images: [],
+  title: '',
+  type: 'khao-sat',
+  description: '',
+  questions: [],
+  userId: -1
+}
+
 const initialState: TDCSocialNetworkState = {
   darkMode: false,
   conversationMessages: [],
-  surveyPostRequest: null,
+  surveyPostRequest: defaultSurveyPostRequest,
+  questionTitleValidates: [],
   choices: ['', '', ''],
   questions: [],
   imagesUpload: null,
@@ -77,27 +90,55 @@ export const TDCSocialNetworkSlice = createSlice({
     setConversationMessages: (state, action: PayloadAction<Message[]>) => {
       state.conversationMessages = action.payload
     },
-    setSurveyPostRequest: (state, action: PayloadAction<SurveyPostRequest | null>) => {
+    setSurveyPostRequest: (state, action: PayloadAction<SurveyPostRequest>) => {
       state.surveyPostRequest = action.payload
     },
-    addQuestion: (state, action: PayloadAction<Question>) => {
-      if (state.surveyPostRequest) {
-        state.surveyPostRequest.questions = [...state.surveyPostRequest.questions, action.payload]
+    setSurveyPostTitle: (state, action: PayloadAction<string>) => {
+      state.surveyPostRequest.title = action.payload
+    },
+    setSurveyPostDescription: (state, action: PayloadAction<string>) => {
+      state.surveyPostRequest.description = action.payload
+    },
+    addQuestion: (state, action: PayloadAction<string>) => {
+      const question: Question = {
+        title: '',
+        type: action.payload,
+        choices: []
       }
+      if (question.type !== SHORT_ANSWER) {
+        question.choices = ['', '', '']
+      }
+      state.surveyPostRequest.questions = [...state.surveyPostRequest.questions, question]
+      console.log(current(state.surveyPostRequest))
+    },
+    setQuestionValidates: (state, action: PayloadAction<InputTextValidate[]>) => {
+      state.questionTitleValidates = action.payload
+    },
+    addQuestionValidates: (state, action: PayloadAction<InputTextValidate>) => {
+      state.questionTitleValidates.push(action.payload)
+    },
+    updateQuestionTitleValidate: (state, action: PayloadAction<{ index: number; validate: InputTextValidate }>) => {
+      state.questionTitleValidates[action.payload.index] = action.payload.validate
+    },
+    deleteQuestionTitleValidate: (state, action: PayloadAction<{ index: number }>) => {
+      state.questionTitleValidates.splice(action.payload.index, 1)
+    },
+    updateQuestion: (state, action: PayloadAction<{ index: number; question: Question }>) => {
+      state.surveyPostRequest.questions[action.payload.index] = action.payload.question
     },
     deleteQuestion: (state, action: PayloadAction<number>) => {
-      if (state.surveyPostRequest) {
-        state.surveyPostRequest.questions.splice(action.payload, 1)
-      }
+      state.surveyPostRequest.questions.splice(action.payload, 1)
     },
-    addChoice: (state, action: PayloadAction<string>) => {
-      state.choices.push(action.payload)
+    addChoice: (state, action: PayloadAction<{ questionIndex: number }>) => {
+      state.surveyPostRequest.questions[action.payload.questionIndex].choices.push('')
     },
-    updateChoice: (state, action: PayloadAction<ChoiceProps>) => {
-      state.choices[action.payload.index] = action.payload.data
+    updateChoice: (state, action: PayloadAction<{ questionIndex: number; choiceIndex: number; choice: string }>) => {
+      const { choiceIndex, questionIndex, choice } = action.payload
+      state.surveyPostRequest.questions[questionIndex].choices[choiceIndex] = choice
     },
-    deleteChoice: (state, action: PayloadAction<number>) => {
-      state.choices.splice(action.payload, 1)
+    deleteChoice: (state, action: PayloadAction<{ questionIndex: number; choiceIndex: number }>) => {
+      const { choiceIndex, questionIndex } = action.payload
+      state.surveyPostRequest.questions[questionIndex].choices.splice(choiceIndex, 1)
     },
     resetChoices: (state, action: PayloadAction<void>) => {
       state.choices = ['', '', '']
@@ -136,12 +177,19 @@ export const TDCSocialNetworkSlice = createSlice({
 export const {
   toggleDarkMode,
   setImagesUpload,
+  setQuestionValidates,
   setUserLogin,
   setConversations,
   setConversationMessages,
   setDeviceToken,
   setSurveyPostRequest,
+  addQuestionValidates,
+  updateQuestionTitleValidate,
+  deleteQuestionTitleValidate,
+  setSurveyPostTitle,
+  setSurveyPostDescription,
   addQuestion,
+  updateQuestion,
   deleteQuestion,
   addChoice,
   updateChoice,
