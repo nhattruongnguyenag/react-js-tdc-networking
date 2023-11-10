@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FaAngleDoubleRight } from 'react-icons/fa'
 import { FaAngleDoubleLeft } from 'react-icons/fa'
 import '../style/login.css'
-import { Slide, ToastContainer, toast } from 'react-toastify'
+import { Bounce, Slide, ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { REGISTER_BUSINESS_PAGE, REGISTER_STUDENT_PAGE } from '../constants/Page'
 const data = [
@@ -79,7 +79,7 @@ export default function SelectTypeRegistationPage() {
           </div>
         </div>
       </div>
-      <ToastContainer autoClose={2000} transition={Slide} position='top-right' />
+      <ToastContainer autoClose={5000} transition={Bounce} />
     </Fragment>
   )
 }
