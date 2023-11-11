@@ -69,7 +69,7 @@ export default function JobApplyPage() {
             }).then(res => {
                 setIsAnonymous(true);
                 // alert("ok")
-                navigate('/doanh-nghiep/bai-viet')
+                navigate(-1)
                 toast.success('Ứng tuyển thành công!')
             })
         }

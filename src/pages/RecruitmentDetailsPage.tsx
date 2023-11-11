@@ -72,9 +72,9 @@ export default function RecruitmentDetailsPage() {
         <div className='middle-wrap'>
           <div className='card w-100 shadow-xs mb-4 border-0 bg-white p-0'>
             <div className='card-body w-100 d-flex rounded-3 bg-recruitment border-0 p-4'>
-              <Link className='d-inline-block mt-2' to={BUSINESS_DASHBOARD_PAGE}>
+              <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                 <i className='ti-arrow-left font-sm text-white' />
-              </Link>
+              </button>
               <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Chi tiết tuyển dụng</h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
