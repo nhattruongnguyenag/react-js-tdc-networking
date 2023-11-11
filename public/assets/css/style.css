@@ -18334,16 +18334,14 @@ div.navbar-intro {
     color: #A6ACAF !important;
 }
 .react-pdf__Page {
-    padding-top: 30px;
-    padding-left: 200px;
-
+    display: inline-block;
     background-color: #A6ACAF !important;
 }
 .react-pdf__Page__textContent {
-    height: 10px !important;
+    height: 0px !important;
 }
 .react-pdf__Page__annotations {
-    height: 10px !important;
+    height: 0px !important;
 }
 .lbButton{
     cursor: pointer;
