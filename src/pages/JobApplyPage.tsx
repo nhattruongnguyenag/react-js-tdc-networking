@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faPaperPlane, faCancel } from '@fortawesome/free-solid-svg-icons';
 import { COLOR_BTN_BLUE, COLOR_WHITE } from '../constants/Color';
 import { getIdFromSlug } from '../utils/CommonUtls';
+import { toast } from 'react-toastify';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -55,19 +56,26 @@ export default function JobApplyPage() {
     };
 
     const onSuccess = () => {
-        axios({
-            method: "post",
-            url: `${SERVER_ADDRESS}api/job/apply`,
-            data: {
-                "post_id": postId,
-                "user_id": userLogin?.id ?? 12,
-                "cv_url": fileName
-            },
-        }).then(res => {
-            setIsAnonymous(true);
-            // alert("ok")
-            navigate('/doanh-nghiep/bai-viet')
-        })
+        if (fileName) {
+            
+            axios({
+                method: "post",
+                url: `${SERVER_ADDRESS}api/job/apply`,
+                data: {
+                    "post_id": postId,
+                    "user_id": userLogin?.id ?? 12,
+                    "cv_url": fileName
+                },
+            }).then(res => {
+                setIsAnonymous(true);
+                // alert("ok")
+                navigate('/doanh-nghiep/bai-viet')
+                toast.success('Ứng tuyển thành công!')
+            })
+        }
+        else {
+            toast.error('Ứng tuyển thất bại!')
+        }
     }
 
     return (

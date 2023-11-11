@@ -24,6 +24,7 @@ export default function RecruitmentDetailsPage() {
   const { slug } = useParams()
   const postId = getIdFromSlug(slug ?? '')
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  console.log(SERVER_ADDRESS + `api/posts/recruitment?postId=${postId}&&userLogin=${userLogin?.id}`);
   const [data, setData] = useState({
     salary: '',
     expiration: '',
@@ -37,6 +38,8 @@ export default function RecruitmentDetailsPage() {
   const [result, setResult] = useState([data.benefit])
   const [description, setDescription] = useState([data.description])
   const [requirement, setRequirement] = useState([data.requirement])
+
+  
 
   useEffect(() => {
     if (postId) {
