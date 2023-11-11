@@ -5,18 +5,21 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../constants/SystemConstant';
 import { error, log } from 'console';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FileUploadRequest } from '../types/request/FileUploadRequest';
 import { useAppSelector } from '../redux/Hook';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faPaperPlane, faCancel } from '@fortawesome/free-solid-svg-icons';
 import { COLOR_BTN_BLUE, COLOR_WHITE } from '../constants/Color';
+import { getIdFromSlug } from '../utils/CommonUtls';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 
 
 export default function JobApplyPage() {
+    const { slug } = useParams()
+    const postId = getIdFromSlug(slug ?? '')
     const [file, setFile] = useState(null);
     const [numPages, setNumPages] = useState(0);
     const [pageNumber, setPageNumber] = useState(1);
@@ -56,7 +59,7 @@ export default function JobApplyPage() {
             method: "post",
             url: `${SERVER_ADDRESS}api/job/apply`,
             data: {
-                "post_id": 1,
+                "post_id": postId,
                 "user_id": userLogin?.id ?? 12,
                 "cv_url": fileName
             },
@@ -74,10 +77,10 @@ export default function JobApplyPage() {
                 <div className='middle-sidebar-bottom'>
                     <div className='middle-sidebar-left'>
                         <div className=''>
-                            <div className='position-relative scroll-bar theme-dark-bg pt-0' style={{ height: 845, width: 1000, background: '#A6ACAF'  }}>
-                                <div className='main' style={{ width: '100%', textAlign:'center' }}>
+                            <div className='position-relative scroll-bar theme-dark-bg pt-0' style={{ height: 845, width: 1000, background: '#A6ACAF' }}>
+                                <div className='main' style={{ width: '100%', textAlign: 'center' }}>
                                     {
-                                        file == null ? <div style={{fontWeight: 'bold', marginTop: 400}}>Hiện chưa có file nào được tải lên</div> :
+                                        file == null ? <div style={{ fontWeight: 'bold', marginTop: 400 }}>Hiện chưa có file nào được tải lên</div> :
                                             (file && (
                                                 <Document
                                                     file={file}
