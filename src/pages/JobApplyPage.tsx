@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-
-// ung tuyen cong viec
-export default function JobApplyPage() {
-  return (
-    <div>JobApplyPage</div>
-  )
-=======
 import React, { useEffect, useState } from 'react'
 import Header from '../components/common/Header'
 import { FaFileUpload } from 'react-icons/fa'
@@ -119,5 +110,4 @@ export default function JobApplyPage() {
         </div>
     )
 
->>>>>>> feature/bao/search
 }
