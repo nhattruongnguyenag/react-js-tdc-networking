@@ -13,8 +13,12 @@ export const MESSAGE_PAGE = '/nhan-tin'
 export const FACULTY_DASHBOARD_PAGE = '/khoa'
 export const STUDENT_DASHBOARD_PAGE = '/sinh-vien/bai-viet'
 export const SETTING_PAGE = '/cai-dat'
+<<<<<<< HEAD
 export const FUNCTION_DESCRIPTION_PAGE = '/mo-ta-chuc-nang'
 export const RECRUITMENT_DETAILS_PAGE = '/tuyen-dung'
 export const SURVEY_DETAILS_PAGE = '/khao-sat'
 export const JOB_APPLY_PAGE = '/ung-tuyen-cong-viec'
 export const USER_DETAILS_PAGE = '/thong-tin-ca-nhan'
+=======
+export const JOB_APPLY = '/ung-tuyen'
+>>>>>>> feature/bao/search

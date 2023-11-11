@@ -7,8 +7,12 @@ import {
   CREATE_RECRUITMENT_POST_PAGE,
   CREATE_SURVEY_POST_PAGE,
   FACULTY_DASHBOARD_PAGE,
+<<<<<<< HEAD
   FUNCTION_DESCRIPTION_PAGE,
   JOB_APPLY_PAGE,
+=======
+  JOB_APPLY,
+>>>>>>> feature/bao/search
   LOGIN_PAGE,
   MESSAGE_PAGE,
   RECRUITMENT_DETAILS_PAGE,
@@ -42,10 +46,16 @@ import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import SettingPage from './pages/SettingPage'
 import StudentDashboardPage from './pages/StudentDashboardPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
+<<<<<<< HEAD
 import SurveyConductPage from './pages/SurveyConductPage'
 import SurveyDetailsPage from './pages/SurveyConductPage'
 import UserDetailsPage from './pages/UserDetailsPage'
 import { useAppSelector } from './redux/Hook'
+=======
+import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
+import AddQuestionPage from './pages/AddQuestionPage'
+import JobApplyPage from './pages/JobApplyPage'
+>>>>>>> feature/bao/search
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -71,11 +81,15 @@ export default function AppRouter() {
             <Route path={REGISTER_BUSINESS_PAGE} element={<BusinessRegistationPage />} />
             <Route path={REGISTER_STUDENT_PAGE} element={<StudentRegistationPage />} />
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
+<<<<<<< HEAD
             <Route path={FUNCTION_DESCRIPTION_PAGE} element={<DetailIntroducePage />} />
             <Route path={USER_DETAILS_PAGE + '/:slug'} element={<UserDetailsPage />} />
             <Route path={JOB_APPLY_PAGE + '/:slug'} element={<JobApplyPage />} />
             <Route path={RECRUITMENT_DETAILS_PAGE + '/:slug'} element={<RecruitmentDetailsPage />} />
             <Route path={SURVEY_DETAILS_PAGE + '/:slug'} element={<SurveyConductPage />} />
+=======
+            <Route path={JOB_APPLY} element={<JobApplyPage />} />
+>>>>>>> feature/bao/search
             <Route path='*' element={<NoPage />} />
             <Route path='/' element={<IntroducePage />} />
           </Route>
