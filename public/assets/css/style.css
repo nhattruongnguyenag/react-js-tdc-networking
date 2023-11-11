@@ -13681,7 +13681,7 @@ strong,
 
 .nav-header .nav-top a {
     line-height: 90px;
-    width: 280px;
+    width: 320px;
     text-align: left;
     padding-left: 10px;
     display: -webkit-box;
@@ -13821,7 +13821,7 @@ strong,
     top: 0;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    width: 280px;
+    width: 320px;
     height: 100vh;
     overflow: hidden;
     background: transparent;
@@ -18228,6 +18228,7 @@ div.navbar-intro {
     right: 20%;
     top: 40%;
 }
+
 .gif1-intro {
     background-image: url(../images/giphy.gif);
     background-position: center;
@@ -18238,6 +18239,7 @@ div.navbar-intro {
     left: 10%;
     top: 80%;
 }
+
 .gif2-intro {
     background-image: url(../images/giphy.gif);
     background-position: center;
@@ -18248,6 +18250,7 @@ div.navbar-intro {
     right: 25%;
     top: 70%;
 }
+
 .gif3-intro {
     background-image: url(../images/giphy.gif);
     background-position: center;
@@ -18299,10 +18302,11 @@ div.navbar-intro {
     text-align: center;
 }
 
-.title1-intro {text-align: center;
+.title1-intro {
+    text-align: center;
 }
 
-.icon-bottom-intro{
+.icon-bottom-intro {
     text-align: center;
     margin-top: 1%;
 }
@@ -18322,12 +18326,14 @@ div.navbar-intro {
     color: #1f883d;
     cursor: pointer;
 }
+
 .icon3-intro:hover {
     color: blue;
     cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */
+<<<<<<< HEAD
 
 /* pdf */
 .markedContent{
@@ -18346,3 +18352,39 @@ div.navbar-intro {
 .lbButton{
     cursor: pointer;
 }
+=======
+/* group css */
+.img-group {
+    background: #000;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.text-group {
+    flex-wrap: wrap;
+}
+
+.group {
+    flex-direction: row;
+}
+
+.wrapper-image {
+    width: 30%;
+}
+
+.wrapper-name {
+    width: 75%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.wrapper-count {
+    width: 20%;
+}
+
+.wrapper-group {
+    width: 120%;
+}
+>>>>>>> develop
