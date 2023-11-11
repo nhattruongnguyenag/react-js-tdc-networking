@@ -54,7 +54,7 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
             case TYPE_POST_STUDENT:
                 body = <CustomizeBodyStudentProfile
                     handleClickButtonEvent={handleClickButtonEvent}
-                    position={props.userData.position ?? TEXT_UN_UPDATE}
+                    position={props.userData.position ?? 'Sinh viên'}
                     phone={props.userData.phone ?? TEXT_UN_UPDATE}
                     email={props.userData.email ?? TEXT_UN_UPDATE}
                     numberPost={props.data.length ?? 0}

@@ -134,16 +134,13 @@ const CustomizePost = (props: Post) => {
       "parentCommentId": dataComments.parentCommentId
     })
       .then((response) => {
-        if (response.data.status === 201) {
-          toast.success('Tạo comment thành công')
-        } else {
+        if (response.data.status !== 201) {
           toast.error('Tạo comment thất bại')
         }
       })
       .catch((error) => {
         toast.error('Tạo comment thất bại')
       })
-    // Reset
     dataComments.parentCommentId = 0;
   }
 
@@ -156,7 +153,9 @@ const CustomizePost = (props: Post) => {
       }
     })
       .then((response) => {
-        toast.success('Xóa comment thành công')
+        if (response.data.status !== 200) {
+          toast.error('Xóa comment thất bại')
+        }
       })
       .catch((error) => {
         toast.error('Xóa comment thất bại')

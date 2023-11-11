@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBriefcase, faPhone, faEnvelope, faUserPlus, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBriefcase, faPhone, faEnvelope, faUserPlus, faBars, faPaste } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 import { COLOR_BLACK, COLOR_WHITE } from '../../constants/Color'
 import { CALL_ACTION, FOLLOW_ACTION, MENU_CLICK_ACTION, MESSENGER_ACTION } from '../../constants/Variables';
@@ -71,6 +71,12 @@ export default function CustomizeBodyStudentProfile(props: Readonly<StudentProfi
                     <FontAwesomeIcon icon={faEnvelope} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
                 <div className='txtInfoBodyProfile'>{props.email}</div>
+            </div>
+            <div className='lineOfInfoBodyProfile'>
+                <div>
+                    <FontAwesomeIcon icon={faPaste} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
+                </div>
+                <div className='txtInfoBodyProfile'>Bài viết ({props.numberPost}) </div>
             </div>
         </div>
     )

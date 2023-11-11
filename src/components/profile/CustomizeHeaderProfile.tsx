@@ -15,10 +15,12 @@ export default function CustomizeHeaderProfile(props: Readonly<HeaderProfileType
             {/* Images */}
             <div className='containerImagesProfileHeader'>
                 {/* Background */}
-                <img className='backgroundHeaderProfile' src={SERVER_ADDRESS + 'api/images/4f1df6f082f3d8849a598ae3d9cd6c4a.jpg'} />
+                {
+                    <img className='backgroundHeaderProfile' src={'/assets/images/background-default.jpg'} />
+                }
                 {/* Avatar */}
                 {
-                    props.avatar !== null ? <img
+                    props.avatar ? <img
                         className='avatarHeaderProfile'
                         src={SERVER_ADDRESS + 'api/images/' + props.avatar}
                     /> : <div className='avatarHeaderProfile'>
