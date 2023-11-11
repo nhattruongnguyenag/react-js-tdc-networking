@@ -1,23 +1,27 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../components/common/Header'
-import { SERVER_ADDRESS } from '../constants/SystemConstant'
-import { LikeAction } from '../types/LikeActions'
-import axios from 'axios'
-import CreateNormalPostModal from '../components/modal/CreateNormalPostModal'
-import { formatDateTime, numberDayPassed } from '../utils/FormatTime'
-import CustomizePost from '../components/post/CustomizePost'
-import { API_URL_GET_ALL_POST } from '../constants/Path'
-import CreatePostSelector from '../components/CreatePostSelector'
+import { numberDayPassed } from '../utils/FormatTime'
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton'
-import { useGetAllPostsQuery } from '../redux/Service'
+import { useGetBusinessPostsQuery } from '../redux/Service'
+import { LikeAction } from '../types/LikeActions'
+import { Post } from '../types/Post'
+import { handleDataClassification } from '../utils/DataClassfications'
+import { TYPE_POST_BUSINESS } from '../constants/StringVietnamese'
+import CustomizePost from '../components/post/CustomizePost'
+import CreatePostSelector from '../components/CreatePostSelector'
+import { useAppSelector } from '../redux/Hook'
+import CustomizeModalComments from '../components/modal/CustomizeModalComments'
 
 export default function BusinessDashboardPage() {
-  const [isLoading, setIsLoading] = useState(false)
-
-  const { data, isFetching } = useGetAllPostsQuery(undefined, {
-    pollingInterval: 2000
-  })
-
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const [isLoading, setIsLoading] = useState(false);
+  const [post, setPost] = useState<Post[]>([]);
+  const { data, isFetching } = useGetBusinessPostsQuery(
+    { id: userLogin?.id ?? 0 },
+    {
+      pollingInterval: 2000
+    }
+  );
   useEffect(() => {
     setIsLoading(true)
   }, [])
@@ -25,20 +29,18 @@ export default function BusinessDashboardPage() {
   // Xử lý dữ liệu từ Redux Toolkit Query
   useEffect(() => {
     if (data) {
-      setIsLoading(false)
+      setIsLoading(false);
+      setPost([]);
+      const tempPost = handleDataClassification(data, TYPE_POST_BUSINESS);
+      setPost(tempPost);
     }
   }, [data])
 
   const likeAction = (obj: LikeAction) => {
-    // obj.code = TYPE_POST_BUSINESS
-    // like(obj)
+    console.log('====================================');
+    console.log('like');
+    console.log('====================================');
   }
-
-  // const like = useCallback((likeData: LikeAction) => {
-  // stompClient.send(`/app/posts/${likeData.code}/like`, {}, JSON.stringify(likeData))
-  // }, [])
-  // End post
-  // -------------------------------------
 
   const renderItem = (item: any) => {
     return (
@@ -509,11 +511,12 @@ export default function BusinessDashboardPage() {
                   </div>
                 )}
 
-                {/* Modal */}
-                <CreatePostSelector />
+                {/* Modal create  post */}
+                {
+                  userLogin?.roleCodes === TYPE_POST_BUSINESS && <CreatePostSelector group={2} />
+                }
                 {/* Render post */}
                 {data?.data.map((item) => renderItem(item))}
-
                 <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4 text-center'>
                   <div className='snippet me-auto ms-auto mt-2' data-title='.dot-typing'>
                     <div className='stage'>

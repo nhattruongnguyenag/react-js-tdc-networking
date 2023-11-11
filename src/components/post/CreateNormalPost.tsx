@@ -6,22 +6,23 @@ import {
   TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED,
   TEXT_CREATE_POST_SUCCESS,
   TEXT_CHAR
-} from '../constants/StringVietnamese'
-import { isBlank, isLengthInRange, isNotBlank } from '../utils/ValidateUtils'
-import { handleUploadImage } from '../utils/UploadUtils'
+} from '../../constants/StringVietnamese'
+import { isBlank, isLengthInRange, isNotBlank } from '../../utils/ValidateUtils'
+import { handleUploadImage } from '../../utils/UploadUtils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
-import { API_URL_NORMAL_POST } from '../constants/Path'
-import { NUMBER_MAX_CHARACTER, NUMBER_MIN_CHARACTER, TYPE_NORMAL_POST } from '../constants/Variables'
-import { useAppSelector } from '../redux/Hook'
-import { NormalPost } from '../types/NormalPost'
-import { COLOR_BTN_BLUE, COLOR_WHITE } from '../constants/Color'
-import { ToastContainer, toast } from 'react-toastify'
+import { API_URL_NORMAL_POST } from '../../constants/Path'
+import { NUMBER_MAX_CHARACTER, NUMBER_MIN_CHARACTER, TYPE_NORMAL_POST } from '../../constants/Variables'
+import { useAppSelector } from '../../redux/Hook'
+import { NormalPost } from '../../types/NormalPost'
+import { COLOR_BTN_BLUE, COLOR_WHITE } from '../../constants/Color'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export interface CreateNormalPostType {
-  onHide: () => void
+  onHide: () => void,
+  group: number | null
 }
 const CreateNormalPost = (props: CreateNormalPostType) => {
   // variable
@@ -36,7 +37,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   const [normalPost, setNormalPost] = useState<NormalPost>({
     userId: userLogin?.id ?? -1,
     type: TYPE_NORMAL_POST,
-    groupId: 1,
+    groupId: props.group,
     images: [],
     content: ''
   })
@@ -154,76 +155,72 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   }
 
   return (
-    <>
-      <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 pb-3 pe-4 ps-4 pt-4'>
-        <div className='card-body position-relative mt-3 p-0'>
-          <textarea
-            ref={textAreaRef}
-            value={content}
-            onChange={(value) => {
-              setContent(value.target.value)
-            }}
-            name='message'
-            className='h100 bor-0 w-100 h-100 rounded-xxl font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg p-3'
-            cols={30}
-            rows={10}
-            placeholder={TEXT_PLACEHOLDER_CONTENT_CREATE_POST}
-            defaultValue={''}
-          />
-        </div>
-        <div style={{ position: 'relative' }}>
-          {images.length >= 6 && (
-            <>
-              <div className='container-button-to-left-right'>
-                <button onClick={scrollLeft}>
-                  {' '}
-                  <FontAwesomeIcon icon={faChevronLeft} size='2x' color={COLOR_BTN_BLUE} />
-                </button>
-                <button onClick={scrollRight}>
-                  {' '}
-                  <FontAwesomeIcon icon={faChevronRight} size='2x' color={COLOR_BTN_BLUE} />
-                </button>
-              </div>
-            </>
-          )}
-          <div className='image-file-container' id='imageContainer'>
-            {images.map((item: any, index: any) => (
-              <li
-                key={item + ''}
-                className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
-              >
-                <img className='image-file' src={item.url} alt={`Image ${index}`} />
-                <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
-                  <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
-                </button>
-              </li>
-            ))}
-          </div>
-        </div>
-        <div className='card-body d-flex mt-0 p-0'>
-          <input
-            type={'file'}
-            multiple
-            ref={fileInputRef}
-            className='hidden'
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)}
-          />
-          <button
-            ref={buttonCallPickerImgRef}
-            onClick={handleGetFiles}
-            className='d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4'
-          >
-            <i className='font-md text-success feather-image me-2' />
-            <span className='d-none-xs'>Photo/Video</span>
-          </button>
-          <div className='pointer ms-auto ' id='dropdownMenu4' data-bs-toggle='dropdown' aria-expanded='false'>
-            <button ref={buttonRef} onClick={handleSubmitEvent} className='btn btn-primary'>
-              <span className='d-none-xs'>Đăng bài viết</span>
+    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 pb-3 pe-4 ps-4 pt-4'>
+      <div className='card-body position-relative mt-3 p-0'>
+        <textarea
+          ref={textAreaRef}
+          value={content}
+          onChange={(value) => {
+            setContent(value.target.value)
+          }}
+          name='message'
+          className='h100 bor-0 w-100 h-100 rounded-xxl font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg p-3'
+          cols={30}
+          rows={10}
+          placeholder={TEXT_PLACEHOLDER_CONTENT_CREATE_POST}
+          defaultValue={''}
+        />
+      </div>
+      <div style={{ position: 'relative' }}>
+        {images.length >= 6 && (
+          <div className='container-button-to-left-right'>
+            <button onClick={scrollLeft}>
+              {' '}
+              <FontAwesomeIcon icon={faChevronLeft} size='2x' color={COLOR_BTN_BLUE} />
+            </button>
+            <button onClick={scrollRight}>
+              {' '}
+              <FontAwesomeIcon icon={faChevronRight} size='2x' color={COLOR_BTN_BLUE} />
             </button>
           </div>
+        )}
+        <div className='image-file-container' id='imageContainer'>
+          {images.map((item: any, index: any) => (
+            <li
+              key={item + ''}
+              className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
+            >
+              <img className='image-file' src={item.url} alt={`Image ${index}`} />
+              <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
+                <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
+              </button>
+            </li>
+          ))}
         </div>
       </div>
-    </>
+      <div className='card-body d-flex mt-0 p-0'>
+        <input
+          type={'file'}
+          multiple
+          ref={fileInputRef}
+          className='hidden'
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)}
+        />
+        <button
+          ref={buttonCallPickerImgRef}
+          onClick={handleGetFiles}
+          className='d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4'
+        >
+          <i className='font-md text-success feather-image me-2' />
+          <span className='d-none-xs'>Photo/Video</span>
+        </button>
+        <div className='pointer ms-auto ' id='dropdownMenu4' data-bs-toggle='dropdown' aria-expanded='false'>
+          <button ref={buttonRef} onClick={handleSubmitEvent} className='btn btn-primary'>
+            <span className='d-none-xs'>Đăng bài viết</span>
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
 export default CreateNormalPost

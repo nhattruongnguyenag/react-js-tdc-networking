@@ -4,7 +4,6 @@ import { Business } from '../types/Business'
 import { Conversation } from '../types/Conversation'
 import { Faculty } from '../types/Faculty'
 import { Message } from '../types/Message'
-import { ModalComments } from '../types/ModalComments'
 import { ModalImage } from '../types/ModalImage'
 import { ModalUserReaction } from '../types/ModalUserReaction'
 import { Question } from '../types/Question'
@@ -13,6 +12,7 @@ import { QuestionResponse } from '../types/response/QuestionResponse'
 import { Student } from '../types/Student'
 import { getSelectedConversation, getSurveyPostRequest, getUserLogin } from '../utils/CommonUtls'
 import { InputTextValidate } from '../utils/ValidateUtils'
+import { ModalComments } from '../types/ModalComments'
 
 export interface TDCSocialNetworkState {
   darkMode: boolean

@@ -1,6 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAppDispatch } from '../../redux/Hook'
 import { toggleDarkMode } from '../../redux/Slice'
@@ -13,7 +11,6 @@ import {
   SEARCH_PAGE,
   STUDENT_DASHBOARD_PAGE
 } from '../../constants/Page'
-import classNames from 'classnames'
 import NavItem from './NavItem'
 
 export default function Header() {

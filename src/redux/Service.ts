@@ -78,6 +78,30 @@ export const TDCSocialNetworkAPI = createApi({
     getAllPosts: builder.query<Data<Post[]>, void>({
       query: () => 'api/posts'
     }),
+    getFacultyPosts: builder.query<Data<Post[]>, { faculty: string; id: number }>({
+      query: (data) => ({
+        url: `api/posts/group?code=${data.faculty}&userLogin=${data.id}`,
+        method: 'GET'
+      })
+    }),
+    getBusinessPosts: builder.query<Data<Post[]>, { id: number }>({
+      query: (data) => ({
+        url: `api/posts/group?code=group_connect_business&userLogin=${data.id}`,
+        method: 'GET'
+      })
+    }),
+    getStudentPosts: builder.query<Data<Post[]>, { id: number }>({
+      query: (data) => ({
+        url: `api/posts/group?code=group_tdc&userLogin=${data.id}`,
+        method: 'GET'
+      })
+    }),
+    getPostsById: builder.query<Data<any[]>, { id: string }>({
+      query: (data) => ({
+        url: `api/posts/user/${data.id}`,
+        method: 'GET'
+      })
+    }),
     addSurveyConductAnswer: builder.mutation<MessageResponseData, SurveyConductRequest>({
       query: (data) => ({
         url: 'api/posts/survey/conduct',
@@ -113,6 +137,10 @@ export const {
   useSendFCMNotificationMutation,
   useAddRecruitmentPostMutation,
   useGetAllPostsQuery,
+  useGetFacultyPostsQuery,
+  useGetBusinessPostsQuery,
+  useGetStudentPostsQuery,
+  useGetPostsByIdQuery,
   useAddSurveyConductAnswerMutation,
   useJobApplyMutation
 } = TDCSocialNetworkAPI
