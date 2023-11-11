@@ -13681,7 +13681,7 @@ strong,
 
 .nav-header .nav-top a {
     line-height: 90px;
-    width: 280px;
+    width: 320px;
     text-align: left;
     padding-left: 10px;
     display: -webkit-box;
@@ -13821,7 +13821,7 @@ strong,
     top: 0;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    width: 280px;
+    width: 320px;
     height: 100vh;
     overflow: hidden;
     background: transparent;
@@ -18366,8 +18366,4 @@ div.navbar-intro {
 
 .wrapper-group {
     width: 120%;
-}
-
-.concat {
-    width: 20%;
 }
