@@ -15,7 +15,7 @@ export interface StudentProfileType {
 
 export default function CustomizeBodyStudentProfile(props: Readonly<StudentProfileType>) {
     return (
-        <div>
+        <div className='containerBodyProfile'>
             <div className='lineOfInfoBodyProfile'>
                 <button
                     onClick={() => props.handleClickButtonEvent(MESSENGER_ACTION)}
