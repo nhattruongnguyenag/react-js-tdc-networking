@@ -18,7 +18,7 @@ export default function StudentDashboardPage() {
   const { data, isFetching } = useGetStudentPostsQuery({
     id: userLogin?.id ?? 0
   }, {
-    pollingInterval: 2000
+    pollingInterval: 500
   });
 
   useEffect(() => {

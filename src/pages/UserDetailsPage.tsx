@@ -22,7 +22,7 @@ export default function UserDetailsPage() {
   const { data, isFetching } = useGetPostsByIdQuery(
     { id: userId + '' ?? '0' },
     {
-      pollingInterval: 2000
+      pollingInterval: 500
     }
   );
 

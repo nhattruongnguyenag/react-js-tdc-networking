@@ -200,8 +200,8 @@ const CustomizePost = (props: Post) => {
                 handleClickToAvatarAndName={handleClickToAvatarAndName}
               />
               <CustomizeCreateCommentsToolbar
-                image={props.avatar}
-                name={props.name}
+                image={userLogin?.image ?? ''}
+                name={userLogin?.name ?? ''}
                 tagName={commentAuthorName}
                 handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
               />
@@ -256,8 +256,8 @@ const CustomizePost = (props: Post) => {
                 handleClickToAvatarAndName={handleClickToAvatarAndName}
               />
               <CustomizeCreateCommentsToolbar
-                image={props.avatar}
-                name={props.name}
+                image={userLogin?.image ?? ''}
+                name={userLogin?.name ?? ''}
                 tagName={commentAuthorName}
                 handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
               />
@@ -310,8 +310,8 @@ const CustomizePost = (props: Post) => {
               handleClickToAvatarAndName={handleClickToAvatarAndName}
             />
             <CustomizeCreateCommentsToolbar
-              image={props.avatar}
-              name={props.name}
+              image={userLogin?.image ?? ''}
+              name={userLogin?.name ?? ''}
               tagName={commentAuthorName}
               handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
             />

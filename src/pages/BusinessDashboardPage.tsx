@@ -19,7 +19,7 @@ export default function BusinessDashboardPage() {
   const { data, isFetching } = useGetBusinessPostsQuery(
     { id: userLogin?.id ?? 0 },
     {
-      pollingInterval: 2000
+      pollingInterval: 500
     }
   );
   useEffect(() => {

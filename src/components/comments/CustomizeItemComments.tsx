@@ -1,6 +1,7 @@
 import React from 'react'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { TEXT_DELETE, TEXT_REPLY } from '../../constants/StringVietnamese'
+import DefaultAvatar from '../common/DefaultAvatar'
 
 interface CustomizeCommentType {
     tagName: string,
@@ -25,7 +26,10 @@ export default function CustomizeItemComments(props: Readonly<CustomizeCommentTy
                 <button
                     onClick={() => props.handleClickToAvatarAndName(props.authorCommentId)}
                     className='avatarCommentWrapper'>
-                    <img className={props.type === 0 ? 'avatarCommentsType0' : 'avatarCommentsType1'} src={SERVER_ADDRESS + 'api/images/4b6663af692925ec6e1dc9fb33088254.webp'} />
+                    {
+                        props.avatar ? <img className={props.type === 0 ? 'avatarCommentsType0' : 'avatarCommentsType1'} src={SERVER_ADDRESS + 'api/images/' + props.avatar} /> :
+                            <>{props.type === 0 ? <DefaultAvatar name={props.name[0]} size={30} styleBootstrap={undefined} /> : <DefaultAvatar name={props.name[0]} size={25} styleBootstrap={undefined} />}</>
+                    }
                 </button>
                 <div className='wrapperContent'>
                     {/* name */}
