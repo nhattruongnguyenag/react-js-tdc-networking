@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import {
   ADD_QUESTION_PAGE,
   BUSINESS_DASHBOARD_PAGE,
@@ -36,14 +36,13 @@ import JobApplyPage from './pages/JobApplyPage'
 import LoginPage from './pages/LoginPage'
 import NoPage from './pages/NoPage'
 import RecruitmentDetailsPage from './pages/RecruitmentDetailsPage'
-import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import SearchPage from './pages/SearchPage'
 import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import SettingPage from './pages/SettingPage'
 import StudentDashboardPage from './pages/StudentDashboardPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
+import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import SurveyConductPage from './pages/SurveyConductPage'
-import SurveyDetailsPage from './pages/SurveyConductPage'
 import UserDetailsPage from './pages/UserDetailsPage'
 import { useAppSelector } from './redux/Hook'
 

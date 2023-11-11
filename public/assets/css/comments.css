@@ -1,0 +1,56 @@
+:root{
+  --COLOR_BTN_BLUE:#0065FF
+}
+.wrapperInfo {
+  display: flex;
+  align-items: center;
+}
+.avatarCommentWrapper {
+  width: 6%;
+}
+.avatarCommentsType0 {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+}
+
+.avatarCommentsType1 {
+  width: 25px;
+  height: 25px;
+  border-radius: 15px;
+}
+
+.wrapperContent {
+  padding-left: 5px;
+  width: 94%;
+  font-size: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.txtBlackInfo {
+  margin-right: 50px;
+}
+
+.wrapperBottomComment {
+  margin-top: 10px;
+}
+
+.containerCommentsType1 {
+  padding-left: 30px;
+}
+.tagName{
+  color: var(--COLOR_BTN_BLUE);
+  font-weight: bold;
+}
+.contentWrapper{
+  padding-left: 40px;
+}
+.containerComments{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
