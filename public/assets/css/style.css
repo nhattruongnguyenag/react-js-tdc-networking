@@ -18328,3 +18328,23 @@ div.navbar-intro {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+/* pdf */
+.markedContent{
+    color: #A6ACAF !important;
+}
+.react-pdf__Page {
+    padding-top: 30px;
+    padding-left: 200px;
+
+    background-color: #A6ACAF !important;
+}
+.react-pdf__Page__textContent {
+    height: 10px !important;
+}
+.react-pdf__Page__annotations {
+    height: 10px !important;
+}
+.lbButton{
+    cursor: pointer;
+}

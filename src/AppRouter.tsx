@@ -7,6 +7,7 @@ import {
   CREATE_RECRUITMENT_POST_PAGE,
   CREATE_SURVEY_POST_PAGE,
   FACULTY_DASHBOARD_PAGE,
+  JOB_APPLY,
   LOGIN_PAGE,
   MESSAGE_PAGE,
   REGISTER_BUSINESS_PAGE,
@@ -37,6 +38,7 @@ import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
 import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import AddQuestionPage from './pages/AddQuestionPage'
+import JobApplyPage from './pages/JobApplyPage'
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -62,6 +64,7 @@ export default function AppRouter() {
             <Route path={REGISTER_BUSINESS_PAGE} element={<BusinessRegistationPage />} />
             <Route path={REGISTER_STUDENT_PAGE} element={<StudentRegistationPage />} />
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
+            <Route path={JOB_APPLY} element={<JobApplyPage />} />
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>

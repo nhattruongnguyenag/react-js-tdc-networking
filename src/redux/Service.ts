@@ -18,6 +18,13 @@ export const TDCSocialNetworkAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['UserLogin'],
   endpoints: (builder) => ({
+    getNotificationsUser: builder.query<Data<NotificationModel[]>, { id: number }>({
+      query: (data) => ({
+        url: 'api/notifications/user',
+        method: 'POST',
+        body: data
+      })
+    }),
     getNotificationsUserById: builder.query<Data<NotificationModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/notifications/user',
@@ -97,6 +104,7 @@ export const TDCSocialNetworkAPI = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useGetNotificationsUserQuery,
   useGetNotificationsUserByIdQuery,
   useGetQuestionsFromSurveyPostQuery,
   useGetConversationsByUserIdQuery,
