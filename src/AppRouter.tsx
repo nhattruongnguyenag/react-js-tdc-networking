@@ -11,7 +11,6 @@ import {
   JOB_APPLY_PAGE,
   LOGIN_PAGE,
   MESSAGE_PAGE,
-  PROFILE_PAGE,
   RECRUITMENT_DETAILS_PAGE,
   REGISTER_BUSINESS_PAGE,
   REGISTER_PAGE,
@@ -46,7 +45,6 @@ import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import SurveyConductPage from './pages/SurveyConductPage'
 import UserDetailsPage from './pages/UserDetailsPage'
 import { useAppSelector } from './redux/Hook'
-import ProfileScreen from './pages/ProfileScreen'
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
