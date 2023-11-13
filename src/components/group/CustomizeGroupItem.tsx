@@ -25,10 +25,6 @@ export default function CustomizeGroupItem(props: GroupItem) {
         <div className='wrapper-name'>
           <span className='text-group'>{props.name}</span>
         </div>
-
-        <div className='wrapper-count'>
-          <span className='circle-count bg-warning mt-1'>584</span>
-        </div>
       </a>
     </li>
   )

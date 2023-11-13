@@ -5,7 +5,7 @@ import ListGroup from '../ListGroup'
 export default function Navigaion() {
   return (
     <Fragment>
-      <nav className='navigation scroll-bar mt-1 concat'>
+      <nav className='navigation scroll-bar mt-1'>
         <div className='container pe-0 ps-0'>
           <div className='nav-content'>
             <div className='nav-wrap bg-transparent-card rounded-xxl shadow-xss mb-2 mt-2 bg-white pb-1 pt-3 wrapper-group'>
