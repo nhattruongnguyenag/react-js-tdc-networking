@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useRef, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { UserLoginRequest } from '../types/request/UserLoginRequest'
 import axios, { AxiosResponse } from 'axios'
 import { TOKEN_KEY, USER_LOGIN_KEY } from '../constants/KeyValue'
@@ -15,6 +15,23 @@ import TextValidate from '../components/TextValidate'
 import ReactLoading from 'react-loading'
 import { useNavigate } from 'react-router-dom'
 import '../style/login.css'
+import {
+  TEXT_ALERT_LOGIN_FAILT,
+  TEXT_ERROR_EMAIL_NOTFORMAT,
+  TEXT_ERROR_EMAIL_NOTIMPTY,
+  TEXT_ERROR_EMAIL_NOTLENGTH,
+  TEXT_ERROR_PASSWORD_NOTFORMAT,
+  TEXT_ERROR_PASSWORD_NOTIMPTY,
+  TEXT_ERROR_PASSWORD_NOTLENGTH,
+  TEXT_FORGOT_PASSWORD,
+  TEXT_LOGIN,
+  TEXT_PLACEHOLDER_EMAIL,
+  TEXT_PLACEHOLDER_PASSWORD,
+  TEXT_REGISTER,
+  TEXT_REQUEST_REGISTER,
+  TEXT_TITLE_LOGIN
+} from '../constants/StringVietnamese'
+import { BUSINESS_DASHBOARD_PAGE, REGISTER_PAGE } from '../constants/Page'
 interface UserLogin {
   emailUser: InputTextValidate
   passwordUser: InputTextValidate
@@ -42,12 +59,12 @@ export default function LoginPage() {
   })
   const [validate, setValidate] = useState<UserLogin>({
     emailUser: {
-      textError: 'Email không được để trống',
+      textError: TEXT_ERROR_EMAIL_NOTIMPTY,
       isVisible: false,
       isError: true
     },
     passwordUser: {
-      textError: 'Mật khẩu không được để trống',
+      textError: TEXT_ERROR_PASSWORD_NOTIMPTY,
       isVisible: false,
       isError: true
     }
@@ -61,7 +78,7 @@ export default function LoginPage() {
           ...validate.emailUser,
           isError: true,
           isVisible: true,
-          textError: 'Email không được để trống'
+          textError: TEXT_ERROR_EMAIL_NOTIMPTY
         }
       })
     } else if (!isLengthInRange(e.target.value, 1, 255)) {
@@ -71,7 +88,7 @@ export default function LoginPage() {
           ...validate.emailUser,
           isError: true,
           isVisible: true,
-          textError: 'Email không vượt quá 255 ký tự'
+          textError: TEXT_ERROR_EMAIL_NOTLENGTH
         }
       })
     } else if (!isEmail(e.target.value)) {
@@ -81,7 +98,7 @@ export default function LoginPage() {
           ...validate.emailUser,
           isError: true,
           isVisible: true,
-          textError: 'Email sai định dạng'
+          textError: TEXT_ERROR_EMAIL_NOTFORMAT
         }
       })
     } else {
@@ -105,7 +122,7 @@ export default function LoginPage() {
           ...validate.passwordUser,
           isVisible: true,
           isError: true,
-          textError: 'Mật khẩu không được để trống'
+          textError: TEXT_ERROR_PASSWORD_NOTIMPTY
         }
       })
     } else if (!isLengthInRange(e.target.value, 1, 8)) {
@@ -115,7 +132,7 @@ export default function LoginPage() {
           ...validate.passwordUser,
           isVisible: true,
           isError: true,
-          textError: 'Mật khẩu không vượt quá 8 ký tự'
+          textError: TEXT_ERROR_PASSWORD_NOTLENGTH
         }
       })
     } else if (!isPassword(e.target.value)) {
@@ -125,7 +142,7 @@ export default function LoginPage() {
           ...validate.passwordUser,
           isVisible: true,
           isError: true,
-          textError: 'Mật khẩu sai định dạng'
+          textError: TEXT_ERROR_PASSWORD_NOTFORMAT
         }
       })
     } else {
@@ -158,13 +175,13 @@ export default function LoginPage() {
                 sessionStorage.setItem(USER_LOGIN_KEY, JSON.stringify(response.data.data))
                 dispatch(setUserLogin(response.data.data))
                 console.log(response.data.data)
-                navigate('/doanh-nghiep/bai-viet')
+                navigate(BUSINESS_DASHBOARD_PAGE)
               }
             })
         })
         .catch((error: any) => {
           setIsLoading(false)
-          alert('Sai thông tin email hoặc mật khẩu')
+          alert(TEXT_ALERT_LOGIN_FAILT)
         })
     } else {
       let key: keyof UserLogin
@@ -201,17 +218,14 @@ export default function LoginPage() {
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
             <div className='card login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
-                <h2 className='fw-700 display1-size display2-md-size mb-3'>
-                  Đăng nhập vào <br />
-                  tài khoản của bạn
-                </h2>
+                <h2 className='fw-700 display1-size display2-md-size mb-3'>{TEXT_TITLE_LOGIN}</h2>
                 <form>
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-email text-grey-500 pe-0'></i>
                     <input
                       type='text'
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Email'
+                      placeholder={TEXT_PLACEHOLDER_EMAIL}
                       onChange={(e) => checkEmailChange(e)}
                     />
                     <TextValidate
@@ -225,7 +239,7 @@ export default function LoginPage() {
                     <input
                       type='Password'
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder='Mật khẩu'
+                      placeholder={TEXT_PLACEHOLDER_PASSWORD}
                       onChange={(e) => checkPasswordChange(e)}
                     />
                     <TextValidate
@@ -237,7 +251,7 @@ export default function LoginPage() {
                   </div>
                   <div className='form-check mb-3 text-left'>
                     <button type='button' className='fw-600 font-xsss text-grey-700 float-right'>
-                      Quên mật khẩu?
+                      {TEXT_FORGOT_PASSWORD}
                     </button>
                   </div>
                 </form>
@@ -250,7 +264,7 @@ export default function LoginPage() {
                         onClick={(e) => onSubmit(e)}
                         className='form-control style2-input fw-600 bg-blue border-0 p-0 text-center text-white '
                       >
-                        Đăng nhập
+                        {TEXT_LOGIN}
                       </button>
                       <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#0000FF' height={50} width={50} />
@@ -258,9 +272,9 @@ export default function LoginPage() {
                     </div>
                   </div>
                   <h6 className='text-grey-500 font-xsss fw-500 lh-32 mb-0 mt-0'>
-                    Chưa có tài khoản?{' '}
-                    <button type='button' className='txt-blue' onClick={() => navigate('/dang-ky')}>
-                      Đăng ký
+                    {TEXT_REQUEST_REGISTER}{' '}
+                    <button type='button' className='txt-blue' onClick={() => navigate(REGISTER_PAGE)}>
+                      {TEXT_REGISTER}
                     </button>
                   </h6>
                 </div>

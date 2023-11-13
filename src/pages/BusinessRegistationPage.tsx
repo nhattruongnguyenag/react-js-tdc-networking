@@ -20,6 +20,48 @@ import { useNavigate } from 'react-router-dom'
 import { handleUploadImage } from '../utils/UploadUtils'
 import ReactLoading from 'react-loading'
 import { LOGIN_PAGE } from '../constants/Page'
+import {
+  TEXT_ACTIVETIME,
+  TEXT_ALERT_REGISTER_FAILT,
+  TEXT_ALERT_REGISTER_SUCCESS,
+  TEXT_ERROR_ACTIVE_NOTFORMAT,
+  TEXT_ERROR_ADDRESS_NOTEMPTY,
+  TEXT_ERROR_ADDRESS_NOTMAXLENGTH,
+  TEXT_ERROR_BUSINESSNAME_NOTEMPTY,
+  TEXT_ERROR_BUSINESSNAME_NOTMAXLENGTH,
+  TEXT_ERROR_BUSINESSNAME_NOTSPECIALCHARACTER,
+  TEXT_ERROR_CHECKSAMEEMAIL,
+  TEXT_ERROR_CONFIMPASSWORD,
+  TEXT_ERROR_CONFIMPASS_MATCHPASS,
+  TEXT_ERROR_EMAIL_NOTFORMAT,
+  TEXT_ERROR_EMAIL_NOTIMPTY,
+  TEXT_ERROR_EMAIL_NOTLENGTH,
+  TEXT_ERROR_PASSWORD_NOTFORMAT,
+  TEXT_ERROR_PASSWORD_NOTIMPTY,
+  TEXT_ERROR_PASSWORD_NOTLENGTH,
+  TEXT_ERROR_PHONE_NOTEMPTY,
+  TEXT_ERROR_PHONE_NOTFORMAT,
+  TEXT_ERROR_REPRESENTER_NOTEMPTY,
+  TEXT_ERROR_REPRESENTNAME_NOTMAXLENGTH,
+  TEXT_ERROR_REPRESENTNAME_NOTSPECIALCHARACTER,
+  TEXT_ERROR_TAXCODE_NOTEMPTY,
+  TEXT_ERROR_TAXCODE_NOTFORMAT,
+  TEXT_ERROR_TAXCODE_NOTMAXLENGTH,
+  TEXT_IMAGE_PICKER,
+  TEXT_LOGIN,
+  TEXT_PLACEHOLDER_ADDRESS,
+  TEXT_PLACEHOLDER_BUSINESSNAME,
+  TEXT_PLACEHOLDER_CONFIMPASS,
+  TEXT_PLACEHOLDER_EMAIL,
+  TEXT_PLACEHOLDER_PASSWORD,
+  TEXT_PLACEHOLDER_PHONE,
+  TEXT_PLACEHOLDER_REPRESENTER,
+  TEXT_PLACEHOLDER_TAXCODE,
+  TEXT_REGISTER,
+  TEXT_REQUEST_LOGIN,
+  TEXT_TITLE_REGISTER_BUSINESS,
+  TEXT_TO_ACTIVETIME
+} from '../constants/StringVietnamese'
 
 interface RegisterBusiness {
   name: InputTextValidate
@@ -71,47 +113,47 @@ export default function BusinessRegistationPage() {
   const [timeEnd, setTimeEnd] = useState('17:00')
   const [validate, setValidate] = useState<RegisterBusiness>({
     name: {
-      textError: 'Tên không được để trống',
+      textError: TEXT_ERROR_BUSINESSNAME_NOTEMPTY,
       isVisible: false,
       isError: true
     },
     representor: {
-      textError: 'Tên người đại diện không được để trống',
+      textError: TEXT_ERROR_REPRESENTER_NOTEMPTY,
       isVisible: false,
       isError: true
     },
     email: {
-      textError: 'Email không được để trống',
+      textError: TEXT_ERROR_EMAIL_NOTIMPTY,
       isVisible: false,
       isError: true
     },
     taxCode: {
-      textError: 'Mã số thuế không được để trống',
+      textError: TEXT_ERROR_TAXCODE_NOTEMPTY,
       isVisible: false,
       isError: true
     },
     address: {
-      textError: 'Địa chỉ không được để trống',
+      textError: TEXT_ERROR_ADDRESS_NOTEMPTY,
       isVisible: false,
       isError: true
     },
     phone: {
-      textError: 'Số điện thoại không được để trống',
+      textError: TEXT_ERROR_PHONE_NOTEMPTY,
       isVisible: false,
       isError: true
     },
     activeTime: {
-      textError: 'Thời gian hoạt động sai định dạng',
+      textError: TEXT_ERROR_ACTIVE_NOTFORMAT,
       isVisible: false,
       isError: true
     },
     password: {
-      textError: 'Mật khẩu không được để trống',
+      textError: TEXT_ERROR_PASSWORD_NOTIMPTY,
       isVisible: false,
       isError: true
     },
     confimPassword: {
-      textError: 'Nhập lại mật khẩu không được để trống',
+      textError: TEXT_ERROR_CONFIMPASSWORD,
       isVisible: false,
       isError: true
     }
@@ -124,7 +166,8 @@ export default function BusinessRegistationPage() {
           name: {
             ...validate.name,
             isError: true,
-            isVisible: true
+            isVisible: true,
+            textError: TEXT_ERROR_BUSINESSNAME_NOTEMPTY
           }
         })
       } else if (isContainSpecialCharacter(event.target.value)) {
@@ -134,7 +177,7 @@ export default function BusinessRegistationPage() {
             ...validate.name,
             isError: true,
             isVisible: true,
-            textError: 'Tên công ty không chứa ký tự đặt biệt'
+            textError: TEXT_ERROR_BUSINESSNAME_NOTSPECIALCHARACTER
           }
         })
       } else if (!isLengthInRange(event.target.value, 1, 255)) {
@@ -144,7 +187,7 @@ export default function BusinessRegistationPage() {
             ...validate.name,
             isError: true,
             isVisible: true,
-            textError: 'Tên công ty không vượt quá 255 ký tự'
+            textError: TEXT_ERROR_BUSINESSNAME_NOTMAXLENGTH
           }
         })
       } else {
@@ -170,7 +213,7 @@ export default function BusinessRegistationPage() {
             ...validate.representor,
             isError: true,
             isVisible: true,
-            textError: 'Tên người đại diện không được để trống'
+            textError: TEXT_ERROR_REPRESENTER_NOTEMPTY
           }
         })
       } else if (isContainSpecialCharacter(event.target.value)) {
@@ -179,7 +222,7 @@ export default function BusinessRegistationPage() {
           representor: {
             ...validate.representor,
             isError: true,
-            textError: 'Tên người đại diện không được chứa ký tự đặc biệt',
+            textError: TEXT_ERROR_REPRESENTNAME_NOTSPECIALCHARACTER,
             isVisible: true
           }
         })
@@ -189,7 +232,7 @@ export default function BusinessRegistationPage() {
           representor: {
             ...validate.representor,
             isError: true,
-            textError: 'Tên người đại diện không vượt quá 255 ký tự',
+            textError: TEXT_ERROR_REPRESENTNAME_NOTMAXLENGTH,
             isVisible: true
           }
         })
@@ -217,7 +260,7 @@ export default function BusinessRegistationPage() {
             email: {
               ...validate.email,
               isError: true,
-              textError: 'Email đã được được đăng ký! Vui lòng nhập email khác',
+              textError: TEXT_ERROR_CHECKSAMEEMAIL,
               isVisible: true
             }
           })
@@ -235,7 +278,7 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError: 'Email không được để trống',
+            textError: TEXT_ERROR_EMAIL_NOTIMPTY,
             isVisible: true
           }
         })
@@ -245,7 +288,7 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError: 'Email không vượt quá 255 ký tự',
+            textError: TEXT_ERROR_EMAIL_NOTLENGTH,
             isVisible: true
           }
         })
@@ -255,7 +298,7 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError: 'Email sai định dạng',
+            textError: TEXT_ERROR_EMAIL_NOTFORMAT,
             isVisible: true
           }
         })
@@ -281,7 +324,7 @@ export default function BusinessRegistationPage() {
           password: {
             ...validate.password,
             isError: true,
-            textError: 'Mật khẩu không được để trống',
+            textError: TEXT_ERROR_PASSWORD_NOTIMPTY,
             isVisible: true
           }
         })
@@ -291,7 +334,7 @@ export default function BusinessRegistationPage() {
           password: {
             ...validate.password,
             isError: true,
-            textError: 'Mật khẩu không vượt quá 8 ký tự',
+            textError: TEXT_ERROR_PASSWORD_NOTLENGTH,
             isVisible: true
           }
         })
@@ -301,7 +344,7 @@ export default function BusinessRegistationPage() {
           password: {
             ...validate.password,
             isError: true,
-            textError: 'Mật khẩu sai định dạng',
+            textError: TEXT_ERROR_PASSWORD_NOTFORMAT,
             isVisible: true
           }
         })
@@ -327,7 +370,7 @@ export default function BusinessRegistationPage() {
           confimPassword: {
             ...validate.confimPassword,
             isError: true,
-            textError: 'Trường nhập lại mật khẩu không được để trống',
+            textError: TEXT_ERROR_CONFIMPASSWORD,
             isVisible: true
           }
         })
@@ -337,7 +380,7 @@ export default function BusinessRegistationPage() {
           confimPassword: {
             ...validate.confimPassword,
             isError: true,
-            textError: 'Trường nhập lại mật khẩu phải trùng với mật khẩu',
+            textError: TEXT_ERROR_CONFIMPASS_MATCHPASS,
             isVisible: true
           }
         })
@@ -363,7 +406,7 @@ export default function BusinessRegistationPage() {
           taxCode: {
             ...validate.taxCode,
             isError: true,
-            textError: 'Mã số thuế không được để trống',
+            textError: TEXT_ERROR_TAXCODE_NOTEMPTY,
             isVisible: true
           }
         })
@@ -373,7 +416,7 @@ export default function BusinessRegistationPage() {
           taxCode: {
             ...validate.taxCode,
             isError: true,
-            textError: 'Mã số thuế không vượt quá 255 ký tự',
+            textError: TEXT_ERROR_TAXCODE_NOTMAXLENGTH,
             isVisible: true
           }
         })
@@ -383,7 +426,7 @@ export default function BusinessRegistationPage() {
           taxCode: {
             ...validate.taxCode,
             isError: true,
-            textError: 'Mã số thuế sai định dạng',
+            textError: TEXT_ERROR_TAXCODE_NOTFORMAT,
             isVisible: true
           }
         })
@@ -409,7 +452,7 @@ export default function BusinessRegistationPage() {
           address: {
             ...validate.address,
             isError: true,
-            textError: 'Địa chỉ không được để trống',
+            textError: TEXT_ERROR_ADDRESS_NOTEMPTY,
             isVisible: true
           }
         })
@@ -419,7 +462,7 @@ export default function BusinessRegistationPage() {
           address: {
             ...validate.address,
             isError: true,
-            textError: 'Địa chỉ không vượt quá 255 ký tự',
+            textError: TEXT_ERROR_ADDRESS_NOTMAXLENGTH,
             isVisible: true
           }
         })
@@ -445,7 +488,7 @@ export default function BusinessRegistationPage() {
           phone: {
             ...validate.phone,
             isError: true,
-            textError: 'Số điện thoại không được để trống',
+            textError: TEXT_ERROR_PHONE_NOTEMPTY,
             isVisible: true
           }
         })
@@ -455,7 +498,7 @@ export default function BusinessRegistationPage() {
           phone: {
             ...validate.phone,
             isError: true,
-            textError: 'Số điện thoại sai định dạng',
+            textError: TEXT_ERROR_PHONE_NOTFORMAT,
             isVisible: true
           }
         })
@@ -497,7 +540,7 @@ export default function BusinessRegistationPage() {
         activeTime: {
           ...validate.activeTime,
           isError: true,
-          textError: 'Thời gian hoạt động sai định dạng',
+          textError: TEXT_ERROR_ACTIVE_NOTFORMAT,
           isVisible: true
         }
       })
@@ -521,12 +564,12 @@ export default function BusinessRegistationPage() {
         .post<Business, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/business/register', business)
         .then((response) => {
           setIsLoading(false)
-          alert('Đăng ký thành công')
+          alert(TEXT_ALERT_REGISTER_SUCCESS)
           navigate(LOGIN_PAGE)
         })
         .catch((error) => {
           setIsLoading(false)
-          alert('Đăng ký thất bại')
+          alert(TEXT_ALERT_REGISTER_FAILT)
         })
     } else {
       let key: keyof RegisterBusiness
@@ -567,7 +610,7 @@ export default function BusinessRegistationPage() {
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
             <div className='card login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
-                <h5 className='fw-700 display1-size display2-md-size mb-4'> Đăng ký doanh nghiệp</h5>
+                <h5 className='fw-700 display1-size display2-md-size mb-4'>{TEXT_TITLE_REGISTER_BUSINESS}</h5>
                 <form className='register'>
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-direction-alt text-grey-500 pe-0'> </i>
@@ -575,7 +618,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handleNameChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Tên doanh nghiệp...'
+                      placeholder={TEXT_PLACEHOLDER_BUSINESSNAME}
                       style={{ borderColor: !validate.name?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -591,7 +634,7 @@ export default function BusinessRegistationPage() {
                       onChange={(e) => handleEmailChange(e)}
                       onBlur={() => handleCheckEmail()}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Email...'
+                      placeholder={TEXT_PLACEHOLDER_EMAIL}
                       style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -606,7 +649,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handleRepresentoreChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Họ tên người đại diện'
+                      placeholder={TEXT_PLACEHOLDER_REPRESENTER}
                       style={{ borderColor: !validate.representor?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -621,7 +664,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handleTaxCodeChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Mã số thuế...'
+                      placeholder={TEXT_PLACEHOLDER_TAXCODE}
                       style={{ borderColor: !validate.taxCode?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -636,7 +679,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handleAddressChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Địa chỉ...'
+                      placeholder={TEXT_PLACEHOLDER_ADDRESS}
                       style={{ borderColor: !validate.address?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -651,7 +694,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handlePhoneChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Số điện thoại...'
+                      placeholder={TEXT_PLACEHOLDER_PHONE}
                       style={{ borderColor: !validate.phone?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -660,7 +703,7 @@ export default function BusinessRegistationPage() {
                       isVisible={validate.phone?.isVisible}
                     />
                   </div>
-                  <label className='form-group text-grey-600 fw-600'>Thời gian làm việc</label>
+                  <label className='form-group text-grey-600 fw-600'>{TEXT_ACTIVETIME}</label>
                   <div className='form-group icon-input mb-3'>
                     <div className='clock'>
                       <input
@@ -670,7 +713,7 @@ export default function BusinessRegistationPage() {
                         style={{ borderColor: !validate.activeTime?.isError ? '#228b22' : '#eee' }}
                         className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
                       />
-                      <label className='me-1 ms-1'>đến</label>
+                      <label className='me-1 ms-1'>{TEXT_TO_ACTIVETIME}</label>
                       <input
                         type='time'
                         value={timeEnd}
@@ -690,7 +733,7 @@ export default function BusinessRegistationPage() {
                       type='Password'
                       onChange={(e) => handlePasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder='Mật khẩu'
+                      placeholder={TEXT_PLACEHOLDER_PASSWORD}
                       style={{ borderColor: !validate.password?.isError ? '#228b22' : '#eee' }}
                     />
                     <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
@@ -705,7 +748,7 @@ export default function BusinessRegistationPage() {
                       type='Password'
                       onChange={(e) => handleConfirmPasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder='Nhập lại mật khẩu'
+                      placeholder={TEXT_PLACEHOLDER_CONFIMPASS}
                       style={{ borderColor: !validate.confimPassword?.isError ? '#228b22' : '#eee' }}
                     />
                     <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
@@ -730,7 +773,7 @@ export default function BusinessRegistationPage() {
                       ref={buttonCallPickerImgRef}
                     >
                       <i className='font-md text-success feather-image me-2'></i>
-                      <span className='d-none-xs'>Ảnh đại diện</span>
+                      <span className='d-none-xs'>{TEXT_IMAGE_PICKER}</span>
                     </button>
                   </div>
                   <div className='img'>{image ? <img src={image} className='avatar' /> : ''}</div>
@@ -743,7 +786,7 @@ export default function BusinessRegistationPage() {
                         className='form-control style2-input fw-600 bg-blue border-0 p-0 text-center text-white'
                         onClick={() => onSubmit()}
                       >
-                        Đăng ký
+                        {TEXT_REGISTER}
                       </button>
                       <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#ffff' height={50} width={50} />
@@ -751,9 +794,9 @@ export default function BusinessRegistationPage() {
                     </div>
                   </div>
                   <h6 className='text-grey-500 font-xsss fw-500 lh-32 mb-0 mt-0'>
-                    Đã có tài khoản?
+                    {TEXT_REQUEST_LOGIN}
                     <button className='fw-700 txt-blue ms-1' onClick={() => navigate(LOGIN_PAGE)}>
-                      Đăng nhập
+                      {TEXT_LOGIN}
                     </button>
                   </h6>
                 </div>
