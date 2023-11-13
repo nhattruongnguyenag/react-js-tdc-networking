@@ -1,0 +1,25 @@
+/* custom-image-gallery.css */
+/* Đặt CSS cho ảnh trong react-image-gallery */
+.react-image-gallery {
+    /* Tùy chỉnh chiều rộng và chiều cao của hình ảnh */
+    width: 300px; /* Chiều rộng tùy chỉnh */
+  }
+  
+  /* Tùy chỉnh CSS cho mô tả của ảnh */
+  .react-image-gallery-description {
+    font-size: 16px; /* Kích thước phông chữ tùy chỉnh */
+    color: #333; /* Màu văn bản tùy chỉnh */
+  }
+  
+  /* Tùy chỉnh nút điều hướng ảnh trước và sau */
+  .react-image-gallery-left-nav,
+  .react-image-gallery-right-nav {
+    background-color: #007bff; /* Màu nền tùy chỉnh cho nút điều hướng */
+    border-radius: 50%; /* Tùy chỉnh hình dạng nút */
+  }
+  
+  /* Tùy chỉnh màu biểu tượng trong nút điều hướng ảnh */
+  .react-image-gallery-svg {
+    fill: #fff; /* Màu biểu tượng tùy chỉnh */
+  }
+  

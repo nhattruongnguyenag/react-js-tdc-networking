@@ -1,47 +1,76 @@
 import { useEffect, useState } from 'react'
 import Header from '../components/common/Header'
-import { SERVER_ADDRESS } from '../constants/SystemConstant'
+import { numberDayPassed } from '../utils/FormatTime'
+import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton'
+import { useGetBusinessPostsQuery } from '../redux/Service'
 import { LikeAction } from '../types/LikeActions'
-import axios from 'axios'
-import CreateNormalPostModal from '../components/modal/CreateNormalPostModal'
-import { formatDateTime } from '../utils/FormatTime'
+import { Post } from '../types/Post'
+import { handleDataClassification } from '../utils/DataClassfications'
+import { TYPE_POST_BUSINESS } from '../constants/StringVietnamese'
 import CustomizePost from '../components/post/CustomizePost'
-import { API_URL_GET_ALL_POST } from '../constants/Path'
 import CreatePostSelector from '../components/CreatePostSelector'
+import { useAppSelector } from '../redux/Hook'
+import CustomizeModalComments from '../components/modal/CustomizeModalComments'
 
 export default function BusinessDashboardPage() {
-  // -------------------------------------
-  // Variable
-  const [data, setData] = useState([] as any)
-
-  // Start post
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const [isLoading, setIsLoading] = useState(false);
+  const [post, setPost] = useState<Post[]>([]);
+  const { data, isFetching } = useGetBusinessPostsQuery(
+    { id: userLogin?.id ?? 0 },
+    {
+      pollingInterval: 2000
+    }
+  );
   useEffect(() => {
-    getPostsFromApi()
+    setIsLoading(true)
   }, [])
 
-  const getPostsFromApi = () => {
-    axios
-      .get(API_URL_GET_ALL_POST)
-      .then((response) => {
-        setData(response.data.data)
-        console.log(response.data)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
+  // Xử lý dữ liệu từ Redux Toolkit Query
+  useEffect(() => {
+    if (data) {
+      setIsLoading(false);
+      setPost([]);
+      const tempPost = handleDataClassification(data, TYPE_POST_BUSINESS);
+      setPost(tempPost);
+    }
+  }, [data])
 
   const likeAction = (obj: LikeAction) => {
-    // obj.code = TYPE_POST_BUSINESS
-    // like(obj)
+    console.log('====================================');
+    console.log('like');
+    console.log('====================================');
   }
 
-  // const like = useCallback((likeData: LikeAction) => {
-  // stompClient.send(`/app/posts/${likeData.code}/like`, {}, JSON.stringify(likeData))
-  // }, [])
-  // End post
-  // -------------------------------------
-
+  const renderItem = (item: any) => {
+    return (
+      <CustomizePost
+        key={item.id}
+        id={item.id}
+        userId={item.user['id']}
+        name={item.user['name']}
+        avatar={item.user['image']}
+        typeAuthor={'Doanh Nghiệp'}
+        available={null}
+        timeCreatePost={numberDayPassed(item.createdAt)}
+        content={item.content}
+        type={item.type}
+        likes={item.likes}
+        comments={item.comment}
+        commentQty={item.commentQuantity}
+        images={item.images}
+        role={item.user['roleCodes']}
+        likeAction={likeAction}
+        location={item.location ?? null}
+        title={item.title ?? null}
+        expiration={item.expiration ?? null}
+        salary={item.salary ?? null}
+        employmentType={item.employmentType ?? null}
+        description={item.description ?? null}
+        isConduct={item.isConduct ?? null}
+      />
+    )
+  }
   return (
     <>
       <Header />
@@ -470,37 +499,24 @@ export default function BusinessDashboardPage() {
                     </div>
                   </div>
                 </div>
-                {/* Modal */}
-                <CreatePostSelector />
-                {/* <CreateNormalPostModal /> */}
+                {/* Skeleton */}
+                {isLoading && (
+                  <div>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
+                    </div>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
+                    </div>
+                  </div>
+                )}
+
+                {/* Modal create  post */}
+                {
+                  userLogin?.roleCodes === TYPE_POST_BUSINESS && <CreatePostSelector group={2} />
+                }
                 {/* Render post */}
-                {data &&
-                  data.map((item: any) => (
-                    <CustomizePost
-                      key={item.id}
-                      id={item.id}
-                      userId={item.user['id']}
-                      name={item.user['name']}
-                      avatar={item.user['image']}
-                      typeAuthor={'Doanh Nghiệp'}
-                      available={null}
-                      timeCreatePost={formatDateTime(item.createdAt)}
-                      content={item.content}
-                      type={item.type}
-                      likes={item.likes}
-                      comments={item.comment}
-                      commentQty={item.commentQuantity}
-                      images={item.images}
-                      role={item.user['roleCodes']}
-                      likeAction={likeAction}
-                      location={item.location ?? null}
-                      title={item.title ?? null}
-                      expiration={item.expiration ?? null}
-                      salary={item.salary ?? null}
-                      employmentType={item.employmentType ?? null}
-                      description={item.description ?? null}
-                    />
-                  ))}
+                {data?.data.map((item) => renderItem(item))}
                 <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4 text-center'>
                   <div className='snippet me-auto ms-auto mt-2' data-title='.dot-typing'>
                     <div className='stage'>

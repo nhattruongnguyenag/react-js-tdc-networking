@@ -2,6 +2,7 @@
 :root {
   --COLOR_GREY: #808080;
   --COLOR_BLACK: #000000;
+  --COLOR_WHITE: #ffffff;
 }
 
 .body-content {
@@ -41,6 +42,16 @@
   height: 45px;
   border-radius: 45px;
   object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-default-user-header-post {
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container-button-to-left-right {
@@ -83,4 +94,84 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.button-menu {
+  padding-left: 23%;
+}
+
+.avatar-wrapper-header {
+  width: 10%;
+}
+
+.text-header-name-wrapper {
+  width: 80%;
+}
+
+.button-menu-header-wrapper {
+  width: 10%;
+}
+
+.like-button-bottom-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-content-body-wrapper {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.wrapper-infor-job {
+  padding-left: 8px;
+}
+
+.text-location-body-recruitment {
+  display: flex;
+}
+
+.icon-location-recruitment {
+  margin-right: 5px;
+}
+
+.list-infor-about-recruitment {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.icon-item-infor-job-recruitment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.txt-item-recruitment {
+  padding-left: 5px;
+}
+
+.button-see-more-recruitment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  color: COLOR_WHITE;
+  border-radius: 5px;
+  color: var(--COLOR_WHITE);
+}
+
+.icon-arrow-left {
+  margin-left: 5px;
+}
+
+.typeAuthorShow {
+  background: var(--COLOR_GREY);
+  padding-top: 2px;
+  padding-right: 5px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  border-radius: 10px;
+  color: black;
+  font-weight: 300;
 }

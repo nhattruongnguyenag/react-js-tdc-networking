@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faYoutube, faGithub, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { FUNCTION_DESCRIPTION_PAGE, LOGIN_PAGE, REGISTER_PAGE } from '../constants/Page'
 
 export default function IntroducePage() {
   const navigate = useNavigate()
@@ -10,8 +11,10 @@ export default function IntroducePage() {
       <div className='bg-intro'>
         {/* navbar */}
         <div className='navbar-intro'>
-          <button className='btnAll-intro btnReg-intro' onClick={() => navigate('/dang-ky')}>Đăng kí ngay!</button>
-          <button className='btnAll-intro btnLog-intro' onClick={() => navigate('/dang-nhap')}>
+          <button className='btnAll-intro btnReg-intro' onClick={() => navigate(REGISTER_PAGE)}>
+            Đăng kí ngay!
+          </button>
+          <button className='btnAll-intro btnLog-intro' onClick={() => navigate(LOGIN_PAGE)}>
             Đăng nhập!
           </button>
         </div>
@@ -26,7 +29,7 @@ export default function IntroducePage() {
           <div className='tdc1-intro'>SOCIAL NETWORK</div>
           <div className='tdc2-intro'>Kết nối - Giao lưu</div>
           <div className='tdc2-intro'>Chia sẻ kinh nghiệm - Tìm kiếm doanh nghiệp</div>
-          <button className='btn-intro btnFindNow-intro'>Tìm hiểu ngay!</button>
+          <button className='btn-intro btnFindNow-intro' onClick={() => navigate(FUNCTION_DESCRIPTION_PAGE)}>Tìm hiểu ngay!</button>
         </div>
       </div>
       {/* bottombar */}

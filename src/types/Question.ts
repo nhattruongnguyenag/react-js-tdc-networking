@@ -1,17 +1,18 @@
+import { QuestionResponse } from './response/QuestionResponse'
+
 export interface Question {
   type: string
   title: string
   choices: string[]
+  required: number
 }
 
 export interface QuestionProps {
-  data: Question
-  index: number
-}
-
-export interface ChoiceProps {
-  index: number
-  data: string
+  index?: number
+  dataResponse?: QuestionResponse
+  editMode?: boolean
+  reviewMode?: boolean
+  conductMode?: boolean
 }
 
 export type MultiChoiceQuestion = Question

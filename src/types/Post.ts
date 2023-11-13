@@ -27,4 +27,5 @@ export interface Post {
   salary: string | null
   employmentType: string | null
   description: string | null
+  isConduct: number | null
 }

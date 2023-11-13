@@ -179,7 +179,7 @@ export default function ChatPage() {
                     </div>
                   </div>
                 </div>
-                <div className='chat-bottom dark-bg theme-dark-bg p-3 shadow-none' style={{width: '97%'}}>
+                <div className='chat-bottom dark-bg theme-dark-bg p-3 shadow-none' style={{ width: '97%' }}>
                   <form className='chat-form'>
                     <button className='bg-grey float-left' type='button' onClick={() => onBtnUploadImageClick()}>
                       <i className='ti-image text-grey-600' />

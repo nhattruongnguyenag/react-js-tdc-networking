@@ -1,0 +1,35 @@
+.containerCreateCommentToolbar {
+  display: flex;
+  padding-top: 10px;    
+  padding-bottom: 10px;
+}
+
+.avatarCreateCommentToolbar {
+  width: 35px;
+  height: 35px;
+  border-radius: 35px;
+  border-width: 1px;
+  border-color: #ffffff;
+}
+
+.textAreaCreateCommentToolbar{
+    margin-left: 5px;
+    height: 80px;
+    background-color: grey;
+    padding-left: 10px;
+}
+.btnSubmitComment{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    float: right;
+}
+.txtSubmitComments{
+    color: #ffffff;
+    padding-right: 5px;
+}
