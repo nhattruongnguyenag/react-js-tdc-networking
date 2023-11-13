@@ -101,7 +101,7 @@ export default function BusinessRegistationPage() {
       isError: true
     },
     activeTime: {
-      textError: 'Thời gian hoạt động không được để trống',
+      textError: 'Thời gian hoạt động sai định dạng',
       isVisible: false,
       isError: true
     },
@@ -207,6 +207,26 @@ export default function BusinessRegistationPage() {
     },
     [validate]
   )
+  const handleCheckEmail = useCallback(() => {
+    axios
+      .post(SERVER_ADDRESS + `api/users/check?email=${business.email}`)
+      .then((response) => {
+        if (response.data.data == 0) {
+          setValidate({
+            ...validate,
+            email: {
+              ...validate.email,
+              isError: true,
+              textError: 'Email đã được được đăng ký! Vui lòng nhập email khác',
+              isVisible: true
+            }
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [business.email])
   const handleEmailChange = useCallback(
     (event: any) => {
       if (isBlank(event.target.value)) {
@@ -569,6 +589,7 @@ export default function BusinessRegistationPage() {
                     <input
                       type='text'
                       onChange={(e) => handleEmailChange(e)}
+                      onBlur={() => handleCheckEmail()}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
                       placeholder='Email...'
                       style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}

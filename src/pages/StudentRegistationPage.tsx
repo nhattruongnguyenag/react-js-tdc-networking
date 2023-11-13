@@ -97,7 +97,7 @@ export default function StudentRegistationPage() {
       isError: true
     },
     major: {
-      textError: 'Tên ngành không được để trống',
+      textError: 'Vui lòng chọn khoa trước khi chọn ngành',
       isVisible: false,
       isError: true
     },
@@ -216,6 +216,26 @@ export default function StudentRegistationPage() {
     },
     [validate]
   )
+  const handleCheckEmail = useCallback(() => {
+    axios
+      .post(SERVER_ADDRESS + `api/users/check?email=${student.email}`)
+      .then((response) => {
+        if (response.data.data == 0) {
+          setValidate({
+            ...validate,
+            email: {
+              ...validate.email,
+              isError: true,
+              textError: 'Email đã được được đăng ký! Vui lòng nhập email khác',
+              isVisible: true
+            }
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [student.email])
   const handleEmailChange = useCallback(
     (event: any) => {
       if (isBlank(event.target.value)) {
@@ -353,7 +373,7 @@ export default function StudentRegistationPage() {
             ...validate.major,
             isError: true,
             isVisible: true,
-            textError: 'Tên khoa không được để trống'
+            textError: 'Tên ngành không được để trống'
           }
         })
       } else {
@@ -521,6 +541,7 @@ export default function StudentRegistationPage() {
                     <input
                       type='text'
                       onChange={(e) => handleEmailChange(e)}
+                      onBlur={() => handleCheckEmail()}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
                       placeholder='Địa chỉ Email'
                       style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}
