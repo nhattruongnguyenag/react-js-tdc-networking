@@ -28,4 +28,6 @@ export interface Post {
   employmentType: string | null
   description: string | null
   isConduct: number | null
+  isSave: number
+  group: string
 }

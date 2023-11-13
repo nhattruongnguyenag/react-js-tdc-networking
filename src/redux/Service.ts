@@ -28,8 +28,8 @@ export const TDCSocialNetworkAPI = createApi({
     getConversationsByUserId: builder.query<Conversation[], number>({
       query: (userId) => `api/conversations/${userId}`
     }),
-    getQuestionsFromSurveyPost: builder.query<Data<SurveyResponse>, {postId: number, userLogin: number}>({
-      query: ({postId, userLogin}) => `api/posts/survey?postId=${postId}&userLogin=${userLogin}`
+    getQuestionsFromSurveyPost: builder.query<Data<SurveyResponse>, { postId: number; userLogin: number }>({
+      query: ({ postId, userLogin }) => `api/posts/survey?postId=${postId}&userLogin=${userLogin}`
     }),
     saveDeviceToken: builder.mutation<MessageResponseData, DeviceToken>({
       query: (data) => ({
@@ -89,16 +89,20 @@ export const TDCSocialNetworkAPI = createApi({
         method: 'GET'
       })
     }),
-    getPostsById: builder.query<Data<any[]>, { id: string }>({
+    getPostsById: builder.query<Data<any>, { userId: number; groupCode: string; userLogin: number }>({
       query: (data) => ({
-        url: `api/posts/user/${data.id}`,
-        method: 'GET'
+        url: `api/posts/group/user/detail`,
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
       })
     }),
     addSurveyConductAnswer: builder.mutation<MessageResponseData, SurveyConductRequest>({
       query: (data) => ({
         url: 'api/posts/survey/conduct',
-        method: 'POST', 
+        method: 'POST',
         body: data,
         headers: {
           'Content-type': 'application/json; charset=UTF-8'
