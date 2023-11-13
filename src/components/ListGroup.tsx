@@ -35,9 +35,9 @@ export default function ListGroup() {
   return (
     <div className='nav-wrap bg-warning-card rounded-xxl mb-2 bg-white pb-1 pt-3 wrapper-group'>
       <div className='nav-caption fw-600 font-xssss text-grey-500'>
-        <span>More </span>Groups
+        <span>Nhóm của bạn</span>
       </div>
-      <ul className='mb-3'>{data?.map((item) => renderItem(item))}</ul>
+      <ul className='mb-3 pr-2'>{data?.map((item) => renderItem(item))}</ul>
     </div>
   )
 }
