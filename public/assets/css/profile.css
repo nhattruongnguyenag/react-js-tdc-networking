@@ -4,7 +4,14 @@
 
 .containerImagesProfileHeader {
   position: relative;
-  height: 325px;
+}
+
+.containerBodyProfile{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.backgroundHeaderProfile{
 }
 
 .avatarHeaderProfile {
@@ -12,7 +19,7 @@
   height: 150px;
   border-radius: 150px;
   object-fit: cover;
-  bottom: -40px;
+  bottom: -30px;
   left: 10px;
   border-width: 15px;
   border-color: #ffff;

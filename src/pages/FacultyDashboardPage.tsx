@@ -21,7 +21,7 @@ export default function FacultyDashboardPage() {
       id: userLogin?.id ?? 0
     },
     {
-      pollingInterval: 1000
+      pollingInterval: 500
     }
   );
 

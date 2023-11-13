@@ -22,7 +22,7 @@ export default function UserDetailsPage() {
   const { data, isFetching } = useGetPostsByIdQuery(
     { id: userId + '' ?? '0' },
     {
-      pollingInterval: 2000
+      pollingInterval: 500
     }
   );
 
@@ -81,7 +81,7 @@ export default function UserDetailsPage() {
         <div className='middle-sidebar-bottom'>
           <div className='middle-sidebar-left'>
             <div className='row feed-body'>
-              <div className='col-xl-8 col-xxl-9 col-lg-8'>
+              <div className='col-12'>
                 {
                   post[0] !== null && <>
                     {

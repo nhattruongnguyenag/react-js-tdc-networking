@@ -105,7 +105,7 @@ export const TDCSocialNetworkAPI = createApi({
     addSurveyConductAnswer: builder.mutation<MessageResponseData, SurveyConductRequest>({
       query: (data) => ({
         url: 'api/posts/survey/conduct',
-        method: 'POST',
+        method: 'POST', 
         body: data,
         headers: {
           'Content-type': 'application/json; charset=UTF-8'
