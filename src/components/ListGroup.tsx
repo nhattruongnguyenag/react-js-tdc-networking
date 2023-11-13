@@ -11,6 +11,7 @@ export default function ListGroup() {
   const renderItem = (item: any) => {
     return (
       <CustomizeGroupItem
+        key={item.id.toString()}
         id={item.id}
         createAt={item.createdAt}
         active={item.active}
