@@ -4,7 +4,7 @@ import CustomizeBodyPost from './CustomizeBodyPost'
 import CustomizeBottomPost from './CustomizeBottomPost'
 import CustomizeImage from './CustomizeImage'
 import { Post } from '../../types/Post'
-import { COMMENT_ACTION, GO_TO_PROFILE_ACTIONS, LIKE_ACTION, SHOW_LIST_USER_REACTED, TYPE_NORMAL_POST, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST } from '../../constants/Variables'
+import { CLICK_SAVE_POST_EVENT, CLICK_SEE_RESULT_POST_EVENT, CLICK_SEE_LIST_CV_POST_EVENT, CLICK_DELETE_POST_EVENT, COMMENT_ACTION, GO_TO_PROFILE_ACTIONS, LIKE_ACTION, SHOW_LIST_USER_REACTED, TYPE_NORMAL_POST, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST, CLICK_UN_SAVE_POST_EVENT } from '../../constants/Variables'
 import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { Like } from '../../types/Like'
 import { ImageGalleryDisplay } from '../../types/ImageGalleryDispaly'
@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import { RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, USER_DETAILS_PAGE } from '../../constants/Page'
 import { slugify } from '../../utils/CommonUtls'
 import { isBlank } from '../../utils/ValidateUtils'
+import { savePostAPI } from '../../api/CallAPI'
 
 const CustomizePost = (props: Post) => {
   const navigate = useNavigate()
@@ -166,12 +167,44 @@ const CustomizePost = (props: Post) => {
       })
   }
 
+  const handleClickMenuOption = (flag: number) => {
+    switch (flag) {
+      case CLICK_SAVE_POST_EVENT:
+        handleSavePost();
+        break
+      case CLICK_UN_SAVE_POST_EVENT:
+        handleSavePost();
+        break;
+      case CLICK_DELETE_POST_EVENT:
+        // handleSavePost();
+        // post.handleUnSave(post.id);
+        break
+      case CLICK_SEE_LIST_CV_POST_EVENT:
+        // handleSeeListCvPost();
+        break
+      case CLICK_SEE_RESULT_POST_EVENT:
+        // handleSeeResultSurveyPost();
+        break
+      default:
+        return '';
+    }
+  }
+
+  const handleSavePost = async () => {
+    const data = {
+      "userId": userLogin?.id,
+      "postId": props.id
+    }
+    const status = await savePostAPI(SERVER_ADDRESS + 'api/posts/user/save', data);
+  }
+
   switch (props.type) {
     case TYPE_NORMAL_POST:
       return (
         <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
           {/* Header */}
           <CustomizeHeaderPost
+            userId={props.userId}
             name={props.name}
             avatar={props.avatar}
             available={props.available}
@@ -179,7 +212,9 @@ const CustomizePost = (props: Post) => {
             typeAuthor={props.typeAuthor}
             type={props.type}
             role={props.role}
+            handleClickMenuOption={handleClickMenuOption}
             handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
+            isSave={props.isSave}
           />
           {/* Body */}
           <CustomizeBodyPost content={props.content} />
@@ -217,14 +252,17 @@ const CustomizePost = (props: Post) => {
       return (
         <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
           <CustomizeHeaderPost
+            userId={props.userId}
             name={props.name}
             avatar={props.avatar}
             available={props.available}
             timeCreatePost={props.timeCreatePost}
-            typeAuthor={'Tuyển dụng'}
+            typeAuthor={props.typeAuthor}
             type={props.type}
             role={props.role}
+            handleClickMenuOption={handleClickMenuOption}
             handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
+            isSave={props.isSave}
           />
           <CustomizeRecruitmentPost
             id={props.id}
@@ -272,14 +310,17 @@ const CustomizePost = (props: Post) => {
     case TYPE_SURVEY_POST:
       return <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
         <CustomizeHeaderPost
+          userId={props.userId}
           name={props.name}
           avatar={props.avatar}
           available={props.available}
           timeCreatePost={props.timeCreatePost}
-          typeAuthor={'Khảo sát'}
+          typeAuthor={props.typeAuthor}
           type={props.type}
           role={props.role}
+          handleClickMenuOption={handleClickMenuOption}
           handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
+          isSave={props.isSave}
         />
         <CustomizeSurveyPost
           id={props.id}
