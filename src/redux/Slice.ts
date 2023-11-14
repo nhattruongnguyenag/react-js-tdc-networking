@@ -4,18 +4,20 @@ import { Business } from '../types/Business'
 import { Conversation } from '../types/Conversation'
 import { Faculty } from '../types/Faculty'
 import { Message } from '../types/Message'
-import { ModalComments } from '../types/ModalComments'
 import { ModalImage } from '../types/ModalImage'
 import { ModalUserReaction } from '../types/ModalUserReaction'
 import { Question } from '../types/Question'
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
+import { QuestionResponse } from '../types/response/QuestionResponse'
 import { Student } from '../types/Student'
 import { getSelectedConversation, getSurveyPostRequest, getUserLogin } from '../utils/CommonUtls'
 import { InputTextValidate } from '../utils/ValidateUtils'
+import { ModalComments } from '../types/ModalComments'
 
 export interface TDCSocialNetworkState {
   darkMode: boolean
   surveyPostRequest: SurveyPostRequest
+  questionConducts: QuestionResponse[]
   questionTitleValidates: InputTextValidate[]
   choices: string[]
   questions: Question[]
@@ -62,7 +64,8 @@ const initialState: TDCSocialNetworkState = {
   modalImageData: null,
   modalCommentData: null,
   modalUserReactionData: null,
-  updatePost: false
+  updatePost: false,
+  questionConducts: []
 }
 
 export const TDCSocialNetworkSlice = createSlice({
@@ -103,13 +106,13 @@ export const TDCSocialNetworkSlice = createSlice({
       const question: Question = {
         title: '',
         type: action.payload,
-        choices: []
+        choices: [],
+        required: 1
       }
       if (question.type !== SHORT_ANSWER) {
         question.choices = ['', '', '']
       }
       state.surveyPostRequest.questions = [...state.surveyPostRequest.questions, question]
-      console.log(current(state.surveyPostRequest))
     },
     setQuestionValidates: (state, action: PayloadAction<InputTextValidate[]>) => {
       state.questionTitleValidates = action.payload
@@ -142,6 +145,9 @@ export const TDCSocialNetworkSlice = createSlice({
     },
     resetChoices: (state, action: PayloadAction<void>) => {
       state.choices = ['', '', '']
+    },
+    setQuestionConducts: (state, action: PayloadAction<QuestionResponse[]>) => {
+      state.questionConducts = action.payload
     },
     openModalImage: (state, action: PayloadAction<ModalImage>) => {
       state.modalImageData = action.payload
@@ -202,7 +208,8 @@ export const {
   openModalUserReaction,
   closeModalUserReaction,
   setSelectConversation,
-  updatePostWhenHaveChangeComment
+  updatePostWhenHaveChangeComment,
+  setQuestionConducts
 } = TDCSocialNetworkSlice.actions
 
 export default TDCSocialNetworkSlice.reducer

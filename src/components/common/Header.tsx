@@ -1,6 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAppDispatch } from '../../redux/Hook'
 import { toggleDarkMode } from '../../redux/Slice'
@@ -13,7 +11,6 @@ import {
   SEARCH_PAGE,
   STUDENT_DASHBOARD_PAGE
 } from '../../constants/Page'
-import classNames from 'classnames'
 import NavItem from './NavItem'
 
 export default function Header() {
@@ -21,10 +18,6 @@ export default function Header() {
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    console.log(location.pathname)
-  }, [location])
 
   return (
     <Fragment>
@@ -49,24 +42,26 @@ export default function Header() {
           />
         </div>
 
-        <NavItem to={BUSINESS_DASHBOARD_PAGE} active={BUSINESS_DASHBOARD_PAGE == location.pathname}>
-          <i className='feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </NavItem>
+        <div>
+          <NavItem to={BUSINESS_DASHBOARD_PAGE} active={BUSINESS_DASHBOARD_PAGE == location.pathname}>
+            <i className='feather-home font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+          </NavItem>
 
-        <NavItem to={STUDENT_DASHBOARD_PAGE} active={Boolean(STUDENT_DASHBOARD_PAGE == location.pathname)}>
-          <i className='feather-rss font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </NavItem>
+          <NavItem to={STUDENT_DASHBOARD_PAGE} active={Boolean(STUDENT_DASHBOARD_PAGE == location.pathname)}>
+            <i className='feather-rss font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+          </NavItem>
 
-        <NavItem
-          to={FACULTY_DASHBOARD_PAGE + '/cong-nghe-thong-tin'}
-          active={location.pathname.includes(FACULTY_DASHBOARD_PAGE)}
-        >
-          <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </NavItem>
+          <NavItem
+            to={FACULTY_DASHBOARD_PAGE + '/cong-nghe-thong-tin'}
+            active={location.pathname.includes(FACULTY_DASHBOARD_PAGE)}
+          >
+            <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+          </NavItem>
 
-        <NavItem to={SEARCH_PAGE} active={SEARCH_PAGE == location.pathname}>
-          <i className='feather-search font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
-        </NavItem>
+          <NavItem to={SEARCH_PAGE} active={SEARCH_PAGE == location.pathname}>
+            <i className='feather-search font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+          </NavItem>
+        </div>
 
         <span
           onClick={() => setShowNotificationPopup(!showNotificationPopup)}

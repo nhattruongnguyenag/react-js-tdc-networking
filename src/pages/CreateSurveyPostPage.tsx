@@ -7,9 +7,9 @@ import Header from '../components/common/Header'
 import InputTextWithTitle from '../components/common/InputTextWithTitle'
 import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
 import ValidateTextView from '../components/common/ValidateTextView'
-import MultiQuestionMultiChoice from '../components/survey/MultiQuestionMultiChoice'
-import MultiQuestionOneChoice from '../components/survey/MultiQuestionOneChoice'
-import ShortAnswerQuestion from '../components/survey/ShortAnswerQuestion'
+import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestionMultiChoice'
+import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
+import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
 import { SURVEY_POST_REQUEST } from '../constants/KeyValue'
 import {
   ADD_QUESTION_PAGE,
@@ -180,7 +180,7 @@ export default function CreateSurveyPostPage() {
               </Link>
               <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Thêm khảo sát</h4>
             </div>
-            <div className='card-body p-lg-5 w-100 border-0 p-2'>
+            <div className='card-body p-lg-5 w-100 border-0'>
               <div className='row'>
                 <InputTextWithTitle
                   onTextChange={(value) => onTitleChangeText(value)}
@@ -196,7 +196,7 @@ export default function CreateSurveyPostPage() {
 
                 <TextAreaWithTitle
                   onTextChange={(value) => onDescriptionChangeText(value)}
-                  rows={10}
+                  rows={15}
                   placeholder='Nhập mô tả...'
                   title='Mô tả'
                 />

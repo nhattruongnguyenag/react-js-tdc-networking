@@ -26,7 +26,7 @@ const InputTextWithTitle = React.forwardRef(
             placeholder={props.placeholder}
             type={props.type ? props.type : 'text'}
             name={props.name}
-            className='form-control'
+            className='form-control ps-3'
           />
         </div>
       </div>

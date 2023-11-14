@@ -10,4 +10,6 @@ export interface User {
   updatedAt: string
   roleCodes: string
   code: string
+  facultyGroupCode: string | undefined
+  facultyGroupId: number | undefined
 }

@@ -28,6 +28,36 @@ const CustomizeBottomPost = (props: BottomPostType) => {
     return numberLikeHadFormat
   }
 
+  const getUserLikeQty = (arrayList: Like[]): string => {
+    let numberLikeHadFormat = ''
+    const numberUserLikeQty = arrayList.length - 3
+    if (numberUserLikeQty > 9) {
+      numberLikeHadFormat = '9 +'
+    } else {
+      numberLikeHadFormat = '+ ' + numberUserLikeQty
+    }
+    return numberLikeHadFormat;
+  }
+
+  const getListUserHadLike = () => {
+    let userList;
+    userList = props.likes.map((item, index) =>
+      index < 3 ?
+        item.image != null ? (
+          <img
+            key={item.id}
+            src={SERVER_ADDRESS + 'api/images/' + item.image}
+            alt='avatar'
+            className='avatar-user-reacted-list me-1 shadow-sm'
+          />
+        ) : (
+          <DefaultAvatar key={item.id} name={item.name} size={35} styleBootstrap={'me-1'} />
+        )
+        : null
+    )
+    return userList
+  }
+
   return (
     <div className='card-body d-flex p-0'>
       <div className='emoji-bttn pointer d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss me-2'>
@@ -55,18 +85,12 @@ const CustomizeBottomPost = (props: BottomPostType) => {
         data-bs-toggle='dropdown'
         aria-expanded='false'
       >
-        {props.likes.map((item, index) =>
-          item.image != null ? (
-            <img
-              key={item.id}
-              src={SERVER_ADDRESS + 'api/images/' + item.image}
-              alt='avatar'
-              className='avatar-user-reacted-list me-1 shadow-sm'
-            />
-          ) : (
-            <DefaultAvatar key={item.id} name={item.name} size={35} styleBootstrap={'me-1'} />
-          )
-        )}
+        {
+          getListUserHadLike()
+        }
+        {
+          props.likes.length > 3 ? <div className='avatar-user-reacted-list bg-greylight'>{getUserLikeQty(props.likes)}</div> : null
+        }
       </button>
     </div>
   )

@@ -10,7 +10,7 @@ import { SurveyConductRequest } from '../types/request/SurveyConductRequest'
 import { MessageResponseData } from '../types/response/MessageResponseData'
 import { NotificationModel } from '../types/response/NotificationModel'
 import { Post } from '../types/Post'
-import { QuestionResponse } from '../types/response/QuestionResponse'
+import { QuestionResponse, SurveyResponse } from '../types/response/QuestionResponse'
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 
 export const TDCSocialNetworkAPI = createApi({
@@ -18,6 +18,13 @@ export const TDCSocialNetworkAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['UserLogin'],
   endpoints: (builder) => ({
+    getNotificationsUser: builder.query<Data<NotificationModel[]>, { id: number }>({
+      query: (data) => ({
+        url: 'api/notifications/user',
+        method: 'POST',
+        body: data
+      })
+    }),
     getNotificationsUserById: builder.query<Data<NotificationModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/notifications/user',
@@ -28,8 +35,8 @@ export const TDCSocialNetworkAPI = createApi({
     getConversationsByUserId: builder.query<Conversation[], number>({
       query: (userId) => `api/conversations/${userId}`
     }),
-    getQuestionsFromSurveyPost: builder.query<Data<{ questions: QuestionResponse[] }>, number>({
-      query: (postId) => `api/posts/survey/${postId}`
+    getQuestionsFromSurveyPost: builder.query<Data<SurveyResponse>, { postId: number; userLogin: number }>({
+      query: ({ postId, userLogin }) => `api/posts/survey?postId=${postId}&userLogin=${userLogin}`
     }),
     saveDeviceToken: builder.mutation<MessageResponseData, DeviceToken>({
       query: (data) => ({
@@ -71,6 +78,34 @@ export const TDCSocialNetworkAPI = createApi({
     getAllPosts: builder.query<Data<Post[]>, void>({
       query: () => 'api/posts'
     }),
+    getFacultyPosts: builder.query<Data<Post[]>, { faculty: string; id: number }>({
+      query: (data) => ({
+        url: `api/posts/group?code=${data.faculty}&userLogin=${data.id}`,
+        method: 'GET'
+      })
+    }),
+    getBusinessPosts: builder.query<Data<Post[]>, { id: number }>({
+      query: (data) => ({
+        url: `api/posts/group?code=group_connect_business&userLogin=${data.id}`,
+        method: 'GET'
+      })
+    }),
+    getStudentPosts: builder.query<Data<Post[]>, { id: number }>({
+      query: (data) => ({
+        url: `api/posts/group?code=group_tdc&userLogin=${data.id}`,
+        method: 'GET'
+      })
+    }),
+    getPostsById: builder.query<Data<any>, { userId: number; groupCode: string; userLogin: number }>({
+      query: (data) => ({
+        url: `api/posts/group/user/detail`,
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      })
+    }),
     addSurveyConductAnswer: builder.mutation<MessageResponseData, SurveyConductRequest>({
       query: (data) => ({
         url: 'api/posts/survey/conduct',
@@ -97,6 +132,7 @@ export const TDCSocialNetworkAPI = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useGetNotificationsUserQuery,
   useGetNotificationsUserByIdQuery,
   useGetQuestionsFromSurveyPostQuery,
   useGetConversationsByUserIdQuery,
@@ -105,6 +141,10 @@ export const {
   useSendFCMNotificationMutation,
   useAddRecruitmentPostMutation,
   useGetAllPostsQuery,
+  useGetFacultyPostsQuery,
+  useGetBusinessPostsQuery,
+  useGetStudentPostsQuery,
+  useGetPostsByIdQuery,
   useAddSurveyConductAnswerMutation,
   useJobApplyMutation
 } = TDCSocialNetworkAPI

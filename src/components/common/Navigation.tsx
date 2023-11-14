@@ -1,5 +1,6 @@
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import ListGroup from '../ListGroup'
 
 export default function Navigaion() {
   return (
@@ -7,7 +8,7 @@ export default function Navigaion() {
       <nav className='navigation scroll-bar mt-1'>
         <div className='container pe-0 ps-0'>
           <div className='nav-content'>
-            <div className='nav-wrap bg-transparent-card rounded-xxl shadow-xss mb-2 mt-2 bg-white pb-1 pt-3'>
+            <div className='nav-wrap bg-transparent-card rounded-xxl shadow-xss mb-2 mt-2 bg-white pb-1 pt-3 wrapper-group'>
               <div className='nav-caption fw-600 font-xssss text-grey-500'>
                 <span>New </span>Feeds
               </div>
@@ -45,39 +46,8 @@ export default function Navigaion() {
                 </li>
               </ul>
             </div>
-            <div className='nav-wrap bg-transparent-card rounded-xxl shadow-xss mb-2 bg-white pb-1 pt-3'>
-              <div className='nav-caption fw-600 font-xssss text-grey-500'>
-                <span>More </span>Pages
-              </div>
-              <ul className='mb-3'>
-                <li>
-                  <a className='nav-content-bttn open-font' href='/defaultemailbox'>
-                    <i className='font-xl feather-inbox me-3 text-current' />
-                    <span>Email Box</span>
-                    <span className='circle-count bg-warning mt-1'>584</span>
-                  </a>
-                </li>
-                <li>
-                  <a className='nav-content-bttn open-font' href='/defaulthotel'>
-                    <i className='font-xl feather-home me-3 text-current' />
-                    <span>Near Hotel</span>
-                  </a>
-                </li>
-                <li>
-                  <a className='nav-content-bttn open-font' href='/defaultevent'>
-                    <i className='font-xl feather-map-pin me-3 text-current' />
-                    <span>Latest Event</span>
-                  </a>
-                </li>
-                <li>
-                  <a className='nav-content-bttn open-font' href='/defaultlive'>
-                    <i className='font-xl feather-youtube me-3 text-current' />
-                    <span>Live Stream</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className='nav-wrap bg-transparent-card rounded-xxl shadow-xss bg-white pb-1 pt-3'>
+            <ListGroup></ListGroup>
+            <div className='nav-wrap bg-transparent-card rounded-xxl shadow-xss bg-white pb-1 pt-3 wrapper-group'>
               <div className='nav-caption fw-600 font-xssss text-grey-500'>
                 <span /> Account
               </div>
