@@ -16,6 +16,8 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import { COLOR_BLACK } from '../constants/Color';
 import CustomizeSkeletonUserProfile from '../components/skeleton/CustomizeSkeletonUserProfile';
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
+import { getGroupForPost } from '../utils/GetGroup';
+import { CALL_ACTION, CLICK_CAMERA_AVATAR_EVENT, CLICK_CAMERA_BACKGROUND_EVENT, FOLLOW_ACTION, MESSENGER_ACTION, SEE_AVATAR, SEE_BACKGROUND } from '../constants/Variables'
 
 export default function UserDetailsPage() {
   const { slug } = useParams()
@@ -84,7 +86,43 @@ export default function UserDetailsPage() {
     )
   }
 
+  const handleClickButtonEvent = (flag: number) => {
+    if (flag === MESSENGER_ACTION) {
+      alert('chat');
+    } else if (flag === FOLLOW_ACTION) {
+      alert('follow');
+    } else if (flag === CALL_ACTION) {
+      alert('call');
+    } else {
+      handleClickIntoButtonMenu3dotEvent();
+    }
+  }
+
+  const handleClickIntoButtonMenu3dotEvent = () => {
+    alert('menu')
+  }
+
+  const handleClickIntoHeaderComponentEvent = (flag: number) => {
+    switch (flag) {
+      case CLICK_CAMERA_AVATAR_EVENT:
+        console.log('CLICK_CAMERA_AVATAR_EVENT');
+        break;
+      case CLICK_CAMERA_BACKGROUND_EVENT:
+        console.log('CLICK_CAMERA_BACKGROUND_EVENT');
+        break;
+      case SEE_AVATAR:
+        console.log('SEE_AVATAR');
+        break;
+      case SEE_BACKGROUND:
+        console.log('SEE_BACKGROUND');
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
+
     <>
       <Header />
       <div className='main-content'>
@@ -102,12 +140,13 @@ export default function UserDetailsPage() {
                       data={post}
                       role={typeAuthorPost}
                       userData={userInfo}
-                    />
+                      handleClickButtonEvent={handleClickButtonEvent}
+                      handleClickIntoHeaderComponentEvent={handleClickIntoHeaderComponentEvent} />
                     <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4'>
                       <div className='snippet mt-2 wrapperTitleUserProfile' data-title='.dot-typing'>
-                        <span className='txtTitleInUserProfile'>Bài viết trong nhóm : {userInfo?.name}</span>
+                        <span className='txtTitleInUserProfile'>Bài viết trong nhóm : {userInfo?.name}{' '}</span>
                         <FontAwesomeIcon className='iconArrowToRightUserProfile' icon={faPlay} size='1x' color={COLOR_BLACK} />
-                        <span className='txtTitleInUserProfile'>{' '}{group}</span>
+                        <span className='txtTitleInUserProfile'>{' '}{getGroupForPost(group)}</span>
                       </div>
                     </div>
                     {

@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { COLOR_BTN_BLUE } from '../../constants/Color'
-import { GO_TO_MENU_ACTIONS, GO_TO_PROFILE_ACTIONS, TYPE_RECRUITMENT_POST } from '../../constants/Variables'
+import { CLICK_SAVE_POST_EVENT, CLICK_DELETE_POST_EVENT, CLICK_SEE_LIST_CV_POST_EVENT, CLICK_SEE_RESULT_POST_EVENT, GO_TO_MENU_ACTIONS, GO_TO_PROFILE_ACTIONS, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST, CLICK_UN_SAVE_POST_EVENT } from '../../constants/Variables'
 import DefaultAvatar from '../common/DefaultAvatar'
 import { TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
+import Dropdown from 'react-bootstrap/Dropdown';
+import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu'
+import { useAppSelector } from '../../redux/Hook'
 
 export interface HeaderPostPropsType {
+  userId: number
   name: string
   avatar: string
   typeAuthor: string | null
@@ -15,10 +19,54 @@ export interface HeaderPostPropsType {
   timeCreatePost: string
   type: string | null
   role: string
+  isSave: number
+  handleClickMenuOption: (flag: number) => void
   handleClickIntoAvatarAndNameAndMenuEvent: (flag: number) => void
 }
 
+interface MenuOptionItem {
+  type: number
+  name: string
+  visible: boolean
+}
+
 const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const menuOptions = useMemo<MenuOptionItem[]>(() => {
+    let options: MenuOptionItem[] = [
+      {
+        type: CLICK_SAVE_POST_EVENT,
+        name: 'Lưu bài viết',
+        visible: props.isSave === 0
+      },
+      {
+        type: CLICK_UN_SAVE_POST_EVENT,
+        name: 'Hủy lưu bài viết',
+        visible: props.isSave === 1
+      }
+    ]
+
+    options = [...options, {
+      type: CLICK_DELETE_POST_EVENT,
+      name: 'Xóa bài viết',
+      visible: userLogin?.id === props.userId
+    }]
+
+    options = [...options, {
+      type: CLICK_SEE_LIST_CV_POST_EVENT,
+      name: 'Xem danh sách cv',
+      visible: userLogin?.id === props.userId && props.type === TYPE_RECRUITMENT_POST
+    }]
+
+    options = [...options, {
+      type: CLICK_SEE_RESULT_POST_EVENT,
+      name: 'Xem kết quả khảo sát',
+      visible: userLogin?.id === props.userId && props.type === TYPE_SURVEY_POST
+    }]
+
+    return options
+  }, [props.isSave])
+
   return (
     <div className='card-body d-flex w-100 m-0 p-0'>
       <div className='avatar-wrapper-header'>
@@ -59,9 +107,25 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
       <div className='button-menu-header-wrapper'>
         <button
           className='button-menu'
-          onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_MENU_ACTIONS)}
         >
-          <i className='ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss' />
+          <Menu
+            menuButton={
+              <MenuButton style={{ width: 30, height: 50, borderRadius: 30 }}>
+                <i className='ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss' />
+              </MenuButton>
+            }
+            transition
+          >
+            {
+              menuOptions.map((item, index) => {
+                return item.visible && <MenuItem onClick={() => props.handleClickMenuOption(item.type)}>
+                  {
+                    item.name
+                  }
+                </MenuItem>
+              })
+            }
+          </Menu>
         </button>
       </div>
     </div>
