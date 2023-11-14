@@ -50,7 +50,7 @@ export default function FacultyDashboardPage() {
       userId={item.user['id']}
       name={item.user['name']}
       avatar={item.user['image']}
-      typeAuthor={'Doanh Nghiệp'}
+      typeAuthor={'khoa'}
       available={null}
       timeCreatePost={numberDayPassed(item.createdAt)}
       content={item.content}
