@@ -23,7 +23,7 @@ export default function CustomizeHeaderProfile(props: Readonly<HeaderProfileType
                     props.avatar ? <img
                         className='avatarHeaderProfile'
                         src={SERVER_ADDRESS + 'api/images/' + props.avatar}
-                    /> : <div className='avatarHeaderProfile'>
+                    /> : <div className='avatarHeaderProfileDefault'>
                         <DefaultAvatar name={props.name[0]} size={150} styleBootstrap={undefined} />
                     </div>
                 }

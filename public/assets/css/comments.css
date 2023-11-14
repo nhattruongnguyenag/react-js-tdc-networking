@@ -1,13 +1,16 @@
 :root{
   --COLOR_BTN_BLUE:#0065FF
 }
+
 .wrapperInfo {
   display: flex;
   align-items: center;
 }
+
 .avatarCommentWrapper {
   width: 6%;
 }
+
 .avatarCommentsType0 {
   width: 30px;
   height: 30px;

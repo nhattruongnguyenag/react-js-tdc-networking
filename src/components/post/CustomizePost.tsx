@@ -107,7 +107,11 @@ const CustomizePost = (props: Post) => {
   }
 
   const handleClickToAvatarAndName = (_userId: number) => {
-    navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${props.userId}`)
+    const state = {
+      userId: _userId,
+      group: props.group,
+    };
+    navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${props.userId}`, { state });
   }
 
   const handleClickBtnRecruitmentDetailEvent = (idPost: number, title: string) => {

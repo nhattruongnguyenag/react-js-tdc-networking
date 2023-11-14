@@ -13,6 +13,7 @@ import { useAppSelector } from '../redux/Hook'
 import CustomizeModalComments from '../components/modal/CustomizeModalComments'
 
 export default function BusinessDashboardPage() {
+  const code = 'group_connect_business'
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState<Post[]>([]);
@@ -68,6 +69,8 @@ export default function BusinessDashboardPage() {
         employmentType={item.employmentType ?? null}
         description={item.description ?? null}
         isConduct={item.isConduct ?? null}
+        isSave={item.isSave}
+        group={code}
       />
     )
   }

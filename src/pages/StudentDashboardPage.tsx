@@ -12,6 +12,7 @@ import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { useAppSelector } from '../redux/Hook';
 
 export default function StudentDashboardPage() {
+  const code = 'group_tdc'
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState<Post[]>([]);
@@ -63,6 +64,8 @@ export default function StudentDashboardPage() {
       employmentType={item.employmentType ?? null}
       description={item.description ?? null}
       isConduct={null}
+      isSave={item.isSave}
+      group={code}
     />
   }
 

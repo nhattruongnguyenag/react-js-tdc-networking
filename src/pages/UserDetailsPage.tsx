@@ -6,21 +6,35 @@ import { LikeAction } from '../types/LikeActions';
 import CustomizePost from '../components/post/CustomizePost';
 import { useAppSelector } from '../redux/Hook';
 import CustomizeProfile from '../components/profile/CustomizeProfile';
-import { useParams } from 'react-router-dom';
-import CreatePostSelector from '../components/CreatePostSelector';
+import { useParams, useLocation } from 'react-router-dom';
 import { getIdFromSlug } from '../utils/CommonUtls';
+import { Student } from '../types/Student';
+import { Faculty } from '../types/Faculty';
+import { Business } from '../types/Business';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlay } from '@fortawesome/free-solid-svg-icons'
+import { COLOR_BLACK } from '../constants/Color';
+import CustomizeSkeletonUserProfile from '../components/skeleton/CustomizeSkeletonUserProfile';
+import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 
 export default function UserDetailsPage() {
   const { slug } = useParams()
+  // userId
   const userId = getIdFromSlug(slug ?? '')
-  const [type, setType] = useState<number>();
+  //  group
+  const location = useLocation();
+  const { group } = location.state || {};
   const [post, setPost] = useState<any[]>([]);
-  const [userInfo, setUserInfo] = useState();
-  const [typeAuthorPost, setTypeAuthorPost] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState<Student | Faculty | Business | null>();
+  const [typeAuthorPost, setTypeAuthorPost] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer);
   const { data, isFetching } = useGetPostsByIdQuery(
-    { id: userId + '' ?? '0' },
+    {
+      userId: userId ?? 0,
+      groupCode: group,
+      userLogin: userLogin?.id ?? 0
+    },
     {
       pollingInterval: 500
     }
@@ -28,17 +42,10 @@ export default function UserDetailsPage() {
 
   useEffect(() => {
     if (data) {
-      try {
-        setTypeAuthorPost(data.data[0].user['roleCodes']);
-        setUserInfo(data.data[0].user);
-        setPost(data.data);
-        setType(1)
-      } catch (error) {
-        setTypeAuthorPost(data.data[0].roleCodes);
-        setUserInfo(data.data[0]);
-        setPost([]);
-        setType(2)
-      }
+      setIsLoading(false)
+      setTypeAuthorPost(data.data.user['roleCodes']);
+      setUserInfo(data.data.user);
+      setPost(data.data.posts);
     }
   }, [data]);
 
@@ -70,7 +77,10 @@ export default function UserDetailsPage() {
         salary={item.salary ?? null}
         employmentType={item.employmentType ?? null}
         description={item.description ?? null}
-        isConduct={null} />
+        isConduct={null}
+        isSave={item.isSave}
+        group={'group_tdc'}
+      />
     )
   }
 
@@ -81,31 +91,32 @@ export default function UserDetailsPage() {
         <div className='middle-sidebar-bottom'>
           <div className='middle-sidebar-left'>
             <div className='row feed-body'>
-              <div className='col-12'>
-                {
-                  post[0] !== null && <>
+              {
+                isLoading ?
+                  <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                    <CustomizeSkeletonUserProfile />
+                    <CustomizeSkeleton />
+                  </div>
+                  : <div className='col-12'>
+                    <CustomizeProfile
+                      data={post}
+                      role={typeAuthorPost}
+                      userData={userInfo}
+                    />
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4'>
+                      <div className='snippet mt-2 wrapperTitleUserProfile' data-title='.dot-typing'>
+                        <span className='txtTitleInUserProfile'>Bài viết trong nhóm : {userInfo?.name}</span>
+                        <FontAwesomeIcon className='iconArrowToRightUserProfile' icon={faPlay} size='1x' color={COLOR_BLACK} />
+                        <span className='txtTitleInUserProfile'>{' '}{group}</span>
+                      </div>
+                    </div>
                     {
-                      type === 1 ? <CustomizeProfile
-                        data={post}
-                        role={typeAuthorPost}
-                        userData={userInfo}
-                      /> : <CustomizeProfile
-                        data={post}
-                        role={typeAuthorPost}
-                        userData={userInfo}
-                      />
+                      post.length !== 0 && post.map((item, index) => {
+                        return renderItem(item)
+                      })
                     }
-                  </>
-
-                }
-
-                {
-                  userLogin?.id == userId && <CreatePostSelector group={null} />
-                }
-                {
-                  post.length !== 0 && type === 1 ? post.map((item) => renderItem(item)) : null
-                }
-              </div>
+                  </div>
+              }
             </div>
           </div>
         </div>
