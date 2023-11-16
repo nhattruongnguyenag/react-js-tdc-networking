@@ -64,9 +64,8 @@ h4 {
 }
 
 .avatar {
-  padding: 10px;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 }
 
@@ -165,3 +164,43 @@ h4 {
   display: flex;
   flex-wrap: wrap;
 }
+
+/* css list job apply */
+.item-job-apply{
+  display: flex;
+  background-color: #fff;
+  box-shadow: 2px 2px 5px 3px #E0F4FF ;
+  border-radius: 10px;
+  justify-content: space-between;
+  padding: 10px 40px;
+  width: 80%;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.item-job{
+  display: flex;
+  align-items: baseline;
+}
+
+.date{
+  text-align: right;
+}
+.tam{
+  display: flex;
+}
+
+.text-green{
+  color: #3cb371;
+  font-weight: bold;
+}
+
+.text-green:active{
+  box-shadow: 2px 2px 5px #3cb371 !important;
+}
+
+.img-job-apply{
+  margin-right: 10px;
+}
+

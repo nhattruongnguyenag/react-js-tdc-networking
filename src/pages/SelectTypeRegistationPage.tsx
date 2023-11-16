@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FaAngleDoubleRight } from 'react-icons/fa'
 import { FaAngleDoubleLeft } from 'react-icons/fa'
 import '../style/login.css'
-import { Bounce,ToastContainer, toast } from 'react-toastify'
+import { Bounce, ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { REGISTER_BUSINESS_PAGE, REGISTER_STUDENT_PAGE } from '../constants/Page'
 import {
@@ -88,7 +88,6 @@ export default function SelectTypeRegistationPage() {
           </div>
         </div>
       </div>
-      <ToastContainer autoClose={5000} transition={Bounce} />
     </Fragment>
   )
 }

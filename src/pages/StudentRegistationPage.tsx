@@ -5,7 +5,7 @@ import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { Data } from '../types/Data'
 import { Student } from '../types/Student'
 import { Token } from '../types/Token'
-import { Bounce, ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {
   InputTextValidate,
@@ -482,7 +482,7 @@ export default function StudentRegistationPage() {
         .post<Student, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/student/register', student)
         .then((response) => {
           setIsLoading(false)
-          alert(TEXT_ALERT_REGISTER_SUCCESS)
+          toast.success(TEXT_ALERT_REGISTER_SUCCESS)
           navigate(LOGIN_PAGE)
         })
         .catch((error) => {
@@ -694,7 +694,6 @@ export default function StudentRegistationPage() {
           </div>
         </div>
       </div>
-      <ToastContainer autoClose={5000} transition={Bounce} position='top-right' />
     </Fragment>
   )
 }

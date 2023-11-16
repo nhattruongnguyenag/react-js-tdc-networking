@@ -10,6 +10,7 @@ import {
   FACULTY_DASHBOARD_PAGE,
   FUNCTION_DESCRIPTION_PAGE,
   JOB_APPLY_PAGE,
+  LIST_JOB_APPLY_PAGE,
   LOGIN_PAGE,
   MESSAGE_PAGE,
   RECRUITMENT_DETAILS_PAGE,
@@ -47,6 +48,7 @@ import SurveyConductPage from './pages/SurveyConductPage'
 import UserDetailsPage from './pages/UserDetailsPage'
 import { useAppSelector } from './redux/Hook'
 import DetailJobApply from './pages/DetailJobApply'
+import ListJobApplyPage from './pages/ListJobApplyPage'
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -78,7 +80,7 @@ export default function AppRouter() {
             <Route path={RECRUITMENT_DETAILS_PAGE + '/:slug'} element={<RecruitmentDetailsPage />} />
             <Route path={SURVEY_DETAILS_PAGE + '/:slug'} element={<SurveyConductPage />} />
             <Route path={DETAILS_JOB_APPLY} element={<DetailJobApply />} />
-
+            <Route path={LIST_JOB_APPLY_PAGE + '/:slug'} element={<ListJobApplyPage />} />
             
             <Route path='*' element={<NoPage />} />
             <Route path='/' element={<IntroducePage />} />
