@@ -18312,8 +18312,14 @@ div.navbar-intro {
 }
 
 .react-pdf__Page {
+<<<<<<< HEAD
   display: inline-block;
   background-color: #a6acaf !important;
+=======
+    display: inline-block;
+    background-color: #A6ACAF !important;
+    margin-bottom: 30px !important;
+>>>>>>> develop
 }
 
 .react-pdf__Page__textContent {
@@ -18364,6 +18370,7 @@ div.navbar-intro {
 .wrapper-group {
   width: 120%;
 }
+<<<<<<< HEAD
 
 .szh-menu--state-open {
   margin-left: -130px !important;
@@ -18380,3 +18387,13 @@ div.navbar-intro {
 .btn-close {
   background-color: red;
 } 
+=======
+.react-pdf__Document {
+    display: inline-block;
+    align-items: center;
+}
+.react-pdf__Page__canvas {
+    width: 812px !important;
+    height: 992px !important;
+}
+>>>>>>> develop
