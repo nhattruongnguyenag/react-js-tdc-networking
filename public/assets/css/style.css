@@ -18308,11 +18308,7 @@ div.navbar-intro {
 
 /* pdf */
 .markedContent {
-<<<<<<< HEAD
     color: #A6ACAF !important;
-=======
-  color: #a6acaf !important;
->>>>>>> feature/hanh/user-profile
 }
 
 .react-pdf__Page {
@@ -18327,14 +18323,11 @@ div.navbar-intro {
 .react-pdf__Page__annotations {
   height: 0px !important;
 }
-<<<<<<< HEAD
 
 .lbButton {
     cursor: pointer;
-=======
 .lbButton {
   cursor: pointer;
->>>>>>> feature/hanh/user-profile
 }
 
 /* group css */
@@ -18384,3 +18377,6 @@ div.navbar-intro {
 .szh-menu-container.szh-menu-container--itemTransition{
     padding-right: 500px !important;
 }
+.btn-close {
+  background-color: red;
+} 
