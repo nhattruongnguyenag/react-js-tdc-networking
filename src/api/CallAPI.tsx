@@ -15,3 +15,11 @@ export const savePostAPI = async (urlSavePost: string, data: any) => {
     } catch (error) {
     }
 }
+
+export const deletePost = async (urlDeletePost: string, postId: number) => {
+    try {
+        const response = await axios.delete(urlDeletePost + postId);
+        return response.data.status;
+    } catch (error) {
+    }
+}
