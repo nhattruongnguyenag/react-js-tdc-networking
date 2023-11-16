@@ -18341,6 +18341,7 @@ div.navbar-intro {
 .react-pdf__Page {
     display: inline-block;
     background-color: #A6ACAF !important;
+    margin-bottom: 30px !important;
 }
 .react-pdf__Page__textContent {
     height: 0px !important;
@@ -18384,4 +18385,12 @@ div.navbar-intro {
 
 .wrapper-group {
     width: 120%;
+}
+.react-pdf__Document {
+    display: inline-block;
+    align-items: center;
+}
+.react-pdf__Page__canvas {
+    width: 812px !important;
+    height: 992px !important;
 }
