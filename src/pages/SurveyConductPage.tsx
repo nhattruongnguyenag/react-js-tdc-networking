@@ -1,18 +1,19 @@
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Fragment, useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { isVisible } from '@testing-library/user-event/dist/utils'
+import { Fragment, useCallback, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Header from '../components/common/Header'
 import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestionMultiChoice'
 import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
 import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
 import TextValidate from '../components/TextValidate'
-import { ADD_QUESTION_PAGE } from '../constants/Page'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { useAddSurveyConductAnswerMutation, useGetQuestionsFromSurveyPostQuery } from '../redux/Service'
 import { setQuestionConducts } from '../redux/Slice'
 import { AnswerRequest, SurveyConductRequest } from '../types/request/SurveyConductRequest'
+import { QuestionResponse } from '../types/response/QuestionResponse'
 import { getIdFromSlug } from '../utils/CommonUtls'
 import { InputTextValidate, isNotBlank } from '../utils/ValidateUtils'
 import { MULTI_CHOICE_QUESTION, ONE_CHOICE_QUESTION, SHORT_ANSWER } from './CreateSurveyPostPage'
@@ -112,6 +113,96 @@ export default function SurveyConductPage() {
         }
     }, [data])
 
+    const renderMultiChoiceQuestionItem = useCallback((item: QuestionResponse, index: number) => (
+        <MultiQuestionMultiChoice
+            conductMode
+            index={index}
+            onChangeValue={(choices) => onChoicesValueChange(item, index, choices)}
+        />
+    ), [surveyConductRequest])
+
+    const renderOneChoiceQuestionItem = useCallback((item: QuestionResponse, index: number) => (
+        <MultiQuestionOneChoice
+            conductMode key={index}
+            index={index}
+            onChangeValue={(choices) => onChoicesValueChange(item, index, choices)}
+        />
+    ), [surveyConductRequest])
+
+    const onChoicesValueChange = useCallback((item: QuestionResponse, index: number, choices: number[]) => {
+        const error = {
+            index: index,
+            isError: false,
+            isVisible: false
+        }
+        if (surveyConductRequest.answers[index]) {
+            if (choices.length > 0) {
+                surveyConductRequest.answers[index].choices_ids = choices
+            } else {
+                if (item.required === 1) {
+                    error.isError = true
+                    error.isVisible = true
+                }
+            }
+
+            setError(error)
+        }
+    }, [validates])
+
+    const setError = useCallback((error: { index: number, isError: boolean, isVisible: boolean }) => {
+        let tempValidates = [...validates]
+        tempValidates[error.index].isError = error.isError
+        tempValidates[error.index].isVisible = error.isVisible
+        setValidates(tempValidates)
+    }, [validates])
+
+    const renderShortAnswerQuestionItem = useCallback((item: QuestionResponse, index: number) => (
+        <ShortAnswerQuestion
+            conductMode
+            index={index}
+            onAnswerChangeText={(value) => {
+                const error = {
+                    index: index,
+                    isError: false,
+                    isVisible: false
+                }
+                if (isNotBlank(value.trim())) {
+                    surveyConductRequest.answers[index].content = value
+                } else {
+                    if (item.required === 1) {
+                        error.isError = true
+                        error.isVisible = true
+                    }
+                }
+
+                setError(error)
+            }} />
+    ), [surveyConductRequest])
+
+    const renderQuestionItems = useCallback((item: QuestionResponse, index: number) => (
+        <Fragment key={index.toString()}>
+            {
+                item.type === MULTI_CHOICE_QUESTION
+                && renderMultiChoiceQuestionItem(item, index)
+            }
+            {
+                item.type === ONE_CHOICE_QUESTION
+                && renderOneChoiceQuestionItem(item, index)
+            }
+            {
+                item.type === SHORT_ANSWER
+                && renderShortAnswerQuestionItem(item, index)
+            }
+            <div className='mt-2 ms-2'>
+                <TextValidate
+                    textError={validates[index] ? validates[index].textError : ''}
+                    isVisible={validates[index] ? validates[index].isVisible : false}
+                    isError={validates[index] ? validates[index].isError : true}
+                />
+            </div>
+        </Fragment>
+    ), [surveyConductRequest, validates])
+
     return (
         <>
             <Header />
@@ -126,105 +217,7 @@ export default function SurveyConductPage() {
                             <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Xem lại bài viết</h4>
                         </div>
                         <div className='card-body p-lg-5 w-100 border-0 p-2'>
-                            {questionConducts.map((item, index) => {
-                                if (item.type === MULTI_CHOICE_QUESTION) {
-                                    return <Fragment key={index}>
-                                        <MultiQuestionMultiChoice
-                                            conductMode
-                                            key={index}
-                                            index={index}
-                                            onChangeValue={(choices) => {
-                                                if (surveyConductRequest.answers[index]) {
-                                                    if (choices.length > 0 || item.required === 1) {
-                                                        surveyConductRequest.answers[index].choices_ids = choices
-                                                        let tempValidates = [...validates]
-                                                        tempValidates[index].isError = false
-                                                        tempValidates[index].isVisible = false
-                                                        setValidates(tempValidates)
-                                                    } else {
-                                                        if (item.required === 1) {
-                                                            let tempValidates = [...validates]
-                                                            tempValidates[index].isError = true
-                                                            tempValidates[index].isVisible = true
-                                                            setValidates(tempValidates)
-                                                        }
-                                                    }
-                                                }
-                                            }} />
-
-                                        <div className='mt-2 ms-2'>
-                                            <TextValidate
-                                                textError={validates[index] ? validates[index].textError : ''}
-                                                isVisible={validates[index] ? validates[index].isVisible : false}
-                                                isError={validates[index] ? validates[index].isError : true}
-                                            />
-                                        </div>
-                                    </Fragment>
-                                } else if (item.type === ONE_CHOICE_QUESTION) {
-                                    return <Fragment key={index}>
-                                        <MultiQuestionOneChoice
-                                            conductMode key={index}
-                                            index={index}
-                                            onChangeValue={(choices) => {
-                                                if (surveyConductRequest.answers[index]) {
-                                                    if (choices.length > 0) {
-                                                        surveyConductRequest.answers[index].choices_ids = choices
-                                                        let tempValidates = [...validates]
-                                                        tempValidates[index].isError = false
-                                                        tempValidates[index].isVisible = false
-                                                        setValidates(tempValidates)
-                                                    } else {
-                                                        if (item.required === 1) {
-                                                            let tempValidates = [...validates]
-                                                            tempValidates[index].isError = true
-                                                            tempValidates[index].isVisible = true
-                                                            setValidates(tempValidates)
-                                                        }
-                                                    }
-                                                }
-                                            }}
-                                        />
-
-                                        <div className='mt-2 ms-2'>
-                                            <TextValidate
-                                                textError={validates[index] ? validates[index].textError : ''}
-                                                isVisible={validates[index] ? validates[index].isVisible : false}
-                                                isError={validates[index] ? validates[index].isError : true}
-                                            />
-                                        </div>
-                                    </Fragment>
-                                }
-                                return <Fragment key={index}>
-                                    <ShortAnswerQuestion
-                                        conductMode key={index}
-                                        index={index}
-                                        onAnswerChangeText={(value) => {
-                                            if (isNotBlank(value.trim())) {
-                                                surveyConductRequest.answers[index].content = value
-                                                let tempValidates = [...validates]
-                                                tempValidates[index].isError = false
-                                                tempValidates[index].isVisible = false
-                                                setValidates(tempValidates)
-                                            } else {
-                                                if (item.required === 1) {
-                                                    let tempValidates = [...validates]
-                                                    tempValidates[index].isError = true
-                                                    tempValidates[index].isVisible = true
-                                                    setValidates(tempValidates)
-                                                }
-                                            }
-                                        }} />
-
-                                    <div className='mt-2 ms-2'>
-                                        <TextValidate
-                                            textError={validates[index] ? validates[index].textError : ''}
-                                            isVisible={validates[index] ? validates[index].isVisible : false}
-                                            isError={validates[index] ? validates[index].isError : true}
-                                        />
-                                    </div>
-                                </Fragment>
-                            })}
-
+                            {questionConducts.map((item, index) => renderQuestionItems(item, index))}
                             <div className='mt-5 flex flex-row items-center justify-evenly'>
                                 <button
                                     onClick={() => navigate(-1)}
@@ -245,7 +238,7 @@ export default function SurveyConductPage() {
                                     <div className='flex items-center'>
                                         <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'arrow-right' })} />
                                         <span>{
-                                            data?.data.isConduct === 0 ? 'Gửi câu trả lời' : 'Chỉnh sửa câu trả lời'
+                                            data?.data.isConduct === 0 ? 'Gửi câu trả lời' : 'Cập nhật câu trả lời'
                                         }</span>
                                     </div>
                                 </button>
