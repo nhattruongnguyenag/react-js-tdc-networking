@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Post } from '../types/Post';
 import { numberDayPassed } from '../utils/FormatTime';
 import Header from '../components/common/Header';
-import { useGetAllPostsQuery, useGetStudentPostsQuery } from '../redux/Service';
+import { useGetStudentPostsQuery } from '../redux/Service';
 import { handleDataClassification } from '../utils/DataClassfications';
 import { LikeAction } from '../types/LikeActions';
-import { TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../constants/StringVietnamese';
+import { TYPE_POST_STUDENT } from '../constants/StringVietnamese';
 import CustomizePost from '../components/post/CustomizePost';
 import CreatePostSelector from '../components/CreatePostSelector';
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
@@ -26,7 +26,6 @@ export default function StudentDashboardPage() {
     setIsLoading(true)
   }, [])
 
-  // Xử lý dữ liệu từ Redux Toolkit Query
   useEffect(() => {
     if (data) {
       setIsLoading(false);
@@ -36,7 +35,6 @@ export default function StudentDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
-
   }
 
   const renderItem = (item: any) => {

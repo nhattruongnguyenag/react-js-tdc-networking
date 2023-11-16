@@ -30,7 +30,6 @@ export default function FacultyDashboardPage() {
     setIsLoading(true)
   }, [])
 
-  // Xử lý dữ liệu từ Redux Toolkit Query
   useEffect(() => {
     if (data) {
       setIsLoading(false);
@@ -40,7 +39,6 @@ export default function FacultyDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
-
   }
 
   const renderItem = (item: any) => {

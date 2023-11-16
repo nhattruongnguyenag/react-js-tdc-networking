@@ -21,7 +21,6 @@ import { CALL_ACTION, CLICK_CAMERA_AVATAR_EVENT, CLICK_CAMERA_BACKGROUND_EVENT, 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-
 export default function UserDetailsPage() {
   const [modalShow, setModalShow] = React.useState(false);
   const { slug } = useParams()
@@ -55,8 +54,12 @@ export default function UserDetailsPage() {
     }
   }, [data]);
 
-  const likeAction = (obj: LikeAction) => {
+  useEffect(() => {
+    reloadingPageEvent();
+  }, [userId])
 
+
+  const likeAction = (obj: LikeAction) => {
   }
 
   const renderItem = (item: any) => {
@@ -85,7 +88,7 @@ export default function UserDetailsPage() {
         description={item.description ?? null}
         isConduct={null}
         isSave={item.isSave}
-        group={'group_tdc'}
+        group={group}
       />
     )
   }
@@ -125,6 +128,10 @@ export default function UserDetailsPage() {
     }
   }
 
+  const reloadingPageEvent = function () {
+    window.scrollTo(0, 0);
+  }
+
   return (
 
     <>
@@ -137,6 +144,7 @@ export default function UserDetailsPage() {
                 isLoading ?
                   <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
                     <CustomizeSkeletonUserProfile />
+                    <div className='spaceSkletonUserProfile'></div>
                     <CustomizeSkeleton />
                   </div>
                   : <div className='col-12'>
@@ -148,7 +156,7 @@ export default function UserDetailsPage() {
                       handleClickIntoHeaderComponentEvent={handleClickIntoHeaderComponentEvent} />
                     <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4'>
                       <div className='snippet mt-2 wrapperTitleUserProfile' data-title='.dot-typing'>
-                        <span className='txtTitleInUserProfile'>Bài viết trong nhóm : {userInfo?.name}{' '}</span>
+                        <span className='txtTitleInUserProfile'>{userInfo?.name}{' '}</span>
                         <FontAwesomeIcon className='iconArrowToRightUserProfile' icon={faPlay} size='1x' color={COLOR_BLACK} />
                         <span className='txtTitleInUserProfile'>{' '}{getGroupForPost(group)}</span>
                       </div>

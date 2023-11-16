@@ -10,7 +10,6 @@ import { TYPE_POST_BUSINESS } from '../constants/StringVietnamese'
 import CustomizePost from '../components/post/CustomizePost'
 import CreatePostSelector from '../components/CreatePostSelector'
 import { useAppSelector } from '../redux/Hook'
-import CustomizeModalComments from '../components/modal/CustomizeModalComments'
 
 export default function BusinessDashboardPage() {
   const code = 'group_connect_business'
@@ -27,7 +26,6 @@ export default function BusinessDashboardPage() {
     setIsLoading(true)
   }, [])
 
-  // Xử lý dữ liệu từ Redux Toolkit Query
   useEffect(() => {
     if (data) {
       setIsLoading(false);
@@ -38,9 +36,6 @@ export default function BusinessDashboardPage() {
   }, [data])
 
   const likeAction = (obj: LikeAction) => {
-    console.log('====================================');
-    console.log('like');
-    console.log('====================================');
   }
 
   const renderItem = (item: any) => {

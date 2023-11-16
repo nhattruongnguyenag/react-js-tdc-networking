@@ -6,7 +6,7 @@ export default function CustomizeSkeletonUserProfile() {
         <div style={{ position: 'relative' }}>
             {/* Header */}
             <div className='d-flex justify-content-between align-items-center'>
-                <Skeleton containerClassName='w-100 mr-1' height={300} />
+                <Skeleton containerClassName='w-100 mr-1' height={400} />
                 <Skeleton
                     width={150}
                     height={150}

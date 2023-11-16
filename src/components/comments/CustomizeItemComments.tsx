@@ -31,7 +31,9 @@ export default function CustomizeItemComments(props: Readonly<CustomizeCommentTy
                             <>{props.type === 0 ? <DefaultAvatar name={props.name[0]} size={30} styleBootstrap={undefined} /> : <DefaultAvatar name={props.name[0]} size={25} styleBootstrap={undefined} />}</>
                     }
                 </button>
-                <div className='wrapperContent'>
+                <div
+                    onClick={() => props.handleClickToAvatarAndName(props.authorCommentId)}
+                    className='wrapperContent'>
                     {/* name */}
                     <div
                         className='name'>{props.name}

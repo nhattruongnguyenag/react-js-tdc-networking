@@ -117,10 +117,5 @@ export const TEXT_TITLE_SELECTED_TYPE= 'Chọn vai trò'
 export const TEXT_WARNING_SELECTED_TYPE= 'Hãy chọn hình thức đăng ký'
 export const TEXT_TYPE_STUDENT= 'Sinh viên'
 export const TEXT_TYPE_BUSINESS= 'Doanh nghiệp'
-
-
-
-
-
-
-
+export const TEXT_WARNING_SYSTEM_ERROR= 'Lỗi hệ thống vui lòng thử lại sau'
+export const TEXT_WARNING_COMMENT_CONTENT_NULL= 'Nội dung bài bình luận không thể để trống'

@@ -11,7 +11,6 @@ import { isBlank, isLengthInRange, isNotBlank } from '../../utils/ValidateUtils'
 import { handleUploadImage } from '../../utils/UploadUtils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight, faXmark } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
 import { API_URL_NORMAL_POST } from '../../constants/Path'
 import { NUMBER_MAX_CHARACTER, NUMBER_MIN_CHARACTER, TYPE_NORMAL_POST } from '../../constants/Variables'
 import { useAppSelector } from '../../redux/Hook'
@@ -19,6 +18,7 @@ import { NormalPost } from '../../types/NormalPost'
 import { COLOR_BTN_BLUE, COLOR_WHITE } from '../../constants/Color'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { createNorMalPostAPI } from '../../api/CallAPI'
 
 export interface CreateNormalPostType {
   onHide: () => void,
@@ -75,32 +75,27 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   }
 
   // Send data action
-  const createNormalPost = (fakeImages: string[]) => {
+  const createNormalPost = async (fakeImages: string[]) => {
     normalPost.images = fakeImages
     normalPost.content = content
-    axios
-      .post(API_URL_NORMAL_POST, {
-        type: normalPost.type,
-        groupId: normalPost.groupId,
-        images: normalPost.images,
-        userId: normalPost.userId,
-        content: normalPost.content
-      })
-      .then((response) => {
-        if (response.data.status === 201) {
-          toast.success(TEXT_CREATE_POST_SUCCESS)
-          resetData()
-          disable()
-          setTimeout(() => {
-            props.onHide()
-          }, 2000)
-        } else {
-          toast.success(TEXT_CREATE_POST_FAIL)
-        }
-      })
-      .catch((error) => {
-        toast.error(error)
-      })
+    const _data = {
+      type: normalPost.type,
+      groupId: normalPost.groupId,
+      images: normalPost.images,
+      userId: normalPost.userId,
+      content: normalPost.content
+    }
+    const status = await createNorMalPostAPI(API_URL_NORMAL_POST, _data);
+    if (status === 201) {
+      toast.success(TEXT_CREATE_POST_SUCCESS)
+      resetData()
+      disable()
+      setTimeout(() => {
+        props.onHide()
+      }, 2000)
+    } else {
+      toast.success(TEXT_CREATE_POST_FAIL)
+    }
   }
 
   const disable = () => {
