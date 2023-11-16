@@ -67,7 +67,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
     <div className='card-body d-flex w-100 m-0 p-0'>
       <div className='avatar-wrapper-header'>
         <button onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_PROFILE_ACTIONS)}>
-          {props.avatar ? (
+          {Boolean(props.avatar) ? (
             <img
               src={SERVER_ADDRESS + 'api/images/' + props.avatar}
               alt='avatar'
