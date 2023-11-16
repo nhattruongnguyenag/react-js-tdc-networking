@@ -11,8 +11,14 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { MenuOptionItem } from '../../types/MenuOptionItem';
 
-export default function PostOptionsMenu() {
+interface PostOptionsMenuType {
+  menuOptions: MenuOptionItem[],
+  handleClickMenuOption: (type: number) => void
+}
+
+export default function PostOptionsMenu(props: Readonly<PostOptionsMenuType>) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -70,31 +76,18 @@ export default function PostOptionsMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        {
+          props.menuOptions.map((item, index) => {
+            return item.visible && <MenuItem onClick={() => props.handleClickMenuOption(item.type)}>
+              {/* <ListItemIcon>
+                <PersonAdd fontSize="small" />
+              </ListItemIcon> */}
+              {
+                item.name
+              }
+            </MenuItem>
+          })
+        }
       </Menu>
     </React.Fragment>
   );
