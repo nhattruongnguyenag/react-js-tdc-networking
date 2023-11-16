@@ -79,9 +79,9 @@ export default function AppRouter() {
             <Route path={JOB_APPLY_PAGE + '/:slug'} element={<JobApplyPage />} />
             <Route path={RECRUITMENT_DETAILS_PAGE + '/:slug'} element={<RecruitmentDetailsPage />} />
             <Route path={SURVEY_DETAILS_PAGE + '/:slug'} element={<SurveyConductPage />} />
-            <Route path={DETAILS_JOB_APPLY} element={<DetailJobApply />} />
+            <Route path={DETAILS_JOB_APPLY + '/:slug'} element={<DetailJobApply />} />
             <Route path={LIST_JOB_APPLY_PAGE + '/:slug'} element={<ListJobApplyPage />} />
-            
+
             <Route path='*' element={<NoPage />} />
             <Route path='/' element={<IntroducePage />} />
           </Route>
