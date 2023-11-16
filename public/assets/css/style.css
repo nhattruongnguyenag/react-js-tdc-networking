@@ -18335,22 +18335,27 @@ div.navbar-intro {
 /*# sourceMappingURL=style.css.map */
 
 /* pdf */
-.markedContent{
+.markedContent {
     color: #A6ACAF !important;
 }
+
 .react-pdf__Page {
     display: inline-block;
     background-color: #A6ACAF !important;
 }
+
 .react-pdf__Page__textContent {
     height: 0px !important;
 }
+
 .react-pdf__Page__annotations {
     height: 0px !important;
 }
-.lbButton{
+
+.lbButton {
     cursor: pointer;
 }
+
 /* group css */
 .img-group {
     background: #000;
@@ -18384,4 +18389,12 @@ div.navbar-intro {
 
 .wrapper-group {
     width: 120%;
+}
+
+.szh-menu.szh-menu--state-closed.szh-menu--dir-bottom {
+ 
+}
+
+.szh-menu-container.szh-menu-container--itemTransition{
+    padding-right: 500px !important;
 }
