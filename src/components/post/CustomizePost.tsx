@@ -16,7 +16,7 @@ import { toast } from 'react-toastify'
 import CustomizeCommentPost from './CustomizeCommentPost'
 import CustomizeCreateCommentsToolbar from '../commentToolbar/CustomizeCreateCommentsToolbar'
 import { useNavigate } from 'react-router-dom'
-import { RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, USER_DETAILS_PAGE } from '../../constants/Page'
+import { RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, SURVEY_RESULT_PAGE, USER_DETAILS_PAGE } from '../../constants/Page'
 import { slugify } from '../../utils/CommonUtls'
 import { isBlank } from '../../utils/ValidateUtils'
 import { savePostAPI } from '../../api/CallAPI'
@@ -182,8 +182,8 @@ const CustomizePost = (props: Post) => {
       case CLICK_SEE_LIST_CV_POST_EVENT:
         // handleSeeListCvPost();
         break
-      case CLICK_SEE_RESULT_POST_EVENT:
-        // handleSeeResultSurveyPost();
+        case CLICK_SEE_RESULT_POST_EVENT:
+          navigate(`${SURVEY_RESULT_PAGE}/${slugify(props.title ?? '')}-${props.id}`)
         break
       default:
         return '';
