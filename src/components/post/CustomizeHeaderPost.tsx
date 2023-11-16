@@ -100,36 +100,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
 
         </h4>
       </div>
-<<<<<<< HEAD
-      <div
-        className='button-menu-header-wrapper'>
-        <button
-          className='button-menu'
-        >
-          <Menu
-            menuButton={
-              <MenuButton>
-                <i className='ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss' />
-              </MenuButton>
-            }
-            transition
-          >
-            {
-              menuOptions.map((item, index) => {
-                return item.visible && <MenuItem
-                  onClick={() => props.handleClickMenuOption(item.type)}>
-                  {
-                    item.name
-                  }
-                </MenuItem>
-              })
-            }
-          </Menu>
-        </button>
-      </div>
-=======
       <PostOptionsMenu menuOptions={menuOptions} handleClickMenuOption={props.handleClickMenuOption} />
->>>>>>> develop
     </div>
   )
 }
