@@ -9,6 +9,7 @@ import { TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu'
 import { useAppSelector } from '../../redux/Hook'
+import PostOptionsMenu from '../menu/PostOptionsMenu'
 
 export interface HeaderPostPropsType {
   userId: number
@@ -128,6 +129,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
           </Menu>
         </button>
       </div>
+      <PostOptionsMenu />
     </div>
   )
 }
