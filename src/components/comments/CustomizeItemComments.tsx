@@ -27,7 +27,7 @@ export default function CustomizeItemComments(props: Readonly<CustomizeCommentTy
                     onClick={() => props.handleClickToAvatarAndName(props.authorCommentId)}
                     className='avatarCommentWrapper'>
                     {
-                        props.avatar ? <img className={props.type === 0 ? 'avatarCommentsType0' : 'avatarCommentsType1'} src={SERVER_ADDRESS + 'api/images/' + props.avatar} /> :
+                        Boolean(props.avatar) ? <img className={props.type === 0 ? 'avatarCommentsType0' : 'avatarCommentsType1'} src={SERVER_ADDRESS + 'api/images/' + props.avatar} /> :
                             <>{props.type === 0 ? <DefaultAvatar name={props.name[0]} size={30} styleBootstrap={undefined} /> : <DefaultAvatar name={props.name[0]} size={25} styleBootstrap={undefined} />}</>
                     }
                 </button>
