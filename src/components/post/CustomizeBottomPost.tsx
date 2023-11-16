@@ -43,7 +43,7 @@ const CustomizeBottomPost = (props: BottomPostType) => {
     let userList;
     userList = props.likes.map((item, index) =>
       index < 3 ?
-        item.image != null ? (
+        Boolean(item.image) ? (
           <img
             key={item.id}
             src={SERVER_ADDRESS + 'api/images/' + item.image}

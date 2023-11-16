@@ -71,7 +71,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
     <div className='card-body d-flex w-100 m-0 p-0'>
       <div className='avatar-wrapper-header'>
         <button onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_PROFILE_ACTIONS)}>
-          {props.avatar ? (
+          {Boolean(props.avatar) ? (
             <img
               src={SERVER_ADDRESS + 'api/images/' + props.avatar}
               alt='avatar'
@@ -104,13 +104,14 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
 
         </h4>
       </div>
-      <div className='button-menu-header-wrapper'>
+      <div
+        className='button-menu-header-wrapper'>
         <button
           className='button-menu'
         >
           <Menu
             menuButton={
-              <MenuButton style={{ width: 30, height: 50, borderRadius: 30 }}>
+              <MenuButton>
                 <i className='ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss' />
               </MenuButton>
             }
@@ -118,7 +119,8 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
           >
             {
               menuOptions.map((item, index) => {
-                return item.visible && <MenuItem onClick={() => props.handleClickMenuOption(item.type)}>
+                return item.visible && <MenuItem
+                  onClick={() => props.handleClickMenuOption(item.type)}>
                   {
                     item.name
                   }

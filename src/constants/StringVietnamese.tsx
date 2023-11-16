@@ -37,3 +37,4 @@ export const TEXT_PLACEHOLDER_CONTENT_CREATE_POST = 'Hãy nhập nội dung bài
 export const TEXT_PLACEHOLDER_TITLE_CREATE_POST = 'Hãy nhập tiêu đề bài viết'
 export const TEXT_WARNING_AREA_BY_ROLE = 'Khu vực này không khả dụng với vai trò taì khoản của bạn !'
 export const TEXT_UN_UPDATE = 'chưa được cập nhật';
+export const TEXT_LIST_PERSON_HAD_LIKE = 'Danh sách người dùng đã like';

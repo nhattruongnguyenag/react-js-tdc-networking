@@ -18,8 +18,12 @@ import CustomizeSkeletonUserProfile from '../components/skeleton/CustomizeSkelet
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { getGroupForPost } from '../utils/GetGroup';
 import { CALL_ACTION, CLICK_CAMERA_AVATAR_EVENT, CLICK_CAMERA_BACKGROUND_EVENT, FOLLOW_ACTION, MESSENGER_ACTION, SEE_AVATAR, SEE_BACKGROUND } from '../constants/Variables'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
 
 export default function UserDetailsPage() {
+  const [modalShow, setModalShow] = React.useState(false);
   const { slug } = useParams()
   // userId
   const userId = getIdFromSlug(slug ?? '')
@@ -99,7 +103,7 @@ export default function UserDetailsPage() {
   }
 
   const handleClickIntoButtonMenu3dotEvent = () => {
-    alert('menu')
+    setModalShow(true)
   }
 
   const handleClickIntoHeaderComponentEvent = (flag: number) => {
@@ -160,6 +164,43 @@ export default function UserDetailsPage() {
           </div>
         </div>
       </div>
+      <ModalUserLiked
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </>
   )
+}
+
+
+
+interface ModalType {
+  show: boolean
+  onHide: () => void,
+}
+
+function ModalUserLiked(props: Readonly<ModalType>) {
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Danh sách người dùng đã thích
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <span>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque quaerat accusamus a minus mollitia dignissimos, odit vitae quibusdam in dolor, ab quis. Assumenda voluptas laboriosam veniam magnam eum, suscipit fugit.
+        </span>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  );
 }
