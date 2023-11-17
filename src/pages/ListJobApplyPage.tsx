@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Header from '../components/common/Header'
 import { useNavigate, useParams } from 'react-router-dom'
-import '../style/login.css'
+import '../assets/css/login.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faFilePdf, faPhoneVolume } from '@fortawesome/free-solid-svg-icons'
 import { getIdFromSlug, slugify } from '../utils/CommonUtls'
