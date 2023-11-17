@@ -14,7 +14,7 @@ import { InputTextValidate, isBlank, isEmail, isLengthInRange, isPassword } from
 import TextValidate from '../components/TextValidate'
 import ReactLoading from 'react-loading'
 import { useNavigate } from 'react-router-dom'
-import '../style/login.css'
+import '../assets/css/login.css'
 import {
   TEXT_ALERT_LOGIN_FAILT,
   TEXT_ERROR_EMAIL_NOTFORMAT,

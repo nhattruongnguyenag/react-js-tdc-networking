@@ -23,7 +23,7 @@ export default function BarItem(props: BarItemProps) {
                     setTooltipVisible(true)
                     console.log(props.data.color)
                 }}
-                className='bg-slate-300 h-5'
+                className='bg-slate-300 h-5 hover:cursor-pointer'
                 style={styles.barChartItemContainer}
             >
                 <div ref={props.ref} style={{ flex: props.barChartFlex, height: 20, backgroundColor: props.data.color + (tooltipVisible ? 'b3' : 'ff') }} />

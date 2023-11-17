@@ -23,18 +23,19 @@ export default function SurveyResultPage() {
         (item: SurveyItemResult) => {
 
             if (item.type === ONE_CHOICE_QUESTION || item.type === MULTI_CHOICE_QUESTION) {
-                // if (item.choices.reduce((curr, next) => curr + next.votes, 0) === 0) {
-                //   return <List.Item title={SURVEY_RESULT_SCREEN_EMPTY_VOTE} />
-                // } else {
-                //   return <OptionSurveyResult data={item} />
-                // }
                 return (
                     <Accordion.Panel>
                         <Accordion.Title className='p-3'>{item.title}</Accordion.Title>
                         <Accordion.Content>
-                            <OptionSurveyQuesionResult data={item} />
+                            {
+                                item.choices.reduce((curr, next) => curr + next.votes, 0) === 0
+                                    ? < p > Chưa có câu trả lời</p>
+                                    :
+                                    <OptionSurveyQuesionResult data={item} />
+
+                            }
                         </Accordion.Content>
-                    </Accordion.Panel>
+                    </Accordion.Panel >
                 )
             }
 
