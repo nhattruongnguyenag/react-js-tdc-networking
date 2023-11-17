@@ -1,7 +1,8 @@
 import { Accordion, CustomFlowbiteTheme } from 'flowbite-react'
-import React, { useCallback } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../components/common/Header'
+import OptionSurveyQuesionResult from '../components/surveyResult/OptionSurveyQuesionResult'
 import { useAppDispatch } from '../redux/Hook'
 import { useGetSurveyResultQuery } from '../redux/Service'
 import { SurveyItemResult } from '../types/response/SurveyResult'
@@ -31,37 +32,25 @@ export default function SurveyResultPage() {
                     <Accordion.Panel>
                         <Accordion.Title className='p-3'>{item.title}</Accordion.Title>
                         <Accordion.Content>
-                            <p className="mb-2 text-gray-500 dark:text-gray-400">
-                                Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons,
-                                dropdowns, modals, navbars, and more.
-                            </p>
-                            <p className="text-gray-500 dark:text-gray-400">
-                                Check out this guide to learn how to&nbsp;
-                                <a
-                                    href="https://flowbite.com/docs/getting-started/introduction/"
-                                    className="text-cyan-600 hover:underline dark:text-cyan-500"
-                                >
-                                    get started&nbsp;
-                                </a>
-                                and start developing websites even faster with components on top of Tailwind CSS.
-                            </p>
+                            <OptionSurveyQuesionResult />
                         </Accordion.Content>
                     </Accordion.Panel>
                 )
             }
-            // return item.answers.length === 0 ?
-            //     <List.Item title={SURVEY_RESULT_SCREEN_EMPTY_SHORT_ANSWER} />
-            //     :
-            //     <Fragment>
-            //         <List.Item title={`${item.answers.length} ${SURVEY_RESULT_SCREEN_NUMBER_OF_SHORT_ANSWER}`} />
-            //         <FlatList data={item.answers} renderItem={({ item, index }) => <List.Item title={item} />} />
-            //     </Fragment>
+
             return <Accordion.Panel>
-                <Accordion.Title className='p-3'>{item.title} </Accordion.Title>
+                <Accordion.Title className='p-3'>{item.title}</Accordion.Title>
                 <Accordion.Content>
-                    <p>{item.answers.length} câu trả lời</p>
                     {
-                        item.answers.map((answer, index) => <p className="mt-2 text-gray-500 dark:text-gray-400" key={index.toString()}>{answer}</p>)
+                        item.answers.length === 0 ?
+                            <p>Chưa có câu trả lời</p>
+                            :
+                            <Fragment>
+                                <p className='font-semibold'>{item.answers.length} câu trả lời</p>
+                                {
+                                    item.answers.map((answer, index) => <p className="mt-2 text-gray-500 dark:text-gray-400" key={index.toString()}>{answer}</p>)
+                                }
+                            </Fragment>
                     }
                 </Accordion.Content>
             </Accordion.Panel>
