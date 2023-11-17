@@ -32,7 +32,7 @@ export default function SurveyResultPage() {
                     <Accordion.Panel>
                         <Accordion.Title className='p-3'>{item.title}</Accordion.Title>
                         <Accordion.Content>
-                            <OptionSurveyQuesionResult />
+                            <OptionSurveyQuesionResult data={item} />
                         </Accordion.Content>
                     </Accordion.Panel>
                 )

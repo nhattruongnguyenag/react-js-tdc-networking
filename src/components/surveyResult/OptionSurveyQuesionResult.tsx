@@ -1,5 +1,9 @@
-import React from 'react'
+import { Divider } from '@mui/material'
+import { Button, Tooltip } from 'flowbite-react'
+import React, { useMemo } from 'react'
 import { SurveyItemResult } from '../../types/response/SurveyResult'
+import CustomizedPieChart from './CustomizedPieChart'
+import HorizontalBarChart from './HorizontalBarChart'
 
 const randomColor = require('randomcolor')
 
@@ -8,17 +12,39 @@ interface OptionSurveyQuesionResultProps {
 }
 
 export interface ChartData {
-    name: string
-    votes: number
+    title: string
+    value: number
     color: string
-    legendFontColor: string
-    legendFontSize: number
-    tooltipVisible: boolean
 }
 
 
-export default function OptionSurveyQuesionResult() {
+export default function OptionSurveyQuesionResult(props: OptionSurveyQuesionResultProps) {
+    const randomColors = useMemo<string[]>(() => {
+        if (props.data) {
+            return props.data.choices.map((item) => randomColor({
+                luminosity: 'dark',
+                format: 'hex',
+                alpha: .7
+            }))
+        }
+
+        return []
+    }, [])
+
+    const chartData = useMemo<ChartData[]>(() => {
+        return props.data.choices.map((item, index) => {
+            return {
+                title: item.content,
+                value: item.votes,
+                color: randomColors[index],
+            }
+        })
+    }, [props.data])
     return (
-        <div>OptionSurveyQuesionResult</div>
+        <>
+            <HorizontalBarChart data={chartData} />
+            <Divider className='w-full mt-10' />
+            <CustomizedPieChart data={chartData} />
+        </>
     )
 }
