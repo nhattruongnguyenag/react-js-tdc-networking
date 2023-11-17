@@ -81,6 +81,8 @@ export default function CustomizeSearch() {
 
   const handleSearch = () => {
     setSearch('')
+    console.log(userLogin?.id + '-' + type + '-' + search);
+    
     if (sub == 'user') {
       stompClient.send(
         `/app/find/user/follow`,
@@ -100,7 +102,7 @@ export default function CustomizeSearch() {
           name: search
         })
         .then((response) => {
-          setData(response.data.data)
+          setData(response.data.data)          
         })
     }
   }
@@ -110,6 +112,7 @@ export default function CustomizeSearch() {
       handleSearch()
     }
   }
+
 
   const handleFollow = (userFollowId: number) => {
     stompClient.send(

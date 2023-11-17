@@ -19,14 +19,14 @@ export const TDCSocialNetworkAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['UserLogin'],
   endpoints: (builder) => ({
-    getFollowerUser: builder.query<Data<FollowUserModel[]>, { id: number | undefined }>({
+    getFollowerUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/users/follow/other',
         method: 'POST',
         body: data
       })
     }),
-    getFollowingUser: builder.query<Data<FollowUserModel[]>, { id: number | undefined }>({
+    getFollowingUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/users/follow/me',
         method: 'POST',
