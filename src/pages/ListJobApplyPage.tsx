@@ -57,7 +57,7 @@ export default function ListJobApplyPage() {
 
   useEffect(() => {
     if (listJob.length == 0) {
-      navigate(BUSINESS_DASHBOARD_PAGE)
+      navigate(-1)
       toast(TEXT_NOTIFICATION_LIST_EMPTY)
     }
   })
