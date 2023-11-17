@@ -15,9 +15,10 @@ import {
   TEXT_NOTIFICATION_LIST_EMPTY,
   TEXT_NOTIFICATION_PHONE_NULL,
   TEXT_SEE_CV,
+  TEXT_TITLE_DOWNLOAD_CV,
   TEXT_TITLE_LIST_JOB_APPLY
 } from '../constants/StringVietnamese'
-import { DETAILS_JOB_APPLY } from '../constants/Page'
+import { BUSINESS_DASHBOARD_PAGE, DETAILS_JOB_APPLY } from '../constants/Page'
 
 export default function ListJobApplyPage() {
   const navigate = useNavigate()
@@ -30,12 +31,14 @@ export default function ListJobApplyPage() {
         name: '',
         phone: '',
         email: ''
-      }
+      },
+      cvUrl: ''
     }
   ])
   const [isLoading, setIsLoading] = useState(false)
   const { slug } = useParams()
   const postId = getIdFromSlug(slug ?? '')
+
   useEffect(() => {
     if (postId) {
       setIsLoading(true)
@@ -44,9 +47,6 @@ export default function ListJobApplyPage() {
         .then((response) => {
           setIsLoading(false)
           setListJob(response.data.data)
-          if (response.data.data == '') {
-            toast(TEXT_NOTIFICATION_LIST_EMPTY)
-          }
         })
         .catch((error) => {
           setIsLoading(false)
@@ -55,6 +55,12 @@ export default function ListJobApplyPage() {
     }
   }, [postId])
 
+  useEffect(() => {
+    if (listJob.length == 0) {
+      navigate(BUSINESS_DASHBOARD_PAGE)
+      toast(TEXT_NOTIFICATION_LIST_EMPTY)
+    }
+  })
   const handleBtnJobApply = (cvID: number | null) => {
     navigate(`${DETAILS_JOB_APPLY}/${cvID}`)
   }
@@ -126,6 +132,9 @@ export default function ListJobApplyPage() {
 
                     <div className='date'>
                       <p className='fw-600'>{formatDateTime(item.createdAt)}</p>
+                      <a className='download' href={SERVER_ADDRESS + 'api/files/' + item.cvUrl} download={item.cvUrl}>
+                        {TEXT_TITLE_DOWNLOAD_CV}
+                      </a>
                     </div>
                   </div>
                 ))}

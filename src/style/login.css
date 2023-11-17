@@ -203,4 +203,21 @@ h4 {
 .img-job-apply{
   margin-right: 10px;
 }
+.job{
+  display: flex;
+}
+
+.job-apply{
+  display: flex;
+  justify-content: space-between;
+}
+
+.download{
+  color: #000;
+  font-weight: bold;
+  margin-left: 20px;
+}
+.download:hover{
+   color: #3cb371;
+}
 
