@@ -15,6 +15,7 @@ import TextValidate from '../components/TextValidate'
 import ReactLoading from 'react-loading'
 import { useNavigate } from 'react-router-dom'
 import '../style/login.css'
+import { FORGOT_PASSWORD_PAGE } from '../constants/Page'
 interface UserLogin {
   emailUser: InputTextValidate
   passwordUser: InputTextValidate
@@ -236,7 +237,7 @@ export default function LoginPage() {
                     <i className='font-sm ti-lock text-grey-500 pe-0'></i>
                   </div>
                   <div className='form-check mb-3 text-left'>
-                    <button type='button' className='fw-600 font-xsss text-grey-700 float-right'>
+                    <button type='button' className='fw-600 font-xsss text-grey-700 float-right' onClick={() => navigate(FORGOT_PASSWORD_PAGE)}>
                       Quên mật khẩu?
                     </button>
                   </div>
