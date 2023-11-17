@@ -114,7 +114,6 @@ const CustomizePost = (props: Post) => {
   }
 
   const handleClickToAvatarAndName = (_userId: number) => {
-    // alert(props.group)
     const state = {
       userId: _userId,
       group: props.group,

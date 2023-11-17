@@ -89,7 +89,13 @@ export default function StudentDashboardPage() {
 
                 {/* Modal */}
                 {
-                  userLogin?.roleCodes == TYPE_POST_STUDENT && <CreatePostSelector group={1} />
+                  userLogin?.roleCodes == TYPE_POST_STUDENT && <CreatePostSelector
+                    id={userLogin?.id}
+                    group={1}
+                    avatar={userLogin?.image}
+                    name={userLogin?.name}
+                    groupName={code}
+                  />
                 }
                 {/* Render post */}
                 {data?.data.map((item) => renderItem(item))}

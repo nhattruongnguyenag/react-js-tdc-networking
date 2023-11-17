@@ -96,10 +96,16 @@ export default function FacultyDashboardPage() {
                   {/* Modal */}
                   {
 
-                    userLogin?.roleCodes !== TYPE_POST_BUSINESS && <CreatePostSelector group={userLogin?.facultyGroupId ?? 0} />
+                    userLogin?.roleCodes !== TYPE_POST_BUSINESS && <CreatePostSelector
+                      id={userLogin?.id ?? 0}
+                      group={userLogin?.facultyGroupId ?? 0}
+                      avatar={userLogin?.image ?? ''}
+                      name={userLogin?.name ?? ''}
+                      groupName={code}
+                    />
                   }
                   {/* Render post */}
-                  {data?.data.map((item:any) => renderItem(item))}
+                  {data?.data.map((item: any) => renderItem(item))}
                 </div>
               </div>
             </div>

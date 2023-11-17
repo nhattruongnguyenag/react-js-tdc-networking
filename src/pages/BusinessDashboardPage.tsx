@@ -511,7 +511,13 @@ export default function BusinessDashboardPage() {
 
                 {/* Modal create  post */}
                 {
-                  userLogin?.roleCodes === TYPE_POST_BUSINESS && <CreatePostSelector group={2} />
+                  userLogin?.roleCodes === TYPE_POST_BUSINESS && <CreatePostSelector
+                    id={userLogin?.id}
+                    group={2}
+                    avatar={userLogin?.image}
+                    name={userLogin?.name}
+                    groupName={code}
+                  />
                 }
                 {/* Render post */}
                 {data?.data.map((item) => renderItem(item))}
