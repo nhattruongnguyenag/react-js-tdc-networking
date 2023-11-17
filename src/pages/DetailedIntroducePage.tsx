@@ -3,6 +3,9 @@ import { faYoutube, faGithub, faFacebook, faInstagram, faTwitter } from '@fortaw
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { LOGIN_PAGE, REGISTER_PAGE } from '../constants/Page'
 import classNames from 'classnames'
+import '../assets/css/DetaileInducePage_css/templatemo-softy-pinko.css'
+import '../assets/css/DetaileInducePage_css/bootstrap.min.css'
+import '../assets/css/DetaileInducePage_css/flex-slider.css'
 
 export default function DetailIntroducePage() {
   const navigate = useNavigate()
