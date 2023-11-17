@@ -9,6 +9,8 @@ import { TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu'
 import { useAppSelector } from '../../redux/Hook'
+import PostOptionsMenu from '../menu/PostOptionsMenu'
+import { MenuOptionItem } from '../../types/MenuOptionItem'
 
 export interface HeaderPostPropsType {
   userId: number
@@ -22,12 +24,6 @@ export interface HeaderPostPropsType {
   isSave: number
   handleClickMenuOption: (flag: number) => void
   handleClickIntoAvatarAndNameAndMenuEvent: (flag: number) => void
-}
-
-interface MenuOptionItem {
-  type: number
-  name: string
-  visible: boolean
 }
 
 const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
@@ -71,7 +67,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
     <div className='card-body d-flex w-100 m-0 p-0'>
       <div className='avatar-wrapper-header'>
         <button onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_PROFILE_ACTIONS)}>
-          {props.avatar ? (
+          {Boolean(props.avatar) ? (
             <img
               src={SERVER_ADDRESS + 'api/images/' + props.avatar}
               alt='avatar'
@@ -104,30 +100,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
 
         </h4>
       </div>
-      <div className='button-menu-header-wrapper'>
-        <button
-          className='button-menu'
-        >
-          <Menu
-            menuButton={
-              <MenuButton style={{ width: 30, height: 50, borderRadius: 30 }}>
-                <i className='ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss' />
-              </MenuButton>
-            }
-            transition
-          >
-            {
-              menuOptions.map((item, index) => {
-                return item.visible && <MenuItem onClick={() => props.handleClickMenuOption(item.type)}>
-                  {
-                    item.name
-                  }
-                </MenuItem>
-              })
-            }
-          </Menu>
-        </button>
-      </div>
+      <PostOptionsMenu menuOptions={menuOptions} handleClickMenuOption={props.handleClickMenuOption} />
     </div>
   )
 }

@@ -18,11 +18,19 @@ import CustomizeSkeletonUserProfile from '../components/skeleton/CustomizeSkelet
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { getGroupForPost } from '../utils/GetGroup';
 import { CALL_ACTION, CLICK_CAMERA_AVATAR_EVENT, CLICK_CAMERA_BACKGROUND_EVENT, FOLLOW_ACTION, MESSENGER_ACTION, SEE_AVATAR, SEE_BACKGROUND } from '../constants/Variables'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { TabPanel, useTabs } from "react-headless-tabs";
+import { TabSelector } from "../components/example/TabSelector";
+import FollowListView from '../components/listviews/FollowListView';
+import FollowerListView from '../components/listviews/FollowerListView';
+
 
 export default function UserDetailsPage() {
+  const [modalShow, setModalShow] = React.useState(false);
   const { slug } = useParams()
-  // userId
   const userId = getIdFromSlug(slug ?? '')
+  // userId
   //  group
   const location = useLocation();
   const { group } = location.state || {};
@@ -41,6 +49,7 @@ export default function UserDetailsPage() {
       pollingInterval: 500
     }
   );
+
 
   useEffect(() => {
     if (data) {
@@ -99,7 +108,7 @@ export default function UserDetailsPage() {
   }
 
   const handleClickIntoButtonMenu3dotEvent = () => {
-    alert('menu')
+    setModalShow(true)
   }
 
   const handleClickIntoHeaderComponentEvent = (flag: number) => {
@@ -160,6 +169,92 @@ export default function UserDetailsPage() {
           </div>
         </div>
       </div>
+      <ModalUserLiked
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </>
   )
+}
+
+
+
+interface ModalType {
+  show: boolean
+  onHide: () => void,
+}
+
+function ModalUserLiked(props: Readonly<ModalType>) {
+  const { slug } = useParams()
+  const userId = getIdFromSlug(slug ?? '')
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer);
+  const [selectedTab, setSelectedTab] = useTabs([
+    "following",
+    "follower",
+    "saved",
+  ]);
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Menu
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <span>
+
+          <div >
+            <nav className="flex border-b border-gray-300">
+
+              {
+                userId == userLogin?.id ? <>
+                  <TabSelector
+                    isActive={selectedTab === "following"}
+                    onClick={() => setSelectedTab("following")}
+                  >
+                    Đang theo dõi
+                  </TabSelector>
+                  <TabSelector
+                    isActive={selectedTab === "follower"}
+                    onClick={() => setSelectedTab("follower")}
+                  >
+                    Đang theo dõi bạn
+                  </TabSelector>
+                  <TabSelector
+                    isActive={selectedTab === "saved"}
+                    onClick={() => setSelectedTab("saved")}
+                  >
+                    Bài viết đã lưu
+                  </TabSelector>
+                </> : <>
+                  <TabSelector
+                    isActive={selectedTab === "following"}
+                    onClick={() => setSelectedTab("following")}
+                  >
+                    Đang theo dõi
+                  </TabSelector>
+                </>
+              }
+
+            </nav>
+            <div className="p-2">
+              <TabPanel hidden={selectedTab !== "following"}><FollowListView id={userId}/></TabPanel>
+              <TabPanel hidden={selectedTab !== "follower"}><FollowerListView id={userId}/></TabPanel>
+              <TabPanel hidden={selectedTab !== "saved"}>Bai viet da luu</TabPanel>
+            </div>
+          </div>
+
+        </span>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide} className='btn btn-outline-secondary bg-primary'>Close</Button>
+      </Modal.Footer>
+    </Modal>
+
+  );
 }

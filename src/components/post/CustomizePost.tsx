@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import CustomizeHeaderPost from './CustomizeHeaderPost'
 import CustomizeBodyPost from './CustomizeBodyPost'
 import CustomizeBottomPost from './CustomizeBottomPost'
@@ -20,9 +20,14 @@ import { LIST_JOB_APPLY_PAGE, RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, USE
 import { slugify } from '../../utils/CommonUtls'
 import { isBlank } from '../../utils/ValidateUtils'
 import { savePostAPI } from '../../api/CallAPI'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import DefaultAvatar from '../common/DefaultAvatar'
+import { TEXT_CREATE_COMMENTS, TEXT_LIST_PERSON_HAD_LIKE } from '../../constants/StringVietnamese'
 
 const CustomizePost = (props: Post) => {
   const navigate = useNavigate()
+  const [modalShow, setModalShow] = React.useState(false);
   const { userLogin, isOpenModalComments } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [isOpenComment, setIsOpenComments] = useState(false);
   const [commentAuthorName, setCommentAuthorName] = useState<string>('');
@@ -86,7 +91,7 @@ const CustomizePost = (props: Post) => {
   }
 
   const handleClickIntoListUserReactions = () => {
-    alert('click user reacted')
+    setModalShow(true)
   }
 
   const handleClickCreateCommentBtnEvent = (content: string) => {
@@ -235,6 +240,11 @@ const CustomizePost = (props: Post) => {
             handleClickBottomBtnEvent={handleClickBottomBtnEvent}
             commentQty={props.commentQty}
           />
+          <ModalUserLiked
+            likes={props.likes}
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
           {
             isOpenComment && <>
               <CustomizeCommentPost comments={props.comments}
@@ -294,6 +304,11 @@ const CustomizePost = (props: Post) => {
             handleClickBottomBtnEvent={handleClickBottomBtnEvent}
             commentQty={props.commentQty}
           />
+          <ModalUserLiked
+            likes={props.likes}
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
           {
             isOpenComment && <>
               <CustomizeCommentPost comments={props.comments}
@@ -350,6 +365,11 @@ const CustomizePost = (props: Post) => {
           handleClickBottomBtnEvent={handleClickBottomBtnEvent}
           commentQty={props.commentQty}
         />
+        <ModalUserLiked
+          likes={props.likes}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
         {
           isOpenComment && <>
             <CustomizeCommentPost
@@ -373,3 +393,61 @@ const CustomizePost = (props: Post) => {
 }
 
 export default CustomizePost
+
+
+
+interface ModalType {
+  show: boolean
+  onHide: () => void,
+  likes: Like[]
+}
+
+function ModalUserLiked(props: Readonly<ModalType>) {
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header>
+        <div className='header-modal'>
+          <Modal.Title className='font-xss'>{TEXT_LIST_PERSON_HAD_LIKE}</Modal.Title>
+          <button
+            style={{ position: 'absolute', top: 0, right: 0 }}
+            type='button'
+            className='btn-close-modal-header close font-xl'
+            onClick={props.onHide}
+          >
+            <span aria-hidden='true'>&times;</span>
+          </button>
+        </div>
+      </Modal.Header>
+      <Modal.Body>
+        {
+          props.likes.map((item, index) => {
+
+            return Boolean(item.image) ?
+              <button className='userLikedWrapper' key={item.id}>
+                <img alt='avatar' className='avatar-user-reacted-list me-1 shadow-sm list-user-liked'
+                  src={SERVER_ADDRESS + 'api/images/' + item.image} />
+                <span>
+                  {item.name}
+                </span>
+              </button> :
+              <button className='userLikedWrapper'>
+                <DefaultAvatar key={item.id} name={item.name} size={35} styleBootstrap={'me-1 list-user-liked'} />
+                <span>
+                  {item.name}
+                </span>
+              </button>
+          })
+        }
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
