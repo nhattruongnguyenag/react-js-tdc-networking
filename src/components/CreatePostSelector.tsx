@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE, USER_DETAILS_PAGE } from '../constants/Page'
 import { TEXT_CREATE_NEW_POST } from '../constants/StringVietnamese'
-import { MyVerticallyCenteredModal } from './modal/CustomizeNormalPostModal'
+import { CreatePostModal } from './modal/CustomizeNormalPostModal'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import DefaultAvatar from './common/DefaultAvatar'
 import CustomizePost from './post/CustomizePost'
@@ -56,7 +56,7 @@ export default function CreatePostSelector(props: Readonly<CreatePostSelectorTyp
               <Dropdown.Item onClick={() => navigate(CREATE_RECRUITMENT_POST_PAGE)}>Tin tuyển dụng</Dropdown.Item>
             </Dropdown>
           </div>
-          <MyVerticallyCenteredModal
+          <CreatePostModal
             show={createNormalPostModalShow}
             onHide={() => setCreateNormalPostModalShow(false)}
             group={props.group}

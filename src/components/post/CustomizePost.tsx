@@ -416,7 +416,7 @@ function ModalUserLiked(props: Readonly<ModalType>) {
         <div className='header-modal'>
           <Modal.Title className='font-xss'>{TEXT_LIST_PERSON_HAD_LIKE}</Modal.Title>
           <button
-            style={{ position: 'absolute', top: 0, right: 0 }}
+            style={{ position: 'absolute', top: 0, right: 10 }}
             type='button'
             className='btn-close-modal-header close font-xl'
             onClick={props.onHide}

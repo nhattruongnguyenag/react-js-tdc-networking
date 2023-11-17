@@ -2,20 +2,20 @@ import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import CreateNormalPost from '../post/CreateNormalPost'
 import { TEXT_CREATE_NEW_POST, TEXT_CREATE_POST } from '../../constants/StringVietnamese'
-export interface MyVerticallyCenteredModalType {
+export interface CreatePostModalType {
   show: boolean
   onHide: () => void,
   group: number | null
 }
 
-export function MyVerticallyCenteredModal(props: Readonly<MyVerticallyCenteredModalType>) {
+export function CreatePostModal(props: Readonly<CreatePostModalType>) {
   return (
     <Modal {...props} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
       <Modal.Header>
         <div className='header-modal'>
           <Modal.Title className='font-xss'>{TEXT_CREATE_POST}</Modal.Title>
           <button
-            style={{ position: 'absolute', top: 0, right: 0 }}
+            style={{ position: 'absolute', top: 0, right: 10 }}
             type='button'
             className='btn-close-modal-header close font-xl'
             onClick={props.onHide}
@@ -29,7 +29,7 @@ export function MyVerticallyCenteredModal(props: Readonly<MyVerticallyCenteredMo
   )
 }
 
-const CreateNormalPostModal = (props: MyVerticallyCenteredModalType) => {
+const CreateNormalPostModal = (props: CreatePostModalType) => {
   const [modalShow, setModalShow] = useState(false)
   return (
     <>
@@ -44,7 +44,7 @@ const CreateNormalPostModal = (props: MyVerticallyCenteredModalType) => {
           </button>
         </div>
       </div>
-      <MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} group={props.group} />
+      <CreatePostModal show={modalShow} onHide={() => setModalShow(false)} group={props.group} />
     </>
   )
 }

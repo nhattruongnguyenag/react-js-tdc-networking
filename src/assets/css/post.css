@@ -158,7 +158,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px;
+  padding: 3px;
   color: COLOR_WHITE;
   border-radius: 5px;
   color: var(--COLOR_WHITE);
@@ -187,4 +187,12 @@
 .list-user-liked {
   margin-top: 2px;
   margin-bottom: 2px;
+}
+
+.textLocationRecruitment {
+  font-size: 14px;
+}
+
+.wrapperContentRecruitment {
+  padding-top: 15px;
 }
