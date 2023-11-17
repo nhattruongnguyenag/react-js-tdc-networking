@@ -14207,7 +14207,7 @@ strong,
     -ms-flex-positive: 1;
     flex-grow: 1;
     padding-top: 90px;
-    padding-left: 280px;
+    padding-left: 350px;
     padding-right: 290px;
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
@@ -18308,19 +18308,16 @@ div.navbar-intro {
 
 /* pdf */
 .markedContent {
-    color: #A6ACAF !important;
+  color: #a6acaf !important;
 }
-
 .react-pdf__Page {
-    display: inline-block;
-    background-color: #A6ACAF !important;
-    margin-bottom: 30px !important;
+  display: inline-block;
+  background-color: #a6acaf !important;
+  margin-bottom: 30px !important;
 }
-
 .react-pdf__Page__textContent {
   height: 0px !important;
 }
-
 .react-pdf__Page__annotations {
   height: 0px !important;
 }
@@ -18328,7 +18325,6 @@ div.navbar-intro {
 .lbButton {
   cursor: pointer;
 }
-
 /* group css */
 .img-group {
   background: #000;
@@ -18370,20 +18366,19 @@ div.navbar-intro {
 }
 
 .szh-menu.szh-menu--state-closed.szh-menu--dir-bottom {
- 
 }
 
-.szh-menu-container.szh-menu-container--itemTransition{
-    padding-right: 500px !important;
+.szh-menu-container.szh-menu-container--itemTransition {
+  padding-right: 500px !important;
 }
 .btn-close {
   background-color: red;
-} 
+}
 .react-pdf__Document {
-    display: inline-block;
-    align-items: center;
+  display: inline-block;
+  align-items: center;
 }
 .react-pdf__Page__canvas {
-    width: 812px !important;
-    height: 992px !important;
+  width: 812px !important;
+  height: 992px !important;
 }

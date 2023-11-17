@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import CreateNormalPost from '../post/CreateNormalPost'
 import { TEXT_CREATE_NEW_POST, TEXT_CREATE_POST } from '../../constants/StringVietnamese'
-
 export interface MyVerticallyCenteredModalType {
   show: boolean
   onHide: () => void,

@@ -14,14 +14,13 @@ export interface CustomizeProfileType {
 }
 
 export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) {
-
     const getBody = () => {
         let body;
         switch (props.role) {
             case TYPE_POST_STUDENT:
                 body = <CustomizeBodyStudentProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    position={props.userData.position ?? TEXT_UN_UPDATE}
+                    position={props.userData.position ?? 'Sinh viên'}
                     phone={props.userData.phone ?? TEXT_UN_UPDATE}
                     email={props.userData.email ?? TEXT_UN_UPDATE}
                     numberPost={props.data.length ?? 0}

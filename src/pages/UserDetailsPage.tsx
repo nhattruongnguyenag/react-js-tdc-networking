@@ -24,6 +24,7 @@ import { TabPanel, useTabs } from "react-headless-tabs";
 import { TabSelector } from "../components/example/TabSelector";
 import FollowListView from '../components/listviews/FollowListView';
 import FollowerListView from '../components/listviews/FollowerListView';
+import '../assets/css/profile.css'
 
 export default function UserDetailsPage() {
   const [modalShow, setModalShow] = React.useState(false);
@@ -251,8 +252,8 @@ function ModalUserLiked(props: Readonly<ModalType>) {
 
             </nav>
             <div className="p-2">
-              <TabPanel hidden={selectedTab !== "following"}><FollowListView id={userId}/></TabPanel>
-              <TabPanel hidden={selectedTab !== "follower"}><FollowerListView id={userId}/></TabPanel>
+              <TabPanel hidden={selectedTab !== "following"}><FollowListView id={userId} /></TabPanel>
+              <TabPanel hidden={selectedTab !== "follower"}><FollowerListView id={userId} /></TabPanel>
               <TabPanel hidden={selectedTab !== "saved"}>Bai viet da luu</TabPanel>
             </div>
           </div>

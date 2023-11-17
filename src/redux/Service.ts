@@ -13,20 +13,21 @@ import { Post } from '../types/Post'
 import { QuestionResponse, SurveyResponse } from '../types/response/QuestionResponse'
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 import { FollowUserModel } from '../types/response/FollowUserModel'
+import { SurveyItemResult } from '../types/response/SurveyResult'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['UserLogin'],
   endpoints: (builder) => ({
-    getFollowerUser: builder.query<Data<FollowUserModel[]>, { id: number | undefined }>({
+    getFollowerUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/users/follow/other',
         method: 'POST',
         body: data
       })
     }),
-    getFollowingUser: builder.query<Data<FollowUserModel[]>, { id: number | undefined }>({
+    getFollowingUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/users/follow/me',
         method: 'POST',
@@ -140,6 +141,11 @@ export const TDCSocialNetworkAPI = createApi({
           'Content-type': 'application/json; charset=UTF-8'
         }
       })
+    }),
+    getSurveyResult: builder.query<Data<SurveyItemResult[]>, number>({
+      query: (surveyPostId) => ({
+        url: `api/posts/survey/${surveyPostId}/result`
+      })
     })
   })
 })
@@ -148,6 +154,7 @@ export const TDCSocialNetworkAPI = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useGetFollowerUserQuery,
+  useGetSurveyResultQuery,
   useGetFollowingUserQuery,
   useGetNotificationsUserQuery,
   useGetNotificationsUserByIdQuery,

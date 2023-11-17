@@ -8,6 +8,7 @@ import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import DefaultAvatar from './common/DefaultAvatar'
 import CustomizePost from './post/CustomizePost'
 import { slugify } from '../utils/CommonUtls'
+import '../assets/css/createPost.css'
 
 interface CreatePostSelectorType {
   id: number,
