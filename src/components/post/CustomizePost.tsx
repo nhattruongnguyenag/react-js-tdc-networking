@@ -23,6 +23,12 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import DefaultAvatar from '../common/DefaultAvatar'
 import { TEXT_LIST_PERSON_HAD_LIKE, TEXT_WARNING_CONTENT_COMMENT_NULL, TEXT_WARNING_SYSTEM_ERROR } from '../../constants/StringVietnamese'
+import '../../assets/css/comments.css'
+import '../../assets/css/createCommentsToolbar.css'
+import '../../assets/css/modal.css'
+import '../../assets/css/post.css'
+
+
 
 const CustomizePost = (props: Post) => {
   const navigate = useNavigate()
