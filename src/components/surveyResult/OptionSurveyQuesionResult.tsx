@@ -1,6 +1,5 @@
 import { Divider } from '@mui/material'
-import { Button, Tooltip } from 'flowbite-react'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { SurveyItemResult } from '../../types/response/SurveyResult'
 import CustomizedPieChart from './CustomizedPieChart'
 import HorizontalBarChart from './HorizontalBarChart'

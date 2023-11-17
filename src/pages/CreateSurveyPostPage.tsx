@@ -1,25 +1,19 @@
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Dropdown } from 'flowbite-react'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/common/Header'
 import InputTextWithTitle from '../components/common/InputTextWithTitle'
 import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
 import ValidateTextView from '../components/common/ValidateTextView'
-import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestionMultiChoice'
-import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
-import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
-import { SURVEY_POST_REQUEST } from '../constants/KeyValue'
 import {
   ADD_QUESTION_PAGE,
-  BUSINESS_DASHBOARD_PAGE,
-  CREATE_SURVEY_POST_PAGE,
-  REVIEW_SURVEY_POST_PAGE
+  BUSINESS_DASHBOARD_PAGE
 } from '../constants/Page'
+import { SURVEY_SAVE_BUTTON_GO_NEXT, SURVEY_SAVE_DESC_EMPTY_VALIDATE, SURVEY_SAVE_DESC_PLACEHOLDER, SURVEY_SAVE_DESC_TITLE, SURVEY_SAVE_PAGE_TITLE, SURVEY_SAVE_TITLE_EMPTY_VALIDATE, SURVEY_SAVE_TITLE_PLACEHOLDER, SURVEY_SAVE_TITLE_TITLE } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
-import { addQuestion, setSurveyPostRequest } from '../redux/Slice'
-import { InputTextValidate, isBlank, isContainSpecialCharacter, isLengthInRange } from '../utils/ValidateUtils'
+import { setSurveyPostRequest } from '../redux/Slice'
+import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
 
 export const SHORT_ANSWER = 'tra-loi-ngan'
 export const ONE_CHOICE_QUESTION = 'chon-mot-dap-an'
@@ -49,12 +43,12 @@ export default function CreateSurveyPostPage() {
 
   const [validate, setValidate] = useState<CreateSurveyPostValidate>({
     title: {
-      textError: 'Tiêu đề không được để trống',
+      textError: SURVEY_SAVE_TITLE_EMPTY_VALIDATE,
       isError: true,
       isVisible: false
     },
     description: {
-      textError: 'Mô tả không được để trống',
+      textError: SURVEY_SAVE_DESC_EMPTY_VALIDATE,
       isError: true,
       isVisible: false
     }
@@ -103,7 +97,7 @@ export default function CreateSurveyPostPage() {
   const onTitleChangeText = useCallback(
     (value: string) => {
       if (isBlank(value)) {
-        setTitleError('Tiêu đề không được để trống')
+        setTitleError(SURVEY_SAVE_TITLE_EMPTY_VALIDATE)
         return
       }
 
@@ -129,7 +123,7 @@ export default function CreateSurveyPostPage() {
   const onDescriptionChangeText = useCallback(
     (value: string) => {
       if (isBlank(value)) {
-        setDescriptionError('Mô tả không được để trống')
+        setDescriptionError(SURVEY_SAVE_DESC_EMPTY_VALIDATE)
         return
       }
 
@@ -178,14 +172,14 @@ export default function CreateSurveyPostPage() {
               <Link className='d-inline-block mt-2' to={BUSINESS_DASHBOARD_PAGE}>
                 <i className='ti-arrow-left font-sm text-white' />
               </Link>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Thêm khảo sát</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{SURVEY_SAVE_PAGE_TITLE}</h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0'>
               <div className='row'>
                 <InputTextWithTitle
                   onTextChange={(value) => onTitleChangeText(value)}
-                  title='Tiêu đề'
-                  placeholder={'Nhập tiêu đề khảo sát...'}
+                  title={SURVEY_SAVE_TITLE_TITLE}
+                  placeholder={SURVEY_SAVE_TITLE_PLACEHOLDER}
                 />
 
                 <ValidateTextView
@@ -197,8 +191,8 @@ export default function CreateSurveyPostPage() {
                 <TextAreaWithTitle
                   onTextChange={(value) => onDescriptionChangeText(value)}
                   rows={15}
-                  placeholder='Nhập mô tả...'
-                  title='Mô tả'
+                  placeholder={SURVEY_SAVE_DESC_PLACEHOLDER}
+                  title={SURVEY_SAVE_DESC_TITLE}
                 />
 
                 <ValidateTextView
@@ -213,7 +207,7 @@ export default function CreateSurveyPostPage() {
                 className='items-centerdark:bg-blue-600 mt-3 inline-flex rounded-lg bg-blue-700 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
               >
                 <div className='flex items-center'>
-                  <span>Tiếp theo</span>
+                  <span>{SURVEY_SAVE_BUTTON_GO_NEXT}</span>
                   <FontAwesomeIcon style={{ fontSize: 15, marginLeft: 10 }} icon={icon({ name: 'arrow-right' })} />
                 </div>
               </button>

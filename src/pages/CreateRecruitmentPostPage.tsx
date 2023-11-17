@@ -7,6 +7,7 @@ import InputTextWithTitle from '../components/common/InputTextWithTitle'
 import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
 import ValidateTextView from '../components/common/ValidateTextView'
 import { BUSINESS_DASHBOARD_PAGE } from '../constants/Page'
+import { RECRUITMENT_BENEFIT_BUTTON_COMPLETE, RECRUITMENT_BENEFIT_EMPTY_VALIDATE, RECRUITMENT_BENEFIT_PLACEHOLDER, RECRUITMENT_BENEFIT_TITLE, RECRUITMENT_DESC_EMPTY_VALIDATE, RECRUITMENT_EMPLOYMENT_TYPE_EMPTY_VALIDATE, RECRUITMENT_EXPIRATION_VALIDATE, RECRUITMENT_LOCATION_EMPTY_VALIDATE, RECRUITMENT_REQUIREMENT_EMPTY_VALIDATE, RECRUITMENT_SALARY_EMPTY_VALIDATE, RECRUITMENT_SAVE_DESC_PLACEHOLDER, RECRUITMENT_SAVE_DESC_TITLE, RECRUITMENT_SAVE_EMPLOYMENT_TYPE_PLACEHOLDER, RECRUITMENT_SAVE_EXPIRATION_TITLE, RECRUITMENT_SAVE_LOCATION_PLACEHOLDER, RECRUITMENT_SAVE_LOCATION_TITLE, RECRUITMENT_SAVE_REQUIREMENT_PLACEHOLDER, RECRUITMENT_SAVE_REQUIREMENT_TITLE, RECRUITMENT_SAVE_SALLARY_PLACEHOLDER, RECRUITMENT_SAVE_SALLARY_TITLE, RECRUITMENT_SAVE_SAVE_EMPLOYMENT_TYPE_TITLE, RECRUITMENT_SAVE_SUCCESS_CONTENT, RECRUITMENT_SAVE_TITLE_PLACEHOLDER, RECRUITMENT_SAVE_TITLE_TITLE, RECRUITMENT_TITLE_EMPTY_VALIDATE } from '../constants/StringVietnamese'
 import { useAppSelector } from '../redux/Hook'
 import { useAddRecruitmentPostMutation } from '../redux/Service'
 import { RecruitmentPostRequest } from '../types/request/RecruitmentPostRequest'
@@ -54,42 +55,42 @@ export default function CreateRecruitmentPostPage() {
   const navigate = useNavigate()
   const [validate, setValidate] = useState<CreateRecruitmentPostValidate>({
     title: {
-      textError: 'Tiêu đề không được để trống',
+      textError: RECRUITMENT_TITLE_EMPTY_VALIDATE,
       isError: true,
       isVisible: false
     },
     desc: {
-      textError: 'Mô tả không được để trống',
+      textError: RECRUITMENT_DESC_EMPTY_VALIDATE,
       isError: true,
       isVisible: false
     },
     benefit: {
-      textError: 'Quyền lợi không được để trống',
+      textError: RECRUITMENT_BENEFIT_EMPTY_VALIDATE,
       isError: true,
       isVisible: false
     },
     salary: {
-      textError: 'Tiền lương không được để trống',
+      textError: RECRUITMENT_SALARY_EMPTY_VALIDATE,
       isError: true,
       isVisible: false
     },
     expiration: {
-      textError: 'Thời hạn không được chọn ở thời điểm trong quá khứ',
+      textError: RECRUITMENT_EXPIRATION_VALIDATE,
       isError: true,
       isVisible: false
     },
     employmentType: {
-      textError: 'Hình thức làm việc không được để trống',
+      textError: RECRUITMENT_EMPLOYMENT_TYPE_EMPTY_VALIDATE,
       isError: true,
       isVisible: false
     },
     location: {
-      textError: 'Địa điểm làm việc không được để trống',
+      textError: RECRUITMENT_LOCATION_EMPTY_VALIDATE,
       isError: true,
       isVisible: false
     },
     requirement: {
-      textError: 'Yêu cầu không được để trống',
+      textError: RECRUITMENT_REQUIREMENT_EMPTY_VALIDATE,
       isError: true,
       isVisible: false
     }
@@ -332,7 +333,7 @@ export default function CreateRecruitmentPostPage() {
   useEffect(() => {
     if (createRecruitmentPostResponse.data) {
       navigate(BUSINESS_DASHBOARD_PAGE)
-      toast.success('Thêm tin tuyển dụng thành công !!!')
+      toast.success(RECRUITMENT_SAVE_SUCCESS_CONTENT)
     }
   }, [createRecruitmentPostResponse])
 
@@ -353,8 +354,8 @@ export default function CreateRecruitmentPostPage() {
                 <InputTextWithTitle
                   onTextChange={(value) => onTitleChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.jobTitle = ref) : undefined)}
-                  title='Tên công việc'
-                  placeholder={'Nhập tên công việc...'}
+                  title={RECRUITMENT_SAVE_TITLE_TITLE}
+                  placeholder={RECRUITMENT_SAVE_TITLE_PLACEHOLDER}
                 />
 
                 <ValidateTextView
@@ -366,8 +367,8 @@ export default function CreateRecruitmentPostPage() {
                 <InputTextWithTitle
                   onTextChange={(value) => onEmploymentTypeChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.employmentType = ref) : undefined)}
-                  title='Hình thức làm việc'
-                  placeholder={'Nhập hình thức làm việc...'}
+                  title={RECRUITMENT_SAVE_SAVE_EMPLOYMENT_TYPE_TITLE}
+                  placeholder={RECRUITMENT_SAVE_EMPLOYMENT_TYPE_PLACEHOLDER}
                 />
 
                 <ValidateTextView
@@ -380,9 +381,8 @@ export default function CreateRecruitmentPostPage() {
                   defaultValue={moment().format('YYYY-MM-DD HH:mm:ss')}
                   onTextChange={(value) => onExpirationChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.expiration = ref) : undefined)}
-                  title='Thời hạn ứng tuyển'
+                  title={RECRUITMENT_SAVE_EXPIRATION_TITLE}
                   type='datetime-local'
-                  placeholder={'Nhập thời hạn ứng tuyển...'}
                 />
 
                 <ValidateTextView
@@ -395,8 +395,8 @@ export default function CreateRecruitmentPostPage() {
                   onTextChange={(value) => onLocationChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.location = ref) : undefined)}
                   rows={5}
-                  placeholder='Nhập địa điểm làm việc...'
-                  title='Địa điểm làm việc'
+                  placeholder={RECRUITMENT_SAVE_LOCATION_TITLE}
+                  title={RECRUITMENT_SAVE_LOCATION_PLACEHOLDER}
                 />
 
                 <ValidateTextView
@@ -409,15 +409,15 @@ export default function CreateRecruitmentPostPage() {
                   onTextChange={(value) => onDescriptionChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.description = ref) : undefined)}
                   rows={10}
-                  placeholder={'Nhập mô tả...'}
-                  title='Mô tả công việc'
+                  placeholder={RECRUITMENT_SAVE_DESC_TITLE}
+                  title={RECRUITMENT_SAVE_DESC_PLACEHOLDER}
                 />
 
                 <InputTextWithTitle
                   onTextChange={(value) => onSalaryChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.salary = ref) : undefined)}
-                  title='Lương'
-                  placeholder={'Nhập mức lương...'}
+                  title={RECRUITMENT_SAVE_SALLARY_TITLE}
+                  placeholder={RECRUITMENT_SAVE_SALLARY_PLACEHOLDER}
                 />
 
                 <ValidateTextView
@@ -430,8 +430,8 @@ export default function CreateRecruitmentPostPage() {
                   onTextChange={(value) => onRequirementChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.requirement = ref) : undefined)}
                   rows={10}
-                  placeholder={'Nhập yêu cầu...'}
-                  title='Yêu cầu'
+                  placeholder={RECRUITMENT_SAVE_REQUIREMENT_TITLE}
+                  title={RECRUITMENT_SAVE_REQUIREMENT_PLACEHOLDER}
                 />
 
                 <ValidateTextView
@@ -444,8 +444,8 @@ export default function CreateRecruitmentPostPage() {
                   onTextChange={(value) => onBenefitChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.benefit = ref) : undefined)}
                   rows={20}
-                  placeholder={'Nhập quyền lợi...'}
-                  title='Quyền lợi'
+                  placeholder={RECRUITMENT_BENEFIT_TITLE}
+                  title={RECRUITMENT_BENEFIT_PLACEHOLDER}
                 />
 
                 <ValidateTextView
@@ -461,7 +461,7 @@ export default function CreateRecruitmentPostPage() {
                     className='font-xsss fw-600 w175 rounded-3 d-inline-block mt-3 bg-current p-3 text-center text-white'
                     onClick={() => onBtnPublishRecruitmentPostPress()}
                   >
-                    Đăng bài viết
+                    {RECRUITMENT_BENEFIT_BUTTON_COMPLETE}
                   </button>
                 </div>
               </div>
