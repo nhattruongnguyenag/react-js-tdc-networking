@@ -91,7 +91,7 @@ export default function ListJobApplyPage() {
                           <DefaultAvatar
                             name={item.user.name.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
                             size={80}
-                            styleBootstrap={undefined}
+                            styleBootstrap={'defaultImage'}
                           />
                         ) : (
                           <img
@@ -102,20 +102,20 @@ export default function ListJobApplyPage() {
                         )}
                       </div>
                       <div className='content-job-apply'>
-                        <h1 className='fw-900 text-black'>
+                        <h1 className='fw-900 text-black title'>
                           {item.user.name.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
                         </h1>
                         <div className='item-job'>
                           <FontAwesomeIcon icon={faPhoneVolume} />
                           {item.user.phone === null ? (
-                            <p className='fw-500 ms-2 text-black'>{TEXT_NOTIFICATION_PHONE_NULL}</p>
+                            <p className='fw-500 ms-2 mb-0 text-black'>{TEXT_NOTIFICATION_PHONE_NULL}</p>
                           ) : (
-                            <p className='fw-500 ms-2 text-black'>{item.user.phone}</p>
+                            <p className='fw-500 ms-2 mb-0 text-black'>{item.user.phone}</p>
                           )}
                         </div>
                         <div className='item-job'>
                           <FontAwesomeIcon icon={faEnvelope} />
-                          <p className='fw-500 txt ms-2 text-black'>{item.user.email}</p>
+                          <p className='fw-500 txt ms-2 mb-0 text-black'>{item.user.email}</p>
                         </div>
                         <div className='item-job'>
                           <FontAwesomeIcon icon={faFilePdf} />
@@ -131,7 +131,7 @@ export default function ListJobApplyPage() {
                     </div>
 
                     <div className='date'>
-                      <p className='fw-600'>{formatDateTime(item.createdAt)}</p>
+                      <p className='fw-600 mb-0'>{formatDateTime(item.createdAt)}</p>
                       <a className='download' href={SERVER_ADDRESS + 'api/files/' + item.cvUrl} download={item.cvUrl}>
                         {TEXT_TITLE_DOWNLOAD_CV}
                       </a>

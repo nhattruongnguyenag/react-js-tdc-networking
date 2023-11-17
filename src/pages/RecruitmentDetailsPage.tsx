@@ -101,7 +101,7 @@ export default function RecruitmentDetailsPage() {
                       <h2 className='fw-700 text-black'>{TEXT_TITLE_RECRUITMENT}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faRankingStar} color={COLOR_GREY} />
-                        <p className='ml-4'>{data.title}</p>
+                        <p className='ml-4 mb-0'>{data.title}</p>
                       </div>
                       <div className='border'></div>
                     </div>
@@ -109,7 +109,7 @@ export default function RecruitmentDetailsPage() {
                       <h2 className='fw-700 text-black'>{TEXT_EMPLOYMENTTYPE}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faBriefcase} color={COLOR_GREY} />
-                        <p className='ml-4'>{data.employmentType}</p>
+                        <p className='ml-4 mb-0'>{data.employmentType}</p>
                       </div>
                       <div className='border'></div>
                     </div>
@@ -117,7 +117,7 @@ export default function RecruitmentDetailsPage() {
                       <h2 className='fw-700 text-black'>{TEXT_SALARY}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faMoneyCheckDollar} color={COLOR_GREY} />
-                        <p className='ml-4'>{formatVietNamCurrency(data.salary)} vnd</p>
+                        <p className='ml-4 mb-0'>{formatVietNamCurrency(data.salary)} vnd</p>
                       </div>
                       <div className='border'></div>
                     </div>
@@ -125,7 +125,7 @@ export default function RecruitmentDetailsPage() {
                       <h2 className='fw-700 text-black'>{TEXT_EXPIRATION}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
-                        <p className='ml-4'>{formatDateTime(data.expiration)}</p>
+                        <p className='ml-4 mb-0'>{formatDateTime(data.expiration)}</p>
                       </div>
                       <div className='border'></div>
                     </div>
@@ -133,7 +133,7 @@ export default function RecruitmentDetailsPage() {
                       <h2 className='fw-700 text-black'>{TEXT_LOCATION}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faMapLocation} color={COLOR_GREY} />
-                        <p className='ml-4'>{data.location}</p>
+                        <p className='ml-4 mb-0'>{data.location}</p>
                       </div>
                       <div className='border'></div>
                     </div>
@@ -145,7 +145,7 @@ export default function RecruitmentDetailsPage() {
                         .filter((item) => item !== '')
                         .map((item, index) => (
                           <div className='item-recruitment' key={index}>
-                            <p className='fw-500'>{item}</p>
+                            <p className='fw-500 mb-0'>{item}</p>
                           </div>
                         ))}
                     </div>
@@ -174,7 +174,7 @@ export default function RecruitmentDetailsPage() {
                 <div className='btn-recuitment mb-0'>
                   <button
                     type='button'
-                    className='font-xsss fw-600 w175 bg-recruitment mt-3 p-3 text-center text-white'
+                    className='font-xsss fw-600 w175 bg-recruitment mt-3 p-3  text-center text-white'
                     onClick={() => handleBtnJobApply(data.title, postId)}
                   >
                     {TEXT_BTN_APPLY_JOB}

@@ -527,9 +527,9 @@ export default function StudentRegistationPage() {
           ></div>
 
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
-            <div className='card login-card me-auto ms-auto border-0 shadow-none'>
+            <div className='login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
-                <h5 className='fw-700 display1-size display2-md-size mb-4'>{TEXT_TITLE_REGISTER_STUDENT}</h5>
+                <h2 className='fw-700 display1-size display2-md-size mb-3'>{TEXT_TITLE_REGISTER_STUDENT}</h2>
                 <form className='register'>
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-user text-grey-500 pe-0'> </i>
@@ -577,7 +577,7 @@ export default function StudentRegistationPage() {
                       isVisible={validate.email?.isVisible}
                     />
                   </div>
-                  <div className='form-group icon-input display-flex mb-3'>
+                  <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-bag text-grey-500 pe-0 '> </i>
                     <select
                       className='style2-input form-control font-xsss fw-600 ps-5 pt-0'
@@ -632,7 +632,7 @@ export default function StudentRegistationPage() {
                       isVisible={validate.password?.isVisible}
                     />
                   </div>
-                  <div className='form-group icon-input mb-1'>
+                  <div className='form-group icon-input mb-3'>
                     <input
                       type='Password'
                       onChange={(e) => handleConfirmPasswordChange(e)}
