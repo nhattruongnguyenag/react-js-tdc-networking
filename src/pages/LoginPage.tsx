@@ -31,7 +31,7 @@ import {
   TEXT_REQUEST_REGISTER,
   TEXT_TITLE_LOGIN
 } from '../constants/StringVietnamese'
-import { BUSINESS_DASHBOARD_PAGE, REGISTER_PAGE } from '../constants/Page'
+import { BUSINESS_DASHBOARD_PAGE, FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from '../constants/Page'
 interface UserLogin {
   emailUser: InputTextValidate
   passwordUser: InputTextValidate
@@ -250,7 +250,9 @@ export default function LoginPage() {
                     <i className='font-sm ti-lock text-grey-500 pe-0'></i>
                   </div>
                   <div className='form-check mb-3 text-left'>
-                    <button type='button' className='fw-600 font-xsss text-grey-700 float-right'>
+                    <button
+                      onClick={() => navigate(FORGOT_PASSWORD_PAGE)}
+                     type='button' className='fw-600 font-xsss text-grey-700 float-right'>
                       {TEXT_FORGOT_PASSWORD}
                     </button>
                   </div>
