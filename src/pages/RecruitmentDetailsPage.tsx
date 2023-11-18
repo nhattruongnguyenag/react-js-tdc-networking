@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/common/Header'
-import { BUSINESS_DASHBOARD_PAGE, JOB_APPLY_PAGE } from '../constants/Page'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import '../style/login.css'
+import { JOB_APPLY_PAGE } from '../constants/Page'
+import { useNavigate, useParams } from 'react-router-dom'
+import '../assets/css/login.css'
 import { getIdFromSlug, slugify } from '../utils/CommonUtls'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { COLOR_GREY } from '../constants/Color'
@@ -18,13 +18,24 @@ import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { formatDateTime } from '../utils/FormatTime'
 import { useAppSelector } from '../redux/Hook'
+import {
+  TEXT_BENEFIT,
+  TEXT_BTN_APPLY_JOB,
+  TEXT_DESCRIPTION_JOB,
+  TEXT_EMPLOYMENTTYPE,
+  TEXT_EXPIRATION,
+  TEXT_LOCATION,
+  TEXT_REQUIREMENT_JOB,
+  TEXT_SALARY,
+  TEXT_TITLE_RECRUITMENT,
+  TEXT_TITLE_RECRUITMENT_DETAIL
+} from '../constants/StringVietnamese'
 
 export default function RecruitmentDetailsPage() {
   const navigate = useNavigate()
   const { slug } = useParams()
   const postId = getIdFromSlug(slug ?? '')
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
-  console.log(SERVER_ADDRESS + `api/posts/recruitment?postId=${postId}&&userLogin=${userLogin?.id}`);
   const [data, setData] = useState({
     salary: '',
     expiration: '',
@@ -38,8 +49,6 @@ export default function RecruitmentDetailsPage() {
   const [result, setResult] = useState([data.benefit])
   const [description, setDescription] = useState([data.description])
   const [requirement, setRequirement] = useState([data.requirement])
-
-  
 
   useEffect(() => {
     if (postId) {
@@ -75,13 +84,13 @@ export default function RecruitmentDetailsPage() {
               <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                 <i className='ti-arrow-left font-sm text-white' />
               </button>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Chi tiết tuyển dụng</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{TEXT_TITLE_RECRUITMENT_DETAIL}</h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
               <div className='row'>
                 <div className='group-recruitment'>
                   <div className='item'>
-                    <h2 className='fw-700 text-black'>Vị trí tuyển dụng</h2>
+                    <h2 className='fw-700 text-black'>{TEXT_TITLE_RECRUITMENT}</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faRankingStar} color={COLOR_GREY} />
                       <p className='ml-4'>{data.title}</p>
@@ -89,7 +98,7 @@ export default function RecruitmentDetailsPage() {
                     <div className='border'></div>
                   </div>
                   <div className='item'>
-                    <h2 className='fw-700 text-black'>Hình thức tuyển dụng</h2>
+                    <h2 className='fw-700 text-black'>{TEXT_EMPLOYMENTTYPE}</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faBriefcase} color={COLOR_GREY} />
                       <p className='ml-4'>{data.employmentType}</p>
@@ -97,7 +106,7 @@ export default function RecruitmentDetailsPage() {
                     <div className='border'></div>
                   </div>
                   <div className='item'>
-                    <h2 className='fw-700 text-black'>Lương</h2>
+                    <h2 className='fw-700 text-black'>{TEXT_SALARY}</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faMoneyCheckDollar} color={COLOR_GREY} />
                       <p className='ml-4'>{formatVietNamCurrency(data.salary)} vnd</p>
@@ -105,7 +114,7 @@ export default function RecruitmentDetailsPage() {
                     <div className='border'></div>
                   </div>
                   <div className='item'>
-                    <h2 className='fw-700 text-black'>Thời hạn ứng tuyển</h2>
+                    <h2 className='fw-700 text-black'>{TEXT_EXPIRATION}</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
                       <p className='ml-4'>{formatDateTime(data.expiration)}</p>
@@ -113,7 +122,7 @@ export default function RecruitmentDetailsPage() {
                     <div className='border'></div>
                   </div>
                   <div className='item'>
-                    <h2 className='fw-700 text-black'>Địa chỉ làm việc</h2>
+                    <h2 className='fw-700 text-black'>{TEXT_LOCATION}</h2>
                     <div className='item-job-recruitment'>
                       <FontAwesomeIcon icon={faMapLocation} color={COLOR_GREY} />
                       <p className='ml-4'>{data.location}</p>
@@ -122,7 +131,7 @@ export default function RecruitmentDetailsPage() {
                   </div>
                 </div>
                 <div className='group-recruitment-content'>
-                  <h1 className='fw-700 fs-3 pt-3 text-black'>Phúc lợi</h1>
+                  <h1 className='fw-700 fs-3 pt-3 text-black'>{TEXT_BENEFIT}</h1>
                   <div className='benefit'>
                     {result
                       .filter((item) => item !== '')
@@ -134,7 +143,7 @@ export default function RecruitmentDetailsPage() {
                   </div>
                 </div>
                 <div className='group-recruitment-content'>
-                  <h1 className='fw-700 fs-3 pt-3 text-black'>Mô tả công việc</h1>
+                  <h1 className='fw-700 fs-3 pt-3 text-black'>{TEXT_DESCRIPTION_JOB}</h1>
                   {description
                     .filter((item) => item !== '')
                     .map((item, index) => (
@@ -144,7 +153,7 @@ export default function RecruitmentDetailsPage() {
                     ))}
                 </div>
                 <div className='group-recruitment-content'>
-                  <h1 className='fw-700 fs-3 pt-3 text-black'>Yêu cầu</h1>
+                  <h1 className='fw-700 fs-3 pt-3 text-black'>{TEXT_REQUIREMENT_JOB}</h1>
                   {requirement
                     .filter((item) => item !== '')
                     .map((item, index) => (
@@ -160,7 +169,7 @@ export default function RecruitmentDetailsPage() {
                   className='font-xsss fw-600 w175 bg-recruitment mt-3 p-3 text-center text-white'
                   onClick={() => handleBtnJobApply(data.title, postId)}
                 >
-                  Nộp đơn ứng tuyển
+                  {TEXT_BTN_APPLY_JOB}
                 </button>
               </div>
             </div>

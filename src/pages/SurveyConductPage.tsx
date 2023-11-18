@@ -237,9 +237,7 @@ export default function SurveyConductPage() {
                                 >
                                     <div className='flex items-center'>
                                         <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'arrow-right' })} />
-                                        <span>{
-                                            data?.data.isConduct === 0 ? 'Gửi câu trả lời' : 'Cập nhật câu trả lời'
-                                        }</span>
+                                        <span>Gửi câu trả lời</span>
                                     </div>
                                 </button>
                             </div>

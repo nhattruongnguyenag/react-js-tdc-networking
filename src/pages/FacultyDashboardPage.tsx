@@ -13,11 +13,12 @@ import { useAppSelector } from '../redux/Hook';
 
 export default function FacultyDashboardPage() {
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const code = userLogin?.roleCodes !== TYPE_POST_BUSINESS ? userLogin?.facultyGroupCode ?? '' : ''
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState<Post[]>([]);
   const { data, isFetching } = useGetFacultyPostsQuery(
     {
-      faculty: userLogin?.roleCodes !== TYPE_POST_BUSINESS ? userLogin?.facultyGroupCode ?? '' : '',
+      faculty: code,
       id: userLogin?.id ?? 0
     },
     {
@@ -49,7 +50,7 @@ export default function FacultyDashboardPage() {
       userId={item.user['id']}
       name={item.user['name']}
       avatar={item.user['image']}
-      typeAuthor={'Doanh Nghiệp'}
+      typeAuthor={'khoa'}
       available={null}
       timeCreatePost={numberDayPassed(item.createdAt)}
       content={item.content}
@@ -67,6 +68,8 @@ export default function FacultyDashboardPage() {
       employmentType={item.employmentType ?? null}
       description={item.description ?? null}
       isConduct={null}
+      isSave={item.isSave}
+      group={code}
     />
   }
 
@@ -98,7 +101,7 @@ export default function FacultyDashboardPage() {
                     userLogin?.roleCodes !== TYPE_POST_BUSINESS && <CreatePostSelector group={userLogin?.facultyGroupId ?? 0} />
                   }
                   {/* Render post */}
-                  {data?.data.map((item) => renderItem(item))}
+                  {data?.data.map((item:any) => renderItem(item))}
                 </div>
               </div>
             </div>
