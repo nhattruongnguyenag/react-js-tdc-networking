@@ -267,7 +267,7 @@ export default function LoginPage() {
                         {TEXT_LOGIN}
                       </button>
                       <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
-                        <ReactLoading type='bubbles' color='#0000FF' height={50} width={50} />
+                        <ReactLoading type='bubbles' color='#fff' height={50} width={50} />
                       </div>
                     </div>
                   </div>

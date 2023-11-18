@@ -92,7 +92,7 @@ export const TEXT_ERROR_TAXCODE_NOTFORMAT = 'Mã số thuế sai định dạng'
 export const TEXT_ERROR_PHONE_NOTFORMAT = 'Số điện thoại sai định dạng'
 export const TEXT_PLACEHOLDER_BUSINESSNAME = 'Tên doanh nghiệp'
 export const TEXT_PLACEHOLDER_REPRESENTER = 'Họ tên người đại diện'
-export const TEXT_PLACEHOLDER_TAXCODE= 'Mã số thuế'
+export const TEXT_PLACEHOLDER_TAXCODE = 'Mã số thuế'
 export const TEXT_PLACEHOLDER_ADDRESS = 'Địa chỉ'
 export const TEXT_PLACEHOLDER_PHONE = 'Số điện thoại'
 export const TEXT_TO_ACTIVETIME = 'đến'
@@ -126,9 +126,6 @@ export const ADD_QUESTION_PAGE_NOTIFICATION_QUESTION_VALIDATE = 'Vui lòng nhậ
 export const ADD_QUESTION_PAGE_REVIEW_SURVEY_POST = 'Xem lại bài viết'
 export const ADD_QUESTION_VIEW_COMPONENT_MULTI_CHOICE_QUESTION = 'Nhiều lựa chọn' 
 export const ADD_QUESTION_VIEW_COMPONENT_TITLE_EMPTY_VALIDATE = 'Tiêu đề không được để trống' 
-
-
-
 
 export const ALL_CONVERSATION_TAB_TITLE = 'Tất cả hội thoại'
 export const ALL_ACTIVE_CONVERSATION_TAB_TITLE = 'Đang hoạt động'
@@ -229,10 +226,8 @@ export const ADD_QUESTION_VIEW_COMPONENT_QUESTION_TYPE_DROPDOWN_TITLE = '--- Ch�
 export const BAR_CHART_NOTE_TITLE_CHOICE = 'Phương án'
 export const CONVERSATION_ITEM_COMPONENT_IMAGE_MESSAGE_ANNOTATION = 'Hình ảnh'
 
-
-
-
-
-
-
-
+export const TEXT_TITLE_LIST_JOB_APPLY = 'Danh sách hồ sơ ứng tuyển'
+export const TEXT_NOTIFICATION_PHONE_NULL = 'Chưa được cập nhật'
+export const TEXT_SEE_CV = 'Xem chi tiết cv'
+export const TEXT_NOTIFICATION_LIST_EMPTY = 'Không có hồ sơ ứng tuyển'
+export const TEXT_TITLE_DOWNLOAD_CV = 'Tải cv'
