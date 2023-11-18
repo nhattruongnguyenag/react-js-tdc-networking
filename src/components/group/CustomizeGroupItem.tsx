@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { useAppSelector } from '../../redux/Hook'
 import { forEachChild } from 'typescript'
@@ -13,7 +13,7 @@ export interface GroupItem {
   code: string
 }
 
-export default function CustomizeGroupItem(props: GroupItem) {
+function CustomizeGroupItem(props: GroupItem) {
   const imgSrc = SERVER_ADDRESS + 'api/images/' + props.background
   return (
     <li>
@@ -29,3 +29,5 @@ export default function CustomizeGroupItem(props: GroupItem) {
     </li>
   )
 }
+
+export default memo(CustomizeGroupItem)
