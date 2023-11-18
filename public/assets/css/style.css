@@ -18338,10 +18338,6 @@ div.navbar-intro {
 .markedContent{
     color: #A6ACAF !important;
 }
-.react-pdf__Page {
-    display: inline-block;
-    background-color: #A6ACAF !important;
-}
 .react-pdf__Page__textContent {
     display: none !important;
     height: 0px !important;
@@ -18353,6 +18349,26 @@ div.navbar-intro {
 .lbButton{
     cursor: pointer;
 }
+
+
+.react-pdf__Document {
+    display: inline-block;
+    align-items: center;
+}
+.react-pdf__Page__canvas {
+    width: 812px !important;
+    height: 992px !important;
+}
+
+
+.react-pdf__Page {
+    display: inline-block;
+    background-color: #A6ACAF !important;
+    margin-bottom: 30px !important;
+}
+
+
+
 /* group css */
 .img-group {
     background: #000;

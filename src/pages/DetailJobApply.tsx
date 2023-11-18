@@ -60,7 +60,7 @@ export default function DetailJobApply() {
                 }}
                 onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
               >
-                <p style={{ fontSize: 20 }}>
+                <p style={{ fontSize: 20, paddingTop: 15 }}>
                   <FontAwesomeIcon icon={faArrowUp} color='grey' />
                 </p>
               </button>
