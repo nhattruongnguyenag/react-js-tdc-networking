@@ -61,8 +61,8 @@ export default function ListJobApplyPage() {
       toast(TEXT_NOTIFICATION_LIST_EMPTY)
     }
   })
-  const handleBtnJobApply = (cvID: number | null) => {
-    navigate(`${DETAILS_JOB_APPLY}/${cvID}`)
+  const handleBtnJobApply = (username: string, cvID: number) => {
+    navigate(`${DETAILS_JOB_APPLY}/${slugify(username)}-${cvID}`)
   }
 
   return (
@@ -122,7 +122,7 @@ export default function ListJobApplyPage() {
                           <button
                             type='button'
                             className='txt text-green ms-2'
-                            onClick={() => handleBtnJobApply(item.id)}
+                            onClick={() => handleBtnJobApply(item.user.name, item.id)}
                           >
                             {TEXT_SEE_CV}
                           </button>
