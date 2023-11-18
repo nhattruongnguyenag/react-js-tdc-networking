@@ -30,7 +30,6 @@ export default function FacultyDashboardPage() {
     setIsLoading(true)
   }, [])
 
-  // Xử lý dữ liệu từ Redux Toolkit Query
   useEffect(() => {
     if (data) {
       setIsLoading(false);
@@ -40,7 +39,6 @@ export default function FacultyDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
-
   }
 
   const renderItem = (item: any) => {
@@ -98,10 +96,16 @@ export default function FacultyDashboardPage() {
                   {/* Modal */}
                   {
 
-                    userLogin?.roleCodes !== TYPE_POST_BUSINESS && <CreatePostSelector group={userLogin?.facultyGroupId ?? 0} />
+                    userLogin?.roleCodes !== TYPE_POST_BUSINESS && <CreatePostSelector
+                      id={userLogin?.id ?? 0}
+                      group={userLogin?.facultyGroupId ?? 0}
+                      avatar={userLogin?.image ?? ''}
+                      name={userLogin?.name ?? ''}
+                      groupName={code}
+                    />
                   }
                   {/* Render post */}
-                  {data?.data.map((item:any) => renderItem(item))}
+                  {data?.data.map((item: any) => renderItem(item))}
                 </div>
               </div>
             </div>

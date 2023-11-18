@@ -6,8 +6,6 @@ import { COLOR_BTN_BLUE } from '../../constants/Color'
 import { CLICK_SAVE_POST_EVENT, CLICK_DELETE_POST_EVENT, CLICK_SEE_LIST_CV_POST_EVENT, CLICK_SEE_RESULT_POST_EVENT, GO_TO_MENU_ACTIONS, GO_TO_PROFILE_ACTIONS, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST, CLICK_UN_SAVE_POST_EVENT } from '../../constants/Variables'
 import DefaultAvatar from '../common/DefaultAvatar'
 import { TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
-import Dropdown from 'react-bootstrap/Dropdown';
-import { Menu, MenuButton, MenuItem } from '@szhsin/react-menu'
 import { useAppSelector } from '../../redux/Hook'
 import PostOptionsMenu from '../menu/PostOptionsMenu'
 import { MenuOptionItem } from '../../types/MenuOptionItem'

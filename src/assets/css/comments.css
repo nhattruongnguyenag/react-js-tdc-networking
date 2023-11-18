@@ -1,5 +1,5 @@
-:root{
-  --COLOR_BTN_BLUE:#0065FF
+:root {
+  --COLOR_BTN_BLUE: #0065ff;
 }
 
 .wrapperInfo {
@@ -37,6 +37,7 @@
 
 .txtBlackInfo {
   margin-right: 50px;
+  font-size: 13px;
 }
 
 .wrapperBottomComment {
@@ -46,14 +47,30 @@
 .containerCommentsType1 {
   padding-left: 30px;
 }
-.tagName{
+
+.tagName {
   color: var(--COLOR_BTN_BLUE);
   font-weight: bold;
+  font-size: 14px;
 }
-.contentWrapper{
+
+.contentComments {
+  font-size: 14px;
+}
+
+.contentWrapper {
   padding-left: 40px;
 }
-.containerComments{
+.containerComments {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.wrapperContent:hover {
+  cursor: pointer;
+}
+
+.createCommentWrapper {
+  margin-top: 10px;
+  border-top: 1px dashed black;
 }

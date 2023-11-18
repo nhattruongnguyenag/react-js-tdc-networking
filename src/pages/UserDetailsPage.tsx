@@ -24,7 +24,7 @@ import { TabPanel, useTabs } from "react-headless-tabs";
 import { TabSelector } from "../components/example/TabSelector";
 import FollowListView from '../components/listviews/FollowListView';
 import FollowerListView from '../components/listviews/FollowerListView';
-
+import '../assets/css/profile.css'
 
 export default function UserDetailsPage() {
   const [modalShow, setModalShow] = React.useState(false);
@@ -60,8 +60,12 @@ export default function UserDetailsPage() {
     }
   }, [data]);
 
-  const likeAction = (obj: LikeAction) => {
+  useEffect(() => {
+    reloadingPageEvent();
+  }, [userId])
 
+
+  const likeAction = (obj: LikeAction) => {
   }
 
   const renderItem = (item: any) => {
@@ -90,7 +94,7 @@ export default function UserDetailsPage() {
         description={item.description ?? null}
         isConduct={null}
         isSave={item.isSave}
-        group={'group_tdc'}
+        group={group}
       />
     )
   }
@@ -130,6 +134,10 @@ export default function UserDetailsPage() {
     }
   }
 
+  const reloadingPageEvent = function () {
+    window.scrollTo(0, 0);
+  }
+
   return (
 
     <>
@@ -142,6 +150,7 @@ export default function UserDetailsPage() {
                 isLoading ?
                   <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
                     <CustomizeSkeletonUserProfile />
+                    <div className='spaceSkletonUserProfile'></div>
                     <CustomizeSkeleton />
                   </div>
                   : <div className='col-12'>
@@ -153,7 +162,7 @@ export default function UserDetailsPage() {
                       handleClickIntoHeaderComponentEvent={handleClickIntoHeaderComponentEvent} />
                     <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4'>
                       <div className='snippet mt-2 wrapperTitleUserProfile' data-title='.dot-typing'>
-                        <span className='txtTitleInUserProfile'>Bài viết trong nhóm : {userInfo?.name}{' '}</span>
+                        <span className='txtTitleInUserProfile'>{userInfo?.name}{' '}</span>
                         <FontAwesomeIcon className='iconArrowToRightUserProfile' icon={faPlay} size='1x' color={COLOR_BLACK} />
                         <span className='txtTitleInUserProfile'>{' '}{getGroupForPost(group)}</span>
                       </div>
@@ -243,8 +252,8 @@ function ModalUserLiked(props: Readonly<ModalType>) {
 
             </nav>
             <div className="p-2">
-              <TabPanel hidden={selectedTab !== "following"}><FollowListView id={userId}/></TabPanel>
-              <TabPanel hidden={selectedTab !== "follower"}><FollowerListView id={userId}/></TabPanel>
+              <TabPanel hidden={selectedTab !== "following"}><FollowListView id={userId} /></TabPanel>
+              <TabPanel hidden={selectedTab !== "follower"}><FollowerListView id={userId} /></TabPanel>
               <TabPanel hidden={selectedTab !== "saved"}>Bai viet da luu</TabPanel>
             </div>
           </div>
