@@ -4,8 +4,8 @@
 
 .loading {
   position: absolute;
-  right: 100px;
-  bottom: 55px;
+  right: 80px;
+  bottom: 40px;
 }
 
 .txt-blue {
@@ -32,14 +32,18 @@
   justify-content: center;
   align-items: center;
 }
+
 h4 {
   color: aliceblue;
+  font-size: 1rem;
+  margin-bottom: 0px;
 }
 
 .btnSelect:active {
   border-radius: 10px;
   box-shadow: 2px 2px 5px rgb(59 130 246) !important;
 }
+
 .group {
   display: flex;
   align-items: center;
@@ -64,9 +68,8 @@ h4 {
 }
 
 .avatar {
-  padding: 10px;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 }
 
@@ -87,46 +90,48 @@ h4 {
   align-items: center;
 }
 
-.bg-recruitment{
+.bg-recruitment {
   background-color: #3cb371 !important;
   padding: 10px !important;
   border-radius: 10px !important;
+  padding-left: 20px;
 }
 
-.bg-recruitment:active{
+.bg-recruitment:active {
   border-radius: 10px;
   box-shadow: 2px 2px 5px #3cb371 !important;
 }
-.main-content{
-   margin-top: 20px;
+
+.main-content {
+  margin-top: 20px;
 }
 
-.item-job-recruitment{
+.item-job-recruitment {
   display: flex;
   align-items: baseline;
   margin-right: 20px;
 }
 
-.group-recruitment{
+.group-recruitment {
   background-color: #E0F4FF;
   border-radius: 10px;
   padding-top: 10px;
   padding-left: 20px;
 }
 
-.border{
+.border {
   border-bottom: solid 1px gray;
 }
 
-.item{
+.item {
   margin-bottom: 10px;
 }
 
-.item:last-child{
+.item:last-child {
   margin-bottom: 0px;
 }
 
-.item-recruitment{
+.item-recruitment {
   background-color: #3cb371;
   width: fit-content;
   color: #fff;
@@ -136,16 +141,16 @@ h4 {
   margin-top: 5px;
 }
 
-.item-recruitment-description{
-   position: relative;
-   border-radius: 10px;
-   padding: 0px 5px;
-   margin-left: 20px;
-   margin-top: 5px;
-   
+.item-recruitment-description {
+  position: relative;
+  border-radius: 10px;
+  padding: 0px 5px;
+  margin-left: 20px;
+  margin-top: 5px;
+
 }
 
-.item-recruitment-description::before{
+.item-recruitment-description::before {
   content: '';
   width: 4px;
   height: 4px;
@@ -156,12 +161,98 @@ h4 {
   top: 14px;
 }
 
-.btn-recuitment{
-   display: flex;
-   justify-content: center;
+.btn-recuitment {
+  display: flex;
+  justify-content: center;
 }
 
-.benefit{
+.benefit {
   display: flex;
   flex-wrap: wrap;
+}
+
+/* css list job apply */
+.item-job-apply {
+  display: flex;
+  background-color: #fff;
+  box-shadow: 2px 2px 5px 3px #E0F4FF;
+  border-radius: 10px;
+  justify-content: space-between;
+  padding: 10px 40px;
+  width: 80%;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.item-job {
+  display: flex;
+  align-items: baseline;
+}
+
+.date {
+  text-align: right;
+}
+
+.tam {
+  display: flex;
+}
+
+.text-green {
+  color: #3cb371;
+  font-weight: bold;
+}
+
+.text-green:active {
+  box-shadow: 2px 2px 5px #3cb371 !important;
+}
+
+.img-job-apply {
+  margin-right: 10px;
+}
+
+.job {
+  display: flex;
+}
+
+.job-apply {
+  display: flex;
+  justify-content: space-between;
+}
+
+.download {
+  color: #fff;
+  background-color: #3cb371;
+  font-weight: bold;
+  padding: 5px;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+
+.download:hover {
+  color: #fff;
+  box-shadow: 2px 2px 5px #3cb371 !important;
+}
+
+h1,
+h2 {
+  font-size: 1rem;
+}
+
+.defaultImage {
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selecttype {
+  line-height: 2;
+  width: 100%;
+  height: calc(2rem + 1rem + 2px);
+  padding: 0;
+}
+
+.element.style {
+  border-color: rgb(238, 238, 238);
 }

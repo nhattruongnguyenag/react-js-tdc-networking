@@ -1,3 +1,4 @@
+import { ADD_CHOICE_BUTTON } from '../../constants/StringVietnamese'
 import { ONE_CHOICE_QUESTION } from '../../pages/CreateSurveyPostPage'
 import { useAppDispatch } from '../../redux/Hook'
 import { addChoice } from '../../redux/Slice'
@@ -35,7 +36,7 @@ export default function AddChoiceButton(props: AddChoiceButtonProps) {
         htmlFor='default-radio-1'
         className='font-se ml-2 cursor-pointer text-sm font-medium text-blue-500 hover:text-blue-400 dark:text-gray-300'
       >
-        Thêm lựa chọn
+        {ADD_CHOICE_BUTTON}
       </label>
     </div>
   )

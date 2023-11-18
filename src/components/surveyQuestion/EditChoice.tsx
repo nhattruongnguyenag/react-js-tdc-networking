@@ -1,5 +1,6 @@
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER } from '../../constants/StringVietnamese'
 import { ONE_CHOICE_QUESTION } from '../../pages/CreateSurveyPostPage'
 import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { deleteChoice, updateChoice } from '../../redux/Slice'
@@ -40,7 +41,7 @@ export default function EditChoice(props: ChoiceProps) {
         />
       )}
       <input
-        placeholder={'Lựa chọn ' + (choiceIndex + 1)}
+        placeholder={ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER + (choiceIndex + 1)}
         onChange={(event) => {
           dispatch(
             updateChoice({

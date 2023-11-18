@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FaAngleDoubleRight } from 'react-icons/fa'
 import { FaAngleDoubleLeft } from 'react-icons/fa'
 import '../assets/css/login.css'
-import { Bounce,ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { REGISTER_BUSINESS_PAGE, REGISTER_STUDENT_PAGE } from '../constants/Page'
 import {
@@ -57,11 +57,11 @@ export default function SelectTypeRegistationPage() {
             }}
           ></div>
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
-            <div className='card login-card me-auto ms-auto border-0 shadow-none'>
+            <div className='login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
                 <h2 className='fw-700 display1-size display2-md-size mb-4 text-center'>{TEXT_TITLE_SELECTED_TYPE}</h2>
                 <select
-                  className='style2-input form-control font-xsss fw-600 pt-0 text-center'
+                  className='style2-input form-control selecttype text-grey-900 font-xsss fw-600 pe-5 ps-5 text-center'
                   value={dataRegister}
                   onChange={(e) => changeData(e.target.value)}
                 >
@@ -88,7 +88,6 @@ export default function SelectTypeRegistationPage() {
           </div>
         </div>
       </div>
-      <ToastContainer autoClose={5000} transition={Bounce} />
     </Fragment>
   )
 }

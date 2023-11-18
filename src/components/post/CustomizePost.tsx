@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'
 import CustomizeCommentPost from '../comments/CustomizeCommentPost'
 import CustomizeCreateCommentsToolbar from '../commentToolbar/CustomizeCreateCommentsToolbar'
 import { useNavigate } from 'react-router-dom'
-import { RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, SURVEY_RESULT_PAGE, USER_DETAILS_PAGE } from '../../constants/Page'
+import { RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, SURVEY_RESULT_PAGE, USER_DETAILS_PAGE, LIST_JOB_APPLY_PAGE } from '../../constants/Page'
 import { slugify } from '../../utils/CommonUtls'
 import { isBlank } from '../../utils/ValidateUtils'
 import { deleteCommentAPI, deletePostAPI, getAllCommentAPI, likeAPI, savePostAPI } from '../../api/CallAPI'
@@ -137,6 +137,10 @@ const CustomizePost = (props: Post) => {
     navigate(`${SURVEY_DETAILS_PAGE}/${slugify(title)}-${idPost}`)
   }
 
+  const handleSeeListCvPost = (idPost: number, title: string) => {
+    navigate(`${LIST_JOB_APPLY_PAGE}/${slugify(title)}-${idPost}`)
+  }
+
   const changeDataToImagGallerys = useCallback(() => {
     const newImagesGallerys: ImageGalleryDisplay[] = props.images.map((element) => ({
       original: SERVER_ADDRESS + 'api/images/' + element.uri,
@@ -168,7 +172,7 @@ const CustomizePost = (props: Post) => {
         handleDeletePostEvent();
         break
       case CLICK_SEE_LIST_CV_POST_EVENT:
-        // handleSeeListCvPost();
+        handleSeeListCvPost(props.id, props.title || '');
         break
         case CLICK_SEE_RESULT_POST_EVENT:
           navigate(`${SURVEY_RESULT_PAGE}/${slugify(props.title ?? '')}-${props.id}`)

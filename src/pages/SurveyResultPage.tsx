@@ -1,8 +1,9 @@
-import { Accordion, CustomFlowbiteTheme } from 'flowbite-react'
-import React, { Fragment, useCallback } from 'react'
+import { Accordion } from 'flowbite-react'
+import { Fragment, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Header from '../components/common/Header'
 import OptionSurveyQuesionResult from '../components/surveyResult/OptionSurveyQuesionResult'
+import { SURVEY_RESULT_SCREEN_EMPTY_SHORT_ANSWER, SURVEY_RESULT_SCREEN_EMPTY_VOTE, SURVEY_RESULT_SCREEN_NUMBER_OF_SHORT_ANSWER, SURVEY_RESULT_SCREEN_TITLE } from '../constants/StringVietnamese'
 import { useAppDispatch } from '../redux/Hook'
 import { useGetSurveyResultQuery } from '../redux/Service'
 import { SurveyItemResult } from '../types/response/SurveyResult'
@@ -29,7 +30,7 @@ export default function SurveyResultPage() {
                         <Accordion.Content>
                             {
                                 item.choices.reduce((curr, next) => curr + next.votes, 0) === 0
-                                    ? < p > Chưa có câu trả lời</p>
+                                    ? < p > {SURVEY_RESULT_SCREEN_EMPTY_VOTE}</p>
                                     :
                                     <OptionSurveyQuesionResult data={item} />
 
@@ -44,10 +45,10 @@ export default function SurveyResultPage() {
                 <Accordion.Content>
                     {
                         item.answers.length === 0 ?
-                            <p>Chưa có câu trả lời</p>
+                            <p>{SURVEY_RESULT_SCREEN_EMPTY_SHORT_ANSWER}</p>
                             :
                             <Fragment>
-                                <p className='font-semibold'>{item.answers.length} câu trả lời</p>
+                                <p className='font-semibold'>{item.answers.length} {SURVEY_RESULT_SCREEN_NUMBER_OF_SHORT_ANSWER}</p>
                                 {
                                     item.answers.map((answer, index) => <p className="mt-2 text-gray-500 dark:text-gray-400" key={index.toString()}>{answer}</p>)
                                 }
@@ -70,7 +71,7 @@ export default function SurveyResultPage() {
                                 onClick={() => navigate(-1)}>
                                 <i className='ti-arrow-left font-sm text-white' />
                             </button>
-                            <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Kết quả khảo sát</h4>
+                            <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{SURVEY_RESULT_SCREEN_TITLE}</h4>
                         </div>
                         <div className='py-3 px-3'>
                             <Accordion collapseAll>
