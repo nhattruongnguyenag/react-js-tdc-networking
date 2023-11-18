@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Comment } from '../../types/Comment'
-import CustomizeItemComments from '../comments/CustomizeItemComments';
+import CustomizeItemComments from './CustomizeItemComments';
 import { useAppSelector } from '../../redux/Hook';
 import { numberDayPassed } from '../../utils/FormatTime';
 import { COLOR_GREY } from '../../constants/Color';

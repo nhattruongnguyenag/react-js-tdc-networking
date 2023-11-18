@@ -4,6 +4,7 @@ import moment from 'moment'
 import 'photoswipe/dist/photoswipe.css'
 import { Fragment } from 'react'
 import { Gallery, Item } from 'react-photoswipe-gallery'
+import { MESSAGE_ITEM_STATUS_RECEIVED, MESSAGE_ITEM_STATUS_SEEN, MESSAGE_SENDING_STATUS } from '../../constants/StringVietnamese'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { useAppSelector } from '../../redux/Hook'
 import { Message } from '../../types/Message'
@@ -86,12 +87,12 @@ const MessageContent = (props: MessageContentProps) => {
 export default function MessageItem(props: MessageItemProps) {
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
 
-  let messageStatus = 'Đang gửi'
+  let messageStatus = MESSAGE_SENDING_STATUS
 
   if (props.data.status === 0) {
-    messageStatus = 'Đã nhận'
+    messageStatus = MESSAGE_ITEM_STATUS_RECEIVED
   } else if (props.data.status === 1) {
-    messageStatus = 'Đã xem'
+    messageStatus = MESSAGE_ITEM_STATUS_SEEN
   }
 
   return (

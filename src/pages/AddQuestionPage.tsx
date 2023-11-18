@@ -9,6 +9,7 @@ import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestion
 import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
 import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
 import { CREATE_SURVEY_POST_PAGE, REVIEW_SURVEY_POST_PAGE } from '../constants/Page'
+import { ADD_QUESTION_PAGE_ADD_QUESTION_BUTTON, ADD_QUESTION_PAGE_NOTIFICATION_QUESTION_VALIDATE, ADD_QUESTION_PAGE_REVIEW_SURVEY_POST, ADD_QUESTION_PAGE_TITLE, ADD_QUESTION_VIEW_COMPONENT_MULTI_CHOICE_QUESTION, ADD_QUESTION_VIEW_COMPONENT_ONE_CHOICE_QUESTION, ADD_QUESTION_VIEW_COMPONENT_SHORT_ANSWER, ADD_QUESTION_VIEW_COMPONENT_TITLE_EMPTY_VALIDATE, TEXT_BUTTON_GO_BACK, TEXT_EMPTY_QUESTION_ERROR_CONTENT } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { addQuestion, addQuestionValidates, setSurveyPostRequest, updateQuestionTitleValidate } from '../redux/Slice'
 import { InputTextValidate } from '../utils/ValidateUtils'
@@ -48,7 +49,7 @@ export default function AddQuestionPage() {
     dispatch(addQuestion(questionType))
     dispatch(
       addQuestionValidates({
-        textError: 'Tiêu đề không được để trống',
+        textError: ADD_QUESTION_VIEW_COMPONENT_TITLE_EMPTY_VALIDATE,
         isError: true,
         isVisible: false
       })
@@ -57,12 +58,12 @@ export default function AddQuestionPage() {
 
   const onBtnReviewClick = () => {
     if (surveyPostRequest.questions.length === 0) {
-      toast.error('Bài khảo sát bắt buộc phải có ít nhất 1 câu hỏi')
+      toast.error(TEXT_EMPTY_QUESTION_ERROR_CONTENT)
     } else {
       if (isAllFieldsValid(questionTitleValidates)) {
         navigation(REVIEW_SURVEY_POST_PAGE)
       } else {
-        toast.error('Vui lòng nhập giá trị hợp lệ cho tất cả câu hỏi')
+        toast.error(ADD_QUESTION_PAGE_NOTIFICATION_QUESTION_VALIDATE)
         for (let i = 0; i < questionTitleValidates.length; i++) {
           if (questionTitleValidates[i].isError) {
             dispatch(
@@ -90,7 +91,7 @@ export default function AddQuestionPage() {
               <Link className='d-inline-block mt-2' to={CREATE_SURVEY_POST_PAGE}>
                 <i className='ti-arrow-left font-sm text-white' />
               </Link>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Thêm câu hỏi</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{ADD_QUESTION_PAGE_TITLE}</h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
               {surveyPostRequest.questions.map((item, index) => {
@@ -111,7 +112,7 @@ export default function AddQuestionPage() {
                 >
                   <div className='flex items-center'>
                     <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'arrow-left' })} />
-                    <span>Quay lại</span>
+                    <span>{TEXT_BUTTON_GO_BACK}</span>
                   </div>
                 </button>
 
@@ -127,15 +128,15 @@ export default function AddQuestionPage() {
                     >
                       <div className='flex items-center'>
                         <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'plus' })} />
-                        <span>Thêm câu hỏi</span>
+                        <span>{ADD_QUESTION_PAGE_ADD_QUESTION_BUTTON}</span>
                       </div>
                     </button>
                   )}
                 >
-                  <Dropdown.Item onClick={() => onBtnAddQuestionClick(SHORT_ANSWER)}>Trả lời ngắn</Dropdown.Item>
-                  <Dropdown.Item onClick={() => onBtnAddQuestionClick(ONE_CHOICE_QUESTION)}>Trắc nghiệm</Dropdown.Item>
+                  <Dropdown.Item onClick={() => onBtnAddQuestionClick(SHORT_ANSWER)}>{ADD_QUESTION_VIEW_COMPONENT_SHORT_ANSWER}</Dropdown.Item>
+                  <Dropdown.Item onClick={() => onBtnAddQuestionClick(ONE_CHOICE_QUESTION)}>{ADD_QUESTION_VIEW_COMPONENT_ONE_CHOICE_QUESTION}</Dropdown.Item>
                   <Dropdown.Item onClick={() => onBtnAddQuestionClick(MULTI_CHOICE_QUESTION)}>
-                    Nhiều lựa chọn
+                    {ADD_QUESTION_VIEW_COMPONENT_MULTI_CHOICE_QUESTION}
                   </Dropdown.Item>
                 </Dropdown>
 
@@ -145,7 +146,7 @@ export default function AddQuestionPage() {
                   className='items-centerdark:bg-blue-600 inline-flex rounded-lg bg-blue-700 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                 >
                   <div className='flex items-center'>
-                    <span>Xem lại bài viết</span>
+                    <span>{ADD_QUESTION_PAGE_REVIEW_SURVEY_POST}</span>
                     <FontAwesomeIcon style={{ fontSize: 15, marginLeft: 10 }} icon={icon({ name: 'arrow-right' })} />
                   </div>
                 </button>

@@ -62,6 +62,7 @@ import {
   TEXT_TITLE_REGISTER_BUSINESS,
   TEXT_TO_ACTIVETIME
 } from '../constants/StringVietnamese'
+import { toast } from 'react-toastify'
 
 interface RegisterBusiness {
   name: InputTextValidate
@@ -564,12 +565,12 @@ export default function BusinessRegistationPage() {
         .post<Business, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/business/register', business)
         .then((response) => {
           setIsLoading(false)
-          alert(TEXT_ALERT_REGISTER_SUCCESS)
+          toast.success(TEXT_ALERT_REGISTER_SUCCESS)
           navigate(LOGIN_PAGE)
         })
         .catch((error) => {
           setIsLoading(false)
-          alert(TEXT_ALERT_REGISTER_FAILT)
+          toast.error(TEXT_ALERT_REGISTER_FAILT)
         })
     } else {
       let key: keyof RegisterBusiness
@@ -608,7 +609,7 @@ export default function BusinessRegistationPage() {
           ></div>
 
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
-            <div className='card login-card me-auto ms-auto border-0 shadow-none'>
+            <div className='login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
                 <h5 className='fw-700 display1-size display2-md-size mb-4'>{TEXT_TITLE_REGISTER_BUSINESS}</h5>
                 <form className='register'>
@@ -711,7 +712,7 @@ export default function BusinessRegistationPage() {
                         value={timeStart}
                         onChange={(e) => setTimeStart(e.target.value)}
                         style={{ borderColor: !validate.activeTime?.isError ? '#228b22' : '#eee' }}
-                        className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
+                        className='style2-input form-control text-grey-900 font-xsss fw-600 ps-4'
                       />
                       <label className='me-1 ms-1'>{TEXT_TO_ACTIVETIME}</label>
                       <input
@@ -719,7 +720,7 @@ export default function BusinessRegistationPage() {
                         value={timeEnd}
                         onChange={(e) => setTimeEnd(e.target.value)}
                         style={{ borderColor: !validate.activeTime?.isError ? '#228b22' : '#eee' }}
-                        className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
+                        className='style2-input form-control text-grey-900 font-xsss fw-600 ps-4'
                       />
                     </div>
                     <TextValidate

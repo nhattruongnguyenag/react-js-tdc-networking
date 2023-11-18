@@ -4,6 +4,7 @@ import { faPhone, faEnvelope, faUserPlus, faBars, faPaste, faClock, faMoneyCheck
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 import { COLOR_BLACK, COLOR_WHITE } from '../../constants/Color'
 import { CALL_ACTION, FOLLOW_ACTION, MENU_CLICK_ACTION, MESSENGER_ACTION } from '../../constants/Variables';
+import { TEXT_EMAIL, TEXT_PHONE, TEXT_PLACEHOLDER_ADDRESS, TEXT_PLACEHOLDER_TAXCODE, TEXT_POST, TEXT_REPRESENTER, TEXT_TIME_WORK } from '../../constants/StringVietnamese';
 
 interface BusinessProfileType {
     handleClickButtonEvent: (flag: number) => void,
@@ -63,43 +64,43 @@ function CustomizeBodyBusinessProfile(props: Readonly<BusinessProfileType>) {
                 <div>
                     <FontAwesomeIcon icon={faClock} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>Thời gian hoạt động: {props.timeWork}</div>
+                <div className='txtInfoBodyProfile'>{TEXT_TIME_WORK}: {props.timeWork}</div>
             </div>
             <div className='lineOfInfoBodyProfile'>
                 <div>
                     <FontAwesomeIcon icon={faMoneyCheck} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>Mã số thuế: {props.TaxIdentificationNumber}</div>
+                <div className='txtInfoBodyProfile'>{TEXT_PLACEHOLDER_TAXCODE}: {props.TaxIdentificationNumber}</div>
             </div>
             <div className='lineOfInfoBodyProfile'>
                 <div>
                     <FontAwesomeIcon icon={faUserTie} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>Người đại diện: {props.representative}</div>
+                <div className='txtInfoBodyProfile'>{TEXT_REPRESENTER}: {props.representative}</div>
             </div>
             <div className='lineOfInfoBodyProfile'>
                 <div>
                     <FontAwesomeIcon icon={faMapLocationDot} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>Địa chỉ: {props.address}</div>
+                <div className='txtInfoBodyProfile'>{TEXT_PLACEHOLDER_ADDRESS}: {props.address}</div>
             </div>
             <div className='lineOfInfoBodyProfile'>
                 <div>
                     <FontAwesomeIcon icon={faPhone} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>Điện thoại: {props.phone}</div>
+                <div className='txtInfoBodyProfile'>{TEXT_PHONE}: {props.phone}</div>
             </div>
             <div className='lineOfInfoBodyProfile'>
                 <div>
                     <FontAwesomeIcon icon={faEnvelope} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>Email: {props.email}</div>
+                <div className='txtInfoBodyProfile'>{TEXT_EMAIL}: {props.email}</div>
             </div>
             <div className='lineOfInfoBodyProfile'>
                 <div>
                     <FontAwesomeIcon icon={faPaste} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>Bài viết ({props.numberPost}) </div>
+                <div className='txtInfoBodyProfile'>{TEXT_POST} ( {props.numberPost} ) </div>
             </div>
         </div>
     )

@@ -8,6 +8,7 @@ import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestion
 import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
 import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
 import { ADD_QUESTION_PAGE, BUSINESS_DASHBOARD_PAGE } from '../constants/Page'
+import { REVIEW_SURVEY_SCREEN_BUTTON_COMPLETE, REVIEW_SURVEY_SCREEN_BUTTON_GO_BACK, REVIEW_SURVEY_SCREEN_QUESTION_LIST_TITLE, REVIEW_SURVEY_SCREEN_SAVE_FAIL_TITLE, REVIEW_SURVEY_SCREEN_SAVE_SUCCESS_CONTENT, REVIEW_SURVEY_SCREEN_TITLE } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { useAddSurveyPostMutation } from '../redux/Service'
 import {
@@ -39,11 +40,11 @@ export default function ReviewSurveyPostPage() {
     if (addSurveyResult.data && addSurveyResult.isSuccess) {
       if (addSurveyResult.data.status === 201 || 200) {
         navigate(BUSINESS_DASHBOARD_PAGE)
-        toast.success('Thêm khảo sát thành công !!!')
+        toast.success(REVIEW_SURVEY_SCREEN_SAVE_SUCCESS_CONTENT)
         dispatch(setSurveyPostRequest(defaultSurveyPostRequest))
         dispatch(setQuestionValidates([]))
       } else {
-        toast.error('Xảy ra lỗi trong quá trình thêm khảo sát!!!')
+        toast.error(REVIEW_SURVEY_SCREEN_SAVE_FAIL_TITLE)
       }
     }
   }, [addSurveyResult])
@@ -62,7 +63,7 @@ export default function ReviewSurveyPostPage() {
               <Link className='d-inline-block mt-2' to={ADD_QUESTION_PAGE}>
                 <i className='ti-arrow-left font-sm text-white' />
               </Link>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Xem lại bài viết</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{REVIEW_SURVEY_SCREEN_TITLE}</h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
               <div className='mb-2 text-justify'>
@@ -70,7 +71,7 @@ export default function ReviewSurveyPostPage() {
                 <p className='mb-3 mt-2'>{surveyPostRequest.description}</p>
               </div>
 
-              <div className='font-bold'>Câu hỏi</div>
+              <div className='font-bold'>{REVIEW_SURVEY_SCREEN_QUESTION_LIST_TITLE}</div>
 
               {surveyPostRequest.questions.map((item, index) => {
                 if (item.type === MULTI_CHOICE_QUESTION) {
@@ -90,7 +91,7 @@ export default function ReviewSurveyPostPage() {
                 >
                   <div className='flex items-center'>
                     <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'arrow-left' })} />
-                    <span>Quay lại</span>
+                    <span>{REVIEW_SURVEY_SCREEN_BUTTON_GO_BACK}</span>
                   </div>
                 </button>
 
@@ -101,7 +102,7 @@ export default function ReviewSurveyPostPage() {
                 >
                   <div className='flex items-center'>
                     <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'plus' })} />
-                    <span>Hoàn tất</span>
+                    <span>{REVIEW_SURVEY_SCREEN_BUTTON_COMPLETE}</span>
                   </div>
                 </button>
               </div>

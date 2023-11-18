@@ -4,7 +4,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function CustomizeSkeleton() {
   return (
-    <div>
+    <div className='skeletonPost'>
       {/* Header */}
       <div className='d-flex justify-content-between align-items-center'>
         <Skeleton width={45} height={45} borderRadius={45} />
