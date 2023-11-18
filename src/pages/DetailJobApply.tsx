@@ -15,6 +15,8 @@ export default function DetailJobApply() {
     const navigate = useNavigate()
     const { slug } = useParams()
     const cvId = getIdFromSlug(slug ?? '')
+
+    console.log('cvId: ', cvId)
     useEffect(() => {
         axios.get(`${SERVER_ADDRESS}api/job/${cvId}`).then((response) => {
             setUrl(response.data.data.cvUrl)
