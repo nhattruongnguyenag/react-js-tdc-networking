@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import { useCallback, useState } from 'react'
+import { ADD_QUESTION_VIEW_COMPONENT_TITLE_CONTAINS_SPECIAL_CHARACTER_VALIDATE, ADD_QUESTION_VIEW_COMPONENT_TITLE_INPUT_PLACEHOLDER, QUESTION_COMPONENT_ADD_TEXT_TITLE } from '../../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { updateQuestion, updateQuestionTitleValidate } from '../../redux/Slice'
 import { Question } from '../../types/Question'
@@ -55,7 +56,7 @@ export default function QuestionTitle(props: QuestionTitleProps) {
     )
 
     if (isBlank(value)) {
-      setTitleError('Tiêu đề không được để trống')
+      setTitleError(ADD_QUESTION_VIEW_COMPONENT_TITLE_CONTAINS_SPECIAL_CHARACTER_VALIDATE)
       return
     }
 
@@ -81,14 +82,14 @@ export default function QuestionTitle(props: QuestionTitleProps) {
           type='text'
           id='floating_standard'
           className='peer block w-full appearance-none text-ellipsis border-0 border-b-2 border-gray-300 bg-transparent pb-2 pr-3 pt-3 text-sm font-medium text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500'
-          placeholder='Nhập tiêu đề câu hỏi...'
+          placeholder={ADD_QUESTION_VIEW_COMPONENT_TITLE_INPUT_PLACEHOLDER}
         />
 
         <label
           htmlFor='floating_standard'
           className='absolute top-3 -z-10 origin-[0] -translate-y-6 transform text-blue-600 duration-300 peer-focus:left-0 peer-focus:dark:text-blue-500'
         >
-          Câu {(props.index ?? 0) + 1}
+          {QUESTION_COMPONENT_ADD_TEXT_TITLE} {(props.index ?? 0) + 1}
           {props.conductMode && questionConducts[questionIndex].required === 1 &&
             <span className='text-red-500'>&nbsp;&nbsp;*</span>}
         </label>

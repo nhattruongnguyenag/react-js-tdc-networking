@@ -3,6 +3,7 @@ import { ChartData } from './OptionSurveyQuesionResult'
 import Stylesheet from "reactjs-stylesheet"
 import BarItem from './BarItem'
 import BarNoteItem from './BarNoteItem'
+import { BAR_CHART_NOTE_TITLE_CHOICE } from '../../constants/StringVietnamese'
 
 const randomColor = require('randomcolor')
 
@@ -35,7 +36,7 @@ export default function HorizontalBarChart(props: HoriontalBarChartProps) {
                 </div>
 
                 <div style={styles.chartNote}>
-                    <p style={styles.chartNoteTitle}>Phương án</p>
+                    <p style={styles.chartNoteTitle}>{BAR_CHART_NOTE_TITLE_CHOICE}</p>
                     {
                         props.data.map((item, index) => <BarNoteItem title={item.title} color={item.color} />)
                     }
