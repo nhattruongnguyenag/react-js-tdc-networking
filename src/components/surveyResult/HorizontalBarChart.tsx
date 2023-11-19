@@ -18,7 +18,7 @@ export default function HorizontalBarChart(props: HoriontalBarChartProps) {
 
     return (
         <div style={styles.container}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: 20, marginTop: 5 }}>
                 {
                     props.data.map((item, index) => <div style={styles.yLabel}><p>{item.value}</p></div>)
                 }

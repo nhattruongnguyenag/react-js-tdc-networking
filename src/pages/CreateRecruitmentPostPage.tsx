@@ -13,6 +13,8 @@ import { useAddRecruitmentPostMutation } from '../redux/Service'
 import { RecruitmentPostRequest } from '../types/request/RecruitmentPostRequest'
 import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
 
+const BUSNESS_GROUP_ID = 2
+
 interface ElementRefs {
   jobTitle: HTMLInputElement
   employmentType: HTMLInputElement
@@ -306,16 +308,16 @@ export default function CreateRecruitmentPostPage() {
       benefit: elementRefs.benefit.value,
       description: elementRefs.description.value,
       employmentType: elementRefs.employmentType.value,
-      location: elementRefs.employmentType.value,
+      location: elementRefs.location.value,
       requirement: elementRefs.requirement.value,
-      expiration: moment(elementRefs.expiration.value.replace('T', ' ')).format('YYYY-MM-DD HH:mm:ss')
+      expiration: moment(elementRefs.expiration.value.replace('T', ' ')).format('YYYY-MM-DD HH:mm:ss'),
+      groupId: BUSNESS_GROUP_ID
     }
   }
 
   const onBtnPublishRecruitmentPostPress = useCallback(() => {
     if (isAllFieldsValid(validate)) {
       const recruitmentModel = getRecruitmentPostRequestFromUserInput()
-      console.log(recruitmentModel)
       createRecruitmentPostRequest(recruitmentModel)
     } else {
       let key: keyof CreateRecruitmentPostValidate
