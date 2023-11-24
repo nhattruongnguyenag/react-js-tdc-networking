@@ -18,21 +18,11 @@ import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { formatDateTime } from '../utils/FormatTime'
 import { useAppSelector } from '../redux/Hook'
-import {
-  TEXT_BENEFIT,
-  TEXT_BTN_APPLY_JOB,
-  TEXT_DESCRIPTION_JOB,
-  TEXT_EMPLOYMENTTYPE,
-  TEXT_EXPIRATION,
-  TEXT_LOCATION,
-  TEXT_REQUIREMENT_JOB,
-  TEXT_SALARY,
-  TEXT_TITLE_RECRUITMENT,
-  TEXT_TITLE_RECRUITMENT_DETAIL
-} from '../constants/StringVietnamese'
 import Loading from '../components/common/Loading'
+import { useTranslation } from 'react-multi-lang'
 
 export default function RecruitmentDetailsPage() {
+  const t = useTranslation()
   const navigate = useNavigate()
   const { slug } = useParams()
   const postId = getIdFromSlug(slug ?? '')
@@ -87,7 +77,7 @@ export default function RecruitmentDetailsPage() {
               <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                 <i className='ti-arrow-left font-sm text-white' />
               </button>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{TEXT_TITLE_RECRUITMENT_DETAIL}</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{t('RecuitmentPostDetailComponent.titleRecruitmentDetail')}</h4>
             </div>
             {isLoading ? (
               <div className='ml-[-320px] mt-[-100px] flex h-screen items-center justify-center'>
@@ -98,7 +88,7 @@ export default function RecruitmentDetailsPage() {
                 <div className='row'>
                   <div className='group-recruitment'>
                     <div className='item'>
-                      <h2 className='fw-700 text-black'>{TEXT_TITLE_RECRUITMENT}</h2>
+                      <h2 className='fw-700 text-black'>{t('RecuitmentPostDetailComponent.titleJob')}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faRankingStar} color={COLOR_GREY} />
                         <p className='ml-4 mb-0'>{data.title}</p>
@@ -106,7 +96,7 @@ export default function RecruitmentDetailsPage() {
                       <div className='border'></div>
                     </div>
                     <div className='item'>
-                      <h2 className='fw-700 text-black'>{TEXT_EMPLOYMENTTYPE}</h2>
+                      <h2 className='fw-700 text-black'>{t('RecuitmentPostDetailComponent.employeType')}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faBriefcase} color={COLOR_GREY} />
                         <p className='ml-4 mb-0'>{data.employmentType}</p>
@@ -114,15 +104,15 @@ export default function RecruitmentDetailsPage() {
                       <div className='border'></div>
                     </div>
                     <div className='item'>
-                      <h2 className='fw-700 text-black'>{TEXT_SALARY}</h2>
+                      <h2 className='fw-700 text-black'>{t('RecuitmentPostDetailComponent.salary')}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faMoneyCheckDollar} color={COLOR_GREY} />
-                        <p className='ml-4 mb-0'>{formatVietNamCurrency(data.salary)} vnd</p>
+                        <p className='ml-4 mb-0'>{formatVietNamCurrency(data.salary)} {t('RecuitmentPostDetailComponent.salaryUnitMonth')}</p>
                       </div>
                       <div className='border'></div>
                     </div>
                     <div className='item'>
-                      <h2 className='fw-700 text-black'>{TEXT_EXPIRATION}</h2>
+                      <h2 className='fw-700 text-black'>{t('RecuitmentPostDetailComponent.expiration')}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
                         <p className='ml-4 mb-0'>{formatDateTime(data.expiration)}</p>
@@ -130,7 +120,7 @@ export default function RecruitmentDetailsPage() {
                       <div className='border'></div>
                     </div>
                     <div className='item'>
-                      <h2 className='fw-700 text-black'>{TEXT_LOCATION}</h2>
+                      <h2 className='fw-700 text-black'>{t('RecuitmentPostDetailComponent.location')}</h2>
                       <div className='item-job-recruitment'>
                         <FontAwesomeIcon icon={faMapLocation} color={COLOR_GREY} />
                         <p className='ml-4 mb-0'>{data.location}</p>
@@ -139,7 +129,7 @@ export default function RecruitmentDetailsPage() {
                     </div>
                   </div>
                   <div className='group-recruitment-content'>
-                    <h1 className='fw-700 fs-3 pt-3 text-black'>{TEXT_BENEFIT}</h1>
+                    <h1 className='fw-700 fs-3 pt-3 text-black'>{t('RecuitmentPostDetailComponent.benefit')}</h1>
                     <div className='benefit'>
                       {result
                         .filter((item) => item !== '')
@@ -151,7 +141,7 @@ export default function RecruitmentDetailsPage() {
                     </div>
                   </div>
                   <div className='group-recruitment-content'>
-                    <h1 className='fw-700 fs-3 pt-3 text-black'>{TEXT_DESCRIPTION_JOB}</h1>
+                    <h1 className='fw-700 fs-3 pt-3 text-black'>{t('RecuitmentPostDetailComponent.descriptionJob')}</h1>
                     {description
                       .filter((item) => item !== '')
                       .map((item, index) => (
@@ -161,7 +151,7 @@ export default function RecruitmentDetailsPage() {
                       ))}
                   </div>
                   <div className='group-recruitment-content'>
-                    <h1 className='fw-700 fs-3 pt-3 text-black'>{TEXT_REQUIREMENT_JOB}</h1>
+                    <h1 className='fw-700 fs-3 pt-3 text-black'>{t('RecuitmentPostDetailComponent.requipmentJob')}</h1>
                     {requirement
                       .filter((item) => item !== '')
                       .map((item, index) => (
@@ -177,7 +167,7 @@ export default function RecruitmentDetailsPage() {
                     className='font-xsss fw-600 w175 bg-recruitment mt-3 p-3  text-center text-white'
                     onClick={() => handleBtnJobApply(data.title, postId)}
                   >
-                    {TEXT_BTN_APPLY_JOB}
+                    {t('RecuitmentPostDetailComponent.btnApplyJob')}
                   </button>
                 </div>
               </div>

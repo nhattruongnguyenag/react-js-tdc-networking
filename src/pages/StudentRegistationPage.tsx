@@ -18,41 +18,8 @@ import {
 import TextValidate from '../components/TextValidate'
 import ReactLoading from 'react-loading'
 import { handleUploadImage } from '../utils/UploadUtils'
-import {
-  TEXT_ALERT_REGISTER_FAILT,
-  TEXT_ALERT_REGISTER_SUCCESS,
-  TEXT_ERROR_CHECKSAMEEMAIL,
-  TEXT_ERROR_CONFIMPASSWORD,
-  TEXT_ERROR_CONFIMPASS_MATCHPASS,
-  TEXT_ERROR_EMAIL_NOTFORMAT,
-  TEXT_ERROR_EMAIL_NOTIMPTY,
-  TEXT_ERROR_EMAIL_NOTLENGTH,
-  TEXT_ERROR_FACULITYNOTEMPTY,
-  TEXT_ERROR_MAJORNAME,
-  TEXT_ERROR_MAJORNAME_NOTEMPTY,
-  TEXT_ERROR_PASSWORD_NOTFORMAT,
-  TEXT_ERROR_PASSWORD_NOTIMPTY,
-  TEXT_ERROR_PASSWORD_NOTLENGTH,
-  TEXT_ERROR_STUDENTCODE,
-  TEXT_ERROR_STUDENTCODE_NOTFORMAT,
-  TEXT_ERROR_STUDENTCODE_NOTSPECIAL_CHARACTER,
-  TEXT_ERROR_STUDENTNAME,
-  TEXT_ERROR_STUDENTNAME_NOTLENGTHMAX,
-  TEXT_ERROR_STUDENTNAME_NOTSPECIAL_CHARACTER,
-  TEXT_IMAGE_PICKER,
-  TEXT_LOGIN,
-  TEXT_PLACEHOLDER_CONFIMPASS,
-  TEXT_PLACEHOLDER_EMAIL,
-  TEXT_PLACEHOLDER_FACULITY,
-  TEXT_PLACEHOLDER_MAJOR,
-  TEXT_PLACEHOLDER_PASSWORD,
-  TEXT_PLACEHOLDER_STUDENTCODE,
-  TEXT_PLACEHOLDER_STUDENTNAME,
-  TEXT_REGISTER,
-  TEXT_REQUEST_LOGIN,
-  TEXT_TITLE_REGISTER_STUDENT
-} from '../constants/StringVietnamese'
 import { LOGIN_PAGE } from '../constants/Page'
+import { useTranslation } from 'react-multi-lang'
 
 interface RegisterStudent {
   name: InputTextValidate
@@ -76,6 +43,7 @@ const isAllFieldsValid = (validate: RegisterStudent): boolean => {
 }
 
 export default function StudentRegistationPage() {
+  const t = useTranslation()
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [image, setImage] = useState('')
@@ -112,37 +80,37 @@ export default function StudentRegistationPage() {
   const [dataNganhRequest, setDataNganhRequest] = useState([{ id: '', name: '' }])
   const [validate, setValidate] = useState<RegisterStudent>({
     name: {
-      textError: TEXT_ERROR_STUDENTNAME,
+      textError: t('RegisterStudentComponent.errorStudentNameEmpty'),
       isVisible: false,
       isError: true
     },
     email: {
-      textError: TEXT_ERROR_EMAIL_NOTIMPTY,
+      textError: t('RegisterStudentComponent.errorEmailEmpty'),
       isVisible: false,
       isError: true
     },
     studentCode: {
-      textError: TEXT_ERROR_STUDENTCODE,
+      textError: t('RegisterStudentComponent.errorStudentCodeEmpty'),
       isVisible: false,
       isError: true
     },
     facultyName: {
-      textError: TEXT_ERROR_FACULITYNOTEMPTY,
+      textError: t('RegisterStudentComponent.errorFaculityEmpty'),
       isVisible: false,
       isError: true
     },
     major: {
-      textError: TEXT_ERROR_MAJORNAME,
+      textError: t('RegisterStudentComponent.errorMajor'),
       isVisible: false,
       isError: true
     },
     password: {
-      textError: TEXT_ERROR_PASSWORD_NOTIMPTY,
+      textError: t('RegisterStudentComponent.errorPasswordEmpty'),
       isVisible: false,
       isError: true
     },
     confimPassword: {
-      textError: TEXT_ERROR_CONFIMPASSWORD,
+      textError: t('RegisterStudentComponent.errorConfimPasswordEmpty'),
       isVisible: false,
       isError: true
     }
@@ -157,7 +125,7 @@ export default function StudentRegistationPage() {
             ...validate.name,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_STUDENTNAME
+            textError: t('RegisterStudentComponent.errorStudentNameEmpty')
           }
         })
       } else if (isContainSpecialCharacter(event.target.value)) {
@@ -166,7 +134,7 @@ export default function StudentRegistationPage() {
           name: {
             ...validate.name,
             isError: true,
-            textError: TEXT_ERROR_STUDENTNAME_NOTSPECIAL_CHARACTER,
+            textError: t('RegisterStudentComponent.errorStudentNameNotSpecial'),
             isVisible: true
           }
         })
@@ -176,7 +144,7 @@ export default function StudentRegistationPage() {
           name: {
             ...validate.name,
             isError: true,
-            textError: TEXT_ERROR_STUDENTNAME_NOTLENGTHMAX,
+            textError: t('RegisterStudentComponent.errorStudentNameNotLengthMax'),
             isVisible: true
           }
         })
@@ -204,7 +172,7 @@ export default function StudentRegistationPage() {
             ...validate.studentCode,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_STUDENTCODE
+            textError: t('RegisterStudentComponent.errorStudentCodeEmpty')
           }
         })
       } else if (isContainSpecialCharacter(event.target.value)) {
@@ -214,7 +182,7 @@ export default function StudentRegistationPage() {
             ...validate.studentCode,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_STUDENTCODE_NOTSPECIAL_CHARACTER
+            textError: t('RegisterStudentComponent.errorStudentCodeNotSpecial')
           }
         })
       } else if (!stCode.test(event.target.value)) {
@@ -224,7 +192,7 @@ export default function StudentRegistationPage() {
             ...validate.studentCode,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_STUDENTCODE_NOTFORMAT
+            textError: t('RegisterStudentComponent.errorStudentCodeNotFormat')
           }
         })
       } else {
@@ -251,7 +219,7 @@ export default function StudentRegistationPage() {
             email: {
               ...validate.email,
               isError: true,
-              textError: TEXT_ERROR_CHECKSAMEEMAIL,
+              textError: t('RegisterStudentComponent.errorSameEmail'),
               isVisible: true
             }
           })
@@ -270,7 +238,7 @@ export default function StudentRegistationPage() {
             ...validate.email,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_EMAIL_NOTIMPTY
+            textError: t('RegisterStudentComponent.errorEmailEmpty')
           }
         })
       } else if (!isLengthInRange(event.target.value, 1, 255)) {
@@ -280,7 +248,7 @@ export default function StudentRegistationPage() {
             ...validate.email,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_EMAIL_NOTLENGTH
+            textError: t('RegisterStudentComponent.errorEmailNotLengthMax')
           }
         })
       } else if (!isEmail(event.target.value)) {
@@ -290,7 +258,7 @@ export default function StudentRegistationPage() {
             ...validate.email,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_EMAIL_NOTFORMAT
+            textError: t('RegisterStudentComponent.errorEmailNotFormat')
           }
         })
       } else {
@@ -316,7 +284,7 @@ export default function StudentRegistationPage() {
             ...validate.password,
             isVisible: true,
             isError: true,
-            textError: TEXT_ERROR_PASSWORD_NOTIMPTY
+            textError: t('RegisterStudentComponent.errorPasswordEmpty')
           }
         })
       } else if (!isLengthInRange(event.target.value, 1, 8)) {
@@ -326,7 +294,7 @@ export default function StudentRegistationPage() {
             ...validate.password,
             isVisible: true,
             isError: true,
-            textError: TEXT_ERROR_PASSWORD_NOTLENGTH
+            textError: t('RegisterStudentComponent.errorPassNotLengthMax')
           }
         })
       } else if (!isPassword(event.target.value)) {
@@ -336,7 +304,7 @@ export default function StudentRegistationPage() {
             ...validate.password,
             isVisible: true,
             isError: true,
-            textError: TEXT_ERROR_PASSWORD_NOTFORMAT
+            textError: t('RegisterStudentComponent.errorPassNotFormat')
           }
         })
       } else {
@@ -362,7 +330,7 @@ export default function StudentRegistationPage() {
             ...validate.confimPassword,
             isVisible: true,
             isError: true,
-            textError: TEXT_ERROR_CONFIMPASSWORD
+            textError: t('RegisterStudentComponent.errorConfimPasswordEmpty')
           }
         })
       } else if (event.target.value != student.password) {
@@ -372,7 +340,7 @@ export default function StudentRegistationPage() {
             ...validate.confimPassword,
             isVisible: true,
             isError: true,
-            textError: TEXT_ERROR_CONFIMPASS_MATCHPASS
+            textError: t('RegisterStudentComponent.errorConfimPassNotMatch')
           }
         })
       } else {
@@ -398,7 +366,7 @@ export default function StudentRegistationPage() {
             ...validate.major,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_MAJORNAME_NOTEMPTY
+            textError: t('RegisterStudentComponent.errorMajorEmpty')
           }
         })
       } else {
@@ -424,7 +392,7 @@ export default function StudentRegistationPage() {
             ...validate.facultyName,
             isVisible: true,
             isError: true,
-            textError: TEXT_ERROR_FACULITYNOTEMPTY
+            textError: t('RegisterStudentComponent.errorFaculityEmpty')
           }
         })
       } else {
@@ -482,13 +450,13 @@ export default function StudentRegistationPage() {
         .post<Student, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/student/register', student)
         .then((response) => {
           setIsLoading(false)
-          toast.success(TEXT_ALERT_REGISTER_SUCCESS)
+          toast.success(t('RegisterStudentComponent.registerSusccess'))
           navigate(LOGIN_PAGE)
         })
         .catch((error) => {
           console.log(error)
           setIsLoading(false)
-          toast.error(TEXT_ALERT_REGISTER_FAILT)
+          toast.error(t('RegisterStudentComponent.registerFail'))
         })
     } else {
       let key: keyof RegisterStudent
@@ -529,7 +497,7 @@ export default function StudentRegistationPage() {
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
             <div className='login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
-                <h2 className='fw-700 display1-size display2-md-size mb-3'>{TEXT_TITLE_REGISTER_STUDENT}</h2>
+                <h2 className='fw-700 display1-size display2-md-size mb-3'>{t('RegisterStudentComponent.titleRegisterStudent')}</h2>
                 <form className='register'>
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-user text-grey-500 pe-0'> </i>
@@ -537,7 +505,7 @@ export default function StudentRegistationPage() {
                       type='text'
                       onChange={(e) => handleStudentNameChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_STUDENTNAME}
+                      placeholder={t('RegisterStudentComponent.titleStudentName')}
                       style={{ borderColor: !validate.name?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -552,7 +520,7 @@ export default function StudentRegistationPage() {
                       type='text'
                       onChange={(e) => handleStudentCodeChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_STUDENTCODE}
+                      placeholder={t('RegisterStudentComponent.titleStudentCode')}
                       style={{ borderColor: !validate.studentCode?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -568,7 +536,7 @@ export default function StudentRegistationPage() {
                       onChange={(e) => handleEmailChange(e)}
                       onBlur={() => handleCheckEmail()}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_EMAIL}
+                      placeholder={t('RegisterStudentComponent.titleEmail')}
                       style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -584,7 +552,7 @@ export default function StudentRegistationPage() {
                       onChange={(e) => handleFacultyNameChange(e)}
                       style={{ borderColor: !validate.facultyName?.isError ? '#228b22' : '#eee' }}
                     >
-                      <option hidden>{TEXT_PLACEHOLDER_FACULITY}</option>
+                      <option hidden>{t('RegisterStudentComponent.titleFaculity')}</option>
                       {dataRequest.map((item, index) => (
                         <option value={item.name} key={index}>
                           {item.name}
@@ -604,7 +572,7 @@ export default function StudentRegistationPage() {
                       onChange={(e) => handleMajorNameChange(e)}
                       style={{ borderColor: !validate.major?.isError ? '#228b22' : '#eee' }}
                     >
-                      <option hidden>{TEXT_PLACEHOLDER_MAJOR}</option>
+                      <option hidden>{t('RegisterStudentComponent.titleMajor')}</option>
                       {dataNganhRequest.map((item, index) => (
                         <option value={item.name} key={index}>
                           {item.name}
@@ -622,7 +590,7 @@ export default function StudentRegistationPage() {
                       type='Password'
                       onChange={(e) => handlePasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_PASSWORD}
+                      placeholder={t('RegisterStudentComponent.titlePass')}
                       style={{ borderColor: !validate.password?.isError ? '#228b22' : '#eee' }}
                     />
                     <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
@@ -637,7 +605,7 @@ export default function StudentRegistationPage() {
                       type='Password'
                       onChange={(e) => handleConfirmPasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_CONFIMPASS}
+                      placeholder={t('RegisterStudentComponent.titleConfimPass')}
                       style={{ borderColor: !validate.confimPassword?.isError ? '#228b22' : '#eee' }}
                     />
                     <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
@@ -662,7 +630,7 @@ export default function StudentRegistationPage() {
                       ref={buttonCallPickerImgRef}
                     >
                       <i className='font-md text-success feather-image me-2'></i>
-                      <span className='d-none-xs'>{TEXT_IMAGE_PICKER}</span>
+                      <span className='d-none-xs'>{t('RegisterStudentComponent.avata')}</span>
                     </button>
                   </div>
                   <div className='img'>{image ? <img src={image} className='avatar' /> : ''}</div>
@@ -675,7 +643,7 @@ export default function StudentRegistationPage() {
                         className='form-control style2-input fw-600 bg-blue border-0 p-0 text-center text-white'
                         onClick={() => onSubmit()}
                       >
-                        {TEXT_REGISTER}
+                        {t('RegisterStudentComponent.titleRegister')}
                       </button>
                       <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#ffff' height={50} width={50} />
@@ -683,9 +651,9 @@ export default function StudentRegistationPage() {
                     </div>
                   </div>
                   <h6 className='text-grey-500 font-xsss fw-500 lh-32 mb-0 mt-0'>
-                    {TEXT_REQUEST_LOGIN}
+                    {t('RegisterStudentComponent.requestLogin')}
                     <button className='fw-700 txt-blue ms-1' onClick={() => navigate(LOGIN_PAGE)}>
-                      {TEXT_LOGIN}
+                      {t('RegisterStudentComponent.titleLogin')}
                     </button>
                   </h6>
                 </div>

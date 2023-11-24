@@ -11,16 +11,11 @@ import DefaultAvatar from '../components/common/DefaultAvatar'
 import { formatDateTime } from '../utils/FormatTime'
 import { toast } from 'react-toastify'
 import Loading from '../components/common/Loading'
-import {
-  TEXT_NOTIFICATION_LIST_EMPTY,
-  TEXT_NOTIFICATION_PHONE_NULL,
-  TEXT_SEE_CV,
-  TEXT_TITLE_DOWNLOAD_CV,
-  TEXT_TITLE_LIST_JOB_APPLY
-} from '../constants/StringVietnamese'
-import { BUSINESS_DASHBOARD_PAGE, DETAILS_JOB_APPLY } from '../constants/Page'
+import { DETAILS_JOB_APPLY } from '../constants/Page'
+import { useTranslation } from 'react-multi-lang'
 
 export default function ListJobApplyPage() {
+  const t = useTranslation()
   const navigate = useNavigate()
   const [listJob, setListJob] = useState([
     {
@@ -58,7 +53,7 @@ export default function ListJobApplyPage() {
   useEffect(() => {
     if (listJob.length == 0) {
       navigate(-1)
-      toast(TEXT_NOTIFICATION_LIST_EMPTY)
+      toast(t('ListJobApplyComponent.listEmpty'))
     }
   })
   const handleBtnJobApply = (username: string, cvID: number) => {
@@ -75,7 +70,7 @@ export default function ListJobApplyPage() {
               <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                 <i className='ti-arrow-left font-sm text-white' />
               </button>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{TEXT_TITLE_LIST_JOB_APPLY}</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{t('ListJobApplyComponent.titleListJobApply')}</h4>
             </div>
             {isLoading ? (
               <div className='ml-[-320px] mt-[-100px] flex h-screen items-center justify-center'>
@@ -108,7 +103,7 @@ export default function ListJobApplyPage() {
                         <div className='item-job'>
                           <FontAwesomeIcon icon={faPhoneVolume} />
                           {item.user.phone === null ? (
-                            <p className='fw-500 ms-2 mb-0 text-black'>{TEXT_NOTIFICATION_PHONE_NULL}</p>
+                            <p className='fw-500 ms-2 mb-0 text-black'>{t('ListJobApplyComponent.updateNull')}</p>
                           ) : (
                             <p className='fw-500 ms-2 mb-0 text-black'>{item.user.phone}</p>
                           )}
@@ -124,7 +119,7 @@ export default function ListJobApplyPage() {
                             className='txt text-green ms-2'
                             onClick={() => handleBtnJobApply(item.user.name, item.id)}
                           >
-                            {TEXT_SEE_CV}
+                            {t('ListJobApplyComponent.seeDetailCV')}
                           </button>
                         </div>
                       </div>
@@ -133,7 +128,7 @@ export default function ListJobApplyPage() {
                     <div className='date'>
                       <p className='fw-600 mb-0'>{formatDateTime(item.createdAt)}</p>
                       <a className='download' href={SERVER_ADDRESS + 'api/files/' + item.cvUrl} download={item.cvUrl}>
-                        {TEXT_TITLE_DOWNLOAD_CV}
+                        {t('ListJobApplyComponent.titleDownloadCv')}
                       </a>
                     </div>
                   </div>
