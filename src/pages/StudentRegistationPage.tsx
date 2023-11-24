@@ -90,26 +90,28 @@ export default function StudentRegistationPage() {
     email: '',
     name: '',
     image: '',
-    facultyName: '',
-    major: '',
+    facultyId: 0,
+    majorId: 0,
     studentCode: '',
     confimPassword: '',
     facultyGroupCode: '',
-    facultyGroupId: 0
+    facultyGroupId: 0,
+    phone:'',
+    background:''
   })
   const [dataRequest, setDataRequest] = useState([
     {
-      id: '',
+      id: 0,
       name: '',
       majors: [
         {
-          id: '',
+          id: 0,
           name: ''
         }
       ]
     }
   ])
-  const [dataNganhRequest, setDataNganhRequest] = useState([{ id: '', name: '' }])
+  const [dataNganhRequest, setDataNganhRequest] = useState([{ id: 0, name: '' }])
   const [validate, setValidate] = useState<RegisterStudent>({
     name: {
       textError: TEXT_ERROR_STUDENTNAME,
@@ -402,7 +404,7 @@ export default function StudentRegistationPage() {
           }
         })
       } else {
-        setStudent({ ...student, major: event.target.value })
+        setStudent({ ...student, majorId: event.target.value })
         setValidate({
           ...validate,
           major: {
@@ -428,7 +430,7 @@ export default function StudentRegistationPage() {
           }
         })
       } else {
-        setStudent({ ...student, facultyName: event.target.value })
+        setStudent({ ...student, facultyId: event.target.value })
         setValidate({
           ...validate,
           facultyName: {
@@ -448,7 +450,7 @@ export default function StudentRegistationPage() {
       .then((response) => {
         setDataRequest(response.data.data)
         dataRequest.map((data) => {
-          if (data.name == student.facultyName) {
+          if (data.id == student.facultyId) {
             setDataNganhRequest(data.majors)
           }
         })
@@ -457,7 +459,7 @@ export default function StudentRegistationPage() {
         console.log(error)
       })
   }, [student])
-
+   
   const onSelectUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
       setImage(URL.createObjectURL(event.target.files[0]))
@@ -467,7 +469,9 @@ export default function StudentRegistationPage() {
       })
     }
   }
-
+  console.log(student.facultyId)
+  console.log(student.majorId)
+  
   const handleGetFiles = () => {
     if (fileInputRef.current) {
       fileInputRef.current.showPicker()
@@ -586,7 +590,7 @@ export default function StudentRegistationPage() {
                     >
                       <option hidden>{TEXT_PLACEHOLDER_FACULITY}</option>
                       {dataRequest.map((item, index) => (
-                        <option value={item.name} key={index}>
+                        <option value={item.id} key={index}>
                           {item.name}
                         </option>
                       ))}
@@ -606,7 +610,7 @@ export default function StudentRegistationPage() {
                     >
                       <option hidden>{TEXT_PLACEHOLDER_MAJOR}</option>
                       {dataNganhRequest.map((item, index) => (
-                        <option value={item.name} key={index}>
+                        <option value={item.id} key={index}>
                           {item.name}
                         </option>
                       ))}

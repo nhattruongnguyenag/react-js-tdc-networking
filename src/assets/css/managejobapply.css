@@ -1,0 +1,65 @@
+.manage-item-job-apply {
+    background-color: #fff;
+    box-shadow: 2px 2px 5px 3px #E0F4FF;
+    border-radius: 10px;
+    padding: 10px 40px;
+    width: 80%;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .item-job {
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .tam {
+    display: flex;
+  }
+
+  .defaultImage {
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+
+  .datetime{
+    display: flex;
+    align-items: center;
+  }
+
+  .btnBottom {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-between;
+    
+  }
+  
+  .txtBtnBottom {
+    font-size: 16px;
+    font-weight: bold;
+    color: #26C281;
+    padding: 2px 5px;
+    border-radius: 10px;
+  }
+
+  .selectType{
+    line-height: 100%;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 1.2rem;
+  }
+  
+  

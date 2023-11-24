@@ -9,6 +9,7 @@ export interface User {
   isMessageConnect: number
   updatedAt: string
   roleCodes: string
+  phone: string
   code: string
   facultyGroupCode: string | undefined
   facultyGroupId: number | undefined
