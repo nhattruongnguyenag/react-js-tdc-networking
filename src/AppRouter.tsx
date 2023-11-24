@@ -14,6 +14,7 @@ import {
   JOB_APPLY_PAGE,
   LIST_JOB_APPLY_PAGE,
   LOGIN_PAGE,
+  MANAGEMENT_JOB_APPLY_PAGE,
   MESSAGE_PAGE,
   RECRUITMENT_DETAILS_PAGE,
   REGISTER_BUSINESS_PAGE,
@@ -57,6 +58,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage'
 import DetailJobApply from './pages/DetailJobApply'
 import ListJobApplyPage from './pages/ListJobApplyPage'
 import SurveyResultPage from './pages/SurveyResultPage'
+import ManagementJobApplyPage from './pages/ManagementJobApplyPage'
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -93,6 +95,7 @@ export default function AppRouter() {
             <Route path={DETAILS_JOB_APPLY + '/:slug'} element={<DetailJobApply />} />
             <Route path={LIST_JOB_APPLY_PAGE + '/:slug'} element={<ListJobApplyPage />} />
             <Route path={SURVEY_RESULT_PAGE + '/:slug'} element={<SurveyResultPage />} />
+            <Route path={MANAGEMENT_JOB_APPLY_PAGE} element={<ManagementJobApplyPage />} />
             <Route path='*' element={<NoPage />} />
             <Route path='/' element={<IntroducePage />} />
           </Route>
