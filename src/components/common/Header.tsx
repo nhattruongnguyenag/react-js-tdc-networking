@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, memo, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAppDispatch } from '../../redux/Hook'
 import { toggleDarkMode } from '../../redux/Slice'
@@ -13,7 +13,7 @@ import {
 } from '../../constants/Page'
 import NavItem from './NavItem'
 
-export default function Header() {
+function Header() {
   const location = useLocation()
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
@@ -287,3 +287,5 @@ export default function Header() {
     </Fragment>
   )
 }
+
+export default memo(Header)

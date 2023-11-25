@@ -49,7 +49,7 @@ export default function ConversationItem(props: ConversationItemProps) {
               </div>
             )}
           </div>
-          <h6 className='font-xssss text-grey-900 text-grey-900 fw-700 mb-0 mt-0'>{props.data?.receiver.name}</h6>
+          <h6 className='font-xssss text-grey-900 text-grey-900 fw-700 mb-0 mt-0 '>{props.data?.receiver.name}</h6>
         </div>
 
         <div className='email-text text-grey-500 fw-600 font-xssss'>{lastMessageContent}</div>

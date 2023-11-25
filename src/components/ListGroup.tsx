@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import CustomizeGroupItem from './group/CustomizeGroupItem'
 import { useAppSelector } from '../redux/Hook'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 
-export default function ListGroup() {
+function ListGroup() {
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [data, setData] = useState([])
 
@@ -42,3 +42,5 @@ export default function ListGroup() {
     </div>
   )
 }
+
+export default memo(ListGroup)
