@@ -7,12 +7,10 @@
 }
 
 .containerBodyProfile {
-  padding-left: 50px;
   padding-right: 50px;
 }
 
 .backgroundHeaderProfile {
-  
 }
 
 .avatarHeaderProfile {
@@ -26,7 +24,7 @@
   position: absolute;
 }
 
-.avatarHeaderProfileDefault{
+.avatarHeaderProfileDefault {
   width: 150px;
   height: 150px;
   border-radius: 150px;
@@ -80,17 +78,22 @@
   font-weight: bold;
 }
 
-.txtTitleInUserProfile{
+.txtTitleInUserProfile {
   color: black;
   font-weight: bold;
 }
 
-.wrapperTitleUserProfile{
+.wrapperTitleUserProfile {
   display: flex;
   align-items: center;
 }
 
-.iconArrowToRightUserProfile{
+.iconArrowToRightUserProfile {
   padding-left: 2px;
   padding-right: 2px;
+}
+
+.spinnerLoading {
+  position: absolute;
+  top: 10px;
 }

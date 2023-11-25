@@ -9,8 +9,10 @@ export interface CustomizeProfileType {
     data: Object[]
     role: string
     userData: any
+    isFollow: boolean,
+    isSameUser: boolean,
     handleClickButtonEvent: (a: number) => void
-    handleClickIntoHeaderComponentEvent: (a: number) => void
+    handleClickIntoHeaderComponentEvent: (a: number) => void,
 }
 
 export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) {
@@ -24,7 +26,10 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
                     phone={props.userData.phone ?? TEXT_UN_UPDATE}
                     email={props.userData.email ?? TEXT_UN_UPDATE}
                     numberPost={props.data.length ?? 0}
-                    name={props.userData.name ?? TEXT_UN_UPDATE} />
+                    name={props.userData.name ?? TEXT_UN_UPDATE}
+                    isFollow={props.isFollow}
+                    isSameUser={props.isSameUser}
+                />
                 break;
             case TYPE_POST_BUSINESS:
                 body = <CustomizeBodyBusinessProfile
@@ -36,7 +41,10 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
                     phone={props.userData.phone ?? TEXT_UN_UPDATE}
                     email={props.userData.email ?? TEXT_UN_UPDATE}
                     name={props.userData.name}
-                    numberPost={props.data.length ?? 0} />
+                    numberPost={props.data.length ?? 0}
+                    isFollow={props.isFollow}
+                    isSameUser={props.isSameUser}
+                />
                 break;
             case TYPE_POST_FACULTY:
                 body = <CustomizeBodyFacultyProfile
@@ -46,7 +54,10 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
                     phone={props.userData.phone ?? TEXT_UN_UPDATE}
                     email={props.userData.email ?? TEXT_UN_UPDATE}
                     name={props.userData.name ?? TEXT_UN_UPDATE}
-                    numberPost={props.data.length ?? 0} />
+                    numberPost={props.data.length ?? 0}
+                    isFollow={props.isFollow}
+                    isSameUser={props.isSameUser}
+                />
                 break;
             default:
                 break;
@@ -56,11 +67,11 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
 
 
     return (
-        <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4 text-center'>
+        <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4'>
             <div className='snippet me-auto ms-auto mt-2' data-title='.dot-typing'>
                 {
                     props.userData && <CustomizeHeaderProfile
-                        background={props.userData.image}
+                        background={props.userData.background}
                         avatar={props.userData.image}
                         name={props.userData.name}
                         handleClickIntoHeaderComponentEvent={

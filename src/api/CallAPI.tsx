@@ -74,3 +74,11 @@ export const createNorMalPostAPI = async (urlCreateNormalPost: string, _data: an
     } catch (error) {
     }
 }
+
+export const followAPI = async (urlFollow: string, followData: any) => {
+    try {
+        const response = await axios.post(urlFollow, followData);
+        return response.data.status;
+    } catch (error) {
+    }
+}

@@ -15,6 +15,7 @@ export const CALL_ACTION = 0;
 export const FOLLOW_ACTION = 1;
 export const MESSENGER_ACTION = 2;
 export const MENU_CLICK_ACTION = 3;
+export const CHANGE_INFO_USER_CLICK_ACTION = 4;
 export const SEE_BACKGROUND = 0;
 export const SEE_AVATAR = 1;
 export const CLICK_CAMERA_AVATAR_EVENT = 2;
