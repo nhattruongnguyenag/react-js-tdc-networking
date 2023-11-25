@@ -30,4 +30,5 @@ export interface Post {
   isConduct: number | null
   isSave: number
   group: string
+  handleUnSave: (post_id: number) => void | undefined
 }
