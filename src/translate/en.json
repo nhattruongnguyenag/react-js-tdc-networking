@@ -266,5 +266,22 @@
             "englishGroup": "English Group",
             "koreanGroup": "Korean Group",
             "japaneseLanguageDepartmentGroup": "Japanese Language Department Group"
+        },
+        "ModalUpdate":{
+            "modalUpdateTitle": "Update Account Information",
+            "modalUpdatePlaceholderPhoneNumber": "Phone Number",
+            "modalUpdatePlaceholderEmail": "Email",
+            "modalUpdateBackground": "Background Image",
+            "modalUpdateAvatar": "Profile Picture",
+            "modalUpdateButtonText": "Update"
+        },
+        "Validate": {
+            "validatePhoneNull": "Phone number cannot be empty",
+            "validatePhoneUnCorrectFormat": "Incorrect phone number format",
+            "validateEmailNull": "Email cannot be empty",
+            "validateEmailUnCorrectFormat": "Incorrect email format",
+            "validateEmailHadUsed": "Email has already been registered, please enter a different email",
+            "validateEmailHasMaxLength": "Email must not exceed 255 characters"
         }
+        
     }

@@ -266,5 +266,22 @@
         "group_tieng_anh": "Nhóm Tiếng Anh",
         "group_tieng_han": "Nhóm Tiếng Hàn",
         "group_bo_mon_tieng_nhat": "Nhóm Bộ môn Tiếng Nhật"
-    }                                
+    },
+    "ModalUpdate": {
+        "modalUpdateTitle": "Cập Nhật Thông Tin Tài Khoản",
+        "modalUpdatePlaceholderPhoneNumber": "Số Điện Thoại",
+        "modalUpdatePlaceholderEmail": "Email",
+        "modalUpdateBackground": "Hình Nền",
+        "modalUpdateAvatar": "Ảnh Đại Diện",
+        "modalUpdateButtonText": "Cập Nhật"
+    },
+    "Validate":{
+        "validatePhoneNull":"Số điện thoại không được để trống",
+        "validatePhoneUnCorrectFormat":"Số điện thoại sai định dạng",
+        "validateEmailNull":"Số điện thoại không được để trống",
+        "validateEmailUnCorrectFormat":"Email sai định dạng",
+        "validateEmailHadUsed":"Email đã đươck đăng ký, vui lòng nhập email khác",
+        "validateEmailHasMaxLength": "Email không vượt quá 255 ký tự"
+    }
+                                    
 }

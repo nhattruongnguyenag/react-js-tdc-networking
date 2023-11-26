@@ -265,7 +265,24 @@
         "englishGroup": "英語グループ",
         "koreanGroup": "韓国語グループ",
         "japaneseLanguageDepartmentGroup": "日本語学科グループ"
+        },
+        "ModalUpdate":{
+            "modalUpdateTitle": "アカウント情報を更新する",
+            "modalUpdatePlaceholderPhoneNumber": "電話番号",
+            "modalUpdatePlaceholderEmail": "メール",
+            "modalUpdateBackground": "背景画像",
+            "modalUpdateAvatar": "プロフィール画像",
+            "modalUpdateButtonText": "更新する"
+        },
+        "Validate": {
+            "validatePhoneNull": "電話番号は空白にできません",
+            "validatePhoneUnCorrectFormat": "電話番号の形式が正しくありません",
+            "validateEmailNull": "メールは空白にできません",
+            "validateEmailUnCorrectFormat": "メールの形式が正しくありません",
+            "validateEmailHadUsed": "このメールはすでに登録されています。別のメールを入力してください",
+            "validateEmailHasMaxLength": "メールは255文字を超えてはいけません"
         }
+        
     
     
               

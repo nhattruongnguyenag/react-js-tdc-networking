@@ -6,6 +6,7 @@ import CustomizeBodyFacultyProfile from './CustomizeBodyFacultyProfile'
 import { useTranslation } from 'react-multi-lang'
 import { getFacultyTranslated } from '../../utils/TranslateFaculty'
 import { TYPE_POST_BUSINESS, TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
+import { userInfo } from 'os'
 
 export interface CustomizeProfileType {
     t: ReturnType<typeof useTranslation>
@@ -38,9 +39,9 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
             case TYPE_POST_BUSINESS:
                 body = <CustomizeBodyBusinessProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    timeWork={props.userData.timeWork ?? props.t("Profile.unUpdate")}
-                    TaxIdentificationNumber={props.userData.TaxIdentificationNumber ?? props.t("Profile.unUpdate")}
-                    representative={props.userData.representative ?? props.t("Profile.unUpdate")}
+                    timeWork={props.userData.activeTime ?? props.t("Profile.unUpdate")}
+                    TaxIdentificationNumber={props.userData.taxCode ?? props.t("Profile.unUpdate")}
+                    representative={props.userData.representor ?? props.t("Profile.unUpdate")}
                     address={props.userData.address ?? props.t("Profile.unUpdate")}
                     phone={props.userData.phone ?? props.t("Profile.unUpdate")}
                     email={props.userData.email ?? props.t("Profile.unUpdate")}
@@ -54,7 +55,7 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
             case TYPE_POST_FACULTY:
                 body = <CustomizeBodyFacultyProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    timeWork={props.userData.timeWork ?? props.t("Profile.unUpdate")}
+                    timeWork={props.userData.activeTime ?? props.t("Profile.unUpdate")}
                     address={props.userData.address ?? props.t("Profile.unUpdate")}
                     phone={props.userData.phone ?? props.t("Profile.unUpdate")}
                     email={props.userData.email ?? props.t("Profile.unUpdate")}
