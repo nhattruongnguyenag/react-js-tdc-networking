@@ -240,3 +240,5 @@ export const TEXT_NOTIFICATION_PHONE_NULL = 'Chưa được cập nhật'
 export const TEXT_SEE_CV = 'Xem chi tiết cv'
 export const TEXT_NOTIFICATION_LIST_EMPTY = 'Không có hồ sơ ứng tuyển'
 export const TEXT_TITLE_DOWNLOAD_CV = 'Tải cv'
+
+export const TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION = 'Xác thực tài khoản'

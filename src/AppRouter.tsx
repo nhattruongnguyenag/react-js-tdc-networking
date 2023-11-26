@@ -1,7 +1,8 @@
 import classNames from 'classnames'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import {
-  ACCEPT_FORGOT_PASSWORD_PAGE,
+  AUTHENTICATE_REGISTRATION_PAGE,
+  ACCEPT_SEND_EMAIL_PAGE,
   ADD_QUESTION_PAGE,
   BUSINESS_DASHBOARD_PAGE,
   CONVERSATION_PAGE,
@@ -53,12 +54,13 @@ import SurveyConductPage from './pages/SurveyConductPage'
 import UserDetailsPage from './pages/UserDetailsPage'
 import { useAppSelector } from './redux/Hook'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
-import AcceptForgotPasswordPage from './pages/AcceptForgotPasswordPage'
+import AcceptSendEmailPage from './pages/AcceptEmailPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import DetailJobApply from './pages/DetailJobApply'
 import ListJobApplyPage from './pages/ListJobApplyPage'
 import SurveyResultPage from './pages/SurveyResultPage'
 import ManagementJobApplyPage from './pages/ManagementJobApplyPage'
+import AuthenticateRegistrationPage from './pages/AuthenticateRegistrationPage'
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -86,7 +88,7 @@ export default function AppRouter() {
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
             <Route path={FUNCTION_DESCRIPTION_PAGE} element={<DetailIntroducePage />} />
             <Route path={FORGOT_PASSWORD_PAGE} element={<ForgotPasswordPage />} />
-            <Route path={ACCEPT_FORGOT_PASSWORD_PAGE} element={<AcceptForgotPasswordPage />} />
+            <Route path={ACCEPT_SEND_EMAIL_PAGE} element={<AcceptSendEmailPage />} />
             <Route path={RESET_PASSWORD_PAGE + '/:slug'} element={<ResetPasswordPage />} />
             <Route path={USER_DETAILS_PAGE + '/:slug'} element={<UserDetailsPage />} />
             <Route path={JOB_APPLY_PAGE + '/:slug'} element={<JobApplyPage />} />
@@ -96,6 +98,7 @@ export default function AppRouter() {
             <Route path={LIST_JOB_APPLY_PAGE + '/:slug'} element={<ListJobApplyPage />} />
             <Route path={SURVEY_RESULT_PAGE + '/:slug'} element={<SurveyResultPage />} />
             <Route path={MANAGEMENT_JOB_APPLY_PAGE} element={<ManagementJobApplyPage />} />
+            <Route path={AUTHENTICATE_REGISTRATION_PAGE + '/:slug'} element={<AuthenticateRegistrationPage />} />
             <Route path='*' element={<NoPage />} />
             <Route path='/' element={<IntroducePage />} />
           </Route>

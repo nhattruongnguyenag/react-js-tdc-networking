@@ -1,0 +1,34 @@
+/* group css */
+.img-group {
+    background: #000;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.text-group {
+    flex-wrap: wrap;
+}
+
+.group {
+    flex-direction: row;
+}
+
+.wrapper-image {
+    width: 30%;
+}
+
+.wrapper-name {
+    width: 75%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.wrapper-count {
+    width: 20%;
+}
+
+.wrapper-group {
+    width: 120%;
+}
