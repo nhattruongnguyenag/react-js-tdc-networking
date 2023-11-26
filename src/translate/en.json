@@ -163,7 +163,108 @@
     "BarItemComponentNumberVote": {
         "barItemComponentNumberOfVote": " votes"
     },
-    "normalPostComponent":{
-        
+    "Post": {
+        "normalPostIdentifyAuthorCompany": "Business",
+        "normalPostIdentifyAuthorFaculty": "Faculty",
+        "normalPostIdentifyAuthorStudent": "",
+        "typePostRecruitment": "Recruitment",
+        "typePostSurvey": "Survey",
+        "normalPostLike": "Likes",
+        "normalPostComment": "Comments"
+     },
+     "Comment": {
+         "commentReplyComment": "Reply",
+         "commentDeleteComment": "Delete",
+         "commentAuthor": "Author"
+     },
+     "CommentContainer": {
+        "CommentContainerComponentSeeMore": "See More",
+        "CommentContainerComponentHidden": "Hide"
+     },
+     "CreateCommentToolbar":{
+        "commentCreateComment": "Post Comment",
+        "commentPlaceholderInput": "Please enter your comment"
+     },
+     "RecruitmentPost": {
+        "RecruitmentPostType": "Recruitment",
+        "RecruitmentPostButtonSeeDetail": "See Details"
+    },    
+     "SurveyPost": {
+        "SurveyPostType": "Survey",
+        "SurveyPostButton": "Conduct Survey",
+        "SurveyPostButtonSetting": "Edit Survey"
+    },
+    "Faculty":{
+        "FacultyOfElectricalEngineering": "Electrical Engineering Faculty",
+        "FacultyOfInformationTechnology": "Information Technology Faculty",
+        "FacultyOfAutomationTechnology": "Automation Technology Faculty",
+        "FacultyOfMechanicalEngineeringAndManufacturing": "Mechanical Engineering and Manufacturing Faculty",
+        "AutomobileEngineeringDepartment": "Automobile Engineering Department",
+        "FacultyOfFinanceAndAccounting": "Finance and Accounting Faculty",
+        "FacultyOfBusinessAdministration": "Business Administration Faculty",
+        "FacultyOfTourism": "Tourism Faculty",
+        "DepartmentOfEnglish": "English Department",
+        "DepartmentOfKoreanLanguage": "Korean Language Department",
+        "JapaneseLanguageDepartment": "Japanese Language Department"        
+        },
+        "ModalUserLiked": {
+            "ModalUserLikedTitle": "List of users who liked"
+        },
+        "MenuOption": {
+          "menuOptionSaveArticle": "Save post",
+          "menuOptionUnSaveArticle": "Un save post",
+          "menuOptionDeleteArticle": "Delete post",
+          "menuOptionViewResumeList": "View list CV",
+          "menuOptionViewSurveyResults": "View survey results"
+        },
+        "CreatePostToolbar": {
+         "createPostToolbarTitle": "Create New Post",
+         "createPostToolbarNormalPost": "Text/Image",
+         "createPostToolbarSurveyPost": "Create Survey Post",
+         "createPostToolbarRecruitmentPost": "Job Recruitment Post"
+        },
+        "ModalCreateNormalPost": {
+        "modalCreateNormalPostTitle": "Create post",
+        "modalCreateNormalPostPlaceholder": "Please enter your post",
+        "modalCreateNormalPostEntryImages": "Photo",
+        "modalCreateNormalPostButton": "Post"
+        },
+        "BusinessSelectFacultyToolbar": {
+          "businessSelectFacultyToolbarTitle": "Please select the faculty you want to display posts for"
+        },
+        "NotifyFacultyDontHaveAnyPost": {
+            "TextNotifyFacultyDontHaveAnyPost": "No posts available in this faculty"
+        },
+        "Profile":{
+            "ProfileOperatingHours":"Operating hours",
+            "ProfileTaxID":"Tax ID",
+            "ProfileRepresentative":"Representative",
+            "ProfileAddress":"Address",
+            "ProfilePhone":"Phone",
+            "ProfileEmail":"Email",
+            "ProfileArticles ":"Articles",
+            "ProfilePosition":"Position",
+            "ProfileRole":"Student",
+            "Chat": "Send message",
+            "Call": "Call",
+            "UnFollow": "Unfollow",
+            "Follow": "Follow",
+            "UpdateProfile": "Update profile",
+            "unUpdate":"Not updated"
+        },
+        "Group":{
+            "groupTdc": "Group by TDC - Thu Duc College of Technology",
+            "groupConnectBusiness": "Connect Business Community",
+            "electricalElectronicsGroup": "Electrical - Electronics Group",
+            "informationTechnologyGroup": "Information Technology Group",
+            "automationTechnologyGroup": "Automation Technology Group",
+            "mechanicalEngineeringAndManufacturingGroup": "Mechanical Engineering and Manufacturing Group",
+            "automotiveMechanicalGroup": "Automotive Mechanical Group",
+            "financeAccountingGroup": "Finance - Accounting Group",
+            "businessAdministrationGroup": "Business Administration Group",
+            "tourismGroup": "Tourism Group",
+            "englishGroup": "English Group",
+            "koreanGroup": "Korean Group",
+            "japaneseLanguageDepartmentGroup": "Japanese Language Department Group"
+        }
     }
-}

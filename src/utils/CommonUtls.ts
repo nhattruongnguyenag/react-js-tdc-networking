@@ -67,3 +67,11 @@ export function getIdFromSlug(slug: string): number | null {
   }
   return null
 }
+
+export function getTokenFromSlug(slug: string): string | null {
+  const string = slug;
+  if (string != '') {
+    return string
+  }
+  return null
+}

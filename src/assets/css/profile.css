@@ -97,3 +97,7 @@
   position: absolute;
   top: 10px;
 }
+
+.imageUpdate {
+  object-fit: cover;
+}

@@ -162,5 +162,109 @@
     },
     "BarItemComponentNumberVote": {
         "barItemComponentNumberOfVote": " lượt bình chọn"
-    }
+    },
+    "Post":{
+        "normalPostIdentifyAuthorCompany": "Doanh nghiệp",
+        "normalPostIdentifyAuthorFaculty": "Khoa",
+        "normalPostIdentifyAuthorStudent": "",
+        "typePostRecruitment":"Tuyển dụng",
+        "typePostSurvey":"Khảo sát",
+        "normalPostLike":"Lượt thích",
+        "normalPostComment":"Bình luận"
+     },
+     "Comment": {
+         "commentReplyComment":"Trả lời",
+         "commentDeleteComment":"Xóa",
+         "commentAuthor": "Tác giả"
+     },
+     "CommentContainer": {
+        "CommentContainerComponentSeeMore": "Xem thêm",
+        "CommentContainerComponentHidden": "Ẩn bớt"
+     },
+     "CreateCommentToolbar":{
+        "commentCreateComment": "Đăng bình luận",
+        "commentPlaceholderInput":"Hãy nhập nội dung bình luận"
+     },
+     "RecruitmentPost": {
+        "RecruitmentPostType": "Tuyển dụng",
+        "RecruitmentPostButtonSeeDetail": "Xem chi tiết"
+    },    
+     "SurveyPost": {
+        "SurveyPostType": "Khảo sát",
+        "SurveyPostButton": "Tiến hành khảo sát",
+        "SurveyPostButtonSetting": "Chỉnh sửa câu trả lời"
+    },
+    "Faculty":{
+        "FacultyOfElectricalEngineering": "Khoa điện - Điện tử",
+        "FacultyOfInformationTechnology": "Khoa Công Nghệ Thông Tin",
+        "FacultyOfAutomationTechnology": "Khoa Công Nghệ Tự Động",
+        "FacultyOfMechanicalEngineeringAndManufacturing": "Khoa Cơ Khí Chế Tạo Máy",
+        "AutomobileEngineeringDepartment": "Khoa Cơ Khí Ô Tô",
+        "FacultyOfFinanceAndAccounting": "Khoa Tài Chính - Kế Toán",
+        "FacultyOfBusinessAdministration": "Khoa Quản Trị Kinh Doanh",
+        "FacultyOfTourism": "Khoa Du Lịch",
+        "DepartmentOfEnglish": "Khoa Tiếng Anh",
+        "DepartmentOfKoreanLanguage": "Khoa Tiếng Hàn",
+        "JapaneseLanguageDepartment": "Khoa Bộ Môn Tiếng Nhật"
+    },
+    "ModalUserLiked":{
+        "ModalUserLikedTitle":"Danh sách người dùng đã like"
+    },
+    "MenuOption":{
+        "menuOptionSaveArticle": "Lưu bài viết",
+        "menuOptionUnSaveArticle": "Hủy lưu bài viết",
+        "menuOptionDeleteArticle": "Xóa bài viết",
+        "menuOptionViewResumeList": "Xem danh sách CV",
+        "menuOptionViewSurveyResults": "Xem kết quả khảo sát"
+    },
+    "CreatePostToolbar": {
+        "createPostToolbarTitle": "Tạo Bài Viết Mới",
+        "createPostToolbarNormalPost": "Văn bản/Hình ảnh",
+        "createPostToolbarSurveyPost": "Tạo Bài Viết Khảo Sát",
+        "createPostToolbarRecruitmentPost": "Tin Tuyển Dụng"
+    },
+    "ModalCreateNormalPost": {
+      "modalCreateNormalPostTitle": "Tạo bài viết",
+      "modalCreateNormalPostPlaceholder": "Vui lòng nhập nội dung bài viết",
+      "modalCreateNormalPostEntryImages": "Ảnh",
+      "modalCreateNormalPostButton": "Đăng bài viết"
+    },
+    "BusinessSelectFacultyToolbar":{
+        "businessSelectFacultyToolbarTitle":"Hãy lựa chọn khoa mà bạn muốn hiển thị bài viết"
+    },
+    "NotifyFacultyDontHaveAnyPost": {
+        "TextNotifyFacultyDontHaveAnyPost": "Chưa có bài viết nào ở khoa này"
+      },
+      "Profile": {
+        "ProfileOperatingHours": "Giờ làm việc",
+        "ProfileTaxID": "Mã số thuế",
+        "ProfileRepresentative": "Đại diện",
+        "ProfileAddress": "Địa chỉ",
+        "ProfilePhone": "Điện thoại",
+        "ProfileEmail": "Email",
+        "ProfileArticles": "Bài viết",
+        "ProfilePosition": "Vị trí",
+        "ProfileRole": "Sinh viên",
+        "Chat": "Nhắn tin",
+        "Call": "Gọi điện",
+        "UnFollow": "Hủy theo dõi",
+        "Follow": "Theo dõi",
+        "UpdateProfile": "Cập nhật thông tin cá nhân",
+        "unUpdate":"chưa được cập nhật "
+    },
+    "Group": {
+        "group_tdc": "Nhóm theo TDC - Trường Cao đẳng Công nghệ Thủ Đức",
+        "group_connect_business": "Nhóm Kết nối Cộng đồng Kinh doanh",
+        "group_dien_dien_tu": "Nhóm Điện - Điện tử",
+        "group_cong_nghe_thong_tin": "Nhóm Công nghệ Thông tin",
+        "group_cong_nghe_tu_dong": "Nhóm Công nghệ Tự động hóa",
+        "group_co_khi_che_tao_may": "Nhóm Cơ khí - Chế tạo máy",
+        "group_co_khi_oto": "Nhóm Cơ khí Ô tô",
+        "group_tai_chinh_ke_toan": "Nhóm Tài chính - Kế toán",
+        "group_quan_tri_kinh_doanh": "Nhóm Quản trị Kinh doanh",
+        "group_du_lich": "Nhóm Du lịch",
+        "group_tieng_anh": "Nhóm Tiếng Anh",
+        "group_tieng_han": "Nhóm Tiếng Hàn",
+        "group_bo_mon_tieng_nhat": "Nhóm Bộ môn Tiếng Nhật"
+    }                                
 }

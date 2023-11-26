@@ -1,11 +1,14 @@
 import React from 'react'
-import { TEXT_UN_UPDATE, TYPE_POST_BUSINESS, TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
 import CustomizeBodyStudentProfile from './CustomizeBodyStudentProfile'
 import CustomizeHeaderProfile from './CustomizeHeaderProfile'
 import CustomizeBodyBusinessProfile from './CustomizeBodyBusinessProfile'
 import CustomizeBodyFacultyProfile from './CustomizeBodyFacultyProfile'
+import { useTranslation } from 'react-multi-lang'
+import { getFacultyTranslated } from '../../utils/TranslateFaculty'
+import { TYPE_POST_BUSINESS, TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
 
 export interface CustomizeProfileType {
+    t: ReturnType<typeof useTranslation>
     data: Object[]
     role: string
     userData: any
@@ -22,41 +25,44 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
             case TYPE_POST_STUDENT:
                 body = <CustomizeBodyStudentProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    position={props.userData.position ?? 'Sinh viên'}
-                    phone={props.userData.phone ?? TEXT_UN_UPDATE}
-                    email={props.userData.email ?? TEXT_UN_UPDATE}
+                    position={props.userData.position ?? props.t("Profile.ProfileRole")}
+                    phone={props.userData.phone ?? props.t("Profile.unUpdate")}
+                    email={props.userData.email ?? props.t("Profile.unUpdate")}
                     numberPost={props.data.length ?? 0}
-                    name={props.userData.name ?? TEXT_UN_UPDATE}
+                    name={props.userData.name ?? props.t("Profile.unUpdate")}
                     isFollow={props.isFollow}
                     isSameUser={props.isSameUser}
+                    t={props.t}
                 />
                 break;
             case TYPE_POST_BUSINESS:
                 body = <CustomizeBodyBusinessProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    timeWork={props.userData.timeWork ?? TEXT_UN_UPDATE}
-                    TaxIdentificationNumber={props.userData.TaxIdentificationNumber ?? TEXT_UN_UPDATE}
-                    representative={props.userData.representative ?? TEXT_UN_UPDATE}
-                    address={props.userData.address ?? TEXT_UN_UPDATE}
-                    phone={props.userData.phone ?? TEXT_UN_UPDATE}
-                    email={props.userData.email ?? TEXT_UN_UPDATE}
+                    timeWork={props.userData.timeWork ?? props.t("Profile.unUpdate")}
+                    TaxIdentificationNumber={props.userData.TaxIdentificationNumber ?? props.t("Profile.unUpdate")}
+                    representative={props.userData.representative ?? props.t("Profile.unUpdate")}
+                    address={props.userData.address ?? props.t("Profile.unUpdate")}
+                    phone={props.userData.phone ?? props.t("Profile.unUpdate")}
+                    email={props.userData.email ?? props.t("Profile.unUpdate")}
                     name={props.userData.name}
                     numberPost={props.data.length ?? 0}
                     isFollow={props.isFollow}
                     isSameUser={props.isSameUser}
+                    t={props.t}
                 />
                 break;
             case TYPE_POST_FACULTY:
                 body = <CustomizeBodyFacultyProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    timeWork={props.userData.timeWork ?? TEXT_UN_UPDATE}
-                    address={props.userData.address ?? TEXT_UN_UPDATE}
-                    phone={props.userData.phone ?? TEXT_UN_UPDATE}
-                    email={props.userData.email ?? TEXT_UN_UPDATE}
-                    name={props.userData.name ?? TEXT_UN_UPDATE}
+                    timeWork={props.userData.timeWork ?? props.t("Profile.unUpdate")}
+                    address={props.userData.address ?? props.t("Profile.unUpdate")}
+                    phone={props.userData.phone ?? props.t("Profile.unUpdate")}
+                    email={props.userData.email ?? props.t("Profile.unUpdate")}
+                    name={props.userData.name ?? props.t("Profile.unUpdate")}
                     numberPost={props.data.length ?? 0}
                     isFollow={props.isFollow}
                     isSameUser={props.isSameUser}
+                    t={props.t}
                 />
                 break;
             default:
@@ -73,7 +79,7 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
                     props.userData && <CustomizeHeaderProfile
                         background={props.userData.background}
                         avatar={props.userData.image}
-                        name={props.userData.name}
+                        name={getFacultyTranslated(props.userData.name, props.t)}
                         handleClickIntoHeaderComponentEvent={
                             props.handleClickIntoHeaderComponentEvent
                         }

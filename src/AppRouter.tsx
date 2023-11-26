@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import {
+  ACCEPT_FORGOT_PASSWORD_PAGE,
   ADD_QUESTION_PAGE,
   BUSINESS_DASHBOARD_PAGE,
   CONVERSATION_PAGE,
@@ -8,6 +9,7 @@ import {
   CREATE_SURVEY_POST_PAGE,
   DETAILS_JOB_APPLY,
   FACULTY_DASHBOARD_PAGE,
+  FORGOT_PASSWORD_PAGE,
   FUNCTION_DESCRIPTION_PAGE,
   JOB_APPLY_PAGE,
   LIST_JOB_APPLY_PAGE,
@@ -17,6 +19,7 @@ import {
   REGISTER_BUSINESS_PAGE,
   REGISTER_PAGE,
   REGISTER_STUDENT_PAGE,
+  RESET_PASSWORD_PAGE,
   REVIEW_SURVEY_POST_PAGE,
   SEARCH_PAGE,
   SETTING_PAGE,
@@ -48,6 +51,9 @@ import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import SurveyConductPage from './pages/SurveyConductPage'
 import UserDetailsPage from './pages/UserDetailsPage'
 import { useAppSelector } from './redux/Hook'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import AcceptForgotPasswordPage from './pages/AcceptForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 import DetailJobApply from './pages/DetailJobApply'
 import ListJobApplyPage from './pages/ListJobApplyPage'
 import SurveyResultPage from './pages/SurveyResultPage'
@@ -77,6 +83,9 @@ export default function AppRouter() {
             <Route path={REGISTER_STUDENT_PAGE} element={<StudentRegistationPage />} />
             <Route path={REGISTER_PAGE} element={<SelectTypeRegistationPage />} />
             <Route path={FUNCTION_DESCRIPTION_PAGE} element={<DetailIntroducePage />} />
+            <Route path={FORGOT_PASSWORD_PAGE} element={<ForgotPasswordPage />} />
+            <Route path={ACCEPT_FORGOT_PASSWORD_PAGE} element={<AcceptForgotPasswordPage />} />
+            <Route path={RESET_PASSWORD_PAGE + '/:slug'} element={<ResetPasswordPage />} />
             <Route path={USER_DETAILS_PAGE + '/:slug'} element={<UserDetailsPage />} />
             <Route path={JOB_APPLY_PAGE + '/:slug'} element={<JobApplyPage />} />
             <Route path={RECRUITMENT_DETAILS_PAGE + '/:slug'} element={<RecruitmentDetailsPage />} />

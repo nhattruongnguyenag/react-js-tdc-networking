@@ -1,9 +1,12 @@
 import React from 'react'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
-import { TEXT_DELETE, TEXT_REPLY } from '../../constants/StringVietnamese'
 import DefaultAvatar from '../common/DefaultAvatar'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faMicrophone} from '@fortawesome/free-solid-svg-icons'
+import { COLOR_BLACK } from '../../constants/Color'
 
 interface CustomizeCommentType {
+    userCreatedPostId: number,
     tagName: string,
     userId: number | undefined,
     authorCommentId: number,
@@ -13,6 +16,9 @@ interface CustomizeCommentType {
     content: string,
     avatar: string,
     timeCreated: string,
+    textReply: string,
+    textDelete: string,
+    textCommentOfAuthor:string,
     handleClickToCommentReplyEvent: (id: number, name: string) => void,
     handleClickToDeleteCommentsEvent: (idComments: number) => void
     handleClickToAvatarAndName: (userId: number) => void
@@ -34,9 +40,9 @@ export default function CustomizeItemComments(props: Readonly<CustomizeCommentTy
                 <div
                     onClick={() => props.handleClickToAvatarAndName(props.authorCommentId)}
                     className='wrapperContent'>
-                    {/* name */}
                     <div
                         className='name'>{props.name}
+                        {' '}{props.userId === props.userCreatedPostId && <span className='typeAuthorShow bg-greylight'><FontAwesomeIcon icon={faMicrophone} size='1x' color={COLOR_BLACK} />{' '}{props.textCommentOfAuthor}</span>}
                     </div>
                 </div>
             </div>
@@ -47,11 +53,11 @@ export default function CustomizeItemComments(props: Readonly<CustomizeCommentTy
                     <button className='txtBlackInfo'>{props.timeCreated}</button>
                     <button
                         onClick={() => props.handleClickToCommentReplyEvent(props.id, props.name)}
-                        className='txtBlackInfo'>{TEXT_REPLY}</button>
+                        className='txtBlackInfo'>{props.textReply}</button>
                     {
                         props.authorCommentId === props.userId && <button
                             onClick={() => props.handleClickToDeleteCommentsEvent(props.id)}
-                            className='txtBlackInfo'>{TEXT_DELETE}</button>
+                            className='txtBlackInfo'>{props.textDelete}</button>
                     }
                 </div>
             </div>

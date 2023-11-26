@@ -161,5 +161,113 @@
     },
     "BarItemComponentNumberVote": {
         "barItemComponentNumberOfVote": " 投票"
-    }
+    },
+    "Post": {
+        "normalPostIdentifyAuthorCompany": "ビジネス",
+        "normalPostIdentifyAuthorFaculty": "学科",
+        "normalPostIdentifyAuthorStudent": "",
+        "typePostRecruitment": "採用",
+        "typePostSurvey": "調査",
+        "normalPostLike": "いいね",
+        "normalPostComment": "コメント"
+     },
+     "Comment": {
+         "commentReplyComment": "返信",
+         "commentDeleteComment": "削除",
+         "commentAuthor": "著者"
+     },
+     "CommentContainer": {
+        "CommentContainerComponentSeeMore": "もっと見る",
+        "CommentContainerComponentHidden": "隠す"
+     },     
+     "CreateCommentToolbar":{
+        "commentCreateComment": "コメント投稿",
+        "commentPlaceholderInput": "コメントを入力してください"
+     },
+     "RecruitmentPost": {
+        "RecruitmentPostType": "採用",
+        "RecruitmentPostButtonSeeDetail": "詳細を見る"
+    },    
+     "SurveyPost": {
+        "SurveyPostType": "アンケート",
+        "SurveyPostButton": "アンケートを実施する",
+        "SurveyPostButtonSetting": "アンケートを編集する"
+    },
+    "Faculty":{
+        "FacultyOfElectricalEngineering": "電気工学学部",
+        "FacultyOfInformationTechnology": "情報技術学部",
+        "FacultyOfAutomationTechnology": "自動化技術学部",
+        "FacultyOfMechanicalEngineeringAndManufacturing": "機械工学及び製造学部",
+        "AutomobileEngineeringDepartment": "自動車工学部",
+        "FacultyOfFinanceAndAccounting": "財務会計学部",
+        "FacultyOfBusinessAdministration": "経営管理学部",
+        "FacultyOfTourism": "観光学部",
+        "DepartmentOfEnglish": "英語学科",
+        "DepartmentOfKoreanLanguage": "韓国語学科",
+        "JapaneseLanguageDepartment": "日本語学科"
+    },
+    "ModalUserLiked": {
+        "ModalUserLikedTitle": "いいねしたユーザーのリスト"
+    },
+    "MenuOption": {
+      "menuOptionSaveArticle": "記事を保存",
+      "menuOptionUnSaveArticle": "記事の保存を解除",
+      "menuOptionDeleteArticle": "記事を削除",
+      "menuOptionViewResumeList": "履歴書リストを表示",
+      "menuOptionViewSurveyResults": "調査結果を表示"
+    },
+    "CreatePostToolbar": {
+        "createPostToolbarTitle": "新しい投稿を作成する",
+        "createPostToolbarNormalPost": "テキスト/画像",
+        "createPostToolbarSurveyPost": "アンケート付きの新しい投稿",
+        "createPostToolbarRecruitmentPost": "求人投稿"
+    },
+    "ModalCreateNormalPost": {
+      "modalCreateNormalPostTitle": "投稿を作成する",
+      "modalCreateNormalPostPlaceholder": "投稿内容を入力してください",
+      "modalCreateNormalPostEntryImages": "写真",
+      "modalCreateNormalPostButton": "投稿する"
+    },
+    "BusinessSelectFacultyToolbar": {
+      "businessSelectFacultyToolbarTitle": "表示したい学部を選択してください"
+    },
+    "NotifyFacultyDontHaveAnyPost": {
+        "TextNotifyFacultyDontHaveAnyPost": "この学部にはまだ投稿がありません"
+      },
+      "Profile": {
+        "ProfileOperatingHours": "営業時間",
+        "ProfileTaxID": "税ID",
+        "ProfileRepresentative": "代表者",
+        "ProfileAddress": "住所",
+        "ProfilePhone": "電話",
+        "ProfileEmail": "メール",
+        "ProfileArticles": "記事",
+        "ProfilePosition": "役職",
+        "ProfileRole": "学生",
+        "Chat": "メッセージを送る",
+        "Call": "電話する",
+        "UnFollow": "フォロー解除",
+        "Follow": "フォローする",
+        "UpdateProfile": "プロフィールを更新",
+        "unUpdate":"まだ更新されていません"
+    },
+        "Group": {
+        "groupTdc": "TDC - Thu Duc College of Technologyによるグループ",
+        "groupConnectBusiness": "ビジネスコミュニティに接続するグループ",
+        "electricalElectronicsGroup": "電気 - 電子グループ",
+        "informationTechnologyGroup": "情報技術グループ",
+        "automationTechnologyGroup": "自動化技術グループ",
+        "mechanicalEngineeringAndManufacturingGroup": "機械工学および製造グループ",
+        "automotiveMechanicalGroup": "自動車機械グループ",
+        "financeAccountingGroup": "ファイナンス - 会計グループ",
+        "businessAdministrationGroup": "経営管理グループ",
+        "tourismGroup": "観光グループ",
+        "englishGroup": "英語グループ",
+        "koreanGroup": "韓国語グループ",
+        "japaneseLanguageDepartmentGroup": "日本語学科グループ"
+        }
+    
+    
+              
+          
 }

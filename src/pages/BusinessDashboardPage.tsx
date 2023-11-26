@@ -46,7 +46,7 @@ export default function BusinessDashboardPage() {
         userId={item.user['id']}
         name={item.user['name']}
         avatar={item.user['image']}
-        typeAuthor={'Doanh Nghiệp'}
+        typeAuthor={TYPE_POST_BUSINESS}
         available={null}
         timeCreatePost={numberDayPassed(item.createdAt)}
         content={item.content}

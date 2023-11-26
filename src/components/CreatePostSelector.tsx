@@ -9,7 +9,11 @@ import DefaultAvatar from './common/DefaultAvatar'
 import CustomizePost from './post/CustomizePost'
 import { slugify } from '../utils/CommonUtls'
 import '../assets/css/createPost.css'
-
+import vi from '../translate/vn.json'
+import en from '../translate/en.json'
+import jp from '../translate/jp.json'
+import { ITranslationParams, setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang'
+setTranslations({ vi, en, jp })
 interface CreatePostSelectorType {
   id: number,
   group: number | null,
@@ -20,6 +24,8 @@ interface CreatePostSelectorType {
 export default function CreatePostSelector(props: Readonly<CreatePostSelectorType>) {
   const [createNormalPostModalShow, setCreateNormalPostModalShow] = useState(false)
   const navigate = useNavigate()
+  setDefaultLanguage('jp')
+  const t = useTranslation();
 
   const handleClickAvatarEvent = () => {
     const state = {
@@ -47,19 +53,20 @@ export default function CreatePostSelector(props: Readonly<CreatePostSelectorTyp
               dismissOnClick={true}
               renderTrigger={() => (
                 <span className='ms-1 cursor-pointer rounded-md bg-gradient-to-r from-cyan-600 to-cyan-500 px-4 py-2 text-white'>
-                  {TEXT_CREATE_NEW_POST}
+                  {t("CreatePostToolbar.createPostToolbarTitle")}
                 </span>
               )}
             >
-              <Dropdown.Item onClick={() => setCreateNormalPostModalShow(true)}>Text/Hình ảnh</Dropdown.Item>
-              <Dropdown.Item onClick={() => navigate(CREATE_SURVEY_POST_PAGE)}>Khảo sát</Dropdown.Item>
-              <Dropdown.Item onClick={() => navigate(CREATE_RECRUITMENT_POST_PAGE)}>Tin tuyển dụng</Dropdown.Item>
+              <Dropdown.Item onClick={() => setCreateNormalPostModalShow(true)}>{t("CreatePostToolbar.createPostToolbarNormalPost")}</Dropdown.Item>
+              <Dropdown.Item onClick={() => navigate(CREATE_SURVEY_POST_PAGE)}>{t("CreatePostToolbar.createPostToolbarSurveyPost")}</Dropdown.Item>
+              <Dropdown.Item onClick={() => navigate(CREATE_RECRUITMENT_POST_PAGE)}>{t("CreatePostToolbar.createPostToolbarRecruitmentPost")}</Dropdown.Item>
             </Dropdown>
           </div>
           <CreatePostModal
             show={createNormalPostModalShow}
             onHide={() => setCreateNormalPostModalShow(false)}
             group={props.group}
+            t={t}
           />
         </div>
       </div>

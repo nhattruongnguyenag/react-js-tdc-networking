@@ -37,8 +37,17 @@ import { Data } from '../types/Data'
 import { TOKEN_KEY, USER_LOGIN_KEY } from '../constants/KeyValue';
 import { useDispatch } from 'react-redux';
 import { setUserLogin } from '../redux/Slice';
+import vi from '../translate/vn.json';
+import en from '../translate/en.json';
+import jp from '../translate/jp.json';
+import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
+import { getFacultyTranslated } from '../utils/TranslateFaculty';
+setTranslations({ vi, en, jp })
+
 
 export default function UserDetailsPage() {
+  setDefaultLanguage('jp');
+  const t = useTranslation();
   const [modalShowOption, setModalShowOption] = React.useState(false);
   const [modalShowUpdate, setModalShowUpdate] = React.useState(false);
   const { slug } = useParams()
@@ -185,6 +194,7 @@ export default function UserDetailsPage() {
                   </div>
                   : <div className='col-10'>
                     <CustomizeProfile
+                      t={t}
                       isFollow={isFollow}
                       isSameUser={userLogin?.id === userId}
                       data={post}
@@ -194,9 +204,11 @@ export default function UserDetailsPage() {
                       handleClickIntoHeaderComponentEvent={handleClickIntoHeaderComponentEvent} />
                     <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4'>
                       <div className='snippet mt-2 wrapperTitleUserProfile' data-title='.dot-typing'>
-                        {/* <span className='txtTitleInUserProfile'>{userInfo?.name ?? ''}{' '}</span> */}
-                        <FontAwesomeIcon className='iconArrowToRightUserProfile' icon={faPlay} size='1x' color={COLOR_BLACK} />
-                        <span className='txtTitleInUserProfile'>{' '}{getGroupForPost(group)}</span>
+                        <span className='txtTitleInUserProfile'>
+                          {getFacultyTranslated(userInfo?.name + "", t)}{' '}
+                          <FontAwesomeIcon className='iconArrowToRightUserProfile' icon={faPlay} size='1x' color={COLOR_BLACK} />
+                          {' '}{getGroupForPost(group,t)}
+                        </span>
                       </div>
                     </div>
                     {
@@ -314,7 +326,6 @@ interface Faculty {
 
 const isAllFieldsValid = (validate: Faculty): boolean => {
   let key: keyof Faculty
-
   for (key in validate) {
     if (validate[key].isError) {
       return false
@@ -331,264 +342,267 @@ interface ModalTypeUpdate {
 }
 
 function ModalUpdateUserInfo(props: Readonly<ModalTypeUpdate>) {
-  const { slug } = useParams()
-  const userId = getIdFromSlug(slug ?? '')
+  const { slug } = useParams();
+  const userId = getIdFromSlug(slug ?? '');
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer);
+
   const [faculty, setFaculty] = useState({
     id: userId,
     email: '',
     name: '',
     image: '',
     background: '',
-    phone: ''
-  })
-  const dispatch = useAppDispatch()
+    phone: '',
+  });
 
-  useEffect(() => {
-    // id: userId,
-    // email: props.user?.email ?? '',
-    // name: props.user?.name ?? '',
-    // image: props.user?.image ?? '',
-    // background: props.user?.image ?? '',
-    // phone: props.user?.phone ?? ''
-  }, [])
+  const [imageAvatar, setImageAvatar] = useState('');
+  const [imageBackground, setImageBackground] = useState('');
 
-
-  const fileInputRefAvatar = useRef<HTMLInputElement | null>(null)
-  const fileInputRefBackground = useRef<HTMLInputElement | null>(null)
-  const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
-  const [imageAvatar, setImageAvatar] = useState('')
-  const [imageBackground, setImageBackground] = useState('')
+  const fileInputRefAvatar = useRef<HTMLInputElement | null>(null);
+  const fileInputRefBackground = useRef<HTMLInputElement | null>(null);
+  const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null);
 
   const [validate, setValidate] = useState<Faculty>({
     name: {
       textError: TEXT_ERROR_FACULTY_NAME,
       isVisible: false,
-      isError: true
+      isError: true,
     },
     email: {
       textError: TEXT_ERROR_EMAIL_NOTIMPTY,
       isVisible: false,
-      isError: true
+      isError: true,
     },
     phone: {
       textError: TEXT_ERROR_PHONE_NOTEMPTY,
       isVisible: false,
-      isError: true
-    }
-  })
+      isError: true,
+    },
+  });
+
+  useEffect(() => {
+    setFaculty({
+      id: userId,
+      email: props.user?.email ?? '',
+      name: props.user?.name ?? '',
+      image: props.user?.image ?? '',
+      background: props.user?.background ?? '',
+      phone: props.user?.phone ?? '',
+    });
+  }, [props.user]);
 
   const handleGetFilesAvatar = () => {
     if (fileInputRefAvatar.current) {
-      fileInputRefAvatar.current.showPicker()
-      fileInputRefAvatar.current.value = ''
+      fileInputRefAvatar.current.showPicker();
+      fileInputRefAvatar.current.value = '';
     }
-  }
+  };
 
   const handleGetFilesBackground = () => {
     if (fileInputRefBackground.current) {
-      fileInputRefBackground.current.showPicker()
-      fileInputRefBackground.current.value = ''
+      fileInputRefBackground.current.showPicker();
+      fileInputRefBackground.current.value = '';
     }
-  }
+  };
 
   const onSelectUploadImageAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
-      setImageAvatar(URL.createObjectURL(event.target.files[0]))
+      setImageAvatar(URL.createObjectURL(event.target.files[0]));
       handleUploadImage(event.target.files, (response) => {
-        console.log(response.data)
-        setFaculty({ ...faculty, image: response.data[0] })
-      })
+        console.log(response.data);
+        setFaculty({ ...faculty, image: response.data[0] });
+      });
     }
-  }
+  };
 
   const onSelectUploadImageBackground = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
-      setImageBackground(URL.createObjectURL(event.target.files[0]))
+      setImageBackground(URL.createObjectURL(event.target.files[0]));
       handleUploadImage(event.target.files, (response) => {
-        console.log(response.data)
-        setFaculty({ ...faculty, background: response.data[0] })
-      })
+        console.log(response.data);
+        setFaculty({ ...faculty, background: response.data[0] });
+      });
     }
-  }
+  };
 
   const handleCheckEmail = useCallback(() => {
     axios
       .post(SERVER_ADDRESS + `api/users/check?email=${faculty.email}`)
       .then((response) => {
-        if (response.data.data == 0) {
+        if (response.data.data === 0) {
           setValidate({
             ...validate,
             email: {
               ...validate.email,
               isError: true,
               textError: TEXT_ERROR_CHECKSAMEEMAIL,
-              isVisible: true
-            }
-          })
+              isVisible: true,
+            },
+          });
         }
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }, [faculty.email])
+        console.log(error);
+      });
+  }, [faculty.email, validate.email]);
 
-
-  const handleStudentNameChange = useCallback(
-    (event: any) => {
-      if (isBlank(event.target.value)) {
+  const handleNameChange = useCallback(
+    (value: string) => {
+      faculty.name = value;
+      if (isBlank(value)) {
         setValidate({
           ...validate,
           name: {
             ...validate.name,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_STUDENTNAME
-          }
-        })
-      } else if (isContainSpecialCharacter(event.target.value)) {
+            textError: TEXT_ERROR_STUDENTNAME,
+          },
+        });
+      } else if (isContainSpecialCharacter(value)) {
         setValidate({
           ...validate,
           name: {
             ...validate.name,
             isError: true,
             textError: TEXT_ERROR_STUDENTNAME_NOTSPECIAL_CHARACTER,
-            isVisible: true
-          }
-        })
-      } else if (!isLengthInRange(event.target.value, 1, 255)) {
+            isVisible: true,
+          },
+        });
+      } else if (!isLengthInRange(value, 1, 255)) {
         setValidate({
           ...validate,
           name: {
             ...validate.name,
             isError: true,
             textError: TEXT_ERROR_STUDENTNAME_NOTLENGTHMAX,
-            isVisible: true
-          }
-        })
+            isVisible: true,
+          },
+        });
       } else {
-        setFaculty({ ...faculty, name: event.target.value })
+        setFaculty({ ...faculty, name: value });
         setValidate({
           ...validate,
           name: {
             ...validate.name,
             isError: false,
-            isVisible: false
-          }
-        })
+            isVisible: false,
+          },
+        });
       }
     },
-    [validate]
-  )
+    [faculty.name, validate.name]
+  );
 
   const handlePhoneChange = useCallback(
-    (event: any) => {
-      if (isBlank(event.target.value)) {
+    (value: string) => {
+      faculty.phone = value;
+      if (isBlank(value)) {
         setValidate({
           ...validate,
           phone: {
             ...validate.phone,
             isError: true,
             textError: TEXT_ERROR_PHONE_NOTEMPTY,
-            isVisible: true
-          }
-        })
-      } else if (!isPhone(event.target.value)) {
+            isVisible: true,
+          },
+        });
+      } else if (!isPhone(value)) {
         setValidate({
           ...validate,
           phone: {
             ...validate.phone,
             isError: true,
             textError: TEXT_ERROR_PHONE_NOTFORMAT,
-            isVisible: true
-          }
-        })
+            isVisible: true,
+          },
+        });
       } else {
-        setFaculty({ ...faculty, phone: event.target.value })
+        setFaculty({ ...faculty, phone: value });
         setValidate({
           ...validate,
           phone: {
             ...validate.phone,
             isError: false,
-            isVisible: false
-          }
-        })
+            isVisible: false,
+          },
+        });
       }
     },
-    [validate]
-  )
+    [faculty.phone, validate.phone]
+  );
 
   const handleEmailChange = useCallback(
-    (event: any) => {
-      if (isBlank(event.target.value)) {
+    (value: string) => {
+      faculty.email = value;
+      if (isBlank(value)) {
         setValidate({
           ...validate,
           email: {
             ...validate.email,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_EMAIL_NOTIMPTY
-          }
-        })
-      } else if (!isLengthInRange(event.target.value, 1, 255)) {
+            textError: TEXT_ERROR_EMAIL_NOTIMPTY,
+          },
+        });
+      } else if (!isLengthInRange(value, 1, 255)) {
         setValidate({
           ...validate,
           email: {
             ...validate.email,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_EMAIL_NOTLENGTH
-          }
-        })
-      } else if (!isEmail(event.target.value)) {
+            textError: TEXT_ERROR_EMAIL_NOTLENGTH,
+          },
+        });
+      } else if (!isEmail(value)) {
         setValidate({
           ...validate,
           email: {
             ...validate.email,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_EMAIL_NOTFORMAT
-          }
-        })
+            textError: TEXT_ERROR_EMAIL_NOTFORMAT,
+          },
+        });
       } else {
-        setFaculty({ ...faculty, email: event.target.value })
+        setFaculty({ ...faculty, email: value });
         setValidate({
           ...validate,
           email: {
             ...validate.email,
             isError: false,
-            isVisible: false
-          }
-        })
+            isVisible: false,
+          },
+        });
       }
     },
-    [validate]
-  )
+    [faculty.email, validate.email]
+  );
 
   const handleSubmitEvent = () => {
-    if (isAllFieldsValid(validate)) {
-      axios
-        .post<Faculty, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/faculty', faculty)
-        .then((response) => {
-          toast.success('cap nhat thanh cong')
-          props.onHide();
-        })
-        .catch((error) => {
-          console.log(error)
-          toast.error('Cap nhat that bai')
-        })
-    } else {
-      let key: keyof Faculty
+    // if (isAllFieldsValid(validate)) {
+    //   axios
+    //     .post<Faculty, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/faculty', faculty)
+    //     .then((response) => {
+    //       toast.success('cap nhat thanh cong');
+    //       props.onHide();
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //       toast.error('Cap nhat that bai');
+    //     });
+    // } else {
+    //   let key: keyof Faculty;
 
-      for (key in validate) {
-        if (validate[key].isError) {
-          validate[key].isVisible = true
-        }
-      }
-      setValidate({ ...validate })
-    }
-  }
-
+    //   for (key in validate) {
+    //     if (validate[key].isError) {
+    //       validate[key].isVisible = true;
+    //     }
+    //   }
+    //   setValidate({ ...validate });
+    // }
+  };
 
   return (
     <Modal
@@ -601,26 +615,16 @@ function ModalUpdateUserInfo(props: Readonly<ModalTypeUpdate>) {
         <Modal.Title id="contained-modal-title-vcenter">
           Cập nhật thông tin tài khoản
         </Modal.Title>
-        <button
-          style={{ position: 'absolute', top: 0, right: 10 }}
-          type='button'
-          className='btn-close-modal-header close font-xl'
-          onClick={props.onHide}
-        >
-          <span aria-hidden='true'>&times;</span>
-        </button>
       </Modal.Header>
       <Modal.Body>
-        {
-          JSON.stringify(props.user?.email)
-        }
         <div className='form-group icon-input mb-3'>
           <i className='font-sm ti-user text-grey-500 pe-0'> </i>
           <input
+            value={faculty.name}
             type='text'
             className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
             placeholder={TEXT_NAME_FACULTY}
-            onChange={(e) => handleStudentNameChange(e)}
+            onChange={(e) => handleNameChange(e.target.value)}
             style={{ borderColor: !validate.name?.isError ? '#228b22' : '#eee' }}
           />
           <TextValidate
@@ -632,8 +636,9 @@ function ModalUpdateUserInfo(props: Readonly<ModalTypeUpdate>) {
         <div className='form-group icon-input mb-3'>
           <i className='font-sm ti-mobile text-grey-500 pe-0'> </i>
           <input
+            value={faculty.phone}
             type='text'
-            onChange={(e) => handlePhoneChange(e)}
+            onChange={(e) => handlePhoneChange(e.target.value)}
             className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
             placeholder={TEXT_PLACEHOLDER_PHONE}
             style={{ borderColor: !validate.phone?.isError ? '#228b22' : '#eee' }}
@@ -647,9 +652,10 @@ function ModalUpdateUserInfo(props: Readonly<ModalTypeUpdate>) {
         <div className='form-group icon-input mb-3'>
           <i className='font-sm ti-user text-grey-500 pe-0'> </i>
           <input
+            value={faculty.email}
             type='text'
             onBlur={() => handleCheckEmail()}
-            onChange={(e) => handleEmailChange(e)}
+            onChange={(e) => handleEmailChange(e.target.value)}
             className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
             placeholder={TEXT_EMAIL}
             style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}
@@ -679,7 +685,7 @@ function ModalUpdateUserInfo(props: Readonly<ModalTypeUpdate>) {
               <span className='d-none-xs'>{TEXT_IMAGE_PICKER}</span>
             </button>
           </div>
-          <div className='img'>{imageAvatar ? <img src={imageAvatar} style={{ width: 200, height: 200, borderRadius: 100 }} /> : ''}</div>
+          <div className='img'>{imageAvatar ? <img className='imageUpdate' src={imageAvatar} style={{ width: 200, height: 200, borderRadius: 100 }} /> : ''}</div>
         </div>
         <div className='form-group icon-input mb-3 mt-3'>
           <div className='d-flex mt-3 p-0'>
@@ -700,7 +706,7 @@ function ModalUpdateUserInfo(props: Readonly<ModalTypeUpdate>) {
               <span className='d-none-xs'>{TEXT_IMAGE_BACKGROUND_PICKER}</span>
             </button>
           </div>
-          <div className='img'>{imageBackground ? <img src={imageBackground} style={{ width: '100%', height: 300, borderRadius: 10 }} /> : ''}</div>
+          <div className='img'>{imageBackground ? <img className='imageUpdate' src={imageBackground} style={{ width: '100%', height: 300, borderRadius: 10 }} /> : ''}</div>
         </div>
       </Modal.Body>
       <Modal.Footer>

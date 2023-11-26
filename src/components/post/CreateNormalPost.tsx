@@ -19,8 +19,10 @@ import { COLOR_BTN_BLUE, COLOR_WHITE } from '../../constants/Color'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { createNorMalPostAPI } from '../../api/CallAPI'
+import { t, useTranslation } from 'react-multi-lang'
 
 export interface CreateNormalPostType {
+  t:ReturnType<typeof useTranslation>,
   onHide: () => void,
   group: number | null
 }
@@ -162,7 +164,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
           className='h100 bor-0 w-100 h-100 rounded-xxl font-xssss text-grey-500 fw-500 border-light-md theme-dark-bg p-3'
           cols={30}
           rows={10}
-          placeholder={TEXT_PLACEHOLDER_CONTENT_CREATE_POST}
+          placeholder={props.t("ModalCreateNormalPost.modalCreateNormalPostPlaceholder")}
           defaultValue={''}
         />
       </div>
@@ -207,11 +209,11 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
           className='d-flex align-items-center font-xssss fw-600 ls-1 text-grey-700 text-dark pe-4'
         >
           <i className='font-md text-success feather-image me-2' />
-          <span className='d-none-xs'>Photo/Video</span>
+          <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalPostEntryImages")}</span>
         </button>
         <div className='pointer ms-auto ' id='dropdownMenu4' data-bs-toggle='dropdown' aria-expanded='false'>
           <button ref={buttonRef} onClick={handleSubmitEvent} className='btn btn-primary'>
-            <span className='d-none-xs'>Đăng bài viết</span>
+            <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalPostButton")}</span>
           </button>
         </div>
       </div>

@@ -78,10 +78,7 @@ export default function PostOptionsMenu(props: Readonly<PostOptionsMenuType>) {
       >
         {
           props.menuOptions.map((item, index) => {
-            return item.visible && <MenuItem onClick={() => props.handleClickMenuOption(item.type)}>
-              {/* <ListItemIcon>
-                <PersonAdd fontSize="small" />
-              </ListItemIcon> */}
+            return item.visible && <MenuItem key={item.type} onClick={() => props.handleClickMenuOption(item.type)}>
               {
                 item.name
               }
