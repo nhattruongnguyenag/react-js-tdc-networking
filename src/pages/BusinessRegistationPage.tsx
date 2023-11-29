@@ -95,7 +95,7 @@ export default function BusinessRegistationPage() {
   const [image, setImage] = useState('')
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
-  const [cookies, setCookie] = useCookies(['email', 'url','subject'])
+  const [cookies, setCookie] = useCookies(['email', 'url', 'subject'])
   const [business, setBusiness] = useState<
     Omit<Business, 'id' | 'status' | 'createdAt' | 'updatedAt' | 'roleCodes' | 'isTyping' | 'isMessageConnect'>
   >({
@@ -111,7 +111,9 @@ export default function BusinessRegistationPage() {
     image: '',
     confimPassword: '',
     facultyGroupCode: '',
-    facultyGroupId: 0
+    facultyGroupId: 0,
+    subject: '',
+    content: ''
   })
   const [timeStart, setTimeStart] = useState('07:00')
   const [timeEnd, setTimeEnd] = useState('17:00')
@@ -563,11 +565,19 @@ export default function BusinessRegistationPage() {
 
   const onSubmit = useCallback(() => {
     if (isAllFieldsValid(validate)) {
+      setBusiness({ ...business, subject: TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION})
       setIsLoading(true)
       axios
         .post<Business, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/business/register', business)
         .then((response) => {
-          sendEmailAuthentication()
+          setIsLoading(false)
+          let expires = new Date()
+          expires.setTime(expires.getTime() + 600 * 1000)
+          setCookie('email', business.email, { path: '/', expires })
+          setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
+          setCookie('subject', TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION, { path: '/', expires })
+          toast.success(TEXT_ALERT_REGISTER_SUCCESS)
+          navigate(ACCEPT_SEND_EMAIL_PAGE)
         })
         .catch((error) => {
           setIsLoading(false)
@@ -585,32 +595,6 @@ export default function BusinessRegistationPage() {
       setValidate({ ...validate })
     }
   }, [validate, business])
-
-  const sendEmailAuthentication = () => {
-    axios({
-      method: 'post',
-      url: `${SERVER_ADDRESS}api/users/get/email/authen/register`,
-      data: {
-        to: business.email,
-        subject: TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION,
-        content: ''
-      }
-    })
-      .then((res) => {
-        setIsLoading(false)
-        let expires = new Date()
-        expires.setTime(expires.getTime() + 600 * 1000)
-        setCookie('email', business.email, { path: '/', expires })
-        setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
-        setCookie('subject', TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION, { path: '/', expires })
-        toast.success(TEXT_ALERT_REGISTER_SUCCESS)
-        navigate(ACCEPT_SEND_EMAIL_PAGE)
-      })
-      .catch((err) => {
-        setIsLoading(false)
-        toast.error('error')
-      })
-  }
 
   return (
     <Fragment>

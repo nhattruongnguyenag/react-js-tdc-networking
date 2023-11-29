@@ -7,4 +7,6 @@ export interface Student extends User {
   studentCode: string
   confimPassword: string
   background:string
+  subject:string
+  content:string
 }

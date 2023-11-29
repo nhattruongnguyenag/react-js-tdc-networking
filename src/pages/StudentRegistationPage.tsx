@@ -80,7 +80,7 @@ const isAllFieldsValid = (validate: RegisterStudent): boolean => {
 export default function StudentRegistationPage() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
-  const [cookies, setCookie] = useCookies(['email', 'url','subject'])
+  const [cookies, setCookie] = useCookies(['email', 'url', 'subject'])
   const [image, setImage] = useState('')
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
@@ -100,7 +100,9 @@ export default function StudentRegistationPage() {
     facultyGroupCode: '',
     facultyGroupId: 0,
     phone: '',
-    background: ''
+    background: '',
+    subject: '',
+    content: ''
   })
   const [dataRequest, setDataRequest] = useState([
     {
@@ -484,11 +486,19 @@ export default function StudentRegistationPage() {
 
   const onSubmit = () => {
     if (isAllFieldsValid(validate)) {
+      setStudent({ ...student, subject: TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION})
       setIsLoading(true)
       axios
         .post<Student, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/student/register', student)
         .then((response) => {
-          sendEmailAuthentication()
+          setIsLoading(false)
+          let expires = new Date()
+          expires.setTime(expires.getTime() + 600 * 1000)
+          setCookie('email', student.email, { path: '/', expires })
+          setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
+          setCookie('subject', TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION, { path: '/', expires })
+          toast.success(TEXT_ALERT_REGISTER_SUCCESS)
+          navigate(ACCEPT_SEND_EMAIL_PAGE)
         })
         .catch((error) => {
           console.log(error)
@@ -505,32 +515,6 @@ export default function StudentRegistationPage() {
       }
       setValidate({ ...validate })
     }
-  }
-
-  const sendEmailAuthentication = () => {
-    axios({
-      method: 'post',
-      url: `${SERVER_ADDRESS}api/users/get/email/authen/register`,
-      data: {
-        to: student.email,
-        subject: TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION,
-        content: ''
-      }
-    })
-      .then((res) => {
-        setIsLoading(false)
-        let expires = new Date()
-        expires.setTime(expires.getTime() + 600 * 1000)
-        setCookie('email', student.email, { path: '/', expires })
-        setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
-        setCookie('subject', TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION, { path: '/', expires })
-        toast.success(TEXT_ALERT_REGISTER_SUCCESS)
-        navigate(ACCEPT_SEND_EMAIL_PAGE)
-      })
-      .catch((err) => {
-        setIsLoading(false)
-        toast.error('error')
-      })
   }
 
   return (
