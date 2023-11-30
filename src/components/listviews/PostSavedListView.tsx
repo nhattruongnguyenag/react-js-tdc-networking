@@ -16,6 +16,7 @@ const PostSavedListView = () => {
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [search, setSearch] = useState('')
   const [value, setValue] = useState(null)
+  const [dataFilter, setDataFilter] = useState<Post[]>([])
 
   useEffect(() => {
     stompClient = getStompClient()
@@ -51,13 +52,13 @@ const PostSavedListView = () => {
   }, [])
 
   useEffect(() => {
-    if (search.trim() === '') {
-      axios
-        .get(`${SERVER_ADDRESS}api/posts/user/save/${userLogin?.id}`)
-        .then((response) => {
-          setData(response.data.data)
-        })
-    }
+    // if (search.trim() === '') {
+    //   axios
+    //     .get(`${SERVER_ADDRESS}api/posts/user/save/${userLogin?.id}`)
+    //     .then((response) => {
+    //       setData(response.data.data)
+    //     })
+    // }
     const dataSearch = []
     for (let index = 0; index < data.length; index++) {
       if (data[index].type == 'thong-thuong') {
@@ -70,7 +71,7 @@ const PostSavedListView = () => {
         }
       }
     }
-    setData(dataSearch)
+    setDataFilter(dataSearch)
   }, [search])
 
   const likeAction = () => { }
@@ -90,35 +91,66 @@ const PostSavedListView = () => {
       </div>
       <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 550 }}>
         {
-          data.map((item: any) =>
-            <CustomizePost
-              id={item.id}
-              userId={item.user['id']}
-              name={item.user['name']}
-              avatar={item.user['image']}
-              typeAuthor={'Doanh Nghiệp'}
-              available={null}
-              timeCreatePost={item.createdAt}
-              content={item.content}
-              type={item.type}
-              likes={item.likes}
-              comments={item.comment}
-              commentQty={item.commentQuantity}
-              images={item.images}
-              role={item.user['roleCodes']}
-              likeAction={likeAction}
-              location={item.location ?? null}
-              title={item.title ?? null}
-              expiration={item.expiration ?? null}
-              salary={item.salary ?? null}
-              employmentType={item.employmentType ?? null}
-              description={item.description ?? null}
-              isSave={item.isSave}
-              group={''}
-              isConduct={null}
-              handleUnSave={handleUnSave}
-            />
-          )
+          search == '' ?
+            data.map((item: any) =>
+              <CustomizePost
+                id={item.id}
+                userId={item.user['id']}
+                name={item.user['name']}
+                avatar={item.user['image']}
+                typeAuthor={'Doanh Nghiệp'}
+                available={null}
+                timeCreatePost={item.createdAt}
+                content={item.content}
+                type={item.type}
+                likes={item.likes}
+                comments={item.comment}
+                commentQty={item.commentQuantity}
+                images={item.images}
+                role={item.user['roleCodes']}
+                likeAction={likeAction}
+                location={item.location ?? null}
+                title={item.title ?? null}
+                expiration={item.expiration ?? null}
+                salary={item.salary ?? null}
+                employmentType={item.employmentType ?? null}
+                description={item.description ?? null}
+                isSave={item.isSave}
+                group={''}
+                isConduct={null}
+                handleUnSave={handleUnSave}
+              />
+            )
+            :
+            dataFilter.map((item: any) =>
+              <CustomizePost
+                id={item.id}
+                userId={item.user['id']}
+                name={item.user['name']}
+                avatar={item.user['image']}
+                typeAuthor={'Doanh Nghiệp'}
+                available={null}
+                timeCreatePost={item.createdAt}
+                content={item.content}
+                type={item.type}
+                likes={item.likes}
+                comments={item.comment}
+                commentQty={item.commentQuantity}
+                images={item.images}
+                role={item.user['roleCodes']}
+                likeAction={likeAction}
+                location={item.location ?? null}
+                title={item.title ?? null}
+                expiration={item.expiration ?? null}
+                salary={item.salary ?? null}
+                employmentType={item.employmentType ?? null}
+                description={item.description ?? null}
+                isSave={item.isSave}
+                group={''}
+                isConduct={null}
+                handleUnSave={handleUnSave}
+              />
+            )
         }
       </div>
     </div>
