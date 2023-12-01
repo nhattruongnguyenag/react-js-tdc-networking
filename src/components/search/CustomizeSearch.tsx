@@ -1,4 +1,4 @@
-import React, { LegacyRef, useCallback, useEffect, useRef, useState } from 'react'
+import React, { LegacyRef, useCallback, useEffect, useRef, useState, useTransition } from 'react'
 import UserItem from '../items/UserItem'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
@@ -8,9 +8,11 @@ import { Client, Frame } from 'stompjs'
 import { useAppSelector } from '../../redux/Hook'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
+import { useTranslation } from 'react-multi-lang'
 
 let stompClient: Client
 export default function CustomizeSearch() {
+  const t = useTranslation()
   const [subjects, setSubjects] = useState([
     {
       label: 'Người dùng',
@@ -142,7 +144,7 @@ export default function CustomizeSearch() {
                     <input
                       type='search'
                       value={search}
-                      placeholder='Tìm kiếm ...'
+                      placeholder={t('SearchComponent.search')}
                       className='bg-grey lh-32 font-xssss fw-600 text-grey-700 rounded-xl border-0 pb-2.5 pe-3 ps-5 pt-2.5'
                       style={{ width: '97%', fontSize: 20 }}
                       onChange={(txt) => {

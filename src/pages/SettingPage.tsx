@@ -1,7 +1,31 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import Header from '../components/common/Header'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import '../assets/css/setting.css'
+import { useAppDispatch } from '../redux/Hook';
+import { setDefaultLanguage } from '../redux/Slice';
 
+const data = [
+  { label: 'Vietnamese', value: 'vi' },
+  { label: 'English', value: 'en' },
+  { label: 'Japanese', value: 'ja' },
+
+];
 export default function SettingPage() {
+  const dispatch = useAppDispatch()
+  const [show, setShow] = useState(false);
+  const [search, setSearch] = useState('')
+  const [language, setLanguage] = useState('vi')
+  const handleClose = () => setShow(false);
+  const handleChange = () => {
+    dispatch(setDefaultLanguage(language))
+    setShow(false)
+  };
+
+  const handleShow = () => setShow(true);
   return (
     <Fragment>
       <Header />
@@ -58,9 +82,9 @@ export default function SettingPage() {
                       <div className='nav-caption fw-600 font-xsss text-grey-500 mb-2'>Other</div>
                       <ul className='list-inline'>
                         <li className='list-inline-item d-block border-bottom me-0'>
-                          <a className='d-flex align-items-center pb-2 pt-2' href='/defaultnoti'>
+                          <a className='d-flex align-items-center pb-2 pt-2' onClick={handleShow}>
                             <i className='btn-round-md bg-gold-gradiant feather-globe font-md me-3 text-white' />{' '}
-                            <h4 className='fw-600 font-xsss mb-0 mt-0' style={{color: 'black'}}>Language</h4>
+                            <h4 className='fw-600 font-xsss mb-0 mt-0' style={{ color: 'black' }}>Ngôn ngữ</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                           </a>
                         </li>
@@ -86,6 +110,42 @@ export default function SettingPage() {
             </div>
           </div>
         </div>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Ngôn ngữ</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <input
+              type='search'
+              placeholder='Tìm kiếm ...'
+              style={{ width: '100%', marginBottom: 20, marginTop: 20, paddingLeft: 60, paddingRight: 30, borderWidth: '1px', height: '50px', borderRadius: 50 }}
+              onChange={(txt) => {
+                setSearch(txt.target.value)
+              }} />
+            <FontAwesomeIcon style={{ position: 'absolute', left: 35, top: 50, fontSize: 20 }} icon={faSearch} color='grey' />
+            <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 500 }}>
+              {
+                data.map((data: any) => <>
+                  <div className='item-language'
+                    style={{ background: data.value == language ? '#dadde1' : ''}}
+                  >
+                    <div>
+                      <p className='name-language' onClick={() => setLanguage(data.value)}>{data.label}</p>
+                    </div>
+                  </div>
+                </>)
+              }
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Hủy
+            </Button>
+            <Button variant="primary" onClick={handleChange}>
+              Lưu thay đổi
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </Fragment>
   )

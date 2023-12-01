@@ -34,6 +34,7 @@ export interface TDCSocialNetworkState {
   modalCommentData: ModalComments | null
   modalUserReactionData: ModalUserReaction | null
   updatePost: boolean
+  defaultLanguage: string
 }
 
 export const defaultSurveyPostRequest: SurveyPostRequest = {
@@ -47,6 +48,7 @@ export const defaultSurveyPostRequest: SurveyPostRequest = {
 }
 
 const initialState: TDCSocialNetworkState = {
+  defaultLanguage: 'vi',
   darkMode: false,
   conversationMessages: [],
   surveyPostRequest: defaultSurveyPostRequest,
@@ -175,12 +177,16 @@ export const TDCSocialNetworkSlice = createSlice({
     },
     listenConversationsSoket: (state, action: PayloadAction<void>) => {
       state.isOpenModalUserReaction = false
-    }
+    },
+    setDefaultLanguage: (state, action: PayloadAction<string>) => {
+      state.defaultLanguage = action.payload
+    },
   }
 })
 
 // Action creators are generated for each case reducer function
 export const {
+  setDefaultLanguage,
   toggleDarkMode,
   setImagesUpload,
   setQuestionValidates,
