@@ -59,8 +59,8 @@ export default function SettingPage() {
                       <ul className='list-inline'>
                         <li className='list-inline-item d-block border-bottom me-0'>
                           <a className='d-flex align-items-center pb-2 pt-2' href='/defaultnoti'>
-                            <i className='btn-round-md bg-gold-gradiant feather-bell font-md me-3 text-white' />{' '}
-                            <h4 className='fw-600 font-xsss mb-0 mt-0'>Notification</h4>
+                            <i className='btn-round-md bg-gold-gradiant feather-globe font-md me-3 text-white' />{' '}
+                            <h4 className='fw-600 font-xsss mb-0 mt-0' style={{color: 'black'}}>Language</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                           </a>
                         </li>
