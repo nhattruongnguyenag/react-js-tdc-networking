@@ -36,6 +36,8 @@ export default function StudentDashboardPage() {
 
   const likeAction = (obj: LikeAction) => {
   }
+  const handleUnSave = () => {
+  }
 
   const renderItem = (item: any) => {
     return <CustomizePost
@@ -64,6 +66,7 @@ export default function StudentDashboardPage() {
       isConduct={null}
       isSave={item.isSave}
       group={code}
+      handleUnSave={handleUnSave}
     />
   }
 
