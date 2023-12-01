@@ -38,13 +38,6 @@ export const TDCSocialNetworkAPI = createApi({
         body: data
       })
     }),
-    getNotificationsUser: builder.query<Data<NotificationModel[]>, { id: number }>({
-      query: (data) => ({
-        url: 'api/notifications/user',
-        method: 'POST',
-        body: data
-      })
-    }),
     getNotificationsUserById: builder.query<Data<NotificationModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/notifications/user',
@@ -161,7 +154,6 @@ export const {
   useGetFollowerUserQuery,
   useGetSurveyResultQuery,
   useGetFollowingUserQuery,
-  useGetNotificationsUserQuery,
   useGetNotificationsUserByIdQuery,
   useGetQuestionsFromSurveyPostQuery,
   useGetConversationsByUserIdQuery,
