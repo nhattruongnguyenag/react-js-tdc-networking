@@ -129,5 +129,4 @@ export default function NotificationPopup(props: NotificationPopupProps) {
       </div>
     </div>
   )
-}
-;<style></style>
+} 
