@@ -14,6 +14,10 @@ import { QuestionResponse, SurveyResponse } from '../types/response/QuestionResp
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 import { FollowUserModel } from '../types/response/FollowUserModel'
 import { SurveyItemResult } from '../types/response/SurveyResult'
+import { JobApplyRespose } from '../types/response/JobApplyResponse'
+import { JobApplyResponseData } from '../types/response/JobApplyResponseData'
+import { JobApplyUpdateRequest } from '../types/request/JobApplyUpdateRequest'
+import { JobUpdateStatus } from '../types/request/JobUpdateStatus'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
@@ -146,13 +150,39 @@ export const TDCSocialNetworkAPI = createApi({
       query: (surveyPostId) => ({
         url: `api/posts/survey/${surveyPostId}/result`
       })
+    }),
+    getJobProfile: builder.query<Data<JobApplyRespose[]>, number | undefined>({
+      query: (userId) => (
+        {
+        url: `api/job/user/${userId}`
+      }),
+    }),
+    getProfileApply: builder.query<Data<JobApplyResponseData[]>, number | undefined>({
+      query: (postId) => (
+        {
+        url: `api/job/post/${postId}`
+      }),
+    }),
+    jobApplyUpdate: builder.mutation<MessageResponseData, JobApplyUpdateRequest | JobUpdateStatus>({
+      query: (data) => ({
+        url: 'api/job/update',
+        method: 'PUT',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      })
     })
+    
   })
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useJobApplyUpdateMutation,
+  useGetJobProfileQuery,
+  useGetProfileApplyQuery,
   useGetFollowerUserQuery,
   useGetSurveyResultQuery,
   useGetFollowingUserQuery,

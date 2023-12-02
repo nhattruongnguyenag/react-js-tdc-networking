@@ -10,99 +10,50 @@ import { formatDateTime } from '../utils/FormatTime'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-solid-svg-icons'
 import { COLOR_GREY } from '../constants/Color'
-import { DETAILS_JOB_APPLY } from '../constants/Page'
+import { DETAILS_JOB_APPLY, JOB_APPLY_PAGE } from '../constants/Page'
 import { slugify } from '../utils/CommonUtls'
 import Loading from '../components/common/Loading'
-
-const dataType = [
-  { name: 'Đang chờ', value: '1' },
-  { name: 'Trong tiến trình', value: '2' },
-  { name: 'Không đủ điều kiện phỏng vấn', value: '3' },
-  { name: 'Phỏng vấn', value: '4' },
-  { name: 'Không đậu phỏng vấn', value: '5' },
-  { name: 'Nhận việc', value: '6' }
-]
+import { useGetJobProfileQuery } from '../redux/Service'
 
 export default function ManagementJobApplyPage() {
+  const dataType = [
+    { label: 'Đã nhận', value: 'received' },
+    { label: 'Đang xử lý', value: 'in_progress' },
+    { label: 'Xem xét', value: 'not_meet_standard_quality' },
+    { label: 'Phỏnrg vấn', value: 'interview' },
+    {
+      label: 'Phỏng vấn thất bại',
+      value: 'interview_not_meet_standard_quality'
+    },
+    { label: 'Nhận việc', value: 'accept' }
+  ]
+
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(false)
-  const [dataJob, setDataJob] = useState([
-    {
-      id: 0,
-      createdAt: '',
-      post: {
-        id: 0,
-        user: {
-          name: '',
-          image: ''
-        }
-      }
-    }
-  ])
+  const { data, isLoading } = useGetJobProfileQuery(userLogin?.id, {
+    pollingInterval: 1000
+  })
+  const [value, setValue] = useState('received')
+  const [item, setItem] = useState('Đã nhận')
 
-  const handleClickType = (flag: string) => {
-    switch (flag) {
-      case 'Đang chờ':
-        handleShowJobWaiting()
-        break
-      case 'Trong tiến trình':
-        handleShowJobUnconditional()
-        break
-      case 'Không đủ điều kiện phỏng vấn':
-        handleShowJobEligible()
-        break
-      case 'Phỏng vấn':
-        handleShowJobInterview()
-        break
-      case 'Không đậu phỏng vấn':
-        handleShowJobNotInterview()
-        break
-      case 'Nhận việc':
-        handleShowJobAccept()
-        break
-      default:
-        return ''
-    }
+  const handleUpdateCv = (username: string, profileId: number) => {
+    navigate(`${JOB_APPLY_PAGE}/${slugify(username)}-${profileId}`)
   }
-
-  const handleShowJobWaiting = () => {
+  const handleDeleteCv = (profileId: number) => {
     axios
-      .get(SERVER_ADDRESS + `api/job/user/${userLogin?.id}`)
+      .delete(SERVER_ADDRESS + `api/job/profile/${profileId}`)
       .then((response) => {
-        console.log(JSON.stringify(response.data.data))
-        console.log(response.data.data)
-        setDataJob(response.data.data)
+        alert('Hủy hồ sơ thành công')
       })
       .catch((error) => {
         console.log(error)
       })
-    console.log('Đang chờ')
-  }
-  const handleShowJobUnconditional = () => {
-    console.log('Trong tiến trình')
-  }
-  const handleShowJobEligible = () => {
-    console.log('Không đủ điều kiện phỏng vấn')
-  }
-  const handleShowJobInterview = () => {
-    console.log('Phỏng vấn')
-  }
-  const handleShowJobNotInterview = () => {
-    console.log('Không đậu phỏng vấn')
-  }
-  const handleShowJobAccept = () => {
-    console.log('Nhận việc')
-  }
-  const handleBtnJobApply = (username: string, cvID: number) => {
-    navigate(`${DETAILS_JOB_APPLY}/${slugify(username)}-${cvID}`)
   }
 
-  useEffect(() => {
-    setIsLoading(true)
-    handleClickType('Đang chờ')
-    setIsLoading(false)
-  }, [])
+  const handleGetDetailJobApply = (jobTitle: string, cvID: number) => {
+    navigate(`${DETAILS_JOB_APPLY}/${slugify(jobTitle)}-${cvID}`)
+  }
+
   return (
     <>
       <Header />
@@ -119,12 +70,17 @@ export default function ManagementJobApplyPage() {
                 </div>
                 <select
                   className='style2-input form-control selectType pe-5 ps-5'
-                  onChange={(e) => handleClickType(e.target.value)}
+                  onChange={(e) => {
+                    setValue(e.target.value)
+                    setItem(e.target.value)
+                  }}
                 >
-                  <option hidden>Quản lý</option>
+                  <option hidden value={value}>
+                    {item}
+                  </option>
                   {dataType.map((item, index) => (
-                    <option value={item.name} key={index}>
-                      {item.name}
+                    <option value={item.value} key={index}>
+                      {item.label}
                     </option>
                   ))}
                 </select>
@@ -134,47 +90,59 @@ export default function ManagementJobApplyPage() {
                   </div>
                 ) : (
                   <div className='card-body p-lg-5 w-100 border-0 p-2'>
-                    {dataJob.map((item, index) => (
-                      <div className='manage-item-job-apply' key={index}>
-                        <div className='tam'>
-                          <div className='img-job-apply'>
-                            {item.post.user.image == '' ? (
-                              <DefaultAvatar
-                                name={item.post.user.name.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
-                                size={80}
-                                styleBootstrap={'defaultImage'}
-                              />
-                            ) : (
-                              <img
-                                src={item.post.user.image ? SERVER_ADDRESS + 'api/images/' + item.post.user.image : ''}
-                                className='avatar p-0'
-                              />
-                            )}
-                          </div>
-                          <div className='content-job-apply'>
-                            <h1 className='fw-900 title text-black'>Tuyển cộng tác viên bán hàng</h1>
-                            <h1 className='fw-900 title text-black'>
-                              {item.post.user.name.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
-                            </h1>
-                            <div className='datetime'>
-                              <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
-                              <p className='fw-600 mb-0 ms-2'>{formatDateTime(item.createdAt)}</p>
+                    {data?.data.map((item, index) =>
+                      item.status == value ? (
+                        <div className='manage-item-job-apply' key={index}>
+                          <div className='tam'>
+                            <div className='img-job-apply'>
+                              {item.companyName == '' ? (
+                                <DefaultAvatar
+                                  name={item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
+                                  size={80}
+                                  styleBootstrap={'defaultImage'}
+                                />
+                              ) : (
+                                <img
+                                  src={item.companyAvatar ? SERVER_ADDRESS + 'api/images/' + item.companyAvatar : ''}
+                                  className='avatar p-0'
+                                />
+                              )}
+                            </div>
+                            <div className='content-job-apply'>
+                              <h1 className='fw-900 title text-black'>Tuyển cộng tác viên bán hàng</h1>
+                              <h1 className='fw-900 title text-black'>
+                                {item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
+                              </h1>
+                              <div className='datetime'>
+                                <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
+                                <p className='fw-600 mb-0 ms-2'>{formatDateTime(item.createdAt)}</p>
+                              </div>
                             </div>
                           </div>
+                          <div className='btnBottom'>
+                            <button type='button' onClick={() => handleGetDetailJobApply(item.jobTitle, item.id)}>
+                              <p className='txtBtnBottom'>Xem cv</p>
+                            </button>
+                            {item.status != 'received' ? (
+                              ''
+                            ) : (
+                              <button type='button' onClick={() => handleUpdateCv(item.jobTitle, item.id)}>
+                                <p className='txtBtnBottom'>Chỉnh sửa cv</p>
+                              </button>
+                            )}
+                            {item.status == 'accept' ? (
+                              ''
+                            ) : (
+                              <button type='button' onClick={() => handleDeleteCv(item.id)}>
+                                <p className='txtBtnBottom'>Hủy cv</p>
+                              </button>
+                            )}
+                          </div>
                         </div>
-                        <div className='btnBottom'>
-                          <button type='button' onClick={() => handleBtnJobApply('son', 1)}>
-                            <p className='txtBtnBottom'>Xem cv</p>
-                          </button>
-                          <button type='button'>
-                            <p className='txtBtnBottom'>Chỉnh sửa cv</p>
-                          </button>
-                          <button type='button'>
-                            <p className='txtBtnBottom'>Hủy cv</p>
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+                      ) : (
+                        ''
+                      )
+                    )}
                   </div>
                 )}
               </div>

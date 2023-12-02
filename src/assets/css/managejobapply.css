@@ -54,12 +54,12 @@
 
   .selectType{
     line-height: 100%;
-    width: fit-content;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
     font-weight: bold;
     margin-top: 10px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   
   

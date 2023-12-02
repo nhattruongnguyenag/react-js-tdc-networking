@@ -183,7 +183,7 @@ export default function LoginPage() {
           setIsLoading(false)
           alert(TEXT_ALERT_LOGIN_FAILT)
         })
-    } else {
+  } else {
       let key: keyof UserLogin
 
       for (key in validate) {
@@ -196,11 +196,11 @@ export default function LoginPage() {
     }
   }
 
-  useEffect(() => {
-    if (userLogin) {
-      navigate(BUSINESS_DASHBOARD_PAGE)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (userLogin) {
+  //     navigate(BUSINESS_DASHBOARD_PAGE)
+  //   }
+  // }, [])
   return (
     <Fragment>
       <div className='main-wrap'>
