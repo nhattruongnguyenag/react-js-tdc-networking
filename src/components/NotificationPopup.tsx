@@ -23,7 +23,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
   const { data, isFetching } = useGetNotificationsUserByIdQuery(
     {
       id: userLogin?.id ?? -1
-    },
+    }, 
     {
       pollingInterval: 1000
     }
@@ -131,5 +131,4 @@ export default function NotificationPopup(props: NotificationPopupProps) {
       </div>
     </div>
   )
-}
-;<style></style>
+} 

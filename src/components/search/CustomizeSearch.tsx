@@ -82,7 +82,6 @@ export default function CustomizeSearch() {
   }, [type, sub])
 
   const handleSearch = () => {
-    setSearch('')
     console.log(userLogin?.id + '-' + type + '-' + search);
     
     if (sub == 'user') {

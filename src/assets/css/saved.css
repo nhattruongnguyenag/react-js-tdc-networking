@@ -1,0 +1,12 @@
+.btnSubmitComment {
+    background: blue !important;
+}
+
+.like {
+    color: #000000 !important;
+    background: blue !important;
+}
+
+.unlike {
+    color: #000000 !important;
+}

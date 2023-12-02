@@ -15,6 +15,10 @@ export default function SearchListView({ data, type, handleFollow }: SearchListV
     // obj.code = TYPE_POST_BUSINESS
     // like(obj)
   }
+  const handleUnSave = () => {
+    // obj.code = TYPE_POST_BUSINESS
+    // like(obj)
+  }
   const checkType = () => {
     switch (type) {
       case 'user':
@@ -58,8 +62,8 @@ export default function SearchListView({ data, type, handleFollow }: SearchListV
                   description={item.description ?? null}
                   isConduct={item.isConduct ?? null}
                   isSave={item.isSave}
-                  group={''}
-                />
+                  group={''} 
+                  handleUnSave={handleUnSave}                />
               ))}
           </>
         )
