@@ -270,6 +270,7 @@
     "ModalUpdate": {
         "modalUpdateTitle": "Cập Nhật Thông Tin Tài Khoản",
         "modalUpdatePlaceholderPhoneNumber": "Số Điện Thoại",
+        "modalUpdatePlaceholderPhoneName": "Nhập tên",
         "modalUpdatePlaceholderEmail": "Email",
         "modalUpdateBackground": "Hình Nền",
         "modalUpdateAvatar": "Ảnh Đại Diện",

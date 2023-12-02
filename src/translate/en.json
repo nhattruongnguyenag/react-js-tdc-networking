@@ -270,6 +270,7 @@
         "ModalUpdate":{
             "modalUpdateTitle": "Update Account Information",
             "modalUpdatePlaceholderPhoneNumber": "Phone Number",
+            "modalUpdatePlaceholderPhoneName":  "Enter name",
             "modalUpdatePlaceholderEmail": "Email",
             "modalUpdateBackground": "Background Image",
             "modalUpdateAvatar": "Profile Picture",

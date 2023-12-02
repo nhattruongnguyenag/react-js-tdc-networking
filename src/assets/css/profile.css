@@ -11,6 +11,10 @@
 }
 
 .backgroundHeaderProfile {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .avatarHeaderProfile {
@@ -100,4 +104,13 @@
 
 .imageUpdate {
   object-fit: cover;
+}
+.imageUpdateHadSave:{
+  border-width: 10px;
+  border-color: green;
+}
+
+.imageUpdateUnSave:{
+  border-width: 10px;
+  border-color: red;
 }

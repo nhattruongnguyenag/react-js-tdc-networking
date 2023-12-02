@@ -10,7 +10,8 @@ import {
   TEXT_SELECT_FACULTY,
   TEXT_WARNING_AREA_BY_ROLE,
   TYPE_POST_BUSINESS,
-  TYPE_POST_FACULTY
+  TYPE_POST_FACULTY,
+  TYPE_POST_STUDENT
 } from '../constants/StringVietnamese';
 import CustomizePost from '../components/post/CustomizePost';
 import CreatePostSelector from '../components/CreatePostSelector';
@@ -120,7 +121,7 @@ export default function FacultyDashboardPage() {
                       </div>
                     </Fragment>
                   )}
-                  {userLogin?.roleCodes !== TYPE_POST_BUSINESS && (
+                  {(userLogin?.roleCodes !== TYPE_POST_BUSINESS && userLogin?.roleCodes !== TYPE_POST_STUDENT) && (
                     <CreatePostSelector
                       id={userLogin?.id ?? 0}
                       group={userLogin?.facultyGroupId ?? 0}

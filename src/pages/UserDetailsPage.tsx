@@ -179,41 +179,34 @@ export default function UserDetailsPage() {
   }
 
   const checkRole = () => {
-    // switch (userInfo?.roleCodes ?? '') {
-    //   case TYPE_POST_STUDENT:
-    //     return <ModalUpdateStudent
-    //     t={t}
-    //     show={modalShowUpdate}
-    //     onHide={() => setModalShowUpdate(false)}
-    //     user={userInfo}
-    //     nameHadTranslated={getFacultyTranslated(userInfo?.name + "", t)}
-    //   />
-    //   case TYPE_POST_FACULTY:
-    //     return <ModalUpdateFaculty
-    //       t={t}
-    //       show={modalShowUpdate}
-    //       onHide={() => setModalShowUpdate(false)}
-    //       user={userInfo}
-    //       nameHadTranslated={getFacultyTranslated(userInfo?.name + "", t)}
-    //     />
-    //   case TYPE_POST_BUSINESS:
-    //     return <ModalUpdateBusiness
-    //       t={t}
-    //       show={modalShowUpdate}
-    //       onHide={() => setModalShowUpdate(false)}
-    //       user={userInfo}
-    //       nameHadTranslated={getFacultyTranslated(userInfo?.name + "", t)}
-    //     />
-    //   default:
-    //     return null;
-    // }
-    return <ModalUpdateStudent
-      t={t}
-      show={modalShowUpdate}
-      onHide={() => setModalShowUpdate(false)}
-      user={userInfo}
-      nameHadTranslated={getFacultyTranslated(userInfo?.name + "", t)}
-    />
+    switch (userInfo?.roleCodes ?? '') {
+      case TYPE_POST_STUDENT:
+        return <ModalUpdateStudent
+          t={t}
+          show={modalShowUpdate}
+          onHide={() => setModalShowUpdate(false)}
+          user={userInfo}
+          nameHadTranslated={getFacultyTranslated(userInfo?.name + "", t)}
+        />
+      case TYPE_POST_FACULTY:
+        return <ModalUpdateFaculty
+          t={t}
+          show={modalShowUpdate}
+          onHide={() => setModalShowUpdate(false)}
+          user={userInfo}
+          nameHadTranslated={getFacultyTranslated(userInfo?.name + "", t)}
+        />
+      case TYPE_POST_BUSINESS:
+        return <ModalUpdateBusiness
+          t={t}
+          show={modalShowUpdate}
+          onHide={() => setModalShowUpdate(false)}
+          user={userInfo}
+          nameHadTranslated={getFacultyTranslated(userInfo?.name + "", t)}
+        />
+      default:
+        return null;
+    }
   }
 
   return (
@@ -356,11 +349,12 @@ function ModalOptions(props: Readonly<ModalType>) {
 
 // Faclty
 interface FacultyUpdate {
-  email: InputTextValidate
+  name: InputTextValidate
   phone: InputTextValidate
+  email: InputTextValidate
 }
 
-const isAllFieldsValid = (validate: FacultyUpdate): boolean => {
+const isAllFieldsValidFaculty = (validate: FacultyUpdate): boolean => {
   let key: keyof FacultyUpdate
   for (key in validate) {
     if (validate[key].isError) {
@@ -382,6 +376,7 @@ interface ModalTypeUpdate {
 function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
   const dispatch = useAppDispatch()
   const { slug } = useParams();
+  const [isPassesValidate, setPassedValidate] = useState(true);
   const userId = getIdFromSlug(slug ?? '');
   const [faculty, setFaculty] = useState({
     id: userId,
@@ -391,30 +386,23 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
     background: '',
     phone: '',
   });
-  const [student, setStudent] = useState({
-    id: userId,
-    email: '',
-    name: '',
-    image: '',
-    background: '',
-    phone: '',
-    studentCode: ''
-  });
 
   const [imageAvatar, setImageAvatar] = useState('');
   const [imageAvatarTemporary, setImageAvatarTemporary] = useState('');
   const [imageBackground, setImageBackground] = useState('');
   const [imageBackgroundTemporary, setImageBackgroundTemporary] = useState('');
+  const [avatarHadSave, setAvatarHadSave] = useState(false);
+  const [backgroundHadSave, setBackgroundHadSave] = useState(false);
   // Faculty
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
 
   const fileInputRefAvatar = useRef<HTMLInputElement | null>(null);
   const fileInputRefBackground = useRef<HTMLInputElement | null>(null);
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null);
 
   const [validate, setValidate] = useState<FacultyUpdate>({
-    email: {
+    name: {
       textError: props.t("Validate.validateEmailNull"),
       isVisible: false,
       isError: true,
@@ -423,6 +411,11 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
       textError: props.t("Validate.validatePhoneNull"),
       isVisible: false,
       isError: true,
+    },
+    email: {
+      textError: props.t("Validate.validatePhoneNull"),
+      isVisible: false,
+      isError: false,
     },
   });
 
@@ -437,9 +430,9 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
     });
     // Faculty
     setPhone(props.user?.phone ?? "");
-    setEmail(props.user?.email ?? "");
+    setName(props.user?.name ?? "");
     props.user?.image ? setImageAvatarTemporary(SERVER_ADDRESS + 'api/images/' + props.user?.image) : setImageAvatarTemporary("");
-    props.user?.background ? setImageBackgroundTemporary(SERVER_ADDRESS + "api/images/" + props.user?.avatar) : setImageBackgroundTemporary("");
+    props.user?.background ? setImageBackgroundTemporary(SERVER_ADDRESS + "api/images/" + props.user?.background) : setImageBackgroundTemporary("");
   }, [props.user]);
 
   const handleGetFilesAvatar = () => {
@@ -458,102 +451,25 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
 
   const onSelectUploadImageAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
+      setAvatarHadSave(true)
       setImageAvatar(URL.createObjectURL(event.target.files[0]));
       handleUploadImage(event.target.files, (response) => {
-        console.log(response.data);
         setFaculty({ ...faculty, image: response.data[0] });
+        setAvatarHadSave(false)
       });
     }
   };
 
   const onSelectUploadImageBackground = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
+      setBackgroundHadSave(true);
       setImageBackground(URL.createObjectURL(event.target.files[0]));
       handleUploadImage(event.target.files, (response) => {
-        console.log(response.data);
         setFaculty({ ...faculty, background: response.data[0] });
+        setBackgroundHadSave(false);
       });
     }
   };
-
-  const handleCheckEmail = useCallback(() => {
-    axios
-      .post(SERVER_ADDRESS + `api/users/check?email=${faculty.email}`)
-      .then((response) => {
-        if (response.data.data == 0) {
-          setValidate({
-            ...validate,
-            email: {
-              ...validate.email,
-              isError: true,
-              textError: props.t("Validate.validateEmailHadUsed"),
-              isVisible: true
-            }
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [faculty.email])
-
-
-  const handleEmailChange = useCallback(
-    (event: string) => {
-      return new Promise<void>((resolve) => {
-        setEmail(event);
-        if (isBlank(event)) {
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: true,
-              isVisible: true,
-              textError: props.t("Validate.validateEmailNull")
-            }
-          }));
-          resolve();
-        } else if (!isLengthInRange(event, 1, 255)) {
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: true,
-              isVisible: true,
-              textError: props.t("Validate.validateEmailHasMaxLength")
-            }
-          }));
-          resolve();
-        } else if (!isEmail(event)) {
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: true,
-              isVisible: true,
-              textError: props.t("Validate.validateEmailUnCorrectFormat")
-            }
-          }));
-          resolve();
-        } else {
-          setFaculty((prevFaculty) => ({
-            ...prevFaculty,
-            email: event
-          }));
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: false,
-              isVisible: false
-            }
-          }));
-          resolve();
-        }
-      });
-    },
-    [validate]
-  );
 
   const handlePhoneChange = useCallback(
     (event: string) => {
@@ -601,10 +517,75 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
     [validate]
   );
 
-  const handleSubmitEvent = async () => {
-    await handleEmailChange(email);
-    await handlePhoneChange(phone);
-    if (isAllFieldsValid(validate)) {
+
+  const handleNameChange = useCallback(
+    (event: string) => {
+      return new Promise<void>((resolve) => {
+        setName(event);
+        if (isBlank(event)) {
+          setValidate((prevValidate) => ({
+            ...prevValidate,
+            name: {
+              ...prevValidate.name,
+              isError: true,
+              textError: props.t("Validate.validateNameNull"),
+              isVisible: true,
+            },
+          }));
+          resolve();
+        } else if (isContainSpecialCharacter(event)) {
+          setValidate((prevValidate) => ({
+            ...prevValidate,
+            name: {
+              ...prevValidate.name,
+              isError: true,
+              textError: props.t("Validate.validateNameSpecialCharacter"),
+              isVisible: true,
+            },
+          }));
+          resolve();
+        } else if (!isLengthInRange(event, 1, 255)) {
+          setValidate((prevValidate) => ({
+            ...prevValidate,
+            name: {
+              ...prevValidate.name,
+              isError: true,
+              textError: props.t("Validate.validateNameMaxLength"),
+              isVisible: true,
+            },
+          }));
+          resolve();
+        } else {
+          setFaculty((prevFaculty) => ({
+            ...prevFaculty,
+            name: event,
+          }));
+          setValidate((prevValidate) => ({
+            ...prevValidate,
+            name: {
+              ...prevValidate.name,
+              isError: false,
+              isVisible: false,
+            },
+          }));
+          resolve();
+        }
+      });
+    },
+    [validate]
+  );
+
+
+  const asyncForValidate = async () => {
+    const validationPromises = [
+      handlePhoneChange(phone),
+      handleNameChange(name),
+    ];
+    await Promise.all(validationPromises);
+  }
+
+  useEffect(() => {
+    if (isAllFieldsValidFaculty(validate)) {
       axios
         .post<Faculty, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/faculty', faculty)
         .then((responseUpdate: any) => {
@@ -643,6 +624,11 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
         }
       }
     }
+  }, [isPassesValidate])
+
+  const handleSubmitEvent = async () => {
+    asyncForValidate();
+    setPassedValidate(!isPassesValidate);
   };
 
   const printBackground = useMemo(() => {
@@ -650,7 +636,7 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
     if (imageBackground.trim().length !== 0) {
       image = (
         <div className='img'>
-          <img className='imageUpdate' src={imageBackground} style={{ width: '100%', height: 300, borderRadius: 10 }} />
+          <img className='imageUpdate' src={imageBackground} style={{ width: '100%', height: 300 }} />
         </div>
       );
     } else if (imageBackgroundTemporary.trim().length !== 0) {
@@ -724,21 +710,20 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
           />
         </div>
         <div className='form-group icon-input mb-3'>
-          <i className='font-sm ti-email text-grey-500 pe-0'> </i>
+          <i className='font-sm ti-user text-grey-500 pe-0'></i>
           <input
-            id='email'
-            value={email}
+            id='name'
+            value={name}
             type='text'
-            onBlur={() => handleCheckEmail()}
-            onChange={(e) => handleEmailChange(e.target.value)}
+            onChange={(e) => handleNameChange(e.target.value)}
             className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-            placeholder={props.t("ModalUpdate.modalUpdatePlaceholderEmail")}
-            style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}
+            placeholder={props.t("ModalUpdate.modalUpdatePlaceholderPhoneName")}
+            style={{ borderColor: !validate.name?.isError ? '#228b22' : '#eee' }}
           />
           <TextValidate
-            textError={validate.email?.textError}
-            isError={validate.email?.isError}
-            isVisible={validate.email?.isVisible}
+            textError={validate.name?.textError}
+            isError={validate.name?.isError}
+            isVisible={validate.name?.isVisible}
           />
         </div>
         <div className='form-group icon-input' style={{ marginTop: 10, marginBottom: 40 }}>
@@ -760,6 +745,12 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
               <span className='d-none-xs'>{props.t("ModalUpdate.modalUpdateAvatar")}</span>
             </button>
           </div>
+          {
+            avatarHadSave ?
+              (<span style={{ background: 'red', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>
+                Đang tải ảnh lên</span>) : (<span style={{ background: 'green', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>Ảnh đã được tải lên</span>)
+          }
+
           {printAvatar}
         </div>
         <div className='form-group icon-input mb-3 mt-3'>
@@ -781,6 +772,11 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
               <span className='d-none-xs'>{props.t("ModalUpdate.modalUpdateBackground")}</span>
             </button>
           </div>
+          {
+            backgroundHadSave ?
+              (<span style={{ background: 'red', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>
+                Đang tải ảnh lên</span>) : (<span style={{ background: 'green', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>Ảnh đã được tải lên</span>)
+          }
           {printBackground}
         </div>
       </Modal.Body>
@@ -795,13 +791,25 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
 // Business
 interface BusinessUpdate {
   name: InputTextValidate
-  email: InputTextValidate
   phone: InputTextValidate
   representor: InputTextValidate
   taxCode: InputTextValidate
   address: InputTextValidate
   activeTime: InputTextValidate
+  email: InputTextValidate
 }
+
+
+const isAllFieldsValidBusiness = (validate: BusinessUpdate): boolean => {
+  let key: keyof BusinessUpdate
+  for (key in validate) {
+    if (validate[key].isError) {
+      return false
+    }
+  }
+  return true
+}
+
 
 function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
   const dispatch = useAppDispatch()
@@ -824,17 +832,16 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
   const [imageAvatarTemporary, setImageAvatarTemporary] = useState('');
   const [imageBackground, setImageBackground] = useState('');
   const [imageBackgroundTemporary, setImageBackgroundTemporary] = useState('');
-  // Faculty
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  // Business
   const [name, setName] = useState('');
   const [representor, setRepresentor] = useState('');
   const [taxCode, setTaxCode] = useState('');
   const [address, setAddress] = useState('');
   const [activeTime, setActiveTime] = useState('');
-  // Public
-  const [role, setRole] = useState('sinh-vien');
+  const [isValidatePassed, setValidatePassed] = useState(false);
+  const [avatarHadSave, setAvatarHadSave] = useState(false);
+  const [backgroundHadSave, setBackgroundHadSave] = useState(false);
 
   const fileInputRefAvatar = useRef<HTMLInputElement | null>(null);
   const fileInputRefBackground = useRef<HTMLInputElement | null>(null);
@@ -851,11 +858,6 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
       isVisible: false,
       isError: true
     },
-    email: {
-      textError: TEXT_ERROR_EMAIL_NOTIMPTY,
-      isVisible: false,
-      isError: true
-    },
     taxCode: {
       textError: TEXT_ERROR_TAXCODE_NOTEMPTY,
       isVisible: false,
@@ -866,15 +868,20 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
       isVisible: false,
       isError: true
     },
+    activeTime: {
+      textError: TEXT_ERROR_ACTIVE_NOTFORMAT,
+      isVisible: false,
+      isError: true
+    },
     phone: {
       textError: TEXT_ERROR_PHONE_NOTEMPTY,
       isVisible: false,
       isError: true
     },
-    activeTime: {
-      textError: TEXT_ERROR_ACTIVE_NOTFORMAT,
+    email: {
+      textError: TEXT_ERROR_EMAIL_NOTIMPTY,
       isVisible: false,
-      isError: true
+      isError: false
     }
   });
 
@@ -891,19 +898,15 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
       activeTime: props.user?.activeTime ?? '',
       phone: props.user?.phone ?? '',
     })
-    // Faculty
     setPhone(props.user?.phone ?? "");
     setEmail(props.user?.email ?? "");
-    // Business
     setName(props.user?.name ?? "");
     setRepresentor(props.user?.representor ?? "");
     setTaxCode(props.user?.taxCode ?? "");
     setAddress(props.user?.address ?? "");
     setActiveTime(props.user?.activeTime ?? "");
-    // Public
-    setRole(props.user?.roleCodes ?? "");
     props.user?.image ? setImageAvatarTemporary(SERVER_ADDRESS + 'api/images/' + props.user?.image) : setImageAvatarTemporary("");
-    props.user?.background ? setImageBackgroundTemporary(SERVER_ADDRESS + "api/images/" + props.user?.avatar) : setImageBackgroundTemporary("");
+    props.user?.background ? setImageBackgroundTemporary(SERVER_ADDRESS + "api/images/" + props.user?.background) : setImageBackgroundTemporary("");
   }, [props.user]);
 
   const handleGetFilesAvatar = () => {
@@ -922,102 +925,26 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
 
   const onSelectUploadImageAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
+      setAvatarHadSave(true);
       setImageAvatar(URL.createObjectURL(event.target.files[0]));
       handleUploadImage(event.target.files, (response) => {
-        console.log(response.data);
         setBusiness({ ...business, image: response.data[0] });
+        setAvatarHadSave(false);
       });
     }
   };
 
   const onSelectUploadImageBackground = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
+      setBackgroundHadSave(true);
       setImageBackground(URL.createObjectURL(event.target.files[0]));
       handleUploadImage(event.target.files, (response) => {
         console.log(response.data);
         setBusiness({ ...business, background: response.data[0] });
+        setBackgroundHadSave(false);
       });
     }
   };
-
-  const handleCheckEmail = useCallback(() => {
-    axios
-      .post(SERVER_ADDRESS + `api/users/check?email=${business.email}`)
-      .then((response) => {
-        if (response.data.data == 0) {
-          setValidate({
-            ...validate,
-            email: {
-              ...validate.email,
-              isError: true,
-              textError: props.t("Validate.validateEmailHadUsed"),
-              isVisible: true
-            }
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [business.email])
-
-
-  const handleEmailChange = useCallback(
-    (event: string) => {
-      return new Promise<void>((resolve) => {
-        setEmail(event);
-        if (isBlank(event)) {
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: true,
-              isVisible: true,
-              textError: props.t("Validate.validateEmailNull")
-            }
-          }));
-          resolve();
-        } else if (!isLengthInRange(event, 1, 255)) {
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: true,
-              isVisible: true,
-              textError: props.t("Validate.validateEmailHasMaxLength")
-            }
-          }));
-          resolve();
-        } else if (!isEmail(event)) {
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: true,
-              isVisible: true,
-              textError: props.t("Validate.validateEmailUnCorrectFormat")
-            }
-          }));
-          resolve();
-        } else {
-          setBusiness((prevBusiness) => ({
-            ...prevBusiness,
-            email: event
-          }));
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: false,
-              isVisible: false
-            }
-          }));
-          resolve();
-        }
-      });
-    },
-    [validate]
-  );
 
   const handlePhoneChange = useCallback(
     (event: string) => {
@@ -1327,16 +1254,8 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
     [validate]
   );
 
-
-  const handleSubmitEvent = async () => {
-    await handleEmailChange(email);
-    await handlePhoneChange(phone);
-    await handleTimeActiveChange(activeTime);
-    await handleAddressChange(address);
-    await handleTaxCodeChange(taxCode);
-    await handleRepresentoreChange(representor);
-    await handleNameChange(name);
-    if (isAllFieldsValid(validate)) {
+  useEffect(() => {
+    if (isAllFieldsValidBusiness(validate)) {
       axios
         .post<Faculty, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/business', business)
         .then((responseUpdate: any) => {
@@ -1375,6 +1294,23 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
         }
       }
     }
+  }, [isValidatePassed])
+
+  const asyncForValidate = async () => {
+    const validationPromises = [
+      await handlePhoneChange(phone),
+      await handleTimeActiveChange(activeTime),
+      await handleAddressChange(address),
+      await handleTaxCodeChange(taxCode),
+      await handleRepresentoreChange(representor),
+      await handleNameChange(name),
+    ];
+    await Promise.all(validationPromises);
+  }
+
+  const handleSubmitEvent = async () => {
+    await asyncForValidate();
+    setValidatePassed(!isValidatePassed);
   };
 
   const printBackground = useMemo(() => {
@@ -1382,7 +1318,7 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
     if (imageBackground.trim().length !== 0) {
       image = (
         <div className='img'>
-          <img className='imageUpdate' src={imageBackground} style={{ width: '100%', height: 300, borderRadius: 10 }} />
+          <img className='imageUpdate' src={imageBackground} style={{ width: '100%', height: 300 }} />
         </div>
       );
     } else if (imageBackgroundTemporary.trim().length !== 0) {
@@ -1424,6 +1360,7 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
     }
     return image;
   }, [imageAvatar, imageAvatarTemporary]);
+
 
   return (
     <Modal
@@ -1546,25 +1483,6 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
             isVisible={validate.phone?.isVisible}
           />
         </div>
-        {/* Email */}
-        <div className='form-group icon-input mb-3'>
-          <i className='font-sm ti-email text-grey-500 pe-0'> </i>
-          <input
-            id='email'
-            value={email}
-            type='text'
-            onBlur={() => handleCheckEmail()}
-            onChange={(e) => handleEmailChange(e.target.value)}
-            className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-            placeholder={props.t("ModalUpdate.modalUpdatePlaceholderEmail")}
-            style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}
-          />
-          <TextValidate
-            textError={validate.email?.textError}
-            isError={validate.email?.isError}
-            isVisible={validate.email?.isVisible}
-          />
-        </div>
         {/* Avatar */}
         <div className='form-group icon-input' style={{ marginTop: 10, marginBottom: 40 }}>
           <div className='d-flex mt-3 p-0'>
@@ -1585,6 +1503,11 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
               <span className='d-none-xs'>{props.t("ModalUpdate.modalUpdateAvatar")}</span>
             </button>
           </div>
+          {
+            avatarHadSave ?
+              (<span style={{ background: 'red', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>
+                Đang tải ảnh lên</span>) : (<span style={{ background: 'green', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>Ảnh đã được tải lên</span>)
+          }
           {printAvatar}
         </div>
         {/* Background */}
@@ -1607,7 +1530,13 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
               <span className='d-none-xs'>{props.t("ModalUpdate.modalUpdateBackground")}</span>
             </button>
           </div>
+          {
+            backgroundHadSave ?
+              (<span style={{ background: 'red', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>
+                Đang tải ảnh lên</span>) : (<span style={{ background: 'green', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>Ảnh đã được tải lên</span>)
+          }
           {printBackground}
+
         </div>
       </Modal.Body>
       <Modal.Footer>
@@ -1618,11 +1547,23 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
 }
 
 
+
+
 // Student
 interface StudentUpdate {
   name: InputTextValidate
-  email: InputTextValidate
   phone: InputTextValidate
+  email: InputTextValidate
+}
+
+const isAllFieldsValidStudent = (validate: StudentUpdate): boolean => {
+  let key: keyof StudentUpdate
+  for (key in validate) {
+    if (validate[key].isError) {
+      return false
+    }
+  }
+  return true
 }
 
 function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
@@ -1643,26 +1584,18 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
   const [imageAvatarTemporary, setImageAvatarTemporary] = useState('');
   const [imageBackground, setImageBackground] = useState('');
   const [imageBackgroundTemporary, setImageBackgroundTemporary] = useState('');
-  // Faculty
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  // Business
   const [name, setName] = useState('');
-  // Public
-  const [role, setRole] = useState('sinh-vien');
-
+  const [isValidatePassed, setValidatePassed] = useState(false);
   const fileInputRefAvatar = useRef<HTMLInputElement | null>(null);
   const fileInputRefBackground = useRef<HTMLInputElement | null>(null);
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null);
+  const [avatarHadSave, setAvatarHadSave] = useState(false);
+  const [backgroundHadSave, setBackgroundHadSave] = useState(false);
 
   const [validate, setValidate] = useState<StudentUpdate>({
     name: {
       textError: TEXT_ERROR_BUSINESSNAME_NOTEMPTY,
-      isVisible: false,
-      isError: true
-    },
-    email: {
-      textError: TEXT_ERROR_EMAIL_NOTIMPTY,
       isVisible: false,
       isError: true
     },
@@ -1671,6 +1604,11 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
       isVisible: false,
       isError: true
     },
+    email: {
+      textError: "",
+      isVisible: false,
+      isError: false
+    }
   });
 
   useEffect(() => {
@@ -1683,13 +1621,8 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
       phone: props.user?.phone ?? '',
       studentCode: props.user?.studentCode ?? '',
     })
-    // Faculty
     setPhone(props.user?.phone ?? "");
-    setEmail(props.user?.email ?? "");
-    // Business
     setName(props.user?.name ?? "");
-    // Public
-    setRole(props.user?.roleCodes ?? "");
     props.user?.image ? setImageAvatarTemporary(SERVER_ADDRESS + 'api/images/' + props.user?.image) : setImageAvatarTemporary("");
     props.user?.background ? setImageBackgroundTemporary(SERVER_ADDRESS + "api/images/" + props.user?.avatar) : setImageBackgroundTemporary("");
   }, [props.user]);
@@ -1710,102 +1643,27 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
 
   const onSelectUploadImageAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
+      setAvatarHadSave(true)
       setImageAvatar(URL.createObjectURL(event.target.files[0]));
       handleUploadImage(event.target.files, (response) => {
         console.log(response.data);
         setStudent({ ...student, image: response.data[0] });
+        setAvatarHadSave(false);
       });
     }
   };
 
   const onSelectUploadImageBackground = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
+      setBackgroundHadSave(true);
       setImageBackground(URL.createObjectURL(event.target.files[0]));
       handleUploadImage(event.target.files, (response) => {
         console.log(response.data);
         setStudent({ ...student, background: response.data[0] });
+        setBackgroundHadSave(false);
       });
     }
   };
-
-  const handleCheckEmail = useCallback(() => {
-    axios
-      .post(SERVER_ADDRESS + `api/users/check?email=${student.email}`)
-      .then((response) => {
-        if (response.data.data == 0) {
-          setValidate({
-            ...validate,
-            email: {
-              ...validate.email,
-              isError: true,
-              textError: props.t("Validate.validateEmailHadUsed"),
-              isVisible: true
-            }
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [student.email])
-
-
-  const handleEmailChange = useCallback(
-    (event: string) => {
-      return new Promise<void>((resolve) => {
-        setEmail(event);
-        if (isBlank(event)) {
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: true,
-              isVisible: true,
-              textError: props.t("Validate.validateEmailNull")
-            }
-          }));
-          resolve();
-        } else if (!isLengthInRange(event, 1, 255)) {
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: true,
-              isVisible: true,
-              textError: props.t("Validate.validateEmailHasMaxLength")
-            }
-          }));
-          resolve();
-        } else if (!isEmail(event)) {
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: true,
-              isVisible: true,
-              textError: props.t("Validate.validateEmailUnCorrectFormat")
-            }
-          }));
-          resolve();
-        } else {
-          setStudent((prevStudent) => ({
-            ...prevStudent,
-            email: event
-          }));
-          setValidate((prevValidate) => ({
-            ...prevValidate,
-            email: {
-              ...prevValidate.email,
-              isError: false,
-              isVisible: false
-            }
-          }));
-          resolve();
-        }
-      });
-    },
-    [validate]
-  );
 
   const handlePhoneChange = useCallback(
     (event: string) => {
@@ -1910,11 +1768,16 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
     [validate]
   );
 
-  const handleSubmitEvent = async () => {
-    await handleEmailChange(email);
-    await handlePhoneChange(phone);
-    await handleNameChange(name);
-    if (isAllFieldsValid(validate)) {
+  const asyncForValidate = async () => {
+    const validationPromises = [
+      await handlePhoneChange(phone),
+      await handleNameChange(name)
+    ];
+    await Promise.all(validationPromises);
+  }
+
+  useEffect(() => {
+    if (isAllFieldsValidStudent(validate)) {
       axios
         .post<Faculty, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/student', student)
         .then((responseUpdate: any) => {
@@ -1953,6 +1816,11 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
         }
       }
     }
+  }, [isValidatePassed])
+
+  const handleSubmitEvent = async () => {
+    await asyncForValidate();
+    setValidatePassed(!isValidatePassed);
   };
 
   const printBackground = useMemo(() => {
@@ -2052,26 +1920,6 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
             isVisible={validate.phone?.isVisible}
           />
         </div>
-        {/* Email */}
-        <div className='form-group icon-input mb-3'>
-          <i className='font-sm ti-email text-grey-500 pe-0'> </i>
-          <input
-            id='email'
-            value={email}
-            type='text'
-            onBlur={() => handleCheckEmail()}
-            onChange={(e) => handleEmailChange(e.target.value)}
-            className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-            placeholder={props.t("ModalUpdate.modalUpdatePlaceholderEmail")}
-            style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}
-          />
-          <TextValidate
-            textError={validate.email?.textError}
-            isError={validate.email?.isError}
-            isVisible={validate.email?.isVisible}
-          />
-        </div>
-        {/* Avatar */}
         <div className='form-group icon-input' style={{ marginTop: 10, marginBottom: 40 }}>
           <div className='d-flex mt-3 p-0'>
             <input
@@ -2091,6 +1939,11 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
               <span className='d-none-xs'>{props.t("ModalUpdate.modalUpdateAvatar")}</span>
             </button>
           </div>
+          {
+            avatarHadSave ?
+              (<span style={{ background: 'red', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>
+                Đang tải ảnh lên</span>) : (<span style={{ background: 'green', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>Ảnh đã được tải lên</span>)
+          }
           {printAvatar}
         </div>
         {/* Background */}
@@ -2113,6 +1966,11 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
               <span className='d-none-xs'>{props.t("ModalUpdate.modalUpdateBackground")}</span>
             </button>
           </div>
+          {
+            backgroundHadSave ?
+              (<span style={{ background: 'red', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>
+                Đang tải ảnh lên</span>) : (<span style={{ background: 'green', position: 'absolute', right: 0, color: '#fff', padding: 5, borderRadius: 3 }}>Ảnh đã được tải lên</span>)
+          }
           {printBackground}
         </div>
       </Modal.Body>

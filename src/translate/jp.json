@@ -269,6 +269,7 @@
         "ModalUpdate":{
             "modalUpdateTitle": "アカウント情報を更新する",
             "modalUpdatePlaceholderPhoneNumber": "電話番号",
+            "modalUpdatePlaceholderPhoneName": "名前を入力してください",
             "modalUpdatePlaceholderEmail": "メール",
             "modalUpdateBackground": "背景画像",
             "modalUpdateAvatar": "プロフィール画像",
