@@ -25,7 +25,6 @@ export default function FollowListView(props: FollowingType) {
         }
     )
     const [search, setSearch] = useState('')
-    const unorm = require("unorm")
     const filter = (data?.data)?.filter(item => item.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/d/g, 'đ')))
     const [filterData, setFilterData] = useState(filter)
     const handleFollow = (userFollowId: number) => {
