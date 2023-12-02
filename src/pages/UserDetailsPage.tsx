@@ -25,6 +25,7 @@ import { TabSelector } from "../components/example/TabSelector";
 import FollowListView from '../components/listviews/FollowListView';
 import FollowerListView from '../components/listviews/FollowerListView';
 import '../assets/css/profile.css'
+import PostSavedListView from '../components/listviews/PostSavedListView';
 
 export default function UserDetailsPage() {
   const [modalShow, setModalShow] = React.useState(false);
@@ -64,6 +65,9 @@ export default function UserDetailsPage() {
     reloadingPageEvent();
   }, [userId])
 
+  const handleUnSave = (post_id: number) => {
+  }
+
 
   const likeAction = (obj: LikeAction) => {
   }
@@ -95,6 +99,7 @@ export default function UserDetailsPage() {
         isConduct={null}
         isSave={item.isSave}
         group={group}
+        handleUnSave={handleUnSave}
       />
     )
   }
@@ -254,7 +259,7 @@ function ModalUserLiked(props: Readonly<ModalType>) {
             <div className="p-2">
               <TabPanel hidden={selectedTab !== "following"}><FollowListView id={userId} /></TabPanel>
               <TabPanel hidden={selectedTab !== "follower"}><FollowerListView id={userId} /></TabPanel>
-              <TabPanel hidden={selectedTab !== "saved"}>Bai viet da luu</TabPanel>
+              <TabPanel hidden={selectedTab !== "saved"}><PostSavedListView /></TabPanel>
             </div>
           </div>
 

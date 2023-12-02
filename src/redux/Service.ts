@@ -18,12 +18,16 @@ import { JobApplyRespose } from '../types/response/JobApplyResponse'
 import { JobApplyResponseData } from '../types/response/JobApplyResponseData'
 import { JobApplyUpdateRequest } from '../types/request/JobApplyUpdateRequest'
 import { JobUpdateStatus } from '../types/request/JobUpdateStatus'
+import { PostSavedModel } from '../types/response/PostSavedModel'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['UserLogin'],
   endpoints: (builder) => ({
+    getListPostSaved: builder.query<Data<PostSavedModel[]>, number>({
+      query: (userId) => `api/posts/user/save/${userId}`
+    }),
     getFollowerUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/users/follow/other',
@@ -34,13 +38,6 @@ export const TDCSocialNetworkAPI = createApi({
     getFollowingUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/users/follow/me',
-        method: 'POST',
-        body: data
-      })
-    }),
-    getNotificationsUser: builder.query<Data<NotificationModel[]>, { id: number }>({
-      query: (data) => ({
-        url: 'api/notifications/user',
         method: 'POST',
         body: data
       })
@@ -183,10 +180,10 @@ export const {
   useJobApplyUpdateMutation,
   useGetJobProfileQuery,
   useGetProfileApplyQuery,
+  useGetListPostSavedQuery,
   useGetFollowerUserQuery,
   useGetSurveyResultQuery,
   useGetFollowingUserQuery,
-  useGetNotificationsUserQuery,
   useGetNotificationsUserByIdQuery,
   useGetQuestionsFromSurveyPostQuery,
   useGetConversationsByUserIdQuery,
