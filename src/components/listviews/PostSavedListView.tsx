@@ -9,6 +9,8 @@ import axios from 'axios'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import CustomizePost from '../post/CustomizePost'
 import { useGetListPostSavedQuery } from '../../redux/Service'
+import '../../assets/css/saved.css'
+
 
 let stompClient: Client
 const PostSavedListView = () => {
@@ -24,7 +26,10 @@ const PostSavedListView = () => {
   })
   const filter = (data?.data)?.filter(item => item.type == 'thong-thuong' ? (item.content).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(/d/g, 'đ').includes(search.toLowerCase().normalize("NFD").replace(/d/g, 'đ')) : item.title?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(/d/g, 'đ').includes(search.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(/d/g, 'đ')))
 
-  const likeAction = () => { }
+  const likeAction = () => {
+    console.log('123');
+    
+  }
 
   const handleUnSave = () => {}
 
