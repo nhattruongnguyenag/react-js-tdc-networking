@@ -7,6 +7,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import '../assets/css/setting.css'
 import { useAppDispatch } from '../redux/Hook';
 import { setDefaultLanguage } from '../redux/Slice';
+import { toast } from 'react-toastify';
 
 const data = [
   { label: 'Vietnamese', value: 'vi' },
@@ -19,10 +20,17 @@ export default function SettingPage() {
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState('')
   const [language, setLanguage] = useState('vi')
+  const filter = data.filter(item => item.label.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))
   const handleClose = () => setShow(false);
   const handleChange = () => {
-    dispatch(setDefaultLanguage(language))
-    setShow(false)
+    if (language) {
+      dispatch(setDefaultLanguage(language))
+      toast.success('Thay đổi ngôn ngữ thành công')
+      setShow(false)
+    } else {
+      toast.error('Thay đổi ngôn ngữ không thành công')
+    }
+
   };
 
   const handleShow = () => setShow(true);
@@ -125,15 +133,26 @@ export default function SettingPage() {
             <FontAwesomeIcon style={{ position: 'absolute', left: 35, top: 50, fontSize: 20 }} icon={faSearch} color='grey' />
             <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 500 }}>
               {
-                data.map((data: any) => <>
-                  <div className='item-language'
-                    style={{ background: data.value == language ? '#dadde1' : ''}}
-                  >
-                    <div>
-                      <p className='name-language' onClick={() => setLanguage(data.value)}>{data.label}</p>
+                search == '' ?
+                  data.map((data: any) => <>
+                    <div className='item-language'
+                      style={{ background: data.value == language ? '#dadde1' : '' }}
+                    >
+                      <div>
+                        <p className='name-language' onClick={() => setLanguage(data.value)}>{data.label}</p>
+                      </div>
                     </div>
-                  </div>
-                </>)
+                  </>)
+                  :
+                  filter.map((data: any) => <>
+                    <div className='item-language'
+                      style={{ background: data.value == language ? '#dadde1' : '' }}
+                    >
+                      <div>
+                        <p className='name-language' onClick={() => setLanguage(data.value)}>{data.label}</p>
+                      </div>
+                    </div>
+                  </>)
               }
             </div>
           </Modal.Body>

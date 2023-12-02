@@ -13,6 +13,7 @@ import { faPlus, faPaperPlane, faCancel } from '@fortawesome/free-solid-svg-icon
 import { COLOR_BTN_BLUE, COLOR_WHITE } from '../constants/Color';
 import { getIdFromSlug } from '../utils/CommonUtls';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-multi-lang'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -29,6 +30,7 @@ export default function JobApplyPage() {
     const navigate = useNavigate()
     const [isAnonymous, setIsAnonymous] = useState(false);
     const [isUploadCV, setIsUpload] = useState(false);
+    const t = useTranslation()
 
     useEffect(() => {
     }, [fileName, isAnonymous, isUploadCV])
@@ -88,7 +90,7 @@ export default function JobApplyPage() {
                             <div className='position-relative scroll-bar theme-dark-bg pt-0' style={{ height: 845, width: 1000, background: '#A6ACAF' }}>
                                 <div className='main' style={{ width: '100%', textAlign: 'center' }}>
                                     {
-                                        file == null ? <div style={{ fontWeight: 'bold', marginTop: 400 }}>Hiện chưa có file nào được tải lên</div> :
+                                        file == null ? <div style={{ fontWeight: 'bold', marginTop: 400 }}>{t('JobApplyScreen.jobApplyScreenEmptyCvTextContent')} </div> :
                                             (file && (
                                                 <Document
                                                     file={file}
@@ -100,9 +102,9 @@ export default function JobApplyPage() {
                                                 </Document>
                                             ))}
                                     <div style={{ position: 'fixed', bottom: 25, right: '35%', width: 130 }}>
-                                        <button className='btn btn-info button_nop' style={{ position: 'fixed', bottom: 27, right: '48%', width: 130 }} onClick={() => navigate('/doanh-nghiep/bai-viet')}><p>Hủy  <FontAwesomeIcon icon={faCancel} size='1x' color={COLOR_WHITE} /></p></button>
+                                        <button className='btn btn-info button_nop' style={{ position: 'fixed', bottom: 27, right: '48%', width: 130 }} onClick={() => navigate(-1)}><p>{t('JobApplyScreen.jobApplyScreenButtonGoBack')}  <FontAwesomeIcon icon={faCancel} size='1x' color={COLOR_WHITE} /></p></button>
                                         <button className='btn btn-info' disabled={isAnonymous ? true : false} style={{ position: 'fixed', bottom: 27, right: '38%', width: 130 }}>
-                                            <label htmlFor="fileInput" className='lbButton'>{isUploadCV ? (<p>Thay đổi CV <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} /></p>) : (<p>Thêm CV  <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} /></p>)}</label>
+                                            <label htmlFor="fileInput" className='lbButton'>{isUploadCV ? (<p>{t('JobApplyScreen.jobApplyScreenButtonUpdateCvTitle')} <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} /></p>) : (<p>{t('JobApplyScreen.jobApplyScreenButtonAddCvTitle')}  <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} /></p>)}</label>
                                         </button>
                                         <input
                                             id="fileInput"
@@ -111,7 +113,7 @@ export default function JobApplyPage() {
                                             onChange={onFileChange}
                                             style={{ display: 'none' }}
                                         />
-                                        <button disabled={isAnonymous ? true : false} className='btn btn-info button_nop' style={{ position: 'fixed', bottom: 27, right: '28%', width: 130 }} onClick={onSuccess}><p>Hoàn tất  <FontAwesomeIcon icon={faPaperPlane} size='1x' color={COLOR_WHITE} /></p></button>
+                                        <button disabled={isAnonymous ? true : false} className='btn btn-info button_nop' style={{ position: 'fixed', bottom: 27, right: '28%', width: 130 }} onClick={onSuccess}><p>{t('JobApplyScreen.jobApplyScreenButtonComplete')}  <FontAwesomeIcon icon={faPaperPlane} size='1x' color={COLOR_WHITE} /></p></button>
                                     </div>
                                 </div>
                             </div>

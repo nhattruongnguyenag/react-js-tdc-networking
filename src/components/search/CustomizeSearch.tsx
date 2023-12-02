@@ -15,44 +15,44 @@ export default function CustomizeSearch() {
   const t = useTranslation()
   const [subjects, setSubjects] = useState([
     {
-      label: 'Người dùng',
+      label: t('SearchComponent.user'),
       value: 'user'
     },
     {
-      label: 'Bài viết',
+      label: t('SearchComponent.post'),
       value: 'post'
     }
   ])
   const [users, setUser] = useState([
     {
-      name: 'Sinh viên',
+      name: t('SearchComponent.student'),
       value: 'sinh-vien'
     },
     {
-      name: 'Doanh nghiệp',
+      name: t('SearchComponent.business'),
       value: 'doanh-nghiep'
     },
     {
-      name: 'Khoa',
+      name: t('SearchComponent.faculty'),
       value: 'khoa'
     }
   ])
   const [posts, setPost] = useState([
     {
-      name: 'Bài viết',
+      name: t('SearchComponent.normal'),
       value: 'thong-thuong'
     },
     {
-      name: 'Khảo sát',
+      name: t('SearchComponent.survey'),
       value: 'khao-sat'
     },
     {
-      name: 'Tin tuyển dụng',
+      name: t('SearchComponent.recruitment'),
       value: 'tuyen-dung'
     }
   ])
   const [sub, setSub] = useState('user')
-  const [subLabel, setSubLabel] = useState('Người dùng')
+  const [subLabel, setSubLabel] = useState(t('SearchComponent.user'))
   const [type, setType] = useState('')
   const [search, setSearch] = useState('')
   const { conversations, userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
