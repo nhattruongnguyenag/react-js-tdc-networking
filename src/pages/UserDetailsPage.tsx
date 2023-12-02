@@ -46,6 +46,7 @@ import { Faculty } from '../types/Faculty';
 import DefaultAvatar from '../components/common/DefaultAvatar';
 setTranslations({ vi, en, jp })
 
+import PostSavedListView from '../components/listviews/PostSavedListView';
 
 export default function UserDetailsPage() {
   setDefaultLanguage('jp');
@@ -89,6 +90,9 @@ export default function UserDetailsPage() {
     reloadingPageEvent();
   }, [userId])
 
+  const handleUnSave = (post_id: number) => {
+  }
+
 
   const likeAction = (obj: LikeAction) => {
   }
@@ -120,6 +124,7 @@ export default function UserDetailsPage() {
         isConduct={null}
         isSave={item.isSave}
         group={group}
+        handleUnSave={handleUnSave}
       />
     )
   }
@@ -333,7 +338,7 @@ function ModalOptions(props: Readonly<ModalType>) {
             <div className="p-2">
               <TabPanel hidden={selectedTab !== "following"}><FollowListView id={userId} /></TabPanel>
               <TabPanel hidden={selectedTab !== "follower"}><FollowerListView id={userId} /></TabPanel>
-              <TabPanel hidden={selectedTab !== "saved"}>Bai viet da luu</TabPanel>
+              <TabPanel hidden={selectedTab !== "saved"}><PostSavedListView /></TabPanel>
             </div>
           </div>
 

@@ -65,9 +65,9 @@ const CustomizeBottomPost = (props: BottomPostType) => {
       <div className='emoji-bttn pointer d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss me-2'>
         <button className='like-button-bottom-wrapper' onClick={() => props.handleClickBottomBtnEvent(LIKE_ACTION)}>
           {props.isLike ? (
-            <i className='feather-thumbs-up bg-primary-gradiant btn-round-xs font-xss me-1 text-white' />
+            <i className='feather-thumbs-up bg-primary-gradiant btn-round-xs font-xss me-1 text-white like' />
           ) : (
-            <i className='feather-thumbs-up btn-round-xs font-xss text-dark me-1' />
+            <i className='feather-thumbs-up btn-round-xs font-xss text-dark me-1 unlike' />
           )}
           {getLikeQty(props.likes)} {props.textLike}
         </button>

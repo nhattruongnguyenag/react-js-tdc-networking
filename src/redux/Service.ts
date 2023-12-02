@@ -14,12 +14,16 @@ import { QuestionResponse, SurveyResponse } from '../types/response/QuestionResp
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 import { FollowUserModel } from '../types/response/FollowUserModel'
 import { SurveyItemResult } from '../types/response/SurveyResult'
+import { PostSavedModel } from '../types/response/PostSavedModel'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['UserLogin'],
   endpoints: (builder) => ({
+    getListPostSaved: builder.query<Data<PostSavedModel[]>, number>({
+      query: (userId) => `api/posts/user/save/${userId}`
+    }),
     getFollowerUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/users/follow/other',
@@ -30,13 +34,6 @@ export const TDCSocialNetworkAPI = createApi({
     getFollowingUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
       query: (data) => ({
         url: 'api/users/follow/me',
-        method: 'POST',
-        body: data
-      })
-    }),
-    getNotificationsUser: builder.query<Data<NotificationModel[]>, { id: number }>({
-      query: (data) => ({
-        url: 'api/notifications/user',
         method: 'POST',
         body: data
       })
@@ -153,10 +150,10 @@ export const TDCSocialNetworkAPI = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useGetListPostSavedQuery,
   useGetFollowerUserQuery,
   useGetSurveyResultQuery,
   useGetFollowingUserQuery,
-  useGetNotificationsUserQuery,
   useGetNotificationsUserByIdQuery,
   useGetQuestionsFromSurveyPostQuery,
   useGetConversationsByUserIdQuery,

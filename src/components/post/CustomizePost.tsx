@@ -173,6 +173,7 @@ const CustomizePost = (props: Post) => {
         break;
       case CLICK_UN_SAVE_POST_EVENT:
         handleSavePost();
+        props.handleUnSave(props.id);
         break;
       case CLICK_DELETE_POST_EVENT:
         handleDeletePostEvent();

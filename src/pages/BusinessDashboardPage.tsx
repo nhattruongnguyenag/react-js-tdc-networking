@@ -37,6 +37,8 @@ export default function BusinessDashboardPage() {
 
   const likeAction = (obj: LikeAction) => {
   }
+  const handleUnSave = () => {
+  }
 
   const renderItem = (item: any) => {
     return (
@@ -66,6 +68,7 @@ export default function BusinessDashboardPage() {
         isConduct={item.isConduct ?? null}
         isSave={item.isSave}
         group={code}
+        handleUnSave={handleUnSave}
       />
     )
   }
