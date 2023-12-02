@@ -49,7 +49,6 @@ setTranslations({ vi, en, jp })
 import PostSavedListView from '../components/listviews/PostSavedListView';
 
 export default function UserDetailsPage() {
-  setDefaultLanguage('jp');
   const t = useTranslation();
   const [modalShowOption, setModalShowOption] = React.useState(false);
   const [modalShowUpdate, setModalShowUpdate] = React.useState(false);

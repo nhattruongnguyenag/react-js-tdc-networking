@@ -36,7 +36,6 @@ import { formatVietNamCurrency } from '../../utils/FormatCurrency'
 setTranslations({ vi, en, jp })
 
 const CustomizePost = (props: Post) => {
-  setDefaultLanguage('jp')
   const t = useTranslation();
   const navigate = useNavigate()
   const [modalShow, setModalShow] = React.useState(false);

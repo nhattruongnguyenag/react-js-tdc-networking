@@ -24,7 +24,6 @@ interface CreatePostSelectorType {
 export default function CreatePostSelector(props: Readonly<CreatePostSelectorType>) {
   const [createNormalPostModalShow, setCreateNormalPostModalShow] = useState(false)
   const navigate = useNavigate()
-  setDefaultLanguage('jp')
   const t = useTranslation();
 
   const handleClickAvatarEvent = () => {

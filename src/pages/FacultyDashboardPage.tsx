@@ -13,7 +13,6 @@ import {
   TYPE_POST_FACULTY,
   TYPE_POST_STUDENT
 } from '../constants/StringVietnamese';
-import CustomizePost from '../components/post/CustomizePost';
 import CreatePostSelector from '../components/CreatePostSelector';
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { useAppSelector } from '../redux/Hook';
@@ -27,11 +26,11 @@ import en from '../translate/en.json';
 import jp from '../translate/jp.json';
 import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
 import { getFacultyTranslated } from '../utils/TranslateFaculty';
+import CustomizePost from '../components/post/CustomizePost'
 
 setTranslations({ vi, en, jp });
 
 export default function FacultyDashboardPage() {
-  setDefaultLanguage('jp');
   const t = useTranslation();
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer);
   const [code, setCode] = useState(userLogin?.roleCodes !== TYPE_POST_BUSINESS ? userLogin?.facultyGroupCode ?? '' : '');
@@ -72,6 +71,9 @@ export default function FacultyDashboardPage() {
       });
   }, []);
 
+  const handleUnSave = () => {
+  }
+
   const renderItem = (item: any) => (
     <CustomizePost
       key={item.id}
@@ -99,6 +101,7 @@ export default function FacultyDashboardPage() {
       isConduct={null}
       isSave={item.isSave}
       group={code}
+      handleUnSave={handleUnSave}
     />
   );
 
