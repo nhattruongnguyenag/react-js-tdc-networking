@@ -62,9 +62,23 @@ import SurveyResultPage from './pages/SurveyResultPage'
 import ManagementJobApplyPage from './pages/ManagementJobApplyPage'
 import AuthenticateRegistrationPage from './pages/AuthenticateRegistrationPage'
 
+import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang'
+import en from './translates/en.json'
+import ja from './translates/jp.json'
+import vi from './translates/vi.json'
+import { useEffect } from 'react'
+import moment, { locale } from 'moment'
+
+setTranslations({ vi, en, ja })
+setDefaultLanguage('vi')
+
+
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
-
+  const { defaultLanguage } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  useEffect(() => {
+    setDefaultLanguage(defaultLanguage)
+  }, [defaultLanguage])
   return (
     <div className={classNames('color-theme-blue mont-font loaded', darkMode ? 'theme-dark' : ' theme-light')}>
       <BrowserRouter>
