@@ -5,9 +5,10 @@ import ReactLoading from 'react-loading'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { useNavigate } from 'react-router-dom'
-import { ACCEPT_FORGOT_PASSWORD_PAGE } from '../constants/Page'
+import { ACCEPT_SEND_EMAIL_PAGE } from '../constants/Page'
 import { toast } from 'react-toastify'
 import { useCookies } from 'react-cookie'
+import '../assets/css/forgotPasswordPage.css'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
@@ -19,7 +20,7 @@ export default function ForgotPasswordPage() {
   const [border, setBorder] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const [cookies, setCookie] = useCookies(['email'])
+  const [cookies, setCookie] = useCookies(['email', 'url','subject'])
 
   useEffect(() => {}, [email, border])
 
@@ -32,7 +33,9 @@ export default function ForgotPasswordPage() {
         method: 'post',
         url: `${SERVER_ADDRESS}api/users/get/email/reset`,
         data: {
-          email: email
+          to: email,
+          subject: 'Password reset',
+          content: ''
         }
       })
         .then((res) => {
@@ -40,7 +43,9 @@ export default function ForgotPasswordPage() {
           let expires = new Date()
           expires.setTime(expires.getTime() + 600 * 1000)
           setCookie('email', email, { path: '/', expires })
-          navigate(ACCEPT_FORGOT_PASSWORD_PAGE)
+          setCookie('url', 'api/users/get/email/reset', { path: '/', expires })
+          setCookie('subject', 'Password reset', { path: '/', expires })
+          navigate(ACCEPT_SEND_EMAIL_PAGE)
           toast.success('Gửi thành công')
         })
         .catch((err) => {

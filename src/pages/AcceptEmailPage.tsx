@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
-import { ACCEPT_FORGOT_PASSWORD_PAGE } from '../constants/Page'
+import { ACCEPT_SEND_EMAIL_PAGE } from '../constants/Page'
 import { toast } from 'react-toastify'
 import ReactLoading from 'react-loading'
+import '../assets/css/forgotPasswordPage.css'
 
-export default function AcceptForgotPasswordPage() {
-  const [cookies, setCookie] = useCookies(['email'])
+export default function AcceptSendEmailPage() {
+  const [cookies, setCookie] = useCookies(['email','url','subject'])
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -20,17 +21,15 @@ export default function AcceptForgotPasswordPage() {
     setIsLoading(true)
     axios({
       method: 'post',
-      url: `${SERVER_ADDRESS}api/users/get/email/reset`,
+      url: `${SERVER_ADDRESS + cookies['url']}`,
       data: {
-        email: cookies['email']
+        to: cookies['email'],
+        subject: cookies['subject'],
+        content: ''
       }
     })
       .then((res) => {
         setIsLoading(false)
-        let expires = new Date()
-        expires.setTime(expires.getTime() + 600 * 1000)
-        setCookie('email', cookies['email'], { path: '/', expires })
-        navigate(ACCEPT_FORGOT_PASSWORD_PAGE)
         toast.success('Gửi thành công')
       })
       .catch((err) => {
@@ -54,7 +53,7 @@ export default function AcceptForgotPasswordPage() {
                 Nhấn tại đây !!
               </a>
               <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
-                <ReactLoading type='bubbles' color='1828ED' height={50} width={50} />
+                <ReactLoading type='bubbles' color='#1828ED' height={50} width={50} />
               </div>
             </div>
             <div className='fw-600 btn_resend border-0 text-black'>

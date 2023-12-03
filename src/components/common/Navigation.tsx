@@ -1,6 +1,7 @@
 import { Fragment, memo } from 'react'
 import { Link } from 'react-router-dom'
 import ListGroup from '../ListGroup'
+import '../../assets/css/group.css'
 
 function Navigaion() {
   return (

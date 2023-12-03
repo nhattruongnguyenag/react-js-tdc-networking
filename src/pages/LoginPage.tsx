@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { UserLoginRequest } from '../types/request/UserLoginRequest'
 import axios, { AxiosResponse } from 'axios'
 import { TOKEN_KEY, USER_LOGIN_KEY } from '../constants/KeyValue'
@@ -8,7 +8,7 @@ import { Data } from '../types/Data'
 import { Faculty } from '../types/Faculty'
 import { Student } from '../types/Student'
 import { Token } from '../types/Token'
-import { useAppDispatch } from '../redux/Hook'
+import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { setUserLogin } from '../redux/Slice'
 import { InputTextValidate, isBlank, isEmail, isLengthInRange, isPassword } from '../utils/ValidateUtils'
 import TextValidate from '../components/TextValidate'
@@ -52,7 +52,7 @@ const isAllFieldsValid = (validate: UserLogin): boolean => {
 export default function LoginPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [userLoginRequest, setUserLoginRequest] = useState<UserLoginRequest>({
     email: '',
     password: ''
@@ -196,6 +196,11 @@ export default function LoginPage() {
     }
   }
 
+  useEffect(() => {
+    if (userLogin) {
+      navigate(BUSINESS_DASHBOARD_PAGE)
+    }
+  }, [])
   return (
     <Fragment>
       <div className='main-wrap'>
@@ -252,7 +257,9 @@ export default function LoginPage() {
                   <div className='form-check mb-3 text-left'>
                     <button
                       onClick={() => navigate(FORGOT_PASSWORD_PAGE)}
-                     type='button' className='fw-600 font-xsss text-grey-700 float-right'>
+                      type='button'
+                      className='fw-600 font-xsss text-grey-700 float-right'
+                    >
                       {TEXT_FORGOT_PASSWORD}
                     </button>
                   </div>
