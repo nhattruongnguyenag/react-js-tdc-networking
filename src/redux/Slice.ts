@@ -14,8 +14,10 @@ import { getSelectedConversation, getSurveyPostRequest, getUserLogin } from '../
 import { InputTextValidate } from '../utils/ValidateUtils'
 import { ModalComments } from '../types/ModalComments'
 import { PostRejectedLog } from '../types/PostRejectLog'
+import { PostRejectLogResponse } from '../types/response/RejectLogResponse'
 
 export interface TDCSocialNetworkState {
+  rejectLogResponse: PostRejectLogResponse | null
   postRejectId: number | null
   darkMode: boolean
   surveyPostRequest: SurveyPostRequest
@@ -50,6 +52,7 @@ export const defaultSurveyPostRequest: SurveyPostRequest = {
 }
 
 const initialState: TDCSocialNetworkState = {
+  rejectLogResponse: null,
   postRejectId: null,
   defaultLanguage: 'vi',
   darkMode: false,
@@ -186,7 +189,10 @@ export const TDCSocialNetworkSlice = createSlice({
     },
     setPostRejectId: (state, action: PayloadAction<number | null>) => {
       state.postRejectId = action.payload
-    }
+    },
+    setRejectLogResponse: (state, action: PayloadAction<PostRejectLogResponse | null>) => {
+      state.rejectLogResponse = action.payload
+    },
   }
 })
 
@@ -222,7 +228,8 @@ export const {
   setSelectConversation,
   updatePostWhenHaveChangeComment,
   setQuestionConducts,
-  setPostRejectId
+  setPostRejectId,
+  setRejectLogResponse
 } = TDCSocialNetworkSlice.actions
 
 export default TDCSocialNetworkSlice.reducer

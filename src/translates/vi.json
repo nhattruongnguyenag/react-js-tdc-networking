@@ -227,6 +227,9 @@
     "HeaderPostApproveItem": {
         "acceptPostSuccess": "Bài viết đã duyệt thành công",
         "acceptMenuItem": "Chấp nhận",
-        "rejectMenuItem": "Từ chối"
+        "rejectMenuItem": "Từ chối",
+        "editPost": "Chỉnh sửa bài viết",
+        "deletePost": "Xóa bài viết",
+        "rejectDetail": "Chi tiết"
     }
 }

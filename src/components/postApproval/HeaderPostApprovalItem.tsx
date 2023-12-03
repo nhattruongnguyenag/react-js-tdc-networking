@@ -9,7 +9,7 @@ import { CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE, USER_DETAILS_PAG
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { useAppDispatch } from '../../redux/Hook'
 import { useAcceptPostMutation, useDeletePostMutation } from '../../redux/Service'
-import { setPostRejectId } from '../../redux/Slice'
+import { setPostRejectId, setRejectLogResponse } from '../../redux/Slice'
 import { Data } from '../../types/Data'
 import { MenuOptionItem } from '../../types/MenuOptionItem'
 import { PostResponseModel } from '../../types/response/PostResponseModel'
@@ -18,6 +18,7 @@ import { slugify } from '../../utils/CommonUtls'
 import { isRecruitmentPost, isSurveyPost } from '../../utils/PostHelper'
 import DefaultAvatar from '../common/DefaultAvatar'
 import PostOptionsMenu from '../menu/PostOptionsMenu'
+import { POST_APPROVAL, POST_PENDING, POST_REJECT } from './PostApprovalItem'
 
 const RECRUITMENT_BADGE_COLOR = 'bg-gray-200'
 const SURVEY_BADGE_COLOR = 'bg-blue-200'
@@ -25,9 +26,13 @@ const TEXT_IMAGE_BADGE_COLOR = 'bg-green-300'
 
 const ACCEPT_POST = 0
 const REJECT_POST = 1
+const UPDATE_POST = 2
+const DELETE_POST = 3
+const REJECT_POST_DETAIL = 4
 
 interface HeaderPostApprovalItemProps {
     post: PostResponseModel
+    type: number
 }
 
 export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProps) {
@@ -55,12 +60,28 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
             {
                 type: ACCEPT_POST,
                 name: t('HeaderPostApproveItem.acceptMenuItem'),
-                visible: true
+                visible: props.type === POST_APPROVAL
             },
             {
                 type: REJECT_POST,
                 name: t('HeaderPostApproveItem.rejectMenuItem'),
-                visible: true,
+                visible: props.type === POST_APPROVAL,
+                color: 'red'
+            },
+            {
+                type: REJECT_POST_DETAIL,
+                name: t('HeaderPostApproveItem.rejectDetail'),
+                visible: props.type === POST_REJECT
+            },
+            {
+                type: UPDATE_POST,
+                name: t('HeaderPostApproveItem.editPost'),
+                visible: props.type === POST_REJECT || props.type === POST_PENDING
+            },
+            {
+                type: DELETE_POST,
+                name: t('HeaderPostApproveItem.deletePost'),
+                visible: props.type === POST_REJECT || props.type === POST_PENDING,
                 color: 'red'
             }
         ]
@@ -97,7 +118,7 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
             .get<void, AxiosResponse<Data<PostRejectLogResponse>>>(SERVER_ADDRESS + `api/approval/log/post/${postId}`)
             .then((response) => {
                 if (response.status == 200) {
-                    alert(`${moment(response.data.data.createdAt).fromNow()}\n\n${response.data.data.content}`)
+                    dispatch(setRejectLogResponse(response.data.data))
                 }
             }).catch(err => console.log(err))
     }
@@ -137,6 +158,15 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
                 break
             case REJECT_POST:
                 onStartRejectedPost(props.post.id)
+                break
+            case REJECT_POST_DETAIL:
+                onRejectDetailsPress(props.post.id)
+                break
+            case UPDATE_POST:
+                onUpdatePost(props.post)
+                break
+            case DELETE_POST:
+                onDeletePost(props.post.id)
                 break
             default:
                 console.log('invalid choice')
