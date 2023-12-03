@@ -1,10 +1,8 @@
 import classNames from 'classnames'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import {
-  AUTHENTICATE_REGISTRATION_PAGE,
   ACCEPT_SEND_EMAIL_PAGE,
-  ADD_QUESTION_PAGE,
-  BUSINESS_DASHBOARD_PAGE,
+  ADD_QUESTION_PAGE, APPROVAL_POST_PAGE, AUTHENTICATE_REGISTRATION_PAGE, BUSINESS_DASHBOARD_PAGE,
   CONVERSATION_PAGE,
   CREATE_RECRUITMENT_POST_PAGE,
   CREATE_SURVEY_POST_PAGE,
@@ -17,6 +15,7 @@ import {
   LOGIN_PAGE,
   MANAGEMENT_JOB_APPLY_PAGE,
   MESSAGE_PAGE,
+  PENDING_POST_PAGE,
   RECRUITMENT_DETAILS_PAGE,
   REGISTER_BUSINESS_PAGE,
   REGISTER_PAGE,
@@ -30,7 +29,9 @@ import {
   SURVEY_RESULT_PAGE,
   USER_DETAILS_PAGE
 } from './constants/Page'
+import AcceptSendEmailPage from './pages/AcceptEmailPage'
 import AddQuestionPage from './pages/AddQuestionPage'
+import AuthenticateRegistrationPage from './pages/AuthenticateRegistrationPage'
 import BusinessDashboardPage from './pages/BusinessDashboardPage'
 import BusinessRegistationPage from './pages/BusinessRegistationPage'
 import ChatPage from './pages/ChatPage'
@@ -38,36 +39,36 @@ import ConversationPage from './pages/ConversationPage'
 import CreateRecruitmentPostPage from './pages/CreateRecruitmentPostPage'
 import CreateSurveyPostPage from './pages/CreateSurveyPostPage'
 import DetailIntroducePage from './pages/DetailedIntroducePage'
+import DetailJobApply from './pages/DetailJobApply'
 import FacultyDashboardPage from './pages/FacultyDashboardPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import IntroducePage from './pages/IntroducePage'
 import JobApplyPage from './pages/JobApplyPage'
+import ListJobApplyPage from './pages/ListJobApplyPage'
 import LoginPage from './pages/LoginPage'
+import ManagementJobApplyPage from './pages/ManagementJobApplyPage'
 import NoPage from './pages/NoPage'
 import RecruitmentDetailsPage from './pages/RecruitmentDetailsPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
+import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import SearchPage from './pages/SearchPage'
 import SelectTypeRegistationPage from './pages/SelectTypeRegistationPage'
 import SettingPage from './pages/SettingPage'
 import StudentDashboardPage from './pages/StudentDashboardPage'
 import StudentRegistationPage from './pages/StudentRegistationPage'
-import ReviewSurveyPostPage from './pages/ReviewSurveyPostPage'
 import SurveyConductPage from './pages/SurveyConductPage'
+import SurveyResultPage from './pages/SurveyResultPage'
 import UserDetailsPage from './pages/UserDetailsPage'
 import { useAppSelector } from './redux/Hook'
-import ForgotPasswordPage from './pages/ForgotPasswordPage'
-import AcceptSendEmailPage from './pages/AcceptEmailPage'
-import ResetPasswordPage from './pages/ResetPasswordPage'
-import DetailJobApply from './pages/DetailJobApply'
-import ListJobApplyPage from './pages/ListJobApplyPage'
-import SurveyResultPage from './pages/SurveyResultPage'
-import ManagementJobApplyPage from './pages/ManagementJobApplyPage'
-import AuthenticateRegistrationPage from './pages/AuthenticateRegistrationPage'
 
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang'
+import { useEffect } from 'react'
+import { setDefaultLanguage, setTranslations } from 'react-multi-lang'
+
 import en from './translates/en.json'
 import ja from './translates/jp.json'
 import vi from './translates/vi.json'
-import { useEffect } from 'react'
-import moment, { locale } from 'moment'
+import ApprovePostPage from './pages/ApprovePostPage'
+import PendingPostPage from './pages/PendingPostPage'
 
 setTranslations({ vi, en, ja })
 setDefaultLanguage('vi')
@@ -113,8 +114,9 @@ export default function AppRouter() {
             <Route path={SURVEY_RESULT_PAGE + '/:slug'} element={<SurveyResultPage />} />
             <Route path={MANAGEMENT_JOB_APPLY_PAGE} element={<ManagementJobApplyPage />} />
             <Route path={AUTHENTICATE_REGISTRATION_PAGE + '/:slug'} element={<AuthenticateRegistrationPage />} />
+            <Route path={APPROVAL_POST_PAGE} element={<ApprovePostPage />} />
+            <Route path={PENDING_POST_PAGE} element={<PendingPostPage />} />
             <Route path='*' element={<NoPage />} />
-            <Route path='/' element={<IntroducePage />} />
           </Route>
         </Routes>
       </BrowserRouter>

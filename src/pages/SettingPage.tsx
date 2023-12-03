@@ -8,6 +8,8 @@ import '../assets/css/setting.css'
 import { useAppDispatch } from '../redux/Hook';
 import { setDefaultLanguage } from '../redux/Slice';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { APPROVAL_POST_PAGE, PENDING_POST_PAGE } from '../constants/Page';
 
 const data = [
   { label: 'Vietnamese', value: 'vi' },
@@ -51,16 +53,25 @@ export default function SettingPage() {
                         <li className='list-inline-item d-block border-bottom me-0'>
                           <a className='d-flex align-items-center pb-2 pt-2' href='/accountinformation'>
                             <i className='btn-round-md bg-primary-gradiant feather-home font-md me-3 text-white' />{' '}
-                            <h4 className='text-black fw-600 font-xsss mb-0 mt-0'>Acount Information</h4>
+                            <h4 className='text-black fw-600 font-xsss mb-0 mt-0'>Thông tin tài khoản</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                           </a>
                         </li>
+
                         <li className='list-inline-item d-block border-bottom me-0'>
-                          <a className='d-flex align-items-center pb-2 pt-2' href='/contactinformation'>
-                            <i className='btn-round-md bg-gold-gradiant feather-map-pin font-md me-3 text-white' />{' '}
-                            <h4 className='text-black fw-600 font-xsss mb-0 mt-0'>Saved Address</h4>
+                          <Link className='d-flex align-items-center pb-2 pt-2' to={APPROVAL_POST_PAGE}>
+                            <i className='btn-round-md bg-gold-gradiant feather-list font-md me-3 text-white' />{' '}
+                            <h4 className='text-black fw-600 font-xsss mb-0 mt-0'>Duyệt bài viết</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
-                          </a>
+                          </Link>
+                        </li>
+
+                        <li className='list-inline-item d-block border-bottom me-0'>
+                          <Link className='d-flex align-items-center pb-2 pt-2' to={PENDING_POST_PAGE}>
+                            <i className='btn-round-md bg-gold-gradiant feather-clock font-md me-3 text-white' />{' '}
+                            <h4 className='text-black fw-600 font-xsss mb-0 mt-0'>Bài viết đang chờ</h4>
+                            <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
+                          </Link>
                         </li>
                         <li className='list-inline-item d-block me-0'>
                           <a className='d-flex align-items-center pb-2 pt-2' href='/socialaccount'>
