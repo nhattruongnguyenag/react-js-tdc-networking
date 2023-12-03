@@ -20,6 +20,7 @@ import {
   REGISTER_BUSINESS_PAGE,
   REGISTER_PAGE,
   REGISTER_STUDENT_PAGE,
+  REJECT_POST_PAGE,
   RESET_PASSWORD_PAGE,
   REVIEW_SURVEY_POST_PAGE,
   SEARCH_PAGE,
@@ -69,6 +70,7 @@ import ja from './translates/jp.json'
 import vi from './translates/vi.json'
 import ApprovePostPage from './pages/ApprovePostPage'
 import PendingPostPage from './pages/PendingPostPage'
+import RejectPostsPage from './pages/RejectPostsPage'
 
 setTranslations({ vi, en, ja })
 setDefaultLanguage('vi')
@@ -116,6 +118,7 @@ export default function AppRouter() {
             <Route path={AUTHENTICATE_REGISTRATION_PAGE + '/:slug'} element={<AuthenticateRegistrationPage />} />
             <Route path={APPROVAL_POST_PAGE} element={<ApprovePostPage />} />
             <Route path={PENDING_POST_PAGE} element={<PendingPostPage />} />
+            <Route path={REJECT_POST_PAGE} element={<RejectPostsPage />} />
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>

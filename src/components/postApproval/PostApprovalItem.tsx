@@ -13,13 +13,14 @@ export const POST_REJECT = 2
 
 export interface PostApprovalItemProps {
   post: PostResponseModel
-  onAcceptedPost?: (postId: number) => void
+  type: number
 }
 
 export default function PostApprovalItem(props: PostApprovalItemProps) {
   return (
     <div className='bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-3 mt-4'>
       <HeaderPostApprovalItem
+        type={props.type}
         post={props.post} />
 
       <div>
