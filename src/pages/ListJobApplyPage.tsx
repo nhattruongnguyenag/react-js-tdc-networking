@@ -23,6 +23,7 @@ import { useGetProfileApplyQuery, useJobApplyUpdateMutation } from '../redux/Ser
 import { COLOR_SUCCESS } from '../constants/Color'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
+import Select from 'react-select'
 
 export interface JobApplyResponseData {
   status: string
@@ -33,23 +34,18 @@ const defaultModal: JobApplyResponseData = {
   isOpen: false
 }
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+const dataType = [
+  { label: 'Đã nhận', value: 'received' },
+  { label: 'Đang xử lý', value: 'in_progress' },
+  { label: 'Xem xét', value: 'not_meet_standard_quality' },
+  { label: 'Phỏnrg vấn', value: 'interview' },
+  {
+    label: 'Phỏng vấn thất bại',
+    value: 'interview_not_meet_standard_quality'
+  },
+  { label: 'Nhận việc', value: 'accept' }
+]
 export default function ListJobApplyPage() {
-  const dataType = [
-    { label: 'Đã nhận', value: 'received' },
-    { label: 'Đang xử lý', value: 'in_progress' },
-    { label: 'Xem xét', value: 'not_meet_standard_quality' },
-    { label: 'Phỏnrg vấn', value: 'interview' },
-    {
-      label: 'Phỏng vấn thất bại',
-      value: 'interview_not_meet_standard_quality'
-    },
-    { label: 'Nhận việc', value: 'accept' }
-  ]
   const navigate = useNavigate()
   const { slug } = useParams()
   const postId = getIdFromSlug(slug ?? '')
@@ -107,7 +103,6 @@ export default function ListJobApplyPage() {
     console.log(item)
   }, [value, item])
 
-  
   return (
     <Fragment>
       <Header />
@@ -120,27 +115,17 @@ export default function ListJobApplyPage() {
               </button>
               <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{TEXT_TITLE_LIST_JOB_APPLY}</h4>
             </div>
-            {/* <Select
-              value={value}
-              defaultValue={value}
-              options={options}
-            /> */}
-            <select
-              className='style2-input form-control selectType pe-5 ps-5'
-              onChange={(e) => {
-                setValue(e.target.value)
+            <Select
+              defaultValue={dataType[0]}
+              options={dataType}
+              getOptionValue={(option) => option.value}
+              getOptionLabel={(option) => option.label}
+              onChange={(item) => {
+                setValue(item?.value ?? '')
+                setItem(item?.label ?? '')
               }}
-              
-            >
-              <option hidden value={value}>
-                {item}
-              </option>
-              {dataType.map((item, index) => (
-                <option value={item.value} label={item.label} key={index}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
+            />
+
             {isLoading ? (
               <div className='ml-[-320px] mt-[-100px] flex h-screen items-center justify-center'>
                 <Loading />
@@ -199,7 +184,7 @@ export default function ListJobApplyPage() {
                         >
                           <FontAwesomeIcon icon={faFilePdf} color={COLOR_SUCCESS} /> Xem hồ sơ
                         </button>
-                        <button className='txt text-green download' onClick={() => openModal(data.status)}>
+                        <button className='txt text-green download ms-4' onClick={() => openModal(data.status)}>
                           Chỉnh sửa hồ sơ
                         </button>
                         <Modal
@@ -231,7 +216,7 @@ export default function ListJobApplyPage() {
                               }}
                             >
                               <option hidden value={modalVisible.status}>
-                                {modalVisible.status}
+                                {item}
                               </option>
                               {dataType.map((item, index) => (
                                 <option value={item.value} key={index}>
@@ -249,7 +234,7 @@ export default function ListJobApplyPage() {
                             </Button>
                           </Modal.Footer>
                         </Modal>
-                        <a className='download' href={SERVER_ADDRESS + 'api/files/' + data.cvUrl} download={data.cvUrl}>
+                        <a className='download ms-4' href={SERVER_ADDRESS + 'api/files/' + data.cvUrl} download={data.cvUrl}>
                           {TEXT_TITLE_DOWNLOAD_CV}
                         </a>
                       </div>

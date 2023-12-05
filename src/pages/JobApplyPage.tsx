@@ -11,16 +11,17 @@ import { useAppSelector } from '../redux/Hook'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faPaperPlane, faCancel } from '@fortawesome/free-solid-svg-icons'
 import { COLOR_BTN_BLUE, COLOR_WHITE } from '../constants/Color'
-import { getIdFromMultiSlug, getIdFromSlug } from '../utils/CommonUtls'
 import { toast } from 'react-toastify'
 import { useJobApplyUpdateMutation } from '../redux/Service'
+import { getIdFromSlug } from '../utils/CommonUtls'
+import { CVURL, PROFILE_ID } from '../constants/KeyValue'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export default function JobApplyPage() {
   const { slug } = useParams()
   const postId = getIdFromSlug(slug ?? '')
-  const [file, setFile] = useState(null)
+  const [file, setFile] = useState('')
   const [numPages, setNumPages] = useState(0)
   const [pageNumber, setPageNumber] = useState(1)
   const [fileName, setFileName] = useState('')
@@ -29,11 +30,16 @@ export default function JobApplyPage() {
   const [isAnonymous, setIsAnonymous] = useState(false)
   const [isUploadCV, setIsUpload] = useState(false)
   const [jobApplyUpdateRequest, jobApplyUpdateResponse] = useJobApplyUpdateMutation()
-  
+  const profile = sessionStorage.getItem(PROFILE_ID)
+  const cvUrl = sessionStorage.getItem(CVURL)
+
   useEffect(() => {
-    console.log(fileName)
-    console.log(file)
-  }, [fileName, isAnonymous, isUploadCV])
+    if (profile && cvUrl) {
+      setFile(SERVER_ADDRESS + 'api/files/' + cvUrl)
+      setFileName(cvUrl)
+      setIsUpload(true)
+    }
+  }, [cvUrl])
   const onFileChange = (event: any) => {
     const selectedFile = event.target.files[0]
     if (selectedFile && selectedFile.type === 'application/pdf') {
@@ -57,16 +63,12 @@ export default function JobApplyPage() {
   }
 
   const onSuccess = () => {
-    if (postId) {
+    if (profile && cvUrl && fileName) {
       jobApplyUpdateRequest({
-        profileId: postId ?? -1,
+        profileId: parseInt(profile) ?? -1,
         cvUrl: fileName
       })
-      if (jobApplyUpdateResponse.isSuccess && jobApplyUpdateResponse.data) {
-        setIsAnonymous(true)
-        navigate(-1)
-        toast.success('Ứng tuyển thành công!')
-      }
+     
     } else if (fileName) {
       axios({
         method: 'post',
@@ -86,7 +88,16 @@ export default function JobApplyPage() {
       toast.error('Ứng tuyển thất bại!')
     }
   }
-
+  
+  useEffect(()=> {
+    if (jobApplyUpdateResponse.isSuccess && jobApplyUpdateResponse.data) {
+      setIsAnonymous(true)
+      navigate(-1)
+      toast.success('Cập nhật ứng tuyển thành công!')
+      sessionStorage.removeItem(PROFILE_ID)
+      sessionStorage.removeItem(CVURL)
+    }
+  },[jobApplyUpdateResponse])
   return (
     <div>
       <Header />

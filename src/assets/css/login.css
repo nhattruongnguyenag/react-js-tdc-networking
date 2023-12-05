@@ -194,6 +194,8 @@ h4 {
 
 .date {
   text-align: right;
+  margin-left: 20px;
+  margin-top: 0;
 }
 
 .tam {
@@ -264,5 +266,17 @@ h2 {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+}
+
+.css-b62m3t-container{
+  width: 70%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+  border-color: black;
+}
+
+.css-1dimb5e-singleValue {
+  font-weight: bold;
 }
 

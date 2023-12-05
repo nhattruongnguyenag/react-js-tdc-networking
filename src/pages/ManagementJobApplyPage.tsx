@@ -14,6 +14,7 @@ import { DETAILS_JOB_APPLY, JOB_APPLY_PAGE } from '../constants/Page'
 import { slugify } from '../utils/CommonUtls'
 import Loading from '../components/common/Loading'
 import { useGetJobProfileQuery } from '../redux/Service'
+import { CVURL, PROFILE_ID } from '../constants/KeyValue'
 
 export default function ManagementJobApplyPage() {
   const dataType = [
@@ -36,7 +37,9 @@ export default function ManagementJobApplyPage() {
   const [value, setValue] = useState('received')
   const [item, setItem] = useState('Đã nhận')
 
-  const handleUpdateCv = (username: string, profileId: number) => {
+  const handleUpdateCv = (username: string, profileId: number, cvUrl: string) => {
+    sessionStorage.setItem(PROFILE_ID, profileId.toString())
+    sessionStorage.setItem(CVURL, cvUrl)
     navigate(`${JOB_APPLY_PAGE}/${slugify(username)}-${profileId}`)
   }
   const handleDeleteCv = (profileId: number) => {
@@ -123,18 +126,14 @@ export default function ManagementJobApplyPage() {
                             <button type='button' onClick={() => handleGetDetailJobApply(item.jobTitle, item.id)}>
                               <p className='txtBtnBottom'>Xem cv</p>
                             </button>
-                            {item.status != 'received' ? (
-                              ''
-                            ) : (
-                              <button type='button' onClick={() => handleUpdateCv(item.jobTitle, item.id)}>
-                                <p className='txtBtnBottom'>Chỉnh sửa cv</p>
+                            {item.status === 'received' && (
+                              <button type='button' onClick={() => handleUpdateCv(item.jobTitle, item.id,item.cvUrl)}>
+                                <p className='txtBtnBottom ms-4'>Chỉnh sửa cv</p>
                               </button>
                             )}
-                            {item.status == 'accept' ? (
-                              ''
-                            ) : (
+                            {item.status !== 'accept' && (
                               <button type='button' onClick={() => handleDeleteCv(item.id)}>
-                                <p className='txtBtnBottom'>Hủy cv</p>
+                                <p className='txtBtnBottom ms-4'>Hủy cv</p>
                               </button>
                             )}
                           </div>
