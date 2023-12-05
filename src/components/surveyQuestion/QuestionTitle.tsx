@@ -1,6 +1,10 @@
 import classNames from 'classnames'
 import { useCallback } from 'react'
-import { ADD_QUESTION_VIEW_COMPONENT_TITLE_CONTAINS_SPECIAL_CHARACTER_VALIDATE, ADD_QUESTION_VIEW_COMPONENT_TITLE_INPUT_PLACEHOLDER, QUESTION_COMPONENT_ADD_TEXT_TITLE } from '../../constants/StringVietnamese'
+import {
+  ADD_QUESTION_VIEW_COMPONENT_TITLE_CONTAINS_SPECIAL_CHARACTER_VALIDATE,
+  ADD_QUESTION_VIEW_COMPONENT_TITLE_INPUT_PLACEHOLDER,
+  QUESTION_COMPONENT_ADD_TEXT_TITLE
+} from '../../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { updateQuestion, updateQuestionTitleValidate } from '../../redux/Slice'
 import { isBlank } from '../../utils/ValidateUtils'
@@ -14,7 +18,9 @@ interface QuestionTitleProps {
 }
 
 export default function QuestionTitle(props: QuestionTitleProps) {
-  const { surveyPostRequest, questionTitleValidates, questionConducts } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { surveyPostRequest, questionTitleValidates, questionConducts } = useAppSelector(
+    (state) => state.TDCSocialNetworkReducer
+  )
   const dispatch = useAppDispatch()
   const questionIndex = props.index ?? -1
   const validate = questionTitleValidates[questionIndex]
@@ -89,14 +95,15 @@ export default function QuestionTitle(props: QuestionTitleProps) {
           className='absolute top-3 -z-10 origin-[0] -translate-y-6 transform text-blue-600 duration-300 peer-focus:left-0 peer-focus:dark:text-blue-500'
         >
           {QUESTION_COMPONENT_ADD_TEXT_TITLE} {(props.index ?? 0) + 1}
-          {props.conductMode && questionConducts[questionIndex].required === 1 &&
-            <span className='text-red-500'>&nbsp;&nbsp;*</span>}
+          {props.conductMode && questionConducts[questionIndex].required === 1 && (
+            <span className='text-red-500'>&nbsp;&nbsp;*</span>
+          )}
         </label>
 
         {
           Boolean(props.editMode) && validate
           && <div className='mb-1'>
-            <ValidateTextView textError={validate.textError} isError={validate.isError} isVisible={validate.isVisible} />
+            <ValidateTextView textError={validate?.textError} isError={validate?.isError} isVisible={validate?.isVisible} />
           </div>
         }
       </div>

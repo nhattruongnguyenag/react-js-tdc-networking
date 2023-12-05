@@ -13,8 +13,7 @@ import { ADD_QUESTION_PAGE_ADD_QUESTION_BUTTON, ADD_QUESTION_PAGE_NOTIFICATION_Q
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { addQuestion, addQuestionValidates, setSurveyPostRequest, updateQuestionTitleValidate } from '../redux/Slice'
 import { Question } from '../types/Question'
-import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
-import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
+import { isBlank } from '../utils/ValidateUtils'
 
 export const SHORT_ANSWER = 'tra-loi-ngan'
 export const ONE_CHOICE_QUESTION = 'chon-mot-dap-an'
@@ -36,16 +35,6 @@ export default function AddQuestionPage() {
   )
   const dispatch = useAppDispatch()
   const navigation = useNavigate()
-
-  useEffect(() => {
-    dispatch(
-      setSurveyPostRequest({
-        ...surveyPostRequest,
-        userId: userLogin?.id ?? -1,
-        groupId: 1
-      })
-    )
-  }, [])
 
   const onBtnAddQuestionClick = (questionType: string) => {
     dispatch(addQuestion(questionType))
