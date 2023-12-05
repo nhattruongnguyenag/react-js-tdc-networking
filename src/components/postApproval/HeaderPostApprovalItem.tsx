@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-multi-lang'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+import { POST_UPDATE_ID } from '../../constants/KeyValue'
 import { CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE, USER_DETAILS_PAGE } from '../../constants/Page'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { useAppDispatch } from '../../redux/Hook'
@@ -131,6 +132,7 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
 
     const onUpdatePost = (post?: PostResponseModel) => {
         if (post) {
+            localStorage.setItem(POST_UPDATE_ID, JSON.stringify(props.post.id))
             if (isRecruitmentPost(props.post)) {
                 navigate(CREATE_RECRUITMENT_POST_PAGE)
             } else if (isSurveyPost(props.post)) {

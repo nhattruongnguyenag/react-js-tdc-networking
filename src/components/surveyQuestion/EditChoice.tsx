@@ -51,7 +51,7 @@ export default function EditChoice(props: ChoiceProps) {
             })
           )
         }}
-        value={surveyPostRequest.questions[questionIndex].choices[choiceIndex]}
+        defaultValue={surveyPostRequest.questions[questionIndex].choices[choiceIndex].content}
         className='ms-2 mt-1 w-full text-ellipsis border-dotted border-indigo-600 bg-gray-100 bg-inherit py-1 hover:border-b-2 focus:border-b-2'
       />
       <button

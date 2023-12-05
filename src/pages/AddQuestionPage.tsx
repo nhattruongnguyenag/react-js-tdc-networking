@@ -12,15 +12,17 @@ import { CREATE_SURVEY_POST_PAGE, REVIEW_SURVEY_POST_PAGE } from '../constants/P
 import { ADD_QUESTION_PAGE_ADD_QUESTION_BUTTON, ADD_QUESTION_PAGE_NOTIFICATION_QUESTION_VALIDATE, ADD_QUESTION_PAGE_REVIEW_SURVEY_POST, ADD_QUESTION_PAGE_TITLE, ADD_QUESTION_VIEW_COMPONENT_MULTI_CHOICE_QUESTION, ADD_QUESTION_VIEW_COMPONENT_ONE_CHOICE_QUESTION, ADD_QUESTION_VIEW_COMPONENT_SHORT_ANSWER, ADD_QUESTION_VIEW_COMPONENT_TITLE_EMPTY_VALIDATE, TEXT_BUTTON_GO_BACK, TEXT_EMPTY_QUESTION_ERROR_CONTENT } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { addQuestion, addQuestionValidates, setSurveyPostRequest, updateQuestionTitleValidate } from '../redux/Slice'
-import { InputTextValidate } from '../utils/ValidateUtils'
+import { Question } from '../types/Question'
+import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
+import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
 
 export const SHORT_ANSWER = 'tra-loi-ngan'
 export const ONE_CHOICE_QUESTION = 'chon-mot-dap-an'
 export const MULTI_CHOICE_QUESTION = 'chon-nhieu-dap-an'
 
-const isAllFieldsValid = (validates: InputTextValidate[]): boolean => {
-  for (let validate of validates) {
-    if (validate.isError) {
+const isAllFieldsValid = (questions: Question[]): boolean => {
+  for (let question of questions) {
+    if (isBlank(question.title)) {
       return false
     }
   }
@@ -60,7 +62,7 @@ export default function AddQuestionPage() {
     if (surveyPostRequest.questions.length === 0) {
       toast.error(TEXT_EMPTY_QUESTION_ERROR_CONTENT)
     } else {
-      if (isAllFieldsValid(questionTitleValidates)) {
+      if (isAllFieldsValid(surveyPostRequest.questions)) {
         navigation(REVIEW_SURVEY_POST_PAGE)
       } else {
         toast.error(ADD_QUESTION_PAGE_NOTIFICATION_QUESTION_VALIDATE)

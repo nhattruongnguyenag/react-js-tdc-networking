@@ -98,6 +98,7 @@ export default function AppRouter() {
             <Route path={SEARCH_PAGE} element={<SearchPage />} />
             <Route path={CREATE_RECRUITMENT_POST_PAGE} element={<CreateRecruitmentPostPage />} />
             <Route path={CREATE_SURVEY_POST_PAGE} element={<CreateSurveyPostPage />} />
+            <Route path={'/update-survey'} element={<CreateSurveyPostPage />} />
             <Route path={ADD_QUESTION_PAGE} element={<AddQuestionPage />} />
             <Route path={REVIEW_SURVEY_POST_PAGE} element={<ReviewSurveyPostPage />} />
             <Route path={REGISTER_BUSINESS_PAGE} element={<BusinessRegistationPage />} />

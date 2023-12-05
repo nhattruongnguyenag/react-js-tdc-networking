@@ -1,10 +1,9 @@
 import classNames from 'classnames'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { ADD_QUESTION_VIEW_COMPONENT_TITLE_CONTAINS_SPECIAL_CHARACTER_VALIDATE, ADD_QUESTION_VIEW_COMPONENT_TITLE_INPUT_PLACEHOLDER, QUESTION_COMPONENT_ADD_TEXT_TITLE } from '../../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { updateQuestion, updateQuestionTitleValidate } from '../../redux/Slice'
-import { Question } from '../../types/Question'
-import { InputTextValidate, isBlank, isContainSpecialCharacter, isLengthInRange } from '../../utils/ValidateUtils'
+import { isBlank } from '../../utils/ValidateUtils'
 import ValidateTextView from '../common/ValidateTextView'
 
 interface QuestionTitleProps {
@@ -95,7 +94,7 @@ export default function QuestionTitle(props: QuestionTitleProps) {
         </label>
 
         {
-          Boolean(props.editMode)
+          Boolean(props.editMode) && validate
           && <div className='mb-1'>
             <ValidateTextView textError={validate.textError} isError={validate.isError} isVisible={validate.isVisible} />
           </div>

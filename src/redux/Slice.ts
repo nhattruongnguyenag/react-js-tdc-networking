@@ -6,7 +6,7 @@ import { Faculty } from '../types/Faculty'
 import { Message } from '../types/Message'
 import { ModalImage } from '../types/ModalImage'
 import { ModalUserReaction } from '../types/ModalUserReaction'
-import { Question } from '../types/Question'
+import { Choice, Question } from '../types/Question'
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 import { QuestionResponse } from '../types/response/QuestionResponse'
 import { Student } from '../types/Student'
@@ -43,7 +43,6 @@ export interface TDCSocialNetworkState {
 
 export const defaultSurveyPostRequest: SurveyPostRequest = {
   groupId: -1,
-  images: [],
   title: '',
   type: 'khao-sat',
   description: '',
@@ -118,7 +117,17 @@ export const TDCSocialNetworkSlice = createSlice({
         required: 1
       }
       if (question.type !== SHORT_ANSWER) {
-        question.choices = ['', '', '']
+        question.choices = [
+          {
+            content: ""
+          },
+          {
+            content: ""
+          },
+          {
+            content: ""
+          }
+        ]
       }
       state.surveyPostRequest.questions = [...state.surveyPostRequest.questions, question]
     },
@@ -141,11 +150,13 @@ export const TDCSocialNetworkSlice = createSlice({
       state.surveyPostRequest.questions.splice(action.payload, 1)
     },
     addChoice: (state, action: PayloadAction<{ questionIndex: number }>) => {
-      state.surveyPostRequest.questions[action.payload.questionIndex].choices.push('')
+      state.surveyPostRequest.questions[action.payload.questionIndex].choices.push({
+        content: ''
+      })
     },
     updateChoice: (state, action: PayloadAction<{ questionIndex: number; choiceIndex: number; choice: string }>) => {
       const { choiceIndex, questionIndex, choice } = action.payload
-      state.surveyPostRequest.questions[questionIndex].choices[choiceIndex] = choice
+      state.surveyPostRequest.questions[questionIndex].choices[choiceIndex].content = choice
     },
     deleteChoice: (state, action: PayloadAction<{ questionIndex: number; choiceIndex: number }>) => {
       const { choiceIndex, questionIndex } = action.payload

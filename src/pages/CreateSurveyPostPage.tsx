@@ -1,18 +1,22 @@
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCallback, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Header from '../components/common/Header'
 import InputTextWithTitle from '../components/common/InputTextWithTitle'
 import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
 import ValidateTextView from '../components/common/ValidateTextView'
+import { POST_UPDATE_ID } from '../constants/KeyValue'
 import {
   ADD_QUESTION_PAGE,
   BUSINESS_DASHBOARD_PAGE
 } from '../constants/Page'
 import { SURVEY_SAVE_BUTTON_GO_NEXT, SURVEY_SAVE_DESC_EMPTY_VALIDATE, SURVEY_SAVE_DESC_PLACEHOLDER, SURVEY_SAVE_DESC_TITLE, SURVEY_SAVE_PAGE_TITLE, SURVEY_SAVE_TITLE_EMPTY_VALIDATE, SURVEY_SAVE_TITLE_PLACEHOLDER, SURVEY_SAVE_TITLE_TITLE } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
+import { useGetSurveyPostUpdateQuery } from '../redux/Service'
 import { setSurveyPostRequest } from '../redux/Slice'
+import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
+import { ErrorMessage, isExistFieldInvalid, validateField } from '../utils/ValidateHelper'
 import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
 
 export const SHORT_ANSWER = 'tra-loi-ngan'
@@ -24,22 +28,25 @@ interface CreateSurveyPostValidate {
   description: InputTextValidate
 }
 
-const isAllFieldsValid = (validate: CreateSurveyPostValidate): boolean => {
-  let key: keyof CreateSurveyPostValidate
+interface CreateSurveyPostErrorMessage {
+  title: ErrorMessage
+  description: ErrorMessage
+}
 
-  for (key in validate) {
-    if (validate[key].isError) {
-      return false
-    }
+const error: CreateSurveyPostErrorMessage = {
+  title: {
+    blank: 'CreateSurveyPostScreen.surveySaveTitleEmptyValidate'
+  },
+  description: {
+    blank: 'CreateSurveyPostScreen.surveySaveDescEmptyValidate'
   }
-
-  return true
 }
 
 export default function CreateSurveyPostPage() {
   const { userLogin, surveyPostRequest } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { state } = useLocation()
 
   const [validate, setValidate] = useState<CreateSurveyPostValidate>({
     title: {
@@ -54,6 +61,34 @@ export default function CreateSurveyPostPage() {
     }
   })
 
+  const surveyPostId = useMemo<number>(() => {
+    const json = localStorage.getItem(POST_UPDATE_ID)
+    if (json) {
+      return JSON.parse(json) as number
+    }
+    return -1
+  }, [])
+
+  const { data, isLoading } = useGetSurveyPostUpdateQuery({
+    postId: surveyPostId
+  }, { refetchOnMountOrArgChange: true, refetchOnFocus: true })
+
+  useEffect(() => {
+    if (surveyPostId !== -1) {
+      if (data) {
+        dispatch(setSurveyPostRequest(data.data))
+      }
+    } else {
+      dispatch(
+        setSurveyPostRequest({
+          ...surveyPostRequest,
+          userId: userLogin?.id ?? -1,
+          groupId: 1
+        })
+      )
+    }
+  }, [data])
+
   useEffect(() => {
     dispatch(
       setSurveyPostRequest({
@@ -64,101 +99,39 @@ export default function CreateSurveyPostPage() {
     )
   }, [])
 
-  const setTitleError = useCallback(
-    (error: string) => {
-      setValidate({
-        ...validate,
-        title: {
-          textError: error,
-          isError: true,
-          isVisible: true
-        }
-      })
-      return
-    },
-    [validate]
-  )
-
-  const setDescriptionError = useCallback(
-    (error: string) => {
-      setValidate({
-        ...validate,
-        description: {
-          textError: error,
-          isError: true,
-          isVisible: true
-        }
-      })
-      return
-    },
-    [validate]
-  )
-
   const onTitleChangeText = useCallback(
     (value: string) => {
-      if (isBlank(value)) {
-        setTitleError(SURVEY_SAVE_TITLE_EMPTY_VALIDATE)
-        return
-      }
-
+      validateField(error['title'], validate['title'], value)
+      setValidate({ ...validate })
       dispatch(
         setSurveyPostRequest({
           ...surveyPostRequest,
           title: value
         })
       )
-
-      setValidate({
-        ...validate,
-        title: {
-          ...validate.title,
-          isError: false,
-          isVisible: false
-        }
-      })
     },
     [surveyPostRequest, validate]
   )
 
   const onDescriptionChangeText = useCallback(
     (value: string) => {
-      if (isBlank(value)) {
-        setDescriptionError(SURVEY_SAVE_DESC_EMPTY_VALIDATE)
-        return
-      }
-
+      validateField(error['description'], validate['description'], value)
+      setValidate({ ...validate })
       dispatch(
         setSurveyPostRequest({
           ...surveyPostRequest,
           description: value
         })
       )
-
-      setValidate({
-        ...validate,
-        description: {
-          ...validate.description,
-          isError: false,
-          isVisible: false
-        }
-      })
     },
     [surveyPostRequest, validate]
   )
 
   const onBtnAddQuestionClick = () => {
-    if (isAllFieldsValid(validate)) {
-      navigate(ADD_QUESTION_PAGE)
-    } else {
-      let key: keyof CreateSurveyPostValidate
-
-      for (key in validate) {
-        if (validate[key].isError && !validate[key].isVisible) {
-          validate[key].isVisible = true
-        }
-      }
-
+    if (isExistFieldInvalid<SurveyPostRequest, CreateSurveyPostValidate, CreateSurveyPostErrorMessage>(surveyPostRequest, validate, error)) {
       setValidate({ ...validate })
+    } else {
+      navigate(ADD_QUESTION_PAGE)
     }
   }
 
@@ -169,14 +142,15 @@ export default function CreateSurveyPostPage() {
         <div className='middle-wrap'>
           <div className='card w-100 shadow-xs mb-4 border-0 bg-white p-0'>
             <div className='card-body w-100 d-flex rounded-3 border-0 bg-current p-4'>
-              <Link className='d-inline-block mt-2' to={BUSINESS_DASHBOARD_PAGE}>
+              <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                 <i className='ti-arrow-left font-sm text-white' />
-              </Link>
+              </button>
               <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{SURVEY_SAVE_PAGE_TITLE}</h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0'>
               <div className='row'>
                 <InputTextWithTitle
+                  defaultValue={surveyPostRequest.title}
                   onTextChange={(value) => onTitleChangeText(value)}
                   title={SURVEY_SAVE_TITLE_TITLE}
                   placeholder={SURVEY_SAVE_TITLE_PLACEHOLDER}
@@ -189,6 +163,7 @@ export default function CreateSurveyPostPage() {
                 />
 
                 <TextAreaWithTitle
+                  defaultValue={surveyPostRequest.description}
                   onTextChange={(value) => onDescriptionChangeText(value)}
                   rows={15}
                   placeholder={SURVEY_SAVE_DESC_PLACEHOLDER}
