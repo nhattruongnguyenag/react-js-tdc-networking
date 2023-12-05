@@ -6,6 +6,7 @@ import { Data } from '../types/Data'
 import { Student } from '../types/Student'
 import { Token } from '../types/Token'
 import { toast } from 'react-toastify'
+import { useCookies } from 'react-cookie'
 import 'react-toastify/dist/ReactToastify.css'
 import {
   InputTextValidate,
@@ -50,9 +51,10 @@ import {
   TEXT_PLACEHOLDER_STUDENTNAME,
   TEXT_REGISTER,
   TEXT_REQUEST_LOGIN,
+  TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION,
   TEXT_TITLE_REGISTER_STUDENT
 } from '../constants/StringVietnamese'
-import { LOGIN_PAGE } from '../constants/Page'
+import { ACCEPT_SEND_EMAIL_PAGE, LOGIN_PAGE } from '../constants/Page'
 
 interface RegisterStudent {
   name: InputTextValidate
@@ -78,6 +80,7 @@ const isAllFieldsValid = (validate: RegisterStudent): boolean => {
 export default function StudentRegistationPage() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
+  const [cookies, setCookie] = useCookies(['email', 'url', 'subject'])
   const [image, setImage] = useState('')
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
@@ -96,8 +99,10 @@ export default function StudentRegistationPage() {
     confimPassword: '',
     facultyGroupCode: '',
     facultyGroupId: 0,
-    phone:'',
-    background:''
+    phone: '',
+    background: '',
+    subject: '',
+    content: ''
   })
   const [dataRequest, setDataRequest] = useState([
     {
@@ -459,7 +464,7 @@ export default function StudentRegistationPage() {
         console.log(error)
       })
   }, [student])
-   
+
   const onSelectUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files) {
       setImage(URL.createObjectURL(event.target.files[0]))
@@ -471,7 +476,7 @@ export default function StudentRegistationPage() {
   }
   console.log(student.facultyId)
   console.log(student.majorId)
-  
+
   const handleGetFiles = () => {
     if (fileInputRef.current) {
       fileInputRef.current.showPicker()
@@ -481,13 +486,19 @@ export default function StudentRegistationPage() {
 
   const onSubmit = () => {
     if (isAllFieldsValid(validate)) {
+      setStudent({ ...student, subject: TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION})
       setIsLoading(true)
       axios
         .post<Student, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/student/register', student)
         .then((response) => {
           setIsLoading(false)
+          let expires = new Date()
+          expires.setTime(expires.getTime() + 600 * 1000)
+          setCookie('email', student.email, { path: '/', expires })
+          setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
+          setCookie('subject', TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION, { path: '/', expires })
           toast.success(TEXT_ALERT_REGISTER_SUCCESS)
-          navigate(LOGIN_PAGE)
+          navigate(ACCEPT_SEND_EMAIL_PAGE)
         })
         .catch((error) => {
           console.log(error)
@@ -502,7 +513,6 @@ export default function StudentRegistationPage() {
           validate[key].isVisible = true
         }
       }
-
       setValidate({ ...validate })
     }
   }

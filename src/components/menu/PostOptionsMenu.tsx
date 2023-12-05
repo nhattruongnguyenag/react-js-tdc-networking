@@ -1,16 +1,11 @@
-import * as React from 'react';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
+import * as React from 'react';
 import { MenuOptionItem } from '../../types/MenuOptionItem';
 
 interface PostOptionsMenuType {
@@ -79,12 +74,12 @@ export default function PostOptionsMenu(props: Readonly<PostOptionsMenuType>) {
         {
           props.menuOptions.map((item, index) => {
             return item.visible && <MenuItem onClick={() => props.handleClickMenuOption(item.type)}>
-              {/* <ListItemIcon>
-                <PersonAdd fontSize="small" />
-              </ListItemIcon> */}
               {
-                item.name
+                item.icon && <ListItemIcon>
+                  <FontAwesomeIcon icon={item.icon} size='lg' color={item.color ? item.color : '#000'} />
+                </ListItemIcon>
               }
+              <span style={{color: item.color ? item.color : '#000'}}>{item.name}</span>
             </MenuItem>
           })
         }

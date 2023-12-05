@@ -12,11 +12,13 @@ import moment from 'moment'
 import { NotificationModel } from '../types/response/NotificationModel'
 import { useGetNotificationsUserByIdQuery } from '../redux/Service'
 import { useAppSelector } from '../redux/Hook'
+import { useTranslation } from 'react-multi-lang'
 interface NotificationPopupProps {
   show?: boolean
 }
 
 export default function NotificationPopup(props: NotificationPopupProps) {
+  const t = useTranslation()
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const { data, isFetching } = useGetNotificationsUserByIdQuery(
     {
@@ -86,11 +88,11 @@ export default function NotificationPopup(props: NotificationPopupProps) {
         >
           <MenuItem onClick={() => handleIsNotRead(item.id)}>
             <FaBullhorn style={{ marginRight: 20 }} />
-            Đánh dấu chưa đọc
+            {t('NotificationsComponent.unReadNotification')}
           </MenuItem>
           <MenuItem onClick={() => handleDelNotification(item.id)}>
             <FaTimes style={{ marginRight: 20 }} />
-            Xóa thông báo
+            {t('NotificationsComponent.deleteNotification')}
           </MenuItem>
         </Menu>
       </div>
@@ -105,7 +107,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
       )}
       aria-labelledby='dropdownMenu3'
     >
-      <h4 className='fw-700 font-xss mb-2'>Notification</h4>
+      <h4 className='fw-700 font-xss mb-2'>{t('NotificationsComponent.notification')}</h4>
       <div className='mb-3'>
         <button
           onClick={handleAllIsRead}
@@ -121,7 +123,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
             fontWeight: 'bold'
           }}
         >
-          Đánh dấu tất cả đã đọc
+          {t('NotificationsComponent.readAll')}
         </button>
       </div>
       <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 700 }}>

@@ -123,10 +123,10 @@ const CustomizePost = (props: Post) => {
     const state = {
       userId: _userId,
       group: props.group,
-    };
+    }
     setModalShow(false);
-    setIsOpenComments(false);
-    navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${state.userId}`, { state });
+    setIsOpenComments(false)
+    navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${state.userId}`, { state })
   }
 
   const handleClickBtnRecruitmentDetailEvent = (idPost: number, title: string) => {

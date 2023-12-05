@@ -19,11 +19,16 @@ import { JobApplyResponseData } from '../types/response/JobApplyResponseData'
 import { JobApplyUpdateRequest } from '../types/request/JobApplyUpdateRequest'
 import { JobUpdateStatus } from '../types/request/JobUpdateStatus'
 import { PostSavedModel } from '../types/response/PostSavedModel'
+import { PostResponseModel } from '../types/response/PostResponseModel'
+import { PostSearchRequest } from '../types/request/PostSearchRequest'
+import { buildPostSearchRequest } from '../utils/PostHelper'
+import { PostRejectedLog } from '../types/PostRejectLog'
+import { RecruitmentPost } from '../types/RecruitmentPost'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
-  tagTypes: ['UserLogin'],
+  tagTypes: ['Posts'],
   endpoints: (builder) => ({
     getListPostSaved: builder.query<Data<PostSavedModel[]>, number>({
       query: (userId) => `api/posts/user/save/${userId}`
@@ -148,6 +153,7 @@ export const TDCSocialNetworkAPI = createApi({
         url: `api/posts/survey/${surveyPostId}/result`
       })
     }),
+<<<<<<< HEAD
     getJobProfile: builder.query<Data<JobApplyRespose[]>, number | undefined>({
       query: (userId) => (
         {
@@ -163,12 +169,100 @@ export const TDCSocialNetworkAPI = createApi({
     jobApplyUpdate: builder.mutation<MessageResponseData, JobApplyUpdateRequest | JobUpdateStatus>({
       query: (data) => ({
         url: 'api/job/update',
+=======
+    getPosts: builder.query<Data<PostResponseModel[]>, PostSearchRequest>({
+      query: (data) => (
+        {
+          url: `api/posts/search?${buildPostSearchRequest(data)}`
+        }),
+      providesTags: (result) => {
+        if (result) {
+          return [
+            ...result.data.map(({ id }) => ({ type: 'Posts' as const, id: id })),
+            { type: 'Posts' as const, id: 'LIST' }
+          ]
+        }
+
+        return [{ type: 'Posts' as const, id: 'LIST' }]
+      }
+    }),
+    rejectPost: builder.mutation<MessageResponseData, PostRejectedLog>({
+      query: (data) => ({
+        url: 'api/approval/post/log',
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: 'LIST' }])
+    }),
+    acceptPost: builder.mutation<MessageResponseData, { postId: number }>({
+      query: (data) => ({
+        url: 'api/posts/acceptance',
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: 'LIST' }])
+    }),
+    getPostRejectLog: builder.query<Data<PostRejectedLog>, { postId: number }>({
+      query: (data) => (
+        {
+          url: `api/approval/log/post/${data.postId}`
+        })
+    }),
+    deletePost: builder.mutation<MessageResponseData, { postId: number }>({
+      query: (data) => ({
+        url: `api/posts/${data.postId}`,
+        method: 'DELETE',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: 'LIST' }])
+    }),
+    getRecruitmentPostUpdate: builder.query<RecruitmentPost, { postId: number }>({
+      query: (data) => (
+        {
+          url: `api/posts/recruitment/${data.postId}/update`
+        })
+    }),
+    updateRecruitmentPost: builder.mutation<MessageResponseData, RecruitmentPost>({
+      query: (data) => ({
+        url: 'api/posts/recruitment',
+>>>>>>> develop
         method: 'PUT',
         body: data,
         headers: {
           'Content-type': 'application/json; charset=UTF-8'
         }
+<<<<<<< HEAD
       })
+=======
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: data.id }])
+    }),
+    getSurveyPostUpdate: builder.query<Data<SurveyPostRequest>, { postId: number }>({
+      query: (data) => (
+        {
+          url: `api/posts/survey/${data.postId}/update`
+        })
+    }),
+    updateSurveyPost: builder.mutation<MessageResponseData, SurveyPostRequest>({
+      query: (data) => ({
+        url: 'api/posts/survey',
+        method: 'PUT',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: -1 }])
+>>>>>>> develop
     })
     
   })
@@ -197,5 +291,14 @@ export const {
   useGetStudentPostsQuery,
   useGetPostsByIdQuery,
   useAddSurveyConductAnswerMutation,
-  useJobApplyMutation
+  useJobApplyMutation,
+  useGetPostRejectLogQuery,
+  useGetPostsQuery,
+  useRejectPostMutation,
+  useAcceptPostMutation,
+  useDeletePostMutation,
+  useGetRecruitmentPostUpdateQuery,
+  useGetSurveyPostUpdateQuery,
+  useUpdateRecruitmentPostMutation,
+  useUpdateSurveyPostMutation
 } = TDCSocialNetworkAPI

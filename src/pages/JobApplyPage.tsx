@@ -15,10 +15,12 @@ import { toast } from 'react-toastify'
 import { useJobApplyUpdateMutation } from '../redux/Service'
 import { getIdFromSlug } from '../utils/CommonUtls'
 import { CVURL, PROFILE_ID } from '../constants/KeyValue'
+import { useTranslation } from 'react-multi-lang'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export default function JobApplyPage() {
+  const t = useTranslation()
   const { slug } = useParams()
   const postId = getIdFromSlug(slug ?? '')
   const [file, setFile] = useState('')
@@ -68,7 +70,6 @@ export default function JobApplyPage() {
         profileId: parseInt(profile) ?? -1,
         cvUrl: fileName
       })
-     
     } else if (fileName) {
       axios({
         method: 'post',
@@ -88,8 +89,8 @@ export default function JobApplyPage() {
       toast.error('Ứng tuyển thất bại!')
     }
   }
-  
-  useEffect(()=> {
+
+  useEffect(() => {
     if (jobApplyUpdateResponse.isSuccess && jobApplyUpdateResponse.data) {
       setIsAnonymous(true)
       navigate(-1)
@@ -97,7 +98,8 @@ export default function JobApplyPage() {
       sessionStorage.removeItem(PROFILE_ID)
       sessionStorage.removeItem(CVURL)
     }
-  },[jobApplyUpdateResponse])
+  }, [jobApplyUpdateResponse])
+
   return (
     <div>
       <Header />
@@ -111,7 +113,9 @@ export default function JobApplyPage() {
               >
                 <div className='main' style={{ width: '100%', textAlign: 'center' }}>
                   {file == null ? (
-                    <div style={{ fontWeight: 'bold', marginTop: 400 }}>Hiện chưa có file nào được tải lên</div>
+                    <div style={{ fontWeight: 'bold', marginTop: 400 }}>
+                      {t('JobApplyScreen.jobApplyScreenEmptyCvTextContent')}{' '}
+                    </div>
                   ) : (
                     file && (
                       <Document file={file} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
@@ -127,10 +131,11 @@ export default function JobApplyPage() {
                     <button
                       className='btn btn-info button_nop'
                       style={{ position: 'fixed', bottom: 27, right: '48%', width: 130 }}
-                      onClick={() => navigate('/doanh-nghiep/bai-viet')}
+                      onClick={() => navigate(-1)}
                     >
                       <p>
-                        Hủy <FontAwesomeIcon icon={faCancel} size='1x' color={COLOR_WHITE} />
+                        {t('JobApplyScreen.jobApplyScreenButtonGoBack')}{' '}
+                        <FontAwesomeIcon icon={faCancel} size='1x' color={COLOR_WHITE} />
                       </p>
                     </button>
                     <button
@@ -141,11 +146,13 @@ export default function JobApplyPage() {
                       <label htmlFor='fileInput' className='lbButton'>
                         {isUploadCV ? (
                           <p>
-                            Thay đổi CV <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} />
+                            {t('JobApplyScreen.jobApplyScreenButtonUpdateCvTitle')}{' '}
+                            <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} />
                           </p>
                         ) : (
                           <p>
-                            Thêm CV <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} />
+                            {t('JobApplyScreen.jobApplyScreenButtonAddCvTitle')}{' '}
+                            <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} />
                           </p>
                         )}
                       </label>
@@ -164,7 +171,8 @@ export default function JobApplyPage() {
                       onClick={onSuccess}
                     >
                       <p>
-                        Hoàn tất <FontAwesomeIcon icon={faPaperPlane} size='1x' color={COLOR_WHITE} />
+                        {t('JobApplyScreen.jobApplyScreenButtonComplete')}{' '}
+                        <FontAwesomeIcon icon={faPaperPlane} size='1x' color={COLOR_WHITE} />
                       </p>
                     </button>
                   </div>

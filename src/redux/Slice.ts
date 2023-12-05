@@ -13,8 +13,12 @@ import { Student } from '../types/Student'
 import { getSelectedConversation, getSurveyPostRequest, getUserLogin } from '../utils/CommonUtls'
 import { InputTextValidate } from '../utils/ValidateUtils'
 import { ModalComments } from '../types/ModalComments'
+import { PostRejectedLog } from '../types/PostRejectLog'
+import { PostRejectLogResponse } from '../types/response/RejectLogResponse'
 
 export interface TDCSocialNetworkState {
+  rejectLogResponse: PostRejectLogResponse | null
+  postRejectId: number | null
   darkMode: boolean
   surveyPostRequest: SurveyPostRequest
   questionConducts: QuestionResponse[]
@@ -34,6 +38,7 @@ export interface TDCSocialNetworkState {
   modalCommentData: ModalComments | null
   modalUserReactionData: ModalUserReaction | null
   updatePost: boolean
+  defaultLanguage: string
 }
 
 export const defaultSurveyPostRequest: SurveyPostRequest = {
@@ -47,6 +52,9 @@ export const defaultSurveyPostRequest: SurveyPostRequest = {
 }
 
 const initialState: TDCSocialNetworkState = {
+  rejectLogResponse: null,
+  postRejectId: null,
+  defaultLanguage: 'vi',
   darkMode: false,
   conversationMessages: [],
   surveyPostRequest: defaultSurveyPostRequest,
@@ -175,12 +183,22 @@ export const TDCSocialNetworkSlice = createSlice({
     },
     listenConversationsSoket: (state, action: PayloadAction<void>) => {
       state.isOpenModalUserReaction = false
-    }
+    },
+    setDefaultLanguage: (state, action: PayloadAction<string>) => {
+      state.defaultLanguage = action.payload
+    },
+    setPostRejectId: (state, action: PayloadAction<number | null>) => {
+      state.postRejectId = action.payload
+    },
+    setRejectLogResponse: (state, action: PayloadAction<PostRejectLogResponse | null>) => {
+      state.rejectLogResponse = action.payload
+    },
   }
 })
 
 // Action creators are generated for each case reducer function
 export const {
+  setDefaultLanguage,
   toggleDarkMode,
   setImagesUpload,
   setQuestionValidates,
@@ -209,7 +227,9 @@ export const {
   closeModalUserReaction,
   setSelectConversation,
   updatePostWhenHaveChangeComment,
-  setQuestionConducts
+  setQuestionConducts,
+  setPostRejectId,
+  setRejectLogResponse
 } = TDCSocialNetworkSlice.actions
 
 export default TDCSocialNetworkSlice.reducer
