@@ -3,6 +3,7 @@ import { SURVEY_DETAILS_PAGE, USER_DETAILS_PAGE } from '../../constants/Page'
 import { SurveyPostResponseModel } from '../../types/response/SurveyResponsePostModal'
 import { slugify } from '../../utils/CommonUtls'
 import CustomizeSurveyPost from '../surveyPost/CustomizeSurveyPost'
+import { useTranslation } from 'react-multi-lang'
 
 interface SurveyPostApprovalItemProps {
     post: SurveyPostResponseModel
@@ -10,7 +11,7 @@ interface SurveyPostApprovalItemProps {
 
 export default function SurveyPostApprovalItem(props: SurveyPostApprovalItemProps) {
     const navigate = useNavigate()
-
+    const t = useTranslation();
     const handleClickBtnSurveyDetailEvent = (idPost: number, title: string) => {
         const state = {
             userId: props.post.user.id,
@@ -31,6 +32,8 @@ export default function SurveyPostApprovalItem(props: SurveyPostApprovalItemProp
             typeAuthor={props.post.user.roleCodes}
             role={props.post.user.roleCodes}
             isConduct={0}
-        />
+            textSurveyPostButton={t("SurveyPost.surveyPostButton")}
+            textSurveyPostButtonSetting={t("SurveyPost.surveyPostButtonSetting")}
+         />
     )
 }
