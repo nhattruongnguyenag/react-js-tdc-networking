@@ -178,8 +178,8 @@
          "commentAuthor": "Author"
      },
      "CommentContainer": {
-        "CommentContainerComponentSeeMore": "See More",
-        "CommentContainerComponentHidden": "Hide"
+        "commentContainerComponentSeeMore": "See More",
+        "commentContainerComponentHidden": "Hide"
      },
      "CreateCommentToolbar":{
         "commentCreateComment": "Post Comment",
@@ -244,7 +244,7 @@
             "ProfileEmail":"Email",
             "ProfileArticles ":"Articles",
             "ProfilePosition":"Position",
-            "ProfileRole":"Student",
+            "profileRole":"Student",
             "Chat": "Send message",
             "Call": "Call",
             "UnFollow": "Unfollow",

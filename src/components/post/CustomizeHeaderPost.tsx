@@ -3,7 +3,7 @@ import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { COLOR_BTN_BLUE } from '../../constants/Color'
-import { CLICK_SAVE_POST_EVENT, CLICK_DELETE_POST_EVENT, CLICK_SEE_LIST_CV_POST_EVENT, CLICK_SEE_RESULT_POST_EVENT, GO_TO_MENU_ACTIONS, GO_TO_PROFILE_ACTIONS, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST, CLICK_UN_SAVE_POST_EVENT } from '../../constants/Variables'
+import { CLICK_SAVE_POST_EVENT, CLICK_DELETE_POST_EVENT, CLICK_SEE_LIST_CV_POST_EVENT, CLICK_SEE_RESULT_POST_EVENT, GO_TO_PROFILE_ACTIONS, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST, CLICK_UN_SAVE_POST_EVENT, CLICK_UPDATE_POST_EVENT } from '../../constants/Variables'
 import DefaultAvatar from '../common/DefaultAvatar'
 import { TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
 import { useAppSelector } from '../../redux/Hook'
@@ -33,7 +33,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
       {
         type: CLICK_SAVE_POST_EVENT,
         name: props.t("MenuOption.menuOptionSaveArticle"),
-        visible: props.isSave === 0
+        visible: props.isSave === 0 && userLogin?.id !== props.userId
       },
       {
         type: CLICK_UN_SAVE_POST_EVENT,
@@ -41,6 +41,14 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
         visible: props.isSave === 1
       }
     ];
+
+    if (userLogin?.id === props.userId) {
+      options.push({
+        type: CLICK_UPDATE_POST_EVENT,
+        name: props.t("MenuOption.menuOptionUpdateArticle"),
+        visible: true
+      });
+    }
 
     if (userLogin?.id === props.userId) {
       options.push({
@@ -67,7 +75,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
     }
 
     return options;
-  }, [props.isSave, props.userId, props.type]);
+  }, [props.isSave, props.userId, props.type, props.t]);
 
   return (
     <div className='card-body d-flex w-100 m-0 p-0'>

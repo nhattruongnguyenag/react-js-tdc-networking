@@ -1,18 +1,16 @@
 import { Dropdown } from 'flowbite-react'
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE, USER_DETAILS_PAGE } from '../constants/Page'
-import { TEXT_CREATE_NEW_POST } from '../constants/StringVietnamese'
 import { CreatePostModal } from './modal/CustomizeNormalPostModal'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import DefaultAvatar from './common/DefaultAvatar'
-import CustomizePost from './post/CustomizePost'
 import { slugify } from '../utils/CommonUtls'
 import '../assets/css/createPost.css'
 import vi from '../translate/vn.json'
 import en from '../translate/en.json'
 import jp from '../translate/jp.json'
-import { ITranslationParams, setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang'
+import { setTranslations, useTranslation } from 'react-multi-lang'
 setTranslations({ vi, en, jp })
 interface CreatePostSelectorType {
   id: number,
@@ -21,7 +19,7 @@ interface CreatePostSelectorType {
   avatar: string,
   name: string
 }
-export default function CreatePostSelector(props: Readonly<CreatePostSelectorType>) {
+const CreatePostSelector = (props: Readonly<CreatePostSelectorType>) => {
   const [createNormalPostModalShow, setCreateNormalPostModalShow] = useState(false)
   const navigate = useNavigate()
   const t = useTranslation();
@@ -66,9 +64,12 @@ export default function CreatePostSelector(props: Readonly<CreatePostSelectorTyp
             onHide={() => setCreateNormalPostModalShow(false)}
             group={props.group}
             t={t}
+            updateNormalPost={null}
           />
         </div>
       </div>
     </div>
   )
 }
+
+export default memo(CreatePostSelector)

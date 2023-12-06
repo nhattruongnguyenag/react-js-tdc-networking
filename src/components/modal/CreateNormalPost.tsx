@@ -1,12 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
-import {
-  TEXT_DETAILED_WARNING_CONTENT_NULL,
-  TEXT_PLACEHOLDER_CONTENT_CREATE_POST,
-  TEXT_CREATE_POST_FAIL,
-  TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED,
-  TEXT_CREATE_POST_SUCCESS,
-  TEXT_CHAR
-} from '../../constants/StringVietnamese'
+import React, { useState, useRef, useEffect, memo } from 'react'
 import { isBlank, isLengthInRange, isNotBlank } from '../../utils/ValidateUtils'
 import { handleUploadImage } from '../../utils/UploadUtils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -18,24 +10,30 @@ import { NormalPost } from '../../types/NormalPost'
 import { COLOR_BTN_BLUE, COLOR_WHITE } from '../../constants/Color'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { createNorMalPostAPI } from '../../api/CallAPI'
+import { createNorMalPostAPI, updateNormalPostAPI } from '../../api/CallAPI'
 import { t, useTranslation } from 'react-multi-lang'
+import { UpdateNormalPost } from '../../types/UpdateNormalPost'
+import { SERVER_ADDRESS } from '../../constants/SystemConstant'
+import { setImagesUpload } from '../../redux/Slice'
 
 export interface CreateNormalPostType {
-  t:ReturnType<typeof useTranslation>,
+  t: ReturnType<typeof useTranslation>,
   onHide: () => void,
-  group: number | null
+  group: number | null,
+  updateNormalPost: UpdateNormalPost | null
 }
 const CreateNormalPost = (props: CreateNormalPostType) => {
-  // variable
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const buttonRef = useRef<HTMLButtonElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
   const [scrollPosition, setScrollPosition] = useState(0)
   const [content, setContent] = useState<string>('')
   const [images, setImages] = useState<object[]>([])
+  const [imagesUpdate, setImagesUpdate] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const [postId, setPostId] = useState(-1);
+  const [type, setType] = useState('thong-thuong');
   const [normalPost, setNormalPost] = useState<NormalPost>({
     userId: userLogin?.id ?? -1,
     type: TYPE_NORMAL_POST,
@@ -44,39 +42,79 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
     content: ''
   })
 
-  // Function
   useEffect(() => {
     textAreaRef.current?.focus()
   }, [])
 
-  const handleSubmitEvent = () => {
+  useEffect(() => {
+    if (props.updateNormalPost != undefined) {
+      setPostId(props.updateNormalPost.postId);
+      setContent(props.updateNormalPost.content);
+      // de xuat ra 
+      const listImages1 = props.updateNormalPost.images.map((item: any) => { return { 'url': item.uri, file: {} } })
+      setImages(listImages1)
+      // de day len
+      const listImages2 = props.updateNormalPost.images.map((item: any) => { return item.uri })
+      setImagesUpdate(listImages2)
+    }
+  },[])
+
+  const handleSubmitEvent = async () => {
     if (isNotBlank(content?.trim()) && isLengthInRange(content.trim(), NUMBER_MIN_CHARACTER, NUMBER_MAX_CHARACTER)) {
-      let fakeNames: string[] = []
+      let fakeNames: string[] = [];
       if (images) {
         const promises = images.map((item: any) => {
           return new Promise<void>((resolve) => {
-            const fileList = new DataTransfer()
-            fileList.items.add(item.file)
-            handleUploadImage(fileList.files, (response) => {
-              fakeNames.push(response.data + '')
-              resolve()
-            })
-          })
-        })
-        Promise.all(promises).then(() => {
-          createNormalPost(fakeNames)
-        })
+            if (item.file instanceof File) {
+              const fileList = new DataTransfer();
+              fileList.items.add(item.file);
+              handleUploadImage(fileList.files, (response) => {
+                fakeNames.push(response.data + '');
+                resolve();
+              });
+            } else {
+              resolve();
+            }
+          });
+        });
+        Promise.all(promises).then(async () => {
+          if (props.updateNormalPost === null) {
+            createNormalPost(fakeNames);
+          } else {
+            updateNormalPost(fakeNames);
+          }
+        });
       } else {
-        createNormalPost([])
+        createNormalPost([]);
       }
     } else if (isBlank(content?.trim())) {
-      toast.error(TEXT_DETAILED_WARNING_CONTENT_NULL)
+      toast.error(props.t("Toast.toastNotifyContentNull"));
     } else {
-      toast.error(TEXT_DETAILED_WARNING_CONTENT_NUMBER_LIMITED + ' ' + NUMBER_MAX_CHARACTER + ' ' + TEXT_CHAR)
+      toast.error(props.t("Toast.toastNotifyNumberCharacterHadCrossLimitedNumberCharacterNull") + ' ' + NUMBER_MAX_CHARACTER + ' ' + props.t("Toast.toastNotifyNumberCharacter"));
     }
   }
 
-  // Send data action
+  const updateNormalPost = async (fakeNames: string[]) => {
+    const imageUpload = imagesUpdate;
+    fakeNames.map((item) => {
+      imageUpload.push(item);
+    })
+    const data = {
+      postId: props.updateNormalPost?.postId ?? 0,
+      content: content,
+      images: imageUpload
+    }
+    const status = await updateNormalPostAPI(API_URL_NORMAL_POST, data);
+    if (status === 201) {
+      toast.success(props.t("Toast.toastUpdateProfileSuccess"))
+      setImagesUpload([])
+      resetData()
+      disable()
+      props.onHide()
+    } else {
+      toast.error(props.t("Toast.toastUpdateProfileUnSuccess"))
+    }
+  }
   const createNormalPost = async (fakeImages: string[]) => {
     normalPost.images = fakeImages
     normalPost.content = content
@@ -89,14 +127,12 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
     }
     const status = await createNorMalPostAPI(API_URL_NORMAL_POST, _data);
     if (status === 201) {
-      toast.success(TEXT_CREATE_POST_SUCCESS)
+      toast.success(props.t("Toast.toastNotifyCreatePostSuccess"))
       resetData()
       disable()
-      setTimeout(() => {
-        props.onHide()
-      }, 2000)
+      props.onHide()
     } else {
-      toast.success(TEXT_CREATE_POST_FAIL)
+      toast.success(props.t("Toast.toastNotifyCreatePostUnSuccess"))
     }
   }
 
@@ -149,6 +185,9 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   const handleDeleteImage = (img: any) => {
     const newImages = images.filter((item: any) => item.url !== img.url)
     setImages(newImages)
+    // xu ly xoa anh cu cap nhat
+    const imageOldDelete = imagesUpdate.filter((item: any) => item !== img.url)
+    setImagesUpdate(imageOldDelete);
   }
 
   return (
@@ -182,17 +221,40 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
           </div>
         )}
         <div className='image-file-container' id='imageContainer'>
-          {images.map((item: any, index: any) => (
-            <li
-              key={item + ''}
-              className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
-            >
-              <img className='image-file' src={item.url} alt={`Image ${index}`} />
-              <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
-                <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
-              </button>
-            </li>
-          ))}
+          {
+            props.updateNormalPost?.postId !== undefined ? (
+              images.map((item: any, index: any) => (
+                <li
+                  key={item + ''}
+                  className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
+                >
+                  {
+                    (typeof (item.url) === 'string' && item.url.includes("http")) ? <>
+                      <img className='image-file' src={item.url} alt={`Image ${index}`} />
+                    </> : <>
+                      <img className='image-file' src={SERVER_ADDRESS + 'api/images/' + item.url} alt={`Image ${index}`} />
+                    </>
+                  }
+                  <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
+                    <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
+                  </button>
+                </li>
+              ))
+            ) : (
+              images.map((item: any, index: any) => (
+                <li
+                  key={item + ''}
+                  className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
+                >
+                  <img className='image-file' src={item.url} alt={`Image ${index}`} />
+                  <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
+                    <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
+                  </button>
+                </li>
+              ))
+            )
+          }
+
         </div>
       </div>
       <div className='card-body d-flex mt-0 p-0'>
@@ -220,4 +282,4 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
     </div>
   )
 }
-export default CreateNormalPost
+export default memo(CreateNormalPost)

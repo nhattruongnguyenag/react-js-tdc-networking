@@ -35,8 +35,10 @@ export default function StudentDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
+    // TODO
   }
   const handleUnSave = () => {
+  // TODO
   }
 
   const renderItem = (item: any) => {

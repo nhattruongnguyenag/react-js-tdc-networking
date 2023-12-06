@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react'
+import { useTranslation } from 'react-multi-lang'
 export interface PostContentType {
+  t:ReturnType <typeof useTranslation>,
   content: string
 }
 const CustomizeBodyPost = (props: PostContentType) => {
@@ -43,7 +45,7 @@ const CustomizeBodyPost = (props: PostContentType) => {
             }}
             className='fw-600 text-primary'
           >
-            <span className='font-xssss'>{hidden ? 'Xem thêm' : 'Ẩn bớt'}</span>
+            <span className='font-xssss'>{hidden ? props.t("CommentContainer.commentContainerComponentSeeMore") : props.t("CommentContainer.commentContainerComponentHidden")}</span>
           </button>
         )}
       </div>

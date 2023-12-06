@@ -35,6 +35,8 @@ export interface TDCSocialNetworkState {
   modalUserReactionData: ModalUserReaction | null
   updatePost: boolean
   defaultLanguage: string
+  userIdOfProfileNow: number
+  currentScreenNowIsProfileScreen: boolean
 }
 
 export const defaultSurveyPostRequest: SurveyPostRequest = {
@@ -67,7 +69,9 @@ const initialState: TDCSocialNetworkState = {
   modalCommentData: null,
   modalUserReactionData: null,
   updatePost: false,
-  questionConducts: []
+  questionConducts: [],
+  userIdOfProfileNow: 0,
+  currentScreenNowIsProfileScreen: false,
 }
 
 export const TDCSocialNetworkSlice = createSlice({
@@ -181,6 +185,12 @@ export const TDCSocialNetworkSlice = createSlice({
     setDefaultLanguage: (state, action: PayloadAction<string>) => {
       state.defaultLanguage = action.payload
     },
+    setCurrentScreenNowIsProfileScreen: (state, action: PayloadAction<boolean>) => {
+      state.currentScreenNowIsProfileScreen = action.payload
+    },
+    goToProfileScreen: (state, action: PayloadAction<number>) => {
+      state.userIdOfProfileNow = action.payload
+    },
   }
 })
 
@@ -215,7 +225,9 @@ export const {
   closeModalUserReaction,
   setSelectConversation,
   updatePostWhenHaveChangeComment,
-  setQuestionConducts
+  setQuestionConducts,
+  goToProfileScreen,
+  setCurrentScreenNowIsProfileScreen
 } = TDCSocialNetworkSlice.actions
 
 export default TDCSocialNetworkSlice.reducer

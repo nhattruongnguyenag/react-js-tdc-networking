@@ -36,8 +36,10 @@ export default function BusinessDashboardPage() {
   }, [data])
 
   const likeAction = (obj: LikeAction) => {
+    // TODO
   }
   const handleUnSave = () => {
+    // TODO
   }
 
   const renderItem = (item: any) => {

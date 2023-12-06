@@ -42,7 +42,7 @@ export default function CustomizeItemComments(props: Readonly<CustomizeCommentTy
                     className='wrapperContent'>
                     <div
                         className='name'>{props.name}
-                        {' '}{props.userId === props.userCreatedPostId && <span className='typeAuthorShow bg-greylight'><FontAwesomeIcon icon={faMicrophone} size='1x' color={COLOR_BLACK} />{' '}{props.textCommentOfAuthor}</span>}
+                        {' '}{props.authorCommentId === props.userCreatedPostId && <span className='typeAuthorShow bg-greylight'><FontAwesomeIcon icon={faMicrophone} size='1x' color={COLOR_BLACK} />{' '}{props.textCommentOfAuthor}</span>}
                     </div>
                 </div>
             </div>

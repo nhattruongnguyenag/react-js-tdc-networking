@@ -82,3 +82,11 @@ export const followAPI = async (urlFollow: string, followData: any) => {
     } catch (error) {
     }
 }
+
+export const updateNormalPostAPI = async (urlUpdate: string, data: any) => {
+    try {
+        const response = await axios.put(urlUpdate, data);
+        return response.data.status;
+    } catch (error) {
+    }
+}

@@ -2,13 +2,8 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { numberDayPassed } from '../utils/FormatTime';
 import Header from '../components/common/Header';
 import { useGetFacultyPostsQuery } from '../redux/Service';
-import { handleDataClassification } from '../utils/DataClassfications';
 import { LikeAction } from '../types/LikeActions';
 import {
-  TEXT_NOTIFICATION_FACULTY_POST_EMPTY,
-  TEXT_PLACEHOLDER_FACULITY,
-  TEXT_SELECT_FACULTY,
-  TEXT_WARNING_AREA_BY_ROLE,
   TYPE_POST_BUSINESS,
   TYPE_POST_FACULTY,
   TYPE_POST_STUDENT
@@ -17,14 +12,13 @@ import CreatePostSelector from '../components/CreatePostSelector';
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { useAppSelector } from '../redux/Hook';
 import ReactLoading from 'react-loading';
-import { Spinner } from 'flowbite-react';
 import { COLOR_BLUE_BANNER } from '../constants/Color';
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../constants/SystemConstant';
 import vi from '../translate/vn.json';
 import en from '../translate/en.json';
 import jp from '../translate/jp.json';
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
+import {setTranslations, useTranslation } from 'react-multi-lang';
 import { getFacultyTranslated } from '../utils/TranslateFaculty';
 import CustomizePost from '../components/post/CustomizePost'
 
@@ -72,6 +66,7 @@ export default function FacultyDashboardPage() {
   }, []);
 
   const handleUnSave = () => {
+    // TODO
   }
 
   const renderItem = (item: any) => (
@@ -176,7 +171,7 @@ export default function FacultyDashboardPage() {
                     data?.data.map((item: any) => renderItem(item))
                   ) : (
                     <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-3 text-center'>
-                      {t("NotifyFacultyDontHaveAnyPost.TextNotifyFacultyDontHaveAnyPost")}
+                      {t("NotifyFacultyDontHaveAnyPost.textNotifyFacultyDontHaveAnyPost")}
                     </div>
                   )}
                 </div>

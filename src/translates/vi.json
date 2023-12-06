@@ -193,5 +193,163 @@
         "follow": "Theo dõi",
         "unFollow": "Hủy theo dõi",
         "profile": "Trang cá nhân"
-    }
+    },
+    "Profile": {
+        "profileOperatingHours": "Giờ làm việc",
+        "profileTaxID": "Mã số thuế",
+        "profileRepresentative": "Đại diện",
+        "profileAddress": "Địa chỉ",
+        "profilePhone": "Điện thoại",
+        "profileEmail": "Email",
+        "profileArticles": "Bài viết",
+        "profilePosition": "Vị trí",
+        "profileRole": "Sinh viên",
+        "chat": "Nhắn tin",
+        "call": "Gọi điện",
+        "unFollow": "Hủy theo dõi",
+        "follow": "Theo dõi",
+        "updateProfile": "Cập nhật thông tin cá nhân",
+        "unUpdate":"chưa được cập nhật ",
+        "profileActiveTimeTo":"Đến"
+    },
+    "Post":{
+        "normalPostIdentifyAuthorCompany": "Doanh nghiệp",
+        "normalPostIdentifyAuthorFaculty": "Khoa",
+        "normalPostIdentifyAuthorStudent": "",
+        "typePostRecruitment":"Tuyển dụng",
+        "typePostSurvey":"Khảo sát",
+        "normalPostLike" : "Thích bởi",
+        "normalPostComment":"Bình luận"
+     },
+     "Comment": {
+         "commentReplyComment":"Trả lời",
+         "commentDeleteComment":"Xóa",
+         "commentAuthor": "Tác giả",
+         "modalListCommentTitle": "Bình luận"
+     },
+     "CommentContainer": {
+        "commentContainerComponentSeeMore": "Xem thêm",
+        "commentContainerComponentHidden": "Ẩn bớt"
+     },
+     "CreateCommentToolbar":{
+        "commentCreateComment": "Đăng bình luận",
+        "commentPlaceholderInput":"Hãy nhập nội dung bình luận"
+     },
+     "RecruitmentPost": {
+        "recruitmentPostType": "Tuyển dụng",
+        "recruitmentPostButtonSeeDetail": "Xem chi tiết",
+        "recruitmentPostCurrency":"vnd/Tháng"
+    },    
+     "SurveyPost": {
+        "surveyPostType": "Khảo sát",
+        "surveyPostButton": "Tiến hành khảo sát",
+        "surveyPostButtonSetting": "Chỉnh sửa câu trả lời"
+    },
+    "Faculty":{
+        "facultyOfElectricalEngineering": "Khoa điện - Điện tử",
+        "facultyOfInformationTechnology": "Khoa Công Nghệ Thông Tin",
+        "facultyOfAutomationTechnology": "Khoa Công Nghệ Tự Động",
+        "facultyOfMechanicalEngineeringAndManufacturing": "Khoa Cơ Khí Chế Tạo Máy",
+        "automobileEngineeringDepartment": "Khoa Cơ Khí Ô Tô",
+        "facultyOfFinanceAndAccounting": "Khoa Tài Chính - Kế Toán",
+        "facultyOfBusinessAdministration": "Khoa Quản Trị Kinh Doanh",
+        "facultyOfTourism": "Khoa Du Lịch",
+        "departmentOfEnglish": "Khoa Tiếng Anh",
+        "departmentOfKoreanLanguage": "Khoa Tiếng Hàn",
+        "japaneseLanguageDepartment": "Khoa Bộ Môn Tiếng Nhật"
+    },
+    "ModalUserLiked":{
+        "modalUserLikedTitle":"Danh sách người dùng đã like"
+    },
+    "MenuOption":{
+        "menuOptionSaveArticle": "Lưu bài viết",
+        "menuOptionUnSaveArticle": "Hủy lưu bài viết",
+        "menuOptionDeleteArticle": "Xóa bài viết",
+        "menuOptionUpdateArticle": "Chỉnh sửa bài viết",
+        "menuOptionViewResumeList": "Xem danh sách CV",
+        "menuOptionViewSurveyResults": "Xem kết quả khảo sát",
+        "menuOptionViewSurveyUpdateNormalPost": "Chỉnh sửa bài viết"
+    },
+    "CreatePostToolbar": {
+        "createPostToolbarTitle": "Tạo Bài Viết Mới",
+        "createPostToolbarNormalPost": "Văn bản/Hình ảnh",
+        "createPostToolbarSurveyPost": "Tạo Bài Viết Khảo Sát",
+        "createPostToolbarRecruitmentPost": "Tin Tuyển Dụng"
+    },
+    "ModalUpdate": {
+        "modalUpdateTitle": "Cập Nhật Thông Tin Tài Khoản",
+        "modalUpdatePlaceholderPhoneNumber": "Số Điện Thoại",
+        "modalUpdatePlaceholderEmail": "Email",
+        "modalUpdateBackground": "Hình Nền",
+        "modalUpdateAvatar": "Ảnh Đại Diện",
+        "modalUpdateButtonText": "Cập Nhật",
+        "modalUpdateImageNotifyNotUpload":"Ảnh đang tải lên",
+        "modalUpdateImageNotifyUploadSuccess":"Ảnh đã được tải lên",
+        "modalUpdateCompanyName":"Tên công ty",
+        "modalUpdateCompanyAddress":"Địa chỉ",
+        "modalUpdateCompanyPresentor":"Người đại diện",
+        "modalUpdateCompanyTaxCode": "Mã số thuế"
+    },
+    "Group": {
+        "groupTdc": "Nhóm TDC - Trường Cao Đẳng Công Nghệ Thủ Đức",
+        "groupConnectBusiness": "Nhóm Kết nối Doanh nghiệp",
+        "electricalElectronicsGroup": "Nhóm Điện - Điện tử",
+        "informationTechnologyGroup": "Nhóm Công nghệ Thông tin",
+        "automationTechnologyGroup": "Nhóm Công nghệ Tự động hóa",
+        "mechanicalEngineeringAndManufacturingGroup": "Nhóm Kỹ thuật Cơ khí và Chế tạo",
+        "automotiveMechanicalGroup": "Nhóm Cơ khí Ô tô",
+        "financeAccountingGroup": "Nhóm Tài chính - Kế toán",
+        "businessAdministrationGroup": "Nhóm Quản trị kinh doanh",
+        "tourismGroup": "Nhóm Du lịch",
+        "englishGroup": "Nhóm Tiếng Anh",
+        "koreanGroup": "Nhóm Tiếng Hàn",
+        "japaneseLanguageDepartmentGroup": "Nhóm Bộ môn Tiếng Nhật"
+    },
+    "ModalCreateNormalPost": {
+        "modalCreateNormalPostTitle": "Tạo bài viết",
+        "modalUpdateNormalPostTitle": "Cập nhật bài viết",
+        "modalCreateNormalPostPlaceholder": "Vui lòng nhập nội dung bài viết",
+        "modalCreateNormalPostEntryImages": "Ảnh",
+        "modalCreateNormalPostButton": "Đăng bài viết"
+      },
+      "Validate":{
+        "validatePhoneNull":"Số điện thoại không được để trống",
+        "validatePhoneUnCorrectFormat":"Số điện thoại sai định dạng",
+        "validateEmailNull":"Email không được để trống",
+        "validateEmailUnCorrectFormat":"Email sai định dạng",
+        "validateEmailHadUsed":"Email đã đươck đăng ký, vui lòng nhập email khác",
+        "validateEmailHasMaxLength": "Email không vượt quá 255 ký tự",
+        "validateNameHasMaxLength":"Tên không được vượt quá 255 ký tự ",
+        "validateNameHasSpecialCharacter":"Tên không được chứa các ký tự đặc biệt ",
+        "validateAddressNull":"Địa chỉ không được để trống",
+        "validatePresentorNull":"Tên người đại diện không được để trống",
+        "validateRepresentorSpecialCharacter":"Tên không được chứa các ký tự đặc biệt",
+        "validateRepresentorMaxLength":"Tên không được vượt quá 255 ký tự ",
+        "validateTaxCodeNull":"Mã số thuế không được để trống",
+        "validateNameNull":"Tên không được để trống",
+        "validateNameSpecialCharacter":"Tên không được chứa các ký tự đặc biệt",
+        "validateNameMaxLength":"Tên không được vượt quá 255 ký tự ",
+        "validateNameTimeActiveUnCorrect": "Thời gian hoạt động sai quy định",
+        "validateTaxCodeFormat": "Mã thuế sai quy định",
+        "validateTaxCodeMaxLength":  "Mã số thuế không vượt quá 255 ký tự",
+        "validateAddressMaxLength":  "Địa chỉ không vượt quá 255 ký tự",
+        "validateTimeActiveErrorFormat":"Thời gian hoạt động sai định dạng"
+    },
+    "BusinessSelectFacultyToolbar": {
+        "businessSelectFacultyToolbarTitle": "Vui lòng chọn khoa bạn muốn hiển thị bài viết"
+    },
+    "NotifyFacultyDontHaveAnyPost": {
+        "textNotifyFacultyDontHaveAnyPost": "Không có bài viết nào trong khoa này"
+    },
+    "Toast":{
+        "toastUpdateProfileSuccess":"Cập nhật thành công",
+        "toastUpdateProfileUnSuccess":"Cập nhật không thành công",
+        "toastNotifyHaveError":"Lỗi hệ thống vui lòng thử lại sau",
+        "toastNotifyCommentNull":"nội dung bình luận không thể để trống",
+        "toastNotifyContentNull":"nội dung bài viết không thể để trống",
+        "toastNotifyNumberCharacterHadCrossLimitedNumberCharacterNull":"số lượng ký tự không được vượt quá",
+        "toastNotifyNumberCharacter":"ký tự",
+        "toastNotifyCreatePostSuccess":"Đã tạo bài viết thành công",
+        "toastNotifyCreatePostUnSuccess":"Đã tạo bài viết không thành công"
+    }        
 }

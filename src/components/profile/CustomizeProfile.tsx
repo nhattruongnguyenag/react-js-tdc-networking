@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import CustomizeBodyStudentProfile from './CustomizeBodyStudentProfile'
 import CustomizeHeaderProfile from './CustomizeHeaderProfile'
 import CustomizeBodyBusinessProfile from './CustomizeBodyBusinessProfile'
@@ -6,7 +6,6 @@ import CustomizeBodyFacultyProfile from './CustomizeBodyFacultyProfile'
 import { useTranslation } from 'react-multi-lang'
 import { getFacultyTranslated } from '../../utils/TranslateFaculty'
 import { TYPE_POST_BUSINESS, TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
-import { userInfo } from 'os'
 
 export interface CustomizeProfileType {
     t: ReturnType<typeof useTranslation>
@@ -19,14 +18,15 @@ export interface CustomizeProfileType {
     handleClickIntoHeaderComponentEvent: (a: number) => void,
 }
 
-export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) {
+const CustomizeProfile = (props: Readonly<CustomizeProfileType>)=> {
+    console.log('==============CustomizeProfile======================');
     const getBody = () => {
         let body;
         switch (props.role) {
             case TYPE_POST_STUDENT:
                 body = <CustomizeBodyStudentProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    position={props.userData.position ?? props.t("Profile.ProfileRole")}
+                    position={props.userData.position ?? props.t("Profile.profileRole")}
                     phone={props.userData.phone ?? props.t("Profile.unUpdate")}
                     email={props.userData.email ?? props.t("Profile.unUpdate")}
                     numberPost={props.data.length ?? 0}
@@ -55,8 +55,6 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
             case TYPE_POST_FACULTY:
                 body = <CustomizeBodyFacultyProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    timeWork={props.userData.activeTime ?? props.t("Profile.unUpdate")}
-                    address={props.userData.address ?? props.t("Profile.unUpdate")}
                     phone={props.userData.phone ?? props.t("Profile.unUpdate")}
                     email={props.userData.email ?? props.t("Profile.unUpdate")}
                     name={props.userData.name ?? props.t("Profile.unUpdate")}
@@ -95,3 +93,5 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
         </div>
     )
 }
+
+export default memo(CustomizeProfile) 

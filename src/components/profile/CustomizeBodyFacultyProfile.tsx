@@ -9,8 +9,6 @@ import { useTranslation } from 'react-multi-lang';
 
 interface FacultyProfileType {
     t:ReturnType<typeof useTranslation>,
-    timeWork: string,
-    address: string,
     phone: string,
     email: string,
     name: string,
@@ -32,7 +30,7 @@ function CustomizeBodyFacultyProfile(props: Readonly<FacultyProfileType>) {
                             size='xl'
                             color={COLOR_WHITE}
                             className='button-header-profile-react' />
-                        {props.t("Profile.Chat")}
+                        {props.t("Profile.chat")}
                     </button>
                         <button
                             onClick={() => props.handleClickButtonEvent(CALL_ACTION)}
@@ -41,7 +39,7 @@ function CustomizeBodyFacultyProfile(props: Readonly<FacultyProfileType>) {
                                 size='xl'
                                 color={COLOR_WHITE}
                                 className='button-header-profile-react' />
-                            {props.t("Profile.Call")}
+                            {props.t("Profile.call")}
                         </button>
                         <button
                             onClick={() => props.handleClickButtonEvent(FOLLOW_ACTION)}
@@ -52,12 +50,12 @@ function CustomizeBodyFacultyProfile(props: Readonly<FacultyProfileType>) {
                                         size='xl'
                                         color={COLOR_WHITE}
                                         className='button-header-profile-react' />
-                                   {props.t("Profile.UnFollow")}
+                                   {props.t("Profile.unFollow")}
                                 </> : <><FontAwesomeIcon icon={faUserPlus}
                                     size='xl'
                                     color={COLOR_WHITE}
                                     className='button-header-profile-react' />
-                                     {props.t("Profile.Follow")}</>
+                                     {props.t("Profile.follow")}</>
                             }
                         </button></> : <button
                             onClick={() => props.handleClickButtonEvent(CHANGE_INFO_USER_CLICK_ACTION)}
@@ -66,7 +64,7 @@ function CustomizeBodyFacultyProfile(props: Readonly<FacultyProfileType>) {
                             size='xl'
                             color={COLOR_BLACK}
                             className='button-header-profile-react' />
-                            {props.t("Profile.UpdateProfile")}
+                            {props.t("Profile.updateProfile")}
                     </button>
                 }
             <button
@@ -80,33 +78,21 @@ function CustomizeBodyFacultyProfile(props: Readonly<FacultyProfileType>) {
         </div>
         <div className='lineOfInfoBodyProfile'>
             <div>
-                <FontAwesomeIcon icon={faClock} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
-            </div>
-            <div className='txtInfoBodyProfile'>{props.t("Profile.ProfileOperatingHours")}: {props.timeWork}</div>
-        </div>
-        <div className='lineOfInfoBodyProfile'>
-            <div>
-                <FontAwesomeIcon icon={faMapLocationDot} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
-            </div>
-            <div className='txtInfoBodyProfile'>{props.t("Profile.ProfileAddress")}: {props.address}</div>
-        </div>
-        <div className='lineOfInfoBodyProfile'>
-            <div>
                 <FontAwesomeIcon icon={faPhone} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
             </div>
-            <div className='txtInfoBodyProfile'>{props.t("Profile.ProfilePhone")}: {props.phone}</div>
+            <div className='txtInfoBodyProfile'>{props.t("Profile.profilePhone")}: {props.phone}</div>
         </div>
         <div className='lineOfInfoBodyProfile'>
             <div>
                 <FontAwesomeIcon icon={faEnvelope} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
             </div>
-            <div className='txtInfoBodyProfile'>{props.t("Profile.ProfileEmail")}: {props.email}</div>
+            <div className='txtInfoBodyProfile'>{props.t("Profile.profileEmail")}: {props.email}</div>
         </div>
         <div className='lineOfInfoBodyProfile'>
             <div>
                 <FontAwesomeIcon icon={faPaste} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
             </div>
-            <div className='txtInfoBodyProfile'>{props.t("Profile.ProfileArticles")} ( {props.numberPost} ) </div>
+            <div className='txtInfoBodyProfile'>{props.t("Profile.profileArticles")} ( {props.numberPost} ) </div>
         </div>
     </div>)
 }

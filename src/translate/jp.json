@@ -177,8 +177,8 @@
          "commentAuthor": "著者"
      },
      "CommentContainer": {
-        "CommentContainerComponentSeeMore": "もっと見る",
-        "CommentContainerComponentHidden": "隠す"
+        "commentContainerComponentSeeMore": "もっと見る",
+        "commentContainerComponentHidden": "隠す"
      },     
      "CreateCommentToolbar":{
         "commentCreateComment": "コメント投稿",
@@ -243,7 +243,7 @@
         "ProfileEmail": "メール",
         "ProfileArticles": "記事",
         "ProfilePosition": "役職",
-        "ProfileRole": "学生",
+        "profileRole": "学生",
         "Chat": "メッセージを送る",
         "Call": "電話する",
         "UnFollow": "フォロー解除",

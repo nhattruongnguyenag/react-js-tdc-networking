@@ -178,8 +178,8 @@
          "commentAuthor": "Tác giả"
      },
      "CommentContainer": {
-        "CommentContainerComponentSeeMore": "Xem thêm",
-        "CommentContainerComponentHidden": "Ẩn bớt"
+        "commentContainerComponentSeeMore": "Xem thêm",
+        "commentContainerComponentHidden": "Ẩn bớt"
      },
      "CreateCommentToolbar":{
         "commentCreateComment": "Đăng bình luận",
