@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-multi-lang'
 export interface PostContentType {
-  t:ReturnType <typeof useTranslation>,
+  t:ReturnType <typeof useTranslation>
   content: string
 }
 const CustomizeBodyPost = (props: PostContentType) => {

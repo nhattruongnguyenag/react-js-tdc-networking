@@ -351,5 +351,43 @@
         "toastNotifyNumberCharacter":"ký tự",
         "toastNotifyCreatePostSuccess":"Đã tạo bài viết thành công",
         "toastNotifyCreatePostUnSuccess":"Đã tạo bài viết không thành công"
-    }        
+    },
+    "ApprovingScreen": {
+        "isLoading": "Đang tải dữ liệu...",
+        "emptyMessage": "Chưa có bài viết mới"
+    },
+    "PostApproveItem": {
+        "isLoading": "Đang tải"
+    },
+    "ModalPostRejectReason": {
+        "default": "Mặc định",
+        "survey": "Khảo sát",
+        "recruitment": "Tuyển dụng",
+        "successDeleteMessage": "Thành công !!!",
+        "successAcceptMessage": "Thành công !!!",
+        "successDeleteMessageContent": "Đã xóa bài viết thành công",
+        "rejectSuccessMessage": "Đã từ chối bài viết thành công",
+        "notePlaceholder": "Ghi chú...",
+        "acceptPostMenuItem": "Duyệt bài viết",
+        "rejectPostMenuItem": "Từ chối bài viết",
+        "isLoading": "Từ chối bài viết",
+        "rejectDetails": "Chi tiết",
+        "pendingPostUpdate": "Chỉnh sửa",
+        "pendingPostDelete": "Xóa bài viết",
+        "buttonCompleteRejectPostTitle": "Hoàn tất"
+    },
+    "PenddingPostScreen": {
+        "peddingPostTab": "Đang chờ",
+        "rejectedPostTab": "Bị từ chối",
+        "loading": "Đang tải...",
+        "emptyMessage": "Không có bài viết"
+    },
+    "HeaderPostApproveItem": {
+        "acceptPostSuccess": "Bài viết đã duyệt thành công",
+        "acceptMenuItem": "Chấp nhận",
+        "rejectMenuItem": "Từ chối",
+        "editPost": "Chỉnh sửa bài viết",
+        "deletePost": "Xóa bài viết",
+        "rejectDetail": "Chi tiết"
+    }
 }

@@ -6,7 +6,7 @@ import { LikeAction } from '../types/LikeActions';
 import CustomizePost from '../components/post/CustomizePost';
 import { useAppDispatch, useAppSelector } from '../redux/Hook';
 import CustomizeProfile from '../components/profile/CustomizeProfile';
-import { useParams, useLocation } from 'react-router-dom'; 
+import { useParams, useLocation } from 'react-router-dom';
 import { getIdFromSlug } from '../utils/CommonUtls';
 import { Student } from '../types/Student';
 import { Business } from '../types/Business';
@@ -36,9 +36,9 @@ import { Data } from '../types/Data'
 import { TOKEN_KEY, USER_LOGIN_KEY } from '../constants/KeyValue';
 import { useDispatch } from 'react-redux';
 import { goToProfileScreen, setCurrentScreenNowIsProfileScreen, setUserLogin } from '../redux/Slice';
-import vi from '../translate/vn.json';
-import en from '../translate/en.json';
-import jp from '../translate/jp.json';
+import vi from '../translates/vi.json';
+import en from '../translates/en.json';
+import jp from '../translates/jp.json';
 import { setTranslations, useTranslation } from 'react-multi-lang';
 import { getFacultyTranslated } from '../utils/TranslateFaculty';
 import { Faculty } from '../types/Faculty';
@@ -614,11 +614,11 @@ function ModalUpdateFaculty(props: Readonly<ModalTypeUpdate>) {
                 toast.success(props.t("Toast.toastUpdateProfileUnSuccess"));
                 props.onHide();
               } else {
-               toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
+                toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
               }
             })
             .catch((error) => {
-            toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
+              toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
             });
         })
         .catch((error) => {
@@ -878,7 +878,7 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
       isError: true
     },
     address: {
-       textError: props.t("Validate.validateAddressNull"),
+      textError: props.t("Validate.validateAddressNull"),
       isVisible: false,
       isError: true
     },
@@ -1248,7 +1248,7 @@ function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
             });
         })
         .catch((error) => {
-          toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));    
+          toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
         });
     } else {
       let key: keyof BusinessUpdate;
@@ -1785,18 +1785,18 @@ function ModalUpdateStudent(props: Readonly<ModalTypeUpdate>) {
                 sessionStorage.setItem(TOKEN_KEY, JSON.stringify(token));
                 sessionStorage.setItem(USER_LOGIN_KEY, JSON.stringify(response.data.data));
                 dispatch(setUserLogin(response.data.data))
-                   toast.success(props.t("Toast.toastUpdateProfileUnSuccess"));
+                toast.success(props.t("Toast.toastUpdateProfileUnSuccess"));
                 props.onHide();
               } else {
-                 toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
+                toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
               }
             })
             .catch((error) => {
-               toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
+              toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
             });
         })
         .catch((error) => {
-             toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
+          toast.error(props.t("Toast.toastUpdateProfileUnSuccess"));
         });
     } else {
       let key: keyof StudentUpdate;

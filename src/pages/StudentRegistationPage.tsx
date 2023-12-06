@@ -6,6 +6,7 @@ import { Data } from '../types/Data'
 import { Student } from '../types/Student'
 import { Token } from '../types/Token'
 import { toast } from 'react-toastify'
+import { useCookies } from 'react-cookie'
 import 'react-toastify/dist/ReactToastify.css'
 import {
   InputTextValidate,
@@ -50,9 +51,10 @@ import {
   TEXT_PLACEHOLDER_STUDENTNAME,
   TEXT_REGISTER,
   TEXT_REQUEST_LOGIN,
+  TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION,
   TEXT_TITLE_REGISTER_STUDENT
 } from '../constants/StringVietnamese'
-import { LOGIN_PAGE } from '../constants/Page'
+import { ACCEPT_SEND_EMAIL_PAGE, LOGIN_PAGE } from '../constants/Page'
 
 interface RegisterStudent {
   name: InputTextValidate
@@ -78,6 +80,7 @@ const isAllFieldsValid = (validate: RegisterStudent): boolean => {
 export default function StudentRegistationPage() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
+  const [cookies, setCookie] = useCookies(['email', 'url', 'subject'])
   const [image, setImage] = useState('')
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
@@ -90,26 +93,30 @@ export default function StudentRegistationPage() {
     email: '',
     name: '',
     image: '',
-    facultyName: '',
-    major: '',
+    facultyId: 0,
+    majorId: 0,
     studentCode: '',
     confimPassword: '',
     facultyGroupCode: '',
-    facultyGroupId: 0
+    facultyGroupId: 0,
+    phone: '',
+    background: '',
+    subject: '',
+    content: ''
   })
   const [dataRequest, setDataRequest] = useState([
     {
-      id: '',
+      id: 0,
       name: '',
       majors: [
         {
-          id: '',
+          id: 0,
           name: ''
         }
       ]
     }
   ])
-  const [dataNganhRequest, setDataNganhRequest] = useState([{ id: '', name: '' }])
+  const [dataNganhRequest, setDataNganhRequest] = useState([{ id: 0, name: '' }])
   const [validate, setValidate] = useState<RegisterStudent>({
     name: {
       textError: TEXT_ERROR_STUDENTNAME,
@@ -403,7 +410,7 @@ export default function StudentRegistationPage() {
           }
         })
       } else {
-        setStudent({ ...student, major: event.target.value })
+        setStudent({ ...student, majorId: event.target.value })
         setValidate({
           ...validate,
           major: {
@@ -429,7 +436,7 @@ export default function StudentRegistationPage() {
           }
         })
       } else {
-        setStudent({ ...student, facultyName: event.target.value })
+        setStudent({ ...student, facultyId: event.target.value })
         setValidate({
           ...validate,
           facultyName: {
@@ -449,7 +456,7 @@ export default function StudentRegistationPage() {
       .then((response) => {
         setDataRequest(response.data.data)
         dataRequest.map((data) => {
-          if (data.name == student.facultyName) {
+          if (data.id == student.facultyId) {
             setDataNganhRequest(data.majors)
           }
         })
@@ -468,6 +475,8 @@ export default function StudentRegistationPage() {
       })
     }
   }
+  console.log(student.facultyId)
+  console.log(student.majorId)
 
   const handleGetFiles = () => {
     if (fileInputRef.current) {
@@ -478,13 +487,19 @@ export default function StudentRegistationPage() {
 
   const onSubmit = () => {
     if (isAllFieldsValid(validate)) {
+      setStudent({ ...student, subject: TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION})
       setIsLoading(true)
       axios
         .post<Student, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/student/register', student)
         .then((response) => {
           setIsLoading(false)
+          let expires = new Date()
+          expires.setTime(expires.getTime() + 600 * 1000)
+          setCookie('email', student.email, { path: '/', expires })
+          setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
+          setCookie('subject', TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION, { path: '/', expires })
           toast.success(TEXT_ALERT_REGISTER_SUCCESS)
-          navigate(LOGIN_PAGE)
+          navigate(ACCEPT_SEND_EMAIL_PAGE)
         })
         .catch((error) => {
           console.log(error)
@@ -499,7 +514,6 @@ export default function StudentRegistationPage() {
           validate[key].isVisible = true
         }
       }
-
       setValidate({ ...validate })
     }
   }
@@ -587,7 +601,7 @@ export default function StudentRegistationPage() {
                     >
                       <option hidden>{TEXT_PLACEHOLDER_FACULITY}</option>
                       {dataRequest.map((item, index) => (
-                        <option value={item.name} key={index}>
+                        <option value={item.id} key={index}>
                           {item.name}
                         </option>
                       ))}
@@ -607,7 +621,7 @@ export default function StudentRegistationPage() {
                     >
                       <option hidden>{TEXT_PLACEHOLDER_MAJOR}</option>
                       {dataNganhRequest.map((item, index) => (
-                        <option value={item.name} key={index}>
+                        <option value={item.id} key={index}>
                           {item.name}
                         </option>
                       ))}

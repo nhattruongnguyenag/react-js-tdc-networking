@@ -15,9 +15,9 @@ import ReactLoading from 'react-loading';
 import { COLOR_BLUE_BANNER } from '../constants/Color';
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../constants/SystemConstant';
-import vi from '../translate/vn.json';
-import en from '../translate/en.json';
-import jp from '../translate/jp.json';
+import vi from '../translates/vi.json';
+import en from '../translates/en.json';
+import jp from '../translates/jp.json';
 import {setTranslations, useTranslation } from 'react-multi-lang';
 import { getFacultyTranslated } from '../utils/TranslateFaculty';
 import CustomizePost from '../components/post/CustomizePost'

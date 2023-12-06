@@ -10,11 +10,15 @@ import { Question } from '../types/Question'
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 import { QuestionResponse } from '../types/response/QuestionResponse'
 import { Student } from '../types/Student'
-import { getSelectedConversation, getSurveyPostRequest, getUserLogin } from '../utils/CommonUtls'
+import { getSelectedConversation, getUserLogin } from '../utils/CommonUtls'
 import { InputTextValidate } from '../utils/ValidateUtils'
 import { ModalComments } from '../types/ModalComments'
+import { PostRejectedLog } from '../types/PostRejectLog'
+import { PostRejectLogResponse } from '../types/response/RejectLogResponse'
 
 export interface TDCSocialNetworkState {
+  rejectLogResponse: PostRejectLogResponse | null
+  postRejectId: number | null
   darkMode: boolean
   surveyPostRequest: SurveyPostRequest
   questionConducts: QuestionResponse[]
@@ -50,6 +54,8 @@ export const defaultSurveyPostRequest: SurveyPostRequest = {
 }
 
 const initialState: TDCSocialNetworkState = {
+  rejectLogResponse: null,
+  postRejectId: null,
   defaultLanguage: 'vi',
   darkMode: false,
   conversationMessages: [],
@@ -191,6 +197,12 @@ export const TDCSocialNetworkSlice = createSlice({
     goToProfileScreen: (state, action: PayloadAction<number>) => {
       state.userIdOfProfileNow = action.payload
     },
+    setPostRejectId: (state, action: PayloadAction<number | null>) => {
+      state.postRejectId = action.payload
+    },
+    setRejectLogResponse: (state, action: PayloadAction<PostRejectLogResponse | null>) => {
+      state.rejectLogResponse = action.payload
+    },
   }
 })
 
@@ -227,7 +239,9 @@ export const {
   updatePostWhenHaveChangeComment,
   setQuestionConducts,
   goToProfileScreen,
-  setCurrentScreenNowIsProfileScreen
+  setCurrentScreenNowIsProfileScreen,
+  setPostRejectId,
+  setRejectLogResponse
 } = TDCSocialNetworkSlice.actions
 
 export default TDCSocialNetworkSlice.reducer

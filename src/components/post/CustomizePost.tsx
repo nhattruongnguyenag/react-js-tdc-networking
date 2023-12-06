@@ -27,9 +27,9 @@ import '../../assets/css/createCommentsToolbar.css'
 import '../../assets/css/modal.css'
 import '../../assets/css/post.css'
 import { setTranslations, useTranslation } from 'react-multi-lang'
-import vi from '../../translate/vn.json';
-import en from '../../translate/en.json';
-import jp from '../../translate/jp.json';
+import vi from '../../translates/vi.json';
+import en from '../../translates/en.json';
+import jp from '../../translates/jp.json';
 import { getFacultyTranslated } from '../../utils/TranslateFaculty'
 import { formatVietNamCurrency } from '../../utils/FormatCurrency'
 import { CreatePostModal } from '../modal/CustomizeNormalPostModal'

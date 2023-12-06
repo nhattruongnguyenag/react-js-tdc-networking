@@ -57,7 +57,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
       const listImages2 = props.updateNormalPost.images.map((item: any) => { return item.uri })
       setImagesUpdate(listImages2)
     }
-  },[])
+  }, [])
 
   const handleSubmitEvent = async () => {
     if (isNotBlank(content?.trim()) && isLengthInRange(content.trim(), NUMBER_MIN_CHARACTER, NUMBER_MAX_CHARACTER)) {
@@ -185,7 +185,6 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   const handleDeleteImage = (img: any) => {
     const newImages = images.filter((item: any) => item.url !== img.url)
     setImages(newImages)
-    // xu ly xoa anh cu cap nhat
     const imageOldDelete = imagesUpdate.filter((item: any) => item !== img.url)
     setImagesUpdate(imageOldDelete);
   }
@@ -228,6 +227,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
                   key={item + ''}
                   className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
                 >
+                  <h1>Update</h1>
                   {
                     (typeof (item.url) === 'string' && item.url.includes("http")) ? <>
                       <img className='image-file' src={item.url} alt={`Image ${index}`} />
@@ -246,6 +246,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
                   key={item + ''}
                   className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
                 >
+                  <h1>Create</h1>
                   <img className='image-file' src={item.url} alt={`Image ${index}`} />
                   <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
                     <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />

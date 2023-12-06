@@ -7,9 +7,9 @@ import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import DefaultAvatar from './common/DefaultAvatar'
 import { slugify } from '../utils/CommonUtls'
 import '../assets/css/createPost.css'
-import vi from '../translate/vn.json'
-import en from '../translate/en.json'
-import jp from '../translate/jp.json'
+import vi from '../translates/vi.json'
+import en from '../translates/en.json'
+import jp from '../translates/jp.json'
 import { setTranslations, useTranslation } from 'react-multi-lang'
 setTranslations({ vi, en, jp })
 interface CreatePostSelectorType {

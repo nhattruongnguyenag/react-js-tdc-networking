@@ -19,7 +19,7 @@ import TextValidate from '../components/TextValidate'
 import { useNavigate } from 'react-router-dom'
 import { handleUploadImage } from '../utils/UploadUtils'
 import ReactLoading from 'react-loading'
-import { LOGIN_PAGE } from '../constants/Page'
+import { ACCEPT_SEND_EMAIL_PAGE, LOGIN_PAGE } from '../constants/Page'
 import {
   TEXT_ACTIVETIME,
   TEXT_ALERT_REGISTER_FAILT,
@@ -59,10 +59,12 @@ import {
   TEXT_PLACEHOLDER_TAXCODE,
   TEXT_REGISTER,
   TEXT_REQUEST_LOGIN,
+  TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION,
   TEXT_TITLE_REGISTER_BUSINESS,
   TEXT_TO_ACTIVETIME
 } from '../constants/StringVietnamese'
 import { toast } from 'react-toastify'
+import { useCookies } from 'react-cookie'
 
 interface RegisterBusiness {
   name: InputTextValidate
@@ -93,6 +95,7 @@ export default function BusinessRegistationPage() {
   const [image, setImage] = useState('')
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
+  const [cookies, setCookie] = useCookies(['email', 'url', 'subject'])
   const [business, setBusiness] = useState<
     Omit<Business, 'id' | 'status' | 'createdAt' | 'updatedAt' | 'roleCodes' | 'isTyping' | 'isMessageConnect'>
   >({
@@ -108,7 +111,9 @@ export default function BusinessRegistationPage() {
     image: '',
     confimPassword: '',
     facultyGroupCode: '',
-    facultyGroupId: 0
+    facultyGroupId: 0,
+    subject: '',
+    content: ''
   })
   const [timeStart, setTimeStart] = useState('07:00')
   const [timeEnd, setTimeEnd] = useState('17:00')
@@ -560,13 +565,19 @@ export default function BusinessRegistationPage() {
 
   const onSubmit = useCallback(() => {
     if (isAllFieldsValid(validate)) {
+      setBusiness({ ...business, subject: TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION})
       setIsLoading(true)
       axios
         .post<Business, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/business/register', business)
         .then((response) => {
           setIsLoading(false)
+          let expires = new Date()
+          expires.setTime(expires.getTime() + 600 * 1000)
+          setCookie('email', business.email, { path: '/', expires })
+          setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
+          setCookie('subject', TEXT_TITLE_EMAIL_AUTHENTICATE_REGISTRATION, { path: '/', expires })
           toast.success(TEXT_ALERT_REGISTER_SUCCESS)
-          navigate(LOGIN_PAGE)
+          navigate(ACCEPT_SEND_EMAIL_PAGE)
         })
         .catch((error) => {
           setIsLoading(false)
