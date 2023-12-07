@@ -61,4 +61,8 @@
     font-size: 1.1rem;
   }
   
+  .text-p{
+    word-break: break-all;
+  }
+  
   

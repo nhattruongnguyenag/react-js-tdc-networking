@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/common/Header'
-import { FaFileUpload } from 'react-icons/fa'
 import { Document, Page, pdfjs } from 'react-pdf'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
@@ -31,7 +30,6 @@ export default function JobApplyPage() {
   const navigate = useNavigate()
   const [isAnonymous, setIsAnonymous] = useState(false)
   const [isUploadCV, setIsUpload] = useState(false)
-  const [jobApplyUpdateRequest, jobApplyUpdateResponse] = useJobApplyUpdateMutation()
   const profile = sessionStorage.getItem(PROFILE_ID)
   const cvUrl = sessionStorage.getItem(CVURL)
 
@@ -65,10 +63,22 @@ export default function JobApplyPage() {
   }
 
   const onSuccess = () => {
-    if (profile && cvUrl && fileName) {
-      jobApplyUpdateRequest({
-        profileId: parseInt(profile) ?? -1,
-        cvUrl: fileName
+    if (profile && fileName) {
+      axios({
+        method: 'PUT',
+        url: `${SERVER_ADDRESS}api/job/update`,
+        data: {
+          profileId: postId,
+          cvUrl: fileName
+        }
+      }).then((res) => {
+        setIsAnonymous(true)
+        navigate(-1)
+        toast.success(t('JobApplyScreen.jobApplyScreenUpdateSuccess'))
+        sessionStorage.removeItem(PROFILE_ID)
+        sessionStorage.removeItem(CVURL)
+      }).catch((error)=>{
+        toast.error(t('JobApplyScreen.jobApplyScreenUpdateFalse'))
       })
     } else if (fileName) {
       axios({
@@ -81,24 +91,13 @@ export default function JobApplyPage() {
         }
       }).then((res) => {
         setIsAnonymous(true)
-        // alert("ok")
         navigate(-1)
-        toast.success('Ứng tuyển thành công!')
+        toast.success(t('JobApplyScreen.jobApplyScreenSuccess'))
       })
     } else {
-      toast.error('Ứng tuyển thất bại!')
+      toast.error(t('JobApplyScreen.jobApplyScreenFalse'))
     }
   }
-
-  useEffect(() => {
-    if (jobApplyUpdateResponse.isSuccess && jobApplyUpdateResponse.data) {
-      setIsAnonymous(true)
-      navigate(-1)
-      toast.success('Cập nhật ứng tuyển thành công!')
-      sessionStorage.removeItem(PROFILE_ID)
-      sessionStorage.removeItem(CVURL)
-    }
-  }, [jobApplyUpdateResponse])
 
   return (
     <div>

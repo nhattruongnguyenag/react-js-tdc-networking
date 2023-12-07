@@ -95,6 +95,7 @@ h4 {
   padding: 10px !important;
   border-radius: 10px !important;
   padding-left: 20px;
+  width: 400px;
 }
 
 .bg-recruitment:active {
@@ -154,7 +155,7 @@ h4 {
   content: '';
   width: 4px;
   height: 4px;
-  background-color: black;
+  background-color: #000;
   position: absolute;
   border-radius: 50%;
   left: -5px;
@@ -273,10 +274,14 @@ h2 {
   margin-right: auto;
   margin-left: auto;
   margin-top: 10px;
-  border-color: black;
+  border-color: #000;
 }
 
 .css-1dimb5e-singleValue {
   font-weight: bold;
+}
+
+.text-p{
+  word-break: break-all;
 }
 

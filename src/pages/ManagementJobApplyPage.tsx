@@ -15,18 +15,20 @@ import { slugify } from '../utils/CommonUtls'
 import Loading from '../components/common/Loading'
 import { useGetJobProfileQuery } from '../redux/Service'
 import { CVURL, PROFILE_ID } from '../constants/KeyValue'
+import { t } from 'react-multi-lang'
+import Select from 'react-select'
 
 export default function ManagementJobApplyPage() {
   const dataType = [
-    { label: 'Đã nhận', value: 'received' },
-    { label: 'Đang xử lý', value: 'in_progress' },
-    { label: 'Xem xét', value: 'not_meet_standard_quality' },
-    { label: 'Phỏnrg vấn', value: 'interview' },
+    { label: t('ManageJobApply.textReceived'), value: 'received' },
+    { label: t('ManageJobApply.textIn_progress'), value: 'in_progress' },
+    { label: t('ManageJobApply.textNot_meet_standard_quality'), value: 'not_meet_standard_quality' },
+    { label: t('ManageJobApply.textInterview'), value: 'interview' },
     {
-      label: 'Phỏng vấn thất bại',
+      label: t('ManageJobApply.textInterview_not_meet_standard_quality'),
       value: 'interview_not_meet_standard_quality'
     },
-    { label: 'Nhận việc', value: 'accept' }
+    { label: t('ManageJobApply.textAccept'), value: 'accept' }
   ]
 
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -35,7 +37,7 @@ export default function ManagementJobApplyPage() {
     pollingInterval: 1000
   })
   const [value, setValue] = useState('received')
-  const [item, setItem] = useState('Đã nhận')
+  const [item, setItem] = useState(t('ManageJobApply.textReceived'))
 
   const handleUpdateCv = (username: string, profileId: number, cvUrl: string) => {
     sessionStorage.setItem(PROFILE_ID, profileId.toString())
@@ -46,7 +48,7 @@ export default function ManagementJobApplyPage() {
     axios
       .delete(SERVER_ADDRESS + `api/job/profile/${profileId}`)
       .then((response) => {
-        alert('Hủy hồ sơ thành công')
+        alert(t('ManageJobApply.textDeleteSucces'))
       })
       .catch((error) => {
         console.log(error)
@@ -69,78 +71,75 @@ export default function ManagementJobApplyPage() {
                   <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                     <i className='ti-arrow-left font-sm text-white' />
                   </button>
-                  <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Quản lý hồ sơ ứng tuyển</h4>
+                  <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{t('ManageJobApply.manageJobApply')}</h4>
                 </div>
-                <select
-                  className='style2-input form-control selectType pe-5 ps-5'
-                  onChange={(e) => {
-                    setValue(e.target.value)
-                    setItem(e.target.value)
+                <Select
+                  defaultValue={dataType[0]}
+                  options={dataType}
+                  getOptionValue={(option) => option.value}
+                  getOptionLabel={(option) => option.label}
+                  onChange={(item) => {
+                    setValue(item?.value ?? '')
+                    setItem(item?.label ?? '')
                   }}
-                >
-                  <option hidden value={value}>
-                    {item}
-                  </option>
-                  {dataType.map((item, index) => (
-                    <option value={item.value} key={index}>
-                      {item.label}
-                    </option>
-                  ))}
-                </select>
+                />
+
                 {isLoading ? (
                   <div className='ml-[-320px] mt-[-100px] flex h-screen items-center justify-center'>
                     <Loading />
                   </div>
                 ) : (
                   <div className='card-body p-lg-5 w-100 border-0 p-2'>
-                    {data?.data.map((item, index) =>
-                      item.status == value ? (
-                        <div className='manage-item-job-apply' key={index}>
-                          <div className='tam'>
-                            <div className='img-job-apply'>
-                              {item.companyName == '' ? (
-                                <DefaultAvatar
-                                  name={item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
-                                  size={80}
-                                  styleBootstrap={'defaultImage'}
-                                />
-                              ) : (
-                                <img
-                                  src={item.companyAvatar ? SERVER_ADDRESS + 'api/images/' + item.companyAvatar : ''}
-                                  className='avatar p-0'
-                                />
-                              )}
-                            </div>
-                            <div className='content-job-apply'>
-                              <h1 className='fw-900 title text-black'>Tuyển cộng tác viên bán hàng</h1>
-                              <h1 className='fw-900 title text-black'>
-                                {item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
-                              </h1>
-                              <div className='datetime'>
-                                <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
-                                <p className='fw-600 mb-0 ms-2'>{formatDateTime(item.createdAt)}</p>
+                    {data?.data.map(
+                      (item, index) =>
+                        item.status === value && (
+                          <div className='manage-item-job-apply' key={index}>
+                            <div className='tam'>
+                              <div className='img-job-apply'>
+                                {item.companyName == '' ? (
+                                  <DefaultAvatar
+                                    name={item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
+                                    size={80}
+                                    styleBootstrap={'defaultImage'}
+                                  />
+                                ) : (
+                                  <img
+                                    src={item.companyAvatar ? SERVER_ADDRESS + 'api/images/' + item.companyAvatar : ''}
+                                    className='avatar p-0'
+                                  />
+                                )}
+                              </div>
+                              <div className='content-job-apply'>
+                                <h1 className='fw-900 title text-black text-p'>{item.jobTitle}</h1>
+                                <h1 className='fw-900 title text-black text-p'>
+                                  {item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
+                                </h1>
+                                <div className='datetime'>
+                                  <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
+                                  <p className='fw-600 mb-0 ms-2 text-p'>{formatDateTime(item.createdAt)}</p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div className='btnBottom'>
-                            <button type='button' onClick={() => handleGetDetailJobApply(item.jobTitle, item.id)}>
-                              <p className='txtBtnBottom'>Xem cv</p>
-                            </button>
-                            {item.status === 'received' && (
-                              <button type='button' onClick={() => handleUpdateCv(item.jobTitle, item.id,item.cvUrl)}>
-                                <p className='txtBtnBottom ms-4'>Chỉnh sửa cv</p>
+                            <div className='btnBottom'>
+                              <button type='button' onClick={() => handleGetDetailJobApply(item.jobTitle, item.id)}>
+                                <p className='txtBtnBottom'>{t('ManageJobApply.textSeeCv')}</p>
                               </button>
-                            )}
-                            {item.status !== 'accept' && (
-                              <button type='button' onClick={() => handleDeleteCv(item.id)}>
-                                <p className='txtBtnBottom ms-4'>Hủy cv</p>
-                              </button>
-                            )}
+                              {item.status === 'received' && (
+                                <button
+                                  type='button'
+                                  onClick={() => handleUpdateCv(item.jobTitle, item.id, item.cvUrl)}
+                                >
+                                  <p className='txtBtnBottom ms-4'> {t('ManageJobApply.textChangeProfile')}</p>
+                                </button>
+                              )}
+                              {item.status !== 'accept' && (
+                                <button type='button' onClick={() => handleDeleteCv(item.id)}>
+                                  <p className='txtBtnBottom ms-4'> {t('ManageJobApply.textDelete')}</p>
+                                </button>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      ) : (
-                        ''
-                      )
+                        )
                     )}
                   </div>
                 )}

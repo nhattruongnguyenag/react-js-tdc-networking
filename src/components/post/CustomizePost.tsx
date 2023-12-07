@@ -147,7 +147,7 @@ const CustomizePost = (props: Post) => {
       thumbnail: SERVER_ADDRESS + 'api/images/' + element.uri
     }))
     return newImagesGallerys
-  }, [])
+  }, [props.images])
 
   const callCommentsAPI = () => {
     const _data = {
