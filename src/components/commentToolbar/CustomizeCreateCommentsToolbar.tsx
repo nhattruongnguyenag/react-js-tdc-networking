@@ -6,6 +6,7 @@ import { Textarea } from 'flowbite-react'
 import { TEXT_CREATE_COMMENTS, TEXT_PLACEHOLDER_INPUT_COMMENT } from '../../constants/StringVietnamese'
 import { COLOR_WHITE } from '../../constants/Color'
 import DefaultAvatar from '../common/DefaultAvatar'
+import '../../assets/css/comments.css'
 
 interface CreateCommentsToolbarType {
     image: string,

@@ -1,67 +1,54 @@
 import React from 'react'
-import { CALL_ACTION, CLICK_CAMERA_AVATAR_EVENT, CLICK_CAMERA_BACKGROUND_EVENT, FOLLOW_ACTION, MESSENGER_ACTION, SEE_AVATAR, SEE_BACKGROUND, TYPE_SURVEY_POST } from '../../constants/Variables'
-import { TEXT_UN_UPDATE, TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
+import { TEXT_UN_UPDATE, TYPE_POST_BUSINESS, TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
 import CustomizeBodyStudentProfile from './CustomizeBodyStudentProfile'
 import CustomizeHeaderProfile from './CustomizeHeaderProfile'
+import CustomizeBodyBusinessProfile from './CustomizeBodyBusinessProfile'
+import CustomizeBodyFacultyProfile from './CustomizeBodyFacultyProfile'
 
 export interface CustomizeProfileType {
     data: Object[]
     role: string
     userData: any
+    handleClickButtonEvent: (a: number) => void
+    handleClickIntoHeaderComponentEvent: (a: number) => void
 }
 
 export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) {
-
-
-    const handleClickButtonEvent = (flag: number) => {
-        if (flag === MESSENGER_ACTION) {
-            alert('chat');
-        } else if (flag === FOLLOW_ACTION) {
-            alert('follow');
-        } else if (flag === CALL_ACTION) {
-            alert('call');
-        } else {
-            handleClickIntoButtonMenu3dotEvent();
-        }
-    }
-
-    const handleClickIntoButtonMenu3dotEvent = () => {
-        alert('menu')
-    }
-
-    const handleClickIntoHeaderComponentEvent = (flag: number) => {
-        switch (flag) {
-            case CLICK_CAMERA_AVATAR_EVENT:
-                console.log('CLICK_CAMERA_AVATAR_EVENT');
-                break;
-            case CLICK_CAMERA_BACKGROUND_EVENT:
-                console.log('CLICK_CAMERA_BACKGROUND_EVENT');
-                break;
-            case SEE_AVATAR:
-                console.log('SEE_AVATAR');
-                break;
-            case SEE_BACKGROUND:
-                console.log('SEE_BACKGROUND');
-                break;
-            default:
-                break;
-        }
-    }
-
     const getBody = () => {
         let body;
         switch (props.role) {
             case TYPE_POST_STUDENT:
                 body = <CustomizeBodyStudentProfile
-                    handleClickButtonEvent={handleClickButtonEvent}
+                    handleClickButtonEvent={props.handleClickButtonEvent}
                     position={props.userData.position ?? 'Sinh viên'}
                     phone={props.userData.phone ?? TEXT_UN_UPDATE}
                     email={props.userData.email ?? TEXT_UN_UPDATE}
                     numberPost={props.data.length ?? 0}
                     name={props.userData.name ?? TEXT_UN_UPDATE} />
                 break;
+            case TYPE_POST_BUSINESS:
+                body = <CustomizeBodyBusinessProfile
+                    handleClickButtonEvent={props.handleClickButtonEvent}
+                    timeWork={props.userData.timeWork ?? TEXT_UN_UPDATE}
+                    TaxIdentificationNumber={props.userData.TaxIdentificationNumber ?? TEXT_UN_UPDATE}
+                    representative={props.userData.representative ?? TEXT_UN_UPDATE}
+                    address={props.userData.address ?? TEXT_UN_UPDATE}
+                    phone={props.userData.phone ?? TEXT_UN_UPDATE}
+                    email={props.userData.email ?? TEXT_UN_UPDATE}
+                    name={props.userData.name}
+                    numberPost={props.data.length ?? 0} />
+                break;
+            case TYPE_POST_FACULTY:
+                body = <CustomizeBodyFacultyProfile
+                    handleClickButtonEvent={props.handleClickButtonEvent}
+                    timeWork={props.userData.timeWork ?? TEXT_UN_UPDATE}
+                    address={props.userData.address ?? TEXT_UN_UPDATE}
+                    phone={props.userData.phone ?? TEXT_UN_UPDATE}
+                    email={props.userData.email ?? TEXT_UN_UPDATE}
+                    name={props.userData.name ?? TEXT_UN_UPDATE}
+                    numberPost={props.data.length ?? 0} />
+                break;
             default:
-                body = <div></div>;
                 break;
         }
         return body
@@ -77,7 +64,7 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
                         avatar={props.userData.image}
                         name={props.userData.name}
                         handleClickIntoHeaderComponentEvent={
-                            handleClickIntoHeaderComponentEvent
+                            props.handleClickIntoHeaderComponentEvent
                         }
                     />
                 }

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Menu, MenuItem, MenuButton, ControlledMenu, useClick, useMenuState } from '@szhsin/react-menu'
 import { FaEllipsisV, FaBullhorn, FaTimes, FaTablet } from 'react-icons/fa'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
+import { Default } from 'react-toastify/dist/utils'
+import DefaultAvatar from '../common/DefaultAvatar'
 
 export interface UserItemProps {
   id: any
@@ -54,7 +56,8 @@ export default function UserItem(props: UserItemProps) {
       className='card shadow-xs mb-2 border-0 bg-white p-4'
       style={{ flexDirection: 'row', height: 90, alignItems: 'center' }}
     >
-      <img
+      {
+        item.image ? <img
         style={{
           width: 65,
           height: 65,
@@ -66,7 +69,10 @@ export default function UserItem(props: UserItemProps) {
           backgroundSize: 'cover'
         }}
         src={SERVER_ADDRESS + 'api/images/' + item.image}
-      />
+      /> : <div style={{marginLeft: 30,
+        marginRight: 20,}}><DefaultAvatar name={item.name} size={65} styleBootstrap={undefined}/></div>
+      }
+      
       <div className='name' style={{ width: '50%' }}>
         <p style={{ fontSize: 17, fontWeight: 'bold' }}>{item.name}</p>
       </div>

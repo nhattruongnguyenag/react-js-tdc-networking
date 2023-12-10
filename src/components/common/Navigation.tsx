@@ -1,8 +1,9 @@
-import { Fragment } from 'react'
+import { Fragment, memo } from 'react'
 import { Link } from 'react-router-dom'
 import ListGroup from '../ListGroup'
+import '../../assets/css/group.css'
 
-export default function Navigaion() {
+function Navigaion() {
   return (
     <Fragment>
       <nav className='navigation scroll-bar mt-1'>
@@ -91,3 +92,5 @@ export default function Navigaion() {
     </Fragment>
   )
 }
+
+export default memo(Navigaion)

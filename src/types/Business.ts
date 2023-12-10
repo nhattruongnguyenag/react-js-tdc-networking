@@ -7,5 +7,6 @@ export interface Business extends User {
   address: string
   activeTime: string
   confimPassword: string
-  phone: string
+  subject:string
+  content:string
 }

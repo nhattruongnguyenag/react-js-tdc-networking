@@ -12,15 +12,33 @@ import { NotificationModel } from '../types/response/NotificationModel'
 import { Post } from '../types/Post'
 import { QuestionResponse, SurveyResponse } from '../types/response/QuestionResponse'
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
+import { FollowUserModel } from '../types/response/FollowUserModel'
+import { SurveyItemResult } from '../types/response/SurveyResult'
+import { PostSavedModel } from '../types/response/PostSavedModel'
+import { PostResponseModel } from '../types/response/PostResponseModel'
+import { PostSearchRequest } from '../types/request/PostSearchRequest'
+import { buildPostSearchRequest } from '../utils/PostHelper'
+import { PostRejectedLog } from '../types/PostRejectLog'
+import { RecruitmentPost } from '../types/RecruitmentPost'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
-  tagTypes: ['UserLogin'],
+  tagTypes: ['Posts'],
   endpoints: (builder) => ({
-    getNotificationsUser: builder.query<Data<NotificationModel[]>, { id: number }>({
+    getListPostSaved: builder.query<Data<PostSavedModel[]>, number>({
+      query: (userId) => `api/posts/user/save/${userId}`
+    }),
+    getFollowerUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
       query: (data) => ({
-        url: 'api/notifications/user',
+        url: 'api/users/follow/other',
+        method: 'POST',
+        body: data
+      })
+    }),
+    getFollowingUser: builder.query<Data<FollowUserModel[]>, { id: number }>({
+      query: (data) => ({
+        url: 'api/users/follow/me',
         method: 'POST',
         body: data
       })
@@ -125,6 +143,100 @@ export const TDCSocialNetworkAPI = createApi({
           'Content-type': 'application/json; charset=UTF-8'
         }
       })
+    }),
+    getSurveyResult: builder.query<Data<SurveyItemResult[]>, number>({
+      query: (surveyPostId) => ({
+        url: `api/posts/survey/${surveyPostId}/result`
+      })
+    }),
+    getPosts: builder.query<Data<PostResponseModel[]>, PostSearchRequest>({
+      query: (data) => (
+        {
+          url: `api/posts/search?${buildPostSearchRequest(data)}`
+        }),
+      providesTags: (result) => {
+        if (result) {
+          return [
+            ...result.data.map(({ id }) => ({ type: 'Posts' as const, id: id })),
+            { type: 'Posts' as const, id: 'LIST' }
+          ]
+        }
+
+        return [{ type: 'Posts' as const, id: 'LIST' }]
+      }
+    }),
+    rejectPost: builder.mutation<MessageResponseData, PostRejectedLog>({
+      query: (data) => ({
+        url: 'api/approval/post/log',
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: 'LIST' }])
+    }),
+    acceptPost: builder.mutation<MessageResponseData, { postId: number }>({
+      query: (data) => ({
+        url: 'api/posts/acceptance',
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: 'LIST' }])
+    }),
+    getPostRejectLog: builder.query<Data<PostRejectedLog>, { postId: number }>({
+      query: (data) => (
+        {
+          url: `api/approval/log/post/${data.postId}`
+        })
+    }),
+    deletePost: builder.mutation<MessageResponseData, { postId: number }>({
+      query: (data) => ({
+        url: `api/posts/${data.postId}`,
+        method: 'DELETE',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: 'LIST' }])
+    }),
+    getRecruitmentPostUpdate: builder.query<RecruitmentPost, { postId: number }>({
+      query: (data) => (
+        {
+          url: `api/posts/recruitment/${data.postId}/update`
+        })
+    }),
+    updateRecruitmentPost: builder.mutation<MessageResponseData, RecruitmentPost>({
+      query: (data) => ({
+        url: 'api/posts/recruitment',
+        method: 'PUT',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: data.id }])
+    }),
+    getSurveyPostUpdate: builder.query<Data<SurveyPostRequest>, { postId: number }>({
+      query: (data) => (
+        {
+          url: `api/posts/survey/${data.postId}/update`
+        })
+    }),
+    updateSurveyPost: builder.mutation<MessageResponseData, SurveyPostRequest>({
+      query: (data) => ({
+        url: 'api/posts/survey',
+        method: 'PUT',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: -1 }])
     })
   })
 })
@@ -132,7 +244,10 @@ export const TDCSocialNetworkAPI = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
-  useGetNotificationsUserQuery,
+  useGetListPostSavedQuery,
+  useGetFollowerUserQuery,
+  useGetSurveyResultQuery,
+  useGetFollowingUserQuery,
   useGetNotificationsUserByIdQuery,
   useGetQuestionsFromSurveyPostQuery,
   useGetConversationsByUserIdQuery,
@@ -146,5 +261,14 @@ export const {
   useGetStudentPostsQuery,
   useGetPostsByIdQuery,
   useAddSurveyConductAnswerMutation,
-  useJobApplyMutation
+  useJobApplyMutation,
+  useGetPostRejectLogQuery,
+  useGetPostsQuery,
+  useRejectPostMutation,
+  useAcceptPostMutation,
+  useDeletePostMutation,
+  useGetRecruitmentPostUpdateQuery,
+  useGetSurveyPostUpdateQuery,
+  useUpdateRecruitmentPostMutation,
+  useUpdateSurveyPostMutation
 } = TDCSocialNetworkAPI

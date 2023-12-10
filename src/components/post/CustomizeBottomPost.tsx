@@ -43,7 +43,7 @@ const CustomizeBottomPost = (props: BottomPostType) => {
     let userList;
     userList = props.likes.map((item, index) =>
       index < 3 ?
-        item.image != null ? (
+        Boolean(item.image) ? (
           <img
             key={item.id}
             src={SERVER_ADDRESS + 'api/images/' + item.image}
@@ -63,9 +63,9 @@ const CustomizeBottomPost = (props: BottomPostType) => {
       <div className='emoji-bttn pointer d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss me-2'>
         <button className='like-button-bottom-wrapper' onClick={() => props.handleClickBottomBtnEvent(LIKE_ACTION)}>
           {props.isLike ? (
-            <i className='feather-thumbs-up bg-primary-gradiant btn-round-xs font-xss me-1 text-white' />
+            <i className='feather-thumbs-up bg-primary-gradiant btn-round-xs font-xss me-1 text-white like' />
           ) : (
-            <i className='feather-thumbs-up btn-round-xs font-xss text-dark me-1' />
+            <i className='feather-thumbs-up btn-round-xs font-xss text-dark me-1 unlike' />
           )}
           {getLikeQty(props.likes)} Like
         </button>

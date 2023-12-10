@@ -1,4 +1,4 @@
-import React, { LegacyRef, useCallback, useEffect, useRef, useState } from 'react'
+import React, { LegacyRef, useCallback, useEffect, useRef, useState, useTransition } from 'react'
 import UserItem from '../items/UserItem'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
@@ -8,49 +8,51 @@ import { Client, Frame } from 'stompjs'
 import { useAppSelector } from '../../redux/Hook'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
+import { useTranslation } from 'react-multi-lang'
 
 let stompClient: Client
 export default function CustomizeSearch() {
+  const t = useTranslation()
   const [subjects, setSubjects] = useState([
     {
-      label: 'Người dùng',
+      label: t('SearchComponent.user'),
       value: 'user'
     },
     {
-      label: 'Bài viết',
+      label: t('SearchComponent.post'),
       value: 'post'
     }
   ])
   const [users, setUser] = useState([
     {
-      name: 'Sinh viên',
+      name: t('SearchComponent.student'),
       value: 'sinh-vien'
     },
     {
-      name: 'Doanh nghiệp',
+      name: t('SearchComponent.business'),
       value: 'doanh-nghiep'
     },
     {
-      name: 'Khoa',
+      name: t('SearchComponent.faculty'),
       value: 'khoa'
     }
   ])
   const [posts, setPost] = useState([
     {
-      name: 'Bài viết',
+      name: t('SearchComponent.normal'),
       value: 'thong-thuong'
     },
     {
-      name: 'Khảo sát',
+      name: t('SearchComponent.survey'),
       value: 'khao-sat'
     },
     {
-      name: 'Tin tuyển dụng',
+      name: t('SearchComponent.recruitment'),
       value: 'tuyen-dung'
     }
   ])
   const [sub, setSub] = useState('user')
-  const [subLabel, setSubLabel] = useState('Người dùng')
+  const [subLabel, setSubLabel] = useState(t('SearchComponent.user'))
   const [type, setType] = useState('')
   const [search, setSearch] = useState('')
   const { conversations, userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -80,7 +82,8 @@ export default function CustomizeSearch() {
   }, [type, sub])
 
   const handleSearch = () => {
-    setSearch('')
+    console.log(userLogin?.id + '-' + type + '-' + search);
+    
     if (sub == 'user') {
       stompClient.send(
         `/app/find/user/follow`,
@@ -100,7 +103,7 @@ export default function CustomizeSearch() {
           name: search
         })
         .then((response) => {
-          setData(response.data.data)
+          setData(response.data.data)          
         })
     }
   }
@@ -110,6 +113,7 @@ export default function CustomizeSearch() {
       handleSearch()
     }
   }
+
 
   const handleFollow = (userFollowId: number) => {
     stompClient.send(
@@ -139,7 +143,7 @@ export default function CustomizeSearch() {
                     <input
                       type='search'
                       value={search}
-                      placeholder='Tìm kiếm ...'
+                      placeholder={t('SearchComponent.search')}
                       className='bg-grey lh-32 font-xssss fw-600 text-grey-700 rounded-xl border-0 pb-2.5 pe-3 ps-5 pt-2.5'
                       style={{ width: '97%', fontSize: 20 }}
                       onChange={(txt) => {

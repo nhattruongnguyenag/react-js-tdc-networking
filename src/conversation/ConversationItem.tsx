@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import { useCallback, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { SELECTED_CONVERSATION } from '../constants/KeyValue'
+import { CONVERSATION_ITEM_COMPONENT_IMAGE_MESSAGE_ANNOTATION } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { setSelectConversation } from '../redux/Slice'
 import { Conversation } from '../types/Conversation'
@@ -22,7 +23,7 @@ export default function ConversationItem(props: ConversationItemProps) {
 
   const lastMessageContent = useMemo(() => {
     if (props.data.lastMessageType === 'images') {
-      return '[Hình ảnh]'
+      return `[${CONVERSATION_ITEM_COMPONENT_IMAGE_MESSAGE_ANNOTATION}]`
     }
 
     return props.data.lastMessageContent
@@ -48,7 +49,7 @@ export default function ConversationItem(props: ConversationItemProps) {
               </div>
             )}
           </div>
-          <h6 className='font-xssss text-grey-900 text-grey-900 fw-700 mb-0 mt-0'>{props.data?.receiver.name}</h6>
+          <h6 className='font-xssss text-grey-900 text-grey-900 fw-700 mb-0 mt-0 '>{props.data?.receiver.name}</h6>
         </div>
 
         <div className='email-text text-grey-500 fw-600 font-xssss'>{lastMessageContent}</div>

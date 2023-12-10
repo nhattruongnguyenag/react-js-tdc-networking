@@ -1,7 +1,7 @@
 export interface RecruitmentPostRequest {
+  id?: number
   userId: number
   type: string
-  images: string[]
   title: string
   salary: number
   benefit: string
@@ -10,4 +10,5 @@ export interface RecruitmentPostRequest {
   location: string
   requirement: string
   expiration: string
+  groupId: number
 }

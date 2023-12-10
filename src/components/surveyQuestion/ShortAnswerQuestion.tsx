@@ -1,3 +1,4 @@
+import { SHORT_ANSWER_QUESTION_COMPONENT_TITLE_PLACEHOLDER } from '../../constants/StringVietnamese'
 import { QuestionProps } from '../../types/Question'
 import QuestionOptions from './QuestionOptions'
 import QuestionTitle from './QuestionTitle'
@@ -18,7 +19,7 @@ export default function ShortAnswerQuestion(props: ShortAnswerQuestionProps) {
         <input
           onChange={(event) => props.onAnswerChangeText && props.onAnswerChangeText(event.target.value)}
           disabled={!Boolean(props.conductMode)}
-          placeholder='Câu trả lời'
+          placeholder={SHORT_ANSWER_QUESTION_COMPONENT_TITLE_PLACEHOLDER}
           className='pr-3 w-full bg-gray-100 bg-inherit py-2' />
       </div>
       {Boolean(props.editMode) && <QuestionOptions index={props.index} />}

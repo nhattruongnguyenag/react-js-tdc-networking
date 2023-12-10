@@ -4,6 +4,7 @@ import { faBriefcase, faPhone, faEnvelope, faUserPlus, faBars, faPaste } from '@
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 import { COLOR_BLACK, COLOR_WHITE } from '../../constants/Color'
 import { CALL_ACTION, FOLLOW_ACTION, MENU_CLICK_ACTION, MESSENGER_ACTION } from '../../constants/Variables';
+import { TEXT_EMAIL, TEXT_PHONE, TEXT_POSITION, TEXT_POST } from '../../constants/StringVietnamese';
 export interface StudentProfileType {
     handleClickButtonEvent: (flag: number) => void,
     position: string,
@@ -58,25 +59,25 @@ export default function CustomizeBodyStudentProfile(props: Readonly<StudentProfi
                 <div>
                     <FontAwesomeIcon icon={faBriefcase} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>{props.position}</div>
+                <div className='txtInfoBodyProfile'>{TEXT_POSITION + ': ' + props.position}</div>
             </div>
             <div className='lineOfInfoBodyProfile'>
                 <div>
                     <FontAwesomeIcon icon={faPhone} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>{props.phone}</div>
+                <div className='txtInfoBodyProfile'>{TEXT_PHONE + ': ' + props.phone}</div>
             </div>
             <div className='lineOfInfoBodyProfile'>
                 <div>
                     <FontAwesomeIcon icon={faEnvelope} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>{props.email}</div>
+                <div className='txtInfoBodyProfile'>{TEXT_EMAIL + ": " + props.email}</div>
             </div>
             <div className='lineOfInfoBodyProfile'>
                 <div>
                     <FontAwesomeIcon icon={faPaste} size='xl' color={COLOR_BLACK} className='icon-arrow-left' />
                 </div>
-                <div className='txtInfoBodyProfile'>Bài viết ({props.numberPost}) </div>
+                <div className='txtInfoBodyProfile'> {TEXT_POST + ': (  ' + props.numberPost + ' )'} </div>
             </div>
         </div>
     )

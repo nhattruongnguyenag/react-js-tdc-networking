@@ -1,6 +1,5 @@
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { isVisible } from '@testing-library/user-event/dist/utils'
 import { Fragment, useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -9,6 +8,7 @@ import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestion
 import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
 import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
 import TextValidate from '../components/TextValidate'
+import { SURVEY_CONDUCT_SCREEN_BUTTON_COMPLETE, SURVEY_CONDUCT_SCREEN_BUTTON_GO_BACK, SURVEY_CONDUCT_SCREEN_MULTI_QUESTION_MULITI_CHOICE, SURVEY_CONDUCT_SCREEN_MULTI_QUESTION_ONE_CHOICE, SURVEY_CONDUCT_SCREEN_SAVE_SUCCESS_CONTENT, SURVEY_CONDUCT_SCREEN_SHORT_ANSWER_ERROR, SURVEY_CONDUCT_SCREEN_TITLE } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { useAddSurveyConductAnswerMutation, useGetQuestionsFromSurveyPostQuery } from '../redux/Service'
 import { setQuestionConducts } from '../redux/Slice'
@@ -71,7 +71,7 @@ export default function SurveyConductPage() {
 
     useEffect(() => {
         if (surveyConductRequestResult.isSuccess) {
-            toast.success('Câu trả lời đã được lưu. Cảm ơn bạn đã tham gia trả lời khảo sát')
+            toast.success(SURVEY_CONDUCT_SCREEN_SAVE_SUCCESS_CONTENT)
             navigate(-1)
         }
     }, [surveyConductRequestResult])
@@ -90,11 +90,11 @@ export default function SurveyConductPage() {
                 let textError = ''
 
                 if (question.type === SHORT_ANSWER) {
-                    textError = 'Vui lòng nhập nội dung câu trả lời'
+                    textError = SURVEY_CONDUCT_SCREEN_SHORT_ANSWER_ERROR
                 } else if (question.type === MULTI_CHOICE_QUESTION) {
-                    textError = 'Vui lòng chọn ít nhất một câu trả lời'
+                    textError = SURVEY_CONDUCT_SCREEN_MULTI_QUESTION_MULITI_CHOICE
                 } else if (question.type === ONE_CHOICE_QUESTION) {
-                    textError = 'Vui lòng chọn một câu trả lời'
+                    textError = SURVEY_CONDUCT_SCREEN_MULTI_QUESTION_ONE_CHOICE
                 }
 
                 tempValidates.push({
@@ -214,7 +214,7 @@ export default function SurveyConductPage() {
                                 onClick={() => navigate(-1)}>
                                 <i className='ti-arrow-left font-sm text-white' />
                             </button>
-                            <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Xem lại bài viết</h4>
+                            <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{SURVEY_CONDUCT_SCREEN_TITLE}</h4>
                         </div>
                         <div className='card-body p-lg-5 w-100 border-0 p-2'>
                             {questionConducts.map((item, index) => renderQuestionItems(item, index))}
@@ -226,7 +226,7 @@ export default function SurveyConductPage() {
                                 >
                                     <div className='flex items-center'>
                                         <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'arrow-left' })} />
-                                        <span>Quay lại</span>
+                                        <span>{SURVEY_CONDUCT_SCREEN_BUTTON_GO_BACK}</span>
                                     </div>
                                 </button>
 
@@ -237,9 +237,7 @@ export default function SurveyConductPage() {
                                 >
                                     <div className='flex items-center'>
                                         <FontAwesomeIcon style={{ fontSize: 15, marginRight: 10 }} icon={icon({ name: 'arrow-right' })} />
-                                        <span>{
-                                            data?.data.isConduct === 0 ? 'Gửi câu trả lời' : 'Cập nhật câu trả lời'
-                                        }</span>
+                                        <span>{SURVEY_CONDUCT_SCREEN_BUTTON_COMPLETE}</span>
                                     </div>
                                 </button>
                             </div>

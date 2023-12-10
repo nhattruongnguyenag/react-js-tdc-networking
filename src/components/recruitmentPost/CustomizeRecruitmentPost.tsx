@@ -34,27 +34,30 @@ export default function CustomizeRecruitmentPost(props: RecruitmentPostType) {
         <div className='wrapper-infor-job'>
           <div className='text-location-body-recruitment'>
             <FontAwesomeIcon icon={faMapLocation} size='1x' color={COLOR_GREY} className='icon-location-recruitment' />
-            <div>{props.location}</div>
+            <div className='textLocationRecruitment'>{props.location}</div>
           </div>
-          <p color={COLOR_GREY}>{props.title}</p>
+          <div className='wrapperContentRecruitment'>
+            <p className='textLocationRecruitment' color={COLOR_GREY}>{props.title}</p>
+          </div>
+          {/*  */}
           <div className='list-infor-about-recruitment'>
             <div className='icon-item-infor-job-recruitment'>
-              <FontAwesomeIcon icon={faClock} size='1x' color={COLOR_GREY} />
-              <p className='txt-item-recruitment'>{props.createdAt}</p>
+              <FontAwesomeIcon icon={faClock} size='1x' color={COLOR_GREY} className='icon-location-recruitment' />
+              <div className='txt-item-recruitment textLocationRecruitment'>{props.createdAt}</div>
             </div>
             <div className='icon-item-infor-job-recruitment'>
-              <FontAwesomeIcon icon={faMoneyCheckDollar} size='1x' color={COLOR_GREY} />
-              <p className='txt-item-recruitment'>{formatVietNamCurrency(props.salary)} vnd</p>
+              <FontAwesomeIcon icon={faMoneyCheckDollar} size='1x' color={COLOR_GREY} className='icon-location-recruitment' />
+              <div className='txt-item-recruitment textLocationRecruitment'>{props.salary}</div>
             </div>
             <div className='icon-item-infor-job-recruitment'>
-              <FontAwesomeIcon icon={faBriefcase} size='1x' color={COLOR_GREY} />
-              <p className='txt-item-recruitment'>{props.employmentType}</p>
+              <FontAwesomeIcon icon={faBriefcase} size='1x' color={COLOR_GREY} className='icon-location-recruitment' />
+              <div className='txt-item-recruitment textLocationRecruitment'>{props.employmentType}</div>
             </div>
           </div>
-          <div className='pt-2'>
+          <div className='pt-3'>
             <button
               onClick={() => props.handleClickBtnSeeDetailEvent(props.id, props.title)}
-              className='bg-primary-gradiant button-see-more-recruitment'
+              className='bg-primary-gradiant button-see-more-recruitment textLocationRecruitment'
             >
               Xem chi tiết
               <FontAwesomeIcon icon={faAnglesRight} size='1x' color={COLOR_WHITE} className='icon-arrow-left' />
