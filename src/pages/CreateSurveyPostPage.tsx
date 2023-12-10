@@ -1,12 +1,11 @@
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Header from '../components/common/Header'
 import InputTextWithTitle from '../components/common/InputTextWithTitle'
 import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
 import ValidateTextView from '../components/common/ValidateTextView'
-import { POST_UPDATE_ID } from '../constants/KeyValue'
 import { ADD_QUESTION_PAGE } from '../constants/Page'
 import {
   SURVEY_SAVE_BUTTON_GO_NEXT,
@@ -19,13 +18,12 @@ import {
   SURVEY_SAVE_TITLE_TITLE
 } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
-import { useGetSurveyPostUpdateQuery } from '../redux/Service'
 import { setQuestionValidates, setSurveyPostRequest } from '../redux/Slice'
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
-import { ErrorMessage, isExistFieldInvalid, validateField } from '../utils/ValidateHelper'
-import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
 import { getIdFromSlug } from '../utils/CommonUtls'
 import { isSurveyPost } from '../utils/PostHelper'
+import { ErrorMessage, isExistFieldInvalid, validateField } from '../utils/ValidateHelper'
+import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
 
 export const SHORT_ANSWER = 'tra-loi-ngan'
 export const ONE_CHOICE_QUESTION = 'chon-mot-dap-an'
@@ -51,7 +49,7 @@ const error: CreateSurveyPostErrorMessage = {
 }
 
 export default function CreateSurveyPostPage() {
-  const { userLogin, surveyPostRequest } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { userLogin, surveyPostRequest, previousPage } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { state } = useLocation()
@@ -130,7 +128,6 @@ export default function CreateSurveyPostPage() {
   )
 
   const onBtnAddQuestionClick = () => {
-    console.log(surveyPostRequest)
     if (
       isExistFieldInvalid<SurveyPostRequest, CreateSurveyPostValidate, CreateSurveyPostErrorMessage>(
         surveyPostRequest,
@@ -151,15 +148,17 @@ export default function CreateSurveyPostPage() {
         <div className='middle-wrap'>
           <div className='card w-100 shadow-xs mb-4 border-0 bg-white p-0'>
             <div className='card-body w-100 d-flex rounded-3 border-0 bg-current p-4'>
-              <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
+              <button className='d-inline-block mt-2' onClick={() => navigate(previousPage)}>
                 <i className='ti-arrow-left font-sm text-white' />
               </button>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{SURVEY_SAVE_PAGE_TITLE}</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>
+                {surveyPostRequest.postId ? 'Cập nhật khảo sát' : 'Thêm khảo sát'}
+              </h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0'>
               <div className='row'>
                 <InputTextWithTitle
-                  defaultValue={surveyPostRequest.title ?? 'aaaaaaaaaaaaa'}
+                  defaultValue={surveyPostRequest.title ?? ''}
                   onTextChange={(value) => onTitleChangeText(value)}
                   title={SURVEY_SAVE_TITLE_TITLE}
                   placeholder={SURVEY_SAVE_TITLE_PLACEHOLDER}

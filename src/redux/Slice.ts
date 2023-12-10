@@ -17,6 +17,7 @@ import { PostRejectedLog } from '../types/PostRejectLog'
 import { PostRejectLogResponse } from '../types/response/RejectLogResponse'
 
 export interface TDCSocialNetworkState {
+  previousPage: string
   rejectLogResponse: PostRejectLogResponse | null
   postRejectId: number | null
   darkMode: boolean
@@ -51,6 +52,7 @@ export const defaultSurveyPostRequest: SurveyPostRequest = {
 }
 
 const initialState: TDCSocialNetworkState = {
+  previousPage: '',
   rejectLogResponse: null,
   postRejectId: null,
   defaultLanguage: 'vi',
@@ -119,13 +121,13 @@ export const TDCSocialNetworkSlice = createSlice({
       if (question.type !== SHORT_ANSWER) {
         question.choices = [
           {
-            content: ""
+            content: ''
           },
           {
-            content: ""
+            content: ''
           },
           {
-            content: ""
+            content: ''
           }
         ]
       }
@@ -204,6 +206,9 @@ export const TDCSocialNetworkSlice = createSlice({
     setRejectLogResponse: (state, action: PayloadAction<PostRejectLogResponse | null>) => {
       state.rejectLogResponse = action.payload
     },
+    setPreviousPage: (state, action: PayloadAction<string>) => {
+      state.previousPage = action.payload
+    }
   }
 })
 
@@ -240,7 +245,8 @@ export const {
   updatePostWhenHaveChangeComment,
   setQuestionConducts,
   setPostRejectId,
-  setRejectLogResponse
+  setRejectLogResponse,
+  setPreviousPage
 } = TDCSocialNetworkSlice.actions
 
 export default TDCSocialNetworkSlice.reducer

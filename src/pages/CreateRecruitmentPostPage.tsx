@@ -1,19 +1,47 @@
 import moment from 'moment'
-import { useCallback, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Header from '../components/common/Header'
 import InputTextWithTitle from '../components/common/InputTextWithTitle'
 import TextAreaWithTitle from '../components/common/TextAreaWithTitle'
 import ValidateTextView from '../components/common/ValidateTextView'
 import { BUSINESS_DASHBOARD_PAGE } from '../constants/Page'
-import { RECRUITMENT_BENEFIT_BUTTON_COMPLETE, RECRUITMENT_BENEFIT_EMPTY_VALIDATE, RECRUITMENT_BENEFIT_PLACEHOLDER, RECRUITMENT_BENEFIT_TITLE, RECRUITMENT_DESC_EMPTY_VALIDATE, RECRUITMENT_EMPLOYMENT_TYPE_EMPTY_VALIDATE, RECRUITMENT_EXPIRATION_VALIDATE, RECRUITMENT_LOCATION_EMPTY_VALIDATE, RECRUITMENT_REQUIREMENT_EMPTY_VALIDATE, RECRUITMENT_SALARY_EMPTY_VALIDATE, RECRUITMENT_SAVE_DESC_PLACEHOLDER, RECRUITMENT_SAVE_DESC_TITLE, RECRUITMENT_SAVE_EMPLOYMENT_TYPE_PLACEHOLDER, RECRUITMENT_SAVE_EXPIRATION_TITLE, RECRUITMENT_SAVE_LOCATION_PLACEHOLDER, RECRUITMENT_SAVE_LOCATION_TITLE, RECRUITMENT_SAVE_REQUIREMENT_PLACEHOLDER, RECRUITMENT_SAVE_REQUIREMENT_TITLE, RECRUITMENT_SAVE_SALLARY_PLACEHOLDER, RECRUITMENT_SAVE_SALLARY_TITLE, RECRUITMENT_SAVE_SAVE_EMPLOYMENT_TYPE_TITLE, RECRUITMENT_SAVE_SUCCESS_CONTENT, RECRUITMENT_SAVE_TITLE_PLACEHOLDER, RECRUITMENT_SAVE_TITLE_TITLE, RECRUITMENT_TITLE_EMPTY_VALIDATE } from '../constants/StringVietnamese'
+import {
+  RECRUITMENT_BENEFIT_BUTTON_COMPLETE,
+  RECRUITMENT_BENEFIT_EMPTY_VALIDATE,
+  RECRUITMENT_BENEFIT_PLACEHOLDER,
+  RECRUITMENT_BENEFIT_TITLE,
+  RECRUITMENT_DESC_EMPTY_VALIDATE,
+  RECRUITMENT_EMPLOYMENT_TYPE_EMPTY_VALIDATE,
+  RECRUITMENT_EXPIRATION_VALIDATE,
+  RECRUITMENT_LOCATION_EMPTY_VALIDATE,
+  RECRUITMENT_REQUIREMENT_EMPTY_VALIDATE,
+  RECRUITMENT_SALARY_EMPTY_VALIDATE,
+  RECRUITMENT_SAVE_DESC_PLACEHOLDER,
+  RECRUITMENT_SAVE_DESC_TITLE,
+  RECRUITMENT_SAVE_EMPLOYMENT_TYPE_PLACEHOLDER,
+  RECRUITMENT_SAVE_EXPIRATION_TITLE,
+  RECRUITMENT_SAVE_LOCATION_PLACEHOLDER,
+  RECRUITMENT_SAVE_LOCATION_TITLE,
+  RECRUITMENT_SAVE_REQUIREMENT_PLACEHOLDER,
+  RECRUITMENT_SAVE_REQUIREMENT_TITLE,
+  RECRUITMENT_SAVE_SALLARY_PLACEHOLDER,
+  RECRUITMENT_SAVE_SALLARY_TITLE,
+  RECRUITMENT_SAVE_SAVE_EMPLOYMENT_TYPE_TITLE,
+  RECRUITMENT_SAVE_SUCCESS_CONTENT,
+  RECRUITMENT_SAVE_TITLE_PLACEHOLDER,
+  RECRUITMENT_SAVE_TITLE_TITLE,
+  RECRUITMENT_TITLE_EMPTY_VALIDATE
+} from '../constants/StringVietnamese'
 import { useAppSelector } from '../redux/Hook'
-import { useAddRecruitmentPostMutation } from '../redux/Service'
+import { useAddRecruitmentPostMutation, useUpdateRecruitmentPostMutation } from '../redux/Service'
 import { RecruitmentPostRequest } from '../types/request/RecruitmentPostRequest'
+import { isRecruitmentPost } from '../utils/PostHelper'
 import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
+import { ErrorMessage, isExistFieldInvalid, validateField } from '../utils/ValidateHelper'
 
-const BUSNESS_GROUP_ID = 2
+const BUSINESS_CONNECT_GROUP = 2
 
 interface ElementRefs {
   jobTitle: HTMLInputElement
@@ -30,7 +58,7 @@ const elementRefs = {} as ElementRefs
 
 interface CreateRecruitmentPostValidate {
   title: InputTextValidate
-  desc: InputTextValidate
+  description: InputTextValidate
   benefit: InputTextValidate
   salary: InputTextValidate
   expiration: InputTextValidate
@@ -39,111 +67,131 @@ interface CreateRecruitmentPostValidate {
   requirement: InputTextValidate
 }
 
-const isAllFieldsValid = (validate: CreateRecruitmentPostValidate): boolean => {
-  let key: keyof CreateRecruitmentPostValidate
+interface CreateRecruitmentPostError {
+  title: ErrorMessage
+  description: ErrorMessage
+  benefit: ErrorMessage
+  salary: ErrorMessage
+  expiration: ErrorMessage
+  employmentType: ErrorMessage
+  location: ErrorMessage
+  requirement: ErrorMessage
+}
 
-  for (key in validate) {
-    if (validate[key].isError) {
-      return false
-    }
+const error: CreateRecruitmentPostError = {
+  title: {
+    blank: 'RecruitmentScreen.recruitmentTitleEmptyValidate'
+  },
+  description: {
+    blank: 'RecruitmentScreen.recruitmentDescEmptyValidate'
+  },
+  benefit: {
+    blank: 'RecruitmentScreen.recruitmentBenefitEmptyValidate'
+  },
+  salary: {
+    blank: 'RecruitmentScreen.recruitmentSalaryEmptyValidate'
+  },
+  expiration: {
+    blank: 'RecruitmentScreen.recruitmentExpirationValidate'
+  },
+  employmentType: {
+    blank: 'RecruitmentScreen.recruitmentEmploymentTypeEmptyValidate'
+  },
+  location: {
+    blank: 'RecruitmentScreen.recruitmentLocationEmptyValidate'
+  },
+  requirement: {
+    blank: 'RecruitmentScreen.recruitmentRequirementEmptyValidate'
   }
-
-  return true
 }
 
 export default function CreateRecruitmentPostPage() {
-  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [createRecruitmentPostRequest, createRecruitmentPostResponse] = useAddRecruitmentPostMutation()
+  const [updateRecruitmentPostRequest, updateRecruitmentPostResponse] = useUpdateRecruitmentPostMutation()
   const navigate = useNavigate()
-  const [validate, setValidate] = useState<CreateRecruitmentPostValidate>({
-    title: {
-      textError: RECRUITMENT_TITLE_EMPTY_VALIDATE,
-      isError: true,
-      isVisible: false
-    },
-    desc: {
-      textError: RECRUITMENT_DESC_EMPTY_VALIDATE,
-      isError: true,
-      isVisible: false
-    },
-    benefit: {
-      textError: RECRUITMENT_BENEFIT_EMPTY_VALIDATE,
-      isError: true,
-      isVisible: false
-    },
-    salary: {
-      textError: RECRUITMENT_SALARY_EMPTY_VALIDATE,
-      isError: true,
-      isVisible: false
-    },
-    expiration: {
-      textError: RECRUITMENT_EXPIRATION_VALIDATE,
-      isError: true,
-      isVisible: false
-    },
-    employmentType: {
-      textError: RECRUITMENT_EMPLOYMENT_TYPE_EMPTY_VALIDATE,
-      isError: true,
-      isVisible: false
-    },
-    location: {
-      textError: RECRUITMENT_LOCATION_EMPTY_VALIDATE,
-      isError: true,
-      isVisible: false
-    },
-    requirement: {
-      textError: RECRUITMENT_REQUIREMENT_EMPTY_VALIDATE,
-      isError: true,
-      isVisible: false
-    }
-  })
+  const { state } = useLocation()
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+
+  const defaultrecruitmentPostRequest: RecruitmentPostRequest = {
+    id: state.id ?? undefined,
+    userId: userLogin?.id ?? -1,
+    type: 'tuyen-dung',
+    title: state.title ?? '',
+    salary: state.salary ?? '',
+    benefit: state.benefit ?? '',
+    description: state.description ?? '',
+    employmentType: state.employmentType ?? '',
+    location: state.location ?? '',
+    requirement: state.requirement ?? '',
+    groupId: BUSINESS_CONNECT_GROUP,
+    expiration: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
+  }
+
+  const [recruitmentPostRequest, setRecruitmentPostRequest] =
+    useState<RecruitmentPostRequest>(defaultrecruitmentPostRequest)
+
+  const defaultValidate = useMemo(
+    () => ({
+      title: {
+        textError: '',
+        isError: true,
+        isVisible: false
+      },
+      description: {
+        textError: '',
+        isError: true,
+        isVisible: false
+      },
+      benefit: {
+        textError: '',
+        isError: true,
+        isVisible: false
+      },
+      salary: {
+        textError: '',
+        isError: true,
+        isVisible: false
+      },
+      expiration: {
+        textError: 'RecruitmentScreen.recruitmentExpirationValidate',
+        isError: moment().isAfter(moment(state.expiration)),
+        isVisible: false
+      },
+      employmentType: {
+        textError: '',
+        isError: true,
+        isVisible: false
+      },
+      location: {
+        textError: '',
+        isError: true,
+        isVisible: false
+      },
+      requirement: {
+        textError: '',
+        isError: true,
+        isVisible: false
+      }
+    }),
+    []
+  )
+
+  const [validate, setValidate] = useState<CreateRecruitmentPostValidate>(defaultValidate)
 
   const onTitleChangeText = useCallback(
     (value: string) => {
-      if (isBlank(value)) {
-        setValidate({
-          ...validate,
-          title: {
-            ...validate.title,
-            isError: true,
-            isVisible: true
-          }
-        })
-      } else {
-        setValidate({
-          ...validate,
-          title: {
-            ...validate.title,
-            isError: false,
-            isVisible: false
-          }
-        })
-      }
+      validateField(error['title'], validate['title'], value)
+      setValidate({ ...validate })
+      setRecruitmentPostRequest({ ...recruitmentPostRequest, title: value })
     },
     [validate]
   )
 
   const onSalaryChangeText = useCallback(
     (value: string) => {
-      if (isBlank(value)) {
-        setValidate({
-          ...validate,
-          salary: {
-            ...validate.salary,
-            isError: true,
-            isVisible: true
-          }
-        })
-      } else {
-        setValidate({
-          ...validate,
-          salary: {
-            ...validate.salary,
-            isError: false,
-            isVisible: false
-          }
-        })
-      }
+      validateField(error['salary'], validate['salary'], value)
+      setValidate({ ...validate })
+      setRecruitmentPostRequest({ ...recruitmentPostRequest, salary: parseInt(value) })
     },
     [validate]
   )
@@ -175,169 +223,81 @@ export default function CreateRecruitmentPostPage() {
 
   const onBenefitChangeText = useCallback(
     (value: string) => {
-      if (isBlank(value)) {
-        setValidate({
-          ...validate,
-          benefit: {
-            ...validate.benefit,
-            isError: true,
-            isVisible: true
-          }
-        })
-      } else {
-        setValidate({
-          ...validate,
-          benefit: {
-            ...validate.benefit,
-            isError: false,
-            isVisible: false
-          }
-        })
-      }
+      validateField(error['benefit'], validate['benefit'], value)
+      setValidate({ ...validate })
+
+      setRecruitmentPostRequest({ ...recruitmentPostRequest, benefit: value })
     },
     [validate]
   )
 
   const onDescriptionChangeText = useCallback(
     (value: string) => {
-      if (isBlank(value)) {
-        setValidate({
-          ...validate,
-          desc: {
-            ...validate.desc,
-            isError: true,
-            isVisible: true
-          }
-        })
-      } else {
-        setValidate({
-          ...validate,
-          desc: {
-            ...validate.desc,
-            isError: false,
-            isVisible: false
-          }
-        })
-      }
+      validateField(error['description'], validate['description'], value)
+      setValidate({ ...validate })
+      setRecruitmentPostRequest({ ...recruitmentPostRequest, description: value })
     },
     [validate]
   )
 
   const onEmploymentTypeChangeText = useCallback(
     (value: string) => {
-      if (isBlank(value)) {
-        setValidate({
-          ...validate,
-          employmentType: {
-            ...validate.employmentType,
-            isError: true,
-            isVisible: true
-          }
-        })
-      } else {
-        setValidate({
-          ...validate,
-          employmentType: {
-            ...validate.employmentType,
-            isError: false,
-            isVisible: false
-          }
-        })
-      }
+      validateField(error['employmentType'], validate['employmentType'], value)
+      setValidate({ ...validate })
+      setRecruitmentPostRequest({ ...recruitmentPostRequest, employmentType: value })
     },
     [validate]
   )
 
   const onLocationChangeText = useCallback(
     (value: string) => {
-      if (isBlank(value)) {
-        setValidate({
-          ...validate,
-          location: {
-            ...validate.location,
-            isError: true,
-            isVisible: true
-          }
-        })
-      } else {
-        setValidate({
-          ...validate,
-          location: {
-            ...validate.location,
-            isError: false,
-            isVisible: false
-          }
-        })
-      }
+      validateField(error['location'], validate['location'], value)
+      setValidate({ ...validate })
+      setRecruitmentPostRequest({ ...recruitmentPostRequest, location: value })
     },
     [validate]
   )
 
   const onRequirementChangeText = useCallback(
     (value: string) => {
-      if (isBlank(value)) {
-        setValidate({
-          ...validate,
-          requirement: {
-            ...validate.requirement,
-            isError: true,
-            isVisible: true
-          }
-        })
-      } else {
-        setValidate({
-          ...validate,
-          requirement: {
-            ...validate.requirement,
-            isError: false,
-            isVisible: false
-          }
-        })
-      }
+      validateField(error['requirement'], validate['requirement'], value)
+      setValidate({ ...validate })
+      setRecruitmentPostRequest({ ...recruitmentPostRequest, requirement: value })
     },
     [validate]
   )
 
-  const getRecruitmentPostRequestFromUserInput = (): RecruitmentPostRequest => {
-    return {
-      userId: userLogin?.id ?? -1,
-      images: [],
-      type: 'tuyen-dung',
-      title: elementRefs.jobTitle.value,
-      salary: parseInt(elementRefs.salary.value),
-      benefit: elementRefs.benefit.value,
-      description: elementRefs.description.value,
-      employmentType: elementRefs.employmentType.value,
-      location: elementRefs.location.value,
-      requirement: elementRefs.requirement.value,
-      expiration: moment(elementRefs.expiration.value.replace('T', ' ')).format('YYYY-MM-DD HH:mm:ss'),
-      groupId: BUSNESS_GROUP_ID
-    }
-  }
-
-  const onBtnPublishRecruitmentPostPress = useCallback(() => {
-    if (isAllFieldsValid(validate)) {
-      const recruitmentModel = getRecruitmentPostRequestFromUserInput()
-      createRecruitmentPostRequest(recruitmentModel)
-    } else {
-      let key: keyof CreateRecruitmentPostValidate
-
-      for (key in validate) {
-        if (validate[key].isError) {
-          validate[key].isVisible = true
-        }
-      }
-
+  const onBtnFinishPress = useCallback(() => {
+    if (
+      isExistFieldInvalid<RecruitmentPostRequest, CreateRecruitmentPostValidate, CreateRecruitmentPostError>(
+        recruitmentPostRequest,
+        validate,
+        error
+      )
+    ) {
       setValidate({ ...validate })
+    } else {
+      if (recruitmentPostRequest.id) {
+        updateRecruitmentPostRequest(recruitmentPostRequest)
+      } else {
+        createRecruitmentPostRequest(recruitmentPostRequest)
+      }
     }
-  }, [elementRefs, validate])
+  }, [validate])
 
   useEffect(() => {
     if (createRecruitmentPostResponse.data) {
       navigate(BUSINESS_DASHBOARD_PAGE)
-      toast.success(RECRUITMENT_SAVE_SUCCESS_CONTENT)
+      toast.success('RecruitmentScreen.recruitmentSaveSuccessContent')
     }
   }, [createRecruitmentPostResponse])
+
+  useEffect(() => {
+    if (updateRecruitmentPostResponse.data) {
+      navigate(BUSINESS_DASHBOARD_PAGE)
+      toast.success('RecruitmentScreen.recruitmentUpdateSuccessContent')
+    }
+  }, [updateRecruitmentPostResponse])
 
   return (
     <>
@@ -346,14 +306,15 @@ export default function CreateRecruitmentPostPage() {
         <div className='middle-wrap'>
           <div className='card w-100 shadow-xs mb-4 border-0 bg-white p-0'>
             <div className='card-body w-100 d-flex rounded-3 border-0 bg-current p-4'>
-              <Link className='d-inline-block mt-2' to={BUSINESS_DASHBOARD_PAGE}>
+              <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                 <i className='ti-arrow-left font-sm text-white' />
-              </Link>
+              </button>
               <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>Thêm tin tuyển dụng</h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
               <div className='row'>
                 <InputTextWithTitle
+                  defaultValue={recruitmentPostRequest.title}
                   onTextChange={(value) => onTitleChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.jobTitle = ref) : undefined)}
                   title={RECRUITMENT_SAVE_TITLE_TITLE}
@@ -367,6 +328,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <InputTextWithTitle
+                  defaultValue={recruitmentPostRequest.employmentType}
                   onTextChange={(value) => onEmploymentTypeChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.employmentType = ref) : undefined)}
                   title={RECRUITMENT_SAVE_SAVE_EMPLOYMENT_TYPE_TITLE}
@@ -380,7 +342,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <InputTextWithTitle
-                  defaultValue={moment().format('YYYY-MM-DD HH:mm:ss')}
+                  defaultValue={recruitmentPostRequest.expiration}
                   onTextChange={(value) => onExpirationChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.expiration = ref) : undefined)}
                   title={RECRUITMENT_SAVE_EXPIRATION_TITLE}
@@ -394,6 +356,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <TextAreaWithTitle
+                  defaultValue={recruitmentPostRequest.location}
                   onTextChange={(value) => onLocationChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.location = ref) : undefined)}
                   rows={5}
@@ -408,6 +371,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <TextAreaWithTitle
+                  defaultValue={recruitmentPostRequest.description}
                   onTextChange={(value) => onDescriptionChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.description = ref) : undefined)}
                   rows={10}
@@ -415,7 +379,14 @@ export default function CreateRecruitmentPostPage() {
                   title={RECRUITMENT_SAVE_DESC_PLACEHOLDER}
                 />
 
+                <ValidateTextView
+                  textError={validate.description.textError}
+                  isError={validate.description.isError}
+                  isVisible={validate.description.isVisible}
+                />
+
                 <InputTextWithTitle
+                  defaultValue={recruitmentPostRequest.salary.toString()}
                   onTextChange={(value) => onSalaryChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.salary = ref) : undefined)}
                   title={RECRUITMENT_SAVE_SALLARY_TITLE}
@@ -429,6 +400,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <TextAreaWithTitle
+                  defaultValue={recruitmentPostRequest.requirement}
                   onTextChange={(value) => onRequirementChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.requirement = ref) : undefined)}
                   rows={10}
@@ -443,6 +415,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <TextAreaWithTitle
+                  defaultValue={recruitmentPostRequest.benefit}
                   onTextChange={(value) => onBenefitChangeText(value)}
                   ref={(ref) => (ref ? (elementRefs.benefit = ref) : undefined)}
                   rows={20}
@@ -461,7 +434,7 @@ export default function CreateRecruitmentPostPage() {
                   <button
                     type='button'
                     className='font-xsss fw-600 w175 rounded-3 d-inline-block mt-3 bg-current p-3 text-center text-white'
-                    onClick={() => onBtnPublishRecruitmentPostPress()}
+                    onClick={() => onBtnFinishPress()}
                   >
                     {RECRUITMENT_BENEFIT_BUTTON_COMPLETE}
                   </button>

@@ -41,7 +41,7 @@ export default function EditChoice(props: ChoiceProps) {
         />
       )}
       <input
-        placeholder={ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER + (choiceIndex + 1)}
+        placeholder={ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER + ' ' + (choiceIndex + 1)}
         onChange={(event) => {
           dispatch(
             updateChoice({

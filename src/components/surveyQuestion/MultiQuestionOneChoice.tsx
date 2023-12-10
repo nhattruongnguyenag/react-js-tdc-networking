@@ -29,12 +29,12 @@ export default function MultiQuestionOneChoice(props: MultiQuestionMultiChoicePr
     if (props.editMode) {
       return surveyPostRequest.questions[props.index ?? -1].choices.map((item, index) =>
         <Fragment>
-          <EditChoice type={ONE_CHOICE_QUESTION} key={index} questionIndex={props.index} choiceIndex={index} />
+          <EditChoice type={ONE_CHOICE_QUESTION} key={index.toString()} questionIndex={props.index} choiceIndex={index} />
         </Fragment>
       )
     } else if (props.reviewMode) {
       return surveyPostRequest.questions[props.index ?? -1].choices.map((item, index) =>
-        <ReviewChoice type={ONE_CHOICE_QUESTION} key={index} questionIndex={props.index} choiceIndex={index} />
+        <ReviewChoice type={ONE_CHOICE_QUESTION} key={index.toString()} questionIndex={props.index} choiceIndex={index} />
       )
     }
 
@@ -44,7 +44,8 @@ export default function MultiQuestionOneChoice(props: MultiQuestionMultiChoicePr
           setSelectedChoiceIds([item.voteQuestionId])
         }}
         type={ONE_CHOICE_QUESTION}
-        key={index} questionIndex={props.index}
+        key={index.toString()}
+         questionIndex={props.index}
         choiceIndex={index} />
     )
   }

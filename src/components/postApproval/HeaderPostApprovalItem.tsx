@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 import classNames from 'classnames'
 import moment from 'moment'
 import { useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-multi-lang'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
@@ -15,7 +16,7 @@ import {
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { useAppDispatch } from '../../redux/Hook'
 import { useAcceptPostMutation, useDeletePostMutation } from '../../redux/Service'
-import { setPostRejectId, setRejectLogResponse } from '../../redux/Slice'
+import { setPostRejectId, setPreviousPage, setRejectLogResponse } from '../../redux/Slice'
 import { Data } from '../../types/Data'
 import { MenuOptionItem } from '../../types/MenuOptionItem'
 import { PostResponseModel } from '../../types/response/PostResponseModel'
@@ -47,6 +48,7 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
   const [acceptPost, acceptPostResponse] = useAcceptPostMutation()
   const [deletePost, deletePostResponse] = useDeletePostMutation()
   const t = useTranslation()
+  const location = useLocation()
 
   const handleClickToAvatarAndName = () => {
     const state = {
@@ -138,11 +140,12 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
 
   const onUpdatePost = (post?: PostResponseModel) => {
     if (post) {
-      localStorage.setItem(POST_UPDATE_ID, JSON.stringify(props.post.id))
+      dispatch(setPreviousPage(location.pathname))
+
       if (isRecruitmentPost(props.post)) {
-        navigate(CREATE_RECRUITMENT_POST_PAGE)
+        navigate(CREATE_RECRUITMENT_POST_PAGE, { state: props.post })
       } else if (isSurveyPost(props.post)) {
-        navigate(`${UPDATE_SURVEY_POST_PAGE}/${slugify(props.post.title)}-${props.post.id}`, {state: props.post})
+        navigate(`${UPDATE_SURVEY_POST_PAGE}/${slugify(props.post.title)}-${props.post.id}`, { state: props.post })
       }
     }
   }

@@ -9,7 +9,18 @@ import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestion
 import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
 import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
 import { CREATE_SURVEY_POST_PAGE, REVIEW_SURVEY_POST_PAGE } from '../constants/Page'
-import { ADD_QUESTION_PAGE_ADD_QUESTION_BUTTON, ADD_QUESTION_PAGE_NOTIFICATION_QUESTION_VALIDATE, ADD_QUESTION_PAGE_REVIEW_SURVEY_POST, ADD_QUESTION_PAGE_TITLE, ADD_QUESTION_VIEW_COMPONENT_MULTI_CHOICE_QUESTION, ADD_QUESTION_VIEW_COMPONENT_ONE_CHOICE_QUESTION, ADD_QUESTION_VIEW_COMPONENT_SHORT_ANSWER, ADD_QUESTION_VIEW_COMPONENT_TITLE_EMPTY_VALIDATE, TEXT_BUTTON_GO_BACK, TEXT_EMPTY_QUESTION_ERROR_CONTENT } from '../constants/StringVietnamese'
+import {
+  ADD_QUESTION_PAGE_ADD_QUESTION_BUTTON,
+  ADD_QUESTION_PAGE_NOTIFICATION_QUESTION_VALIDATE,
+  ADD_QUESTION_PAGE_REVIEW_SURVEY_POST,
+  ADD_QUESTION_PAGE_TITLE,
+  ADD_QUESTION_VIEW_COMPONENT_MULTI_CHOICE_QUESTION,
+  ADD_QUESTION_VIEW_COMPONENT_ONE_CHOICE_QUESTION,
+  ADD_QUESTION_VIEW_COMPONENT_SHORT_ANSWER,
+  ADD_QUESTION_VIEW_COMPONENT_TITLE_EMPTY_VALIDATE,
+  TEXT_BUTTON_GO_BACK,
+  TEXT_EMPTY_QUESTION_ERROR_CONTENT
+} from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { addQuestion, addQuestionValidates, setSurveyPostRequest, updateQuestionTitleValidate } from '../redux/Slice'
 import { Question } from '../types/Question'
@@ -82,17 +93,19 @@ export default function AddQuestionPage() {
               <Link className='d-inline-block mt-2' to={CREATE_SURVEY_POST_PAGE}>
                 <i className='ti-arrow-left font-sm text-white' />
               </Link>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{ADD_QUESTION_PAGE_TITLE}</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>
+                {surveyPostRequest.postId ? 'Cập nhật câu hỏi' : 'Thêm câu hỏi'}
+              </h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
               {surveyPostRequest.questions.map((item, index) => {
                 if (item.type === MULTI_CHOICE_QUESTION) {
-                  return <MultiQuestionMultiChoice editMode key={index} index={index} />
+                  return <MultiQuestionMultiChoice editMode key={index.toString()} index={index} />
                 } else if (item.type === ONE_CHOICE_QUESTION) {
-                  return <MultiQuestionOneChoice editMode key={index} index={index} />
+                  return <MultiQuestionOneChoice editMode key={index.toString()} index={index} />
                 }
 
-                return <ShortAnswerQuestion editMode key={index} index={index} />
+                return <ShortAnswerQuestion editMode key={index.toString()} index={index} />
               })}
 
               <div className='mt-5 flex flex-row items-center justify-evenly'>
@@ -124,8 +137,13 @@ export default function AddQuestionPage() {
                     </button>
                   )}
                 >
-                  <Dropdown.Item onClick={() => onBtnAddQuestionClick(SHORT_ANSWER)}>{ADD_QUESTION_VIEW_COMPONENT_SHORT_ANSWER}</Dropdown.Item>
-                  <Dropdown.Item onClick={() => onBtnAddQuestionClick(ONE_CHOICE_QUESTION)}>{ADD_QUESTION_VIEW_COMPONENT_ONE_CHOICE_QUESTION}</Dropdown.Item>
+                  <Dropdown.Item
+                   onClick={() => onBtnAddQuestionClick(SHORT_ANSWER)}>
+                    {ADD_QUESTION_VIEW_COMPONENT_SHORT_ANSWER}
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => onBtnAddQuestionClick(ONE_CHOICE_QUESTION)}>
+                    {ADD_QUESTION_VIEW_COMPONENT_ONE_CHOICE_QUESTION}
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => onBtnAddQuestionClick(MULTI_CHOICE_QUESTION)}>
                     {ADD_QUESTION_VIEW_COMPONENT_MULTI_CHOICE_QUESTION}
                   </Dropdown.Item>

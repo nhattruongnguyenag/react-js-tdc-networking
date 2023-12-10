@@ -1,6 +1,6 @@
 import { Dropdown } from 'flowbite-react'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE, USER_DETAILS_PAGE } from '../constants/Page'
 import { TEXT_CREATE_NEW_POST } from '../constants/StringVietnamese'
 import { CreatePostModal } from './modal/CustomizeNormalPostModal'
@@ -9,24 +9,38 @@ import DefaultAvatar from './common/DefaultAvatar'
 import CustomizePost from './post/CustomizePost'
 import { slugify } from '../utils/CommonUtls'
 import '../assets/css/createPost.css'
+import { useDispatch } from 'react-redux'
+import { setPreviousPage } from '../redux/Slice'
 
 interface CreatePostSelectorType {
-  id: number,
-  group: number | null,
-  groupName: string,
-  avatar: string,
+  id: number
+  group: number | null
+  groupName: string
+  avatar: string
   name: string
 }
 export default function CreatePostSelector(props: Readonly<CreatePostSelectorType>) {
   const [createNormalPostModalShow, setCreateNormalPostModalShow] = useState(false)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleClickAvatarEvent = () => {
     const state = {
       userId: props.id,
-      group: props.groupName,
-    };
-    navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${state.userId}`, { state });
+      group: props.groupName
+    }
+    navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${state.userId}`, { state })
+  }
+
+  const startAddSurveyPost = () => {
+    dispatch(setPreviousPage(location.pathname))
+    navigate(CREATE_SURVEY_POST_PAGE)
+  }
+
+  const startAddRecruitmentPost = () => {
+    dispatch(setPreviousPage(location.pathname))
+    navigate(CREATE_RECRUITMENT_POST_PAGE)
   }
   return (
     <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 pb-3 pe-4 ps-4 pt-4'>
@@ -34,12 +48,15 @@ export default function CreatePostSelector(props: Readonly<CreatePostSelectorTyp
         <div className='font-xssss fw-600 text-grey-500 card-body d-flex align-items-center p-0'>
           <div className='wrapperAvatarCreatePostToolBar'>
             <button onClick={() => handleClickAvatarEvent()}>
-              {
-                Boolean(props.avatar) ? <img
+              {Boolean(props.avatar) ? (
+                <img
                   alt='avatar'
                   className='avatar-user-header-post shadow-sm'
-                  src={SERVER_ADDRESS + 'api/images/' + props.avatar} /> : <DefaultAvatar name={props.name} size={45} styleBootstrap={undefined} />
-              }
+                  src={SERVER_ADDRESS + 'api/images/' + props.avatar}
+                />
+              ) : (
+                <DefaultAvatar name={props.name} size={45} styleBootstrap={undefined} />
+              )}
             </button>
             <Dropdown
               className='z-50 ms-4 text-black '
@@ -52,8 +69,8 @@ export default function CreatePostSelector(props: Readonly<CreatePostSelectorTyp
               )}
             >
               <Dropdown.Item onClick={() => setCreateNormalPostModalShow(true)}>Text/Hình ảnh</Dropdown.Item>
-              <Dropdown.Item onClick={() => navigate(CREATE_SURVEY_POST_PAGE)}>Khảo sát</Dropdown.Item>
-              <Dropdown.Item onClick={() => navigate(CREATE_RECRUITMENT_POST_PAGE)}>Tin tuyển dụng</Dropdown.Item>
+              <Dropdown.Item onClick={() => startAddSurveyPost()}>Khảo sát</Dropdown.Item>
+              <Dropdown.Item onClick={() => startAddRecruitmentPost()}>Tin tuyển dụng</Dropdown.Item>
             </Dropdown>
           </div>
           <CreatePostModal
