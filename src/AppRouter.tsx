@@ -116,7 +116,7 @@ export default function AppRouter() {
             <Route path={DETAILS_JOB_APPLY + '/:slug'} element={<DetailJobApply />} />
             <Route path={LIST_JOB_APPLY_PAGE + '/:slug'} element={<ListJobApplyPage />} />
             <Route path={SURVEY_RESULT_PAGE + '/:slug'} element={<SurveyResultPage />} />
-            <Route path={MANAGEMENT_JOB_APPLY_PAGE} element={<ManagementJobApplyPage />} />
+            <Route path={MANAGEMENT_JOB_APPLY_PAGE + '/:slug'} element={<ManagementJobApplyPage />} />
             <Route path={AUTHENTICATE_REGISTRATION_PAGE + '/:slug'} element={<AuthenticateRegistrationPage />} />
             <Route path={APPROVAL_POST_PAGE} element={<ApprovePostPage />} />
             <Route path={PENDING_POST_PAGE} element={<PendingPostPage />} />

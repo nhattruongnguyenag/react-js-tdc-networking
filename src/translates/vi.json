@@ -11,14 +11,16 @@
         "titleLogin": "Đăng nhập",
         "emailId": "Email ID",
         "password": "Mật khẩu",
-        "errorEmail": "Email sai định dạng hoặc rỗng",
-        "errorPass": "Mật khẩu sai định dạng hoặc rỗng",
-        "showPass": "Hiện",
-        "hidePass": "Ẩn",
+        "errorEmail": "Email không được để trống",
+        "errorPass": "Mật khẩu không được để trống",
+        "errorEmailNotFormat": "Email sai định dạng",
+        "errorPassNotLengthMax": "Mật khẩu không vượt quá 8 ký tự",
+        "errorPassNotFormat": "Mật khẩu sai định dạng",
         "loginFail": "Đăng nhập thất bại",
         "alertLoginFail": "Sai thông tin email hoặc mật khẩu",
         "forgotPass": "Quên mật khẩu?",
         "titleRegister": "Đăng ký",
+        "textLogin": "Đăng nhập",
         "requestRegister": "Chưa có tài khoản?"
     },
     "RegisterComponent": {
@@ -44,10 +46,11 @@
         "requipmentJob": "Yêu cầu công việc",
         "btnApplyJob": "Nộp đơn ứng tuyển",
         "textNotification": "Thông báo",
-        "textNoApply": "Bạn không thuộc đối tượng ứng tuyển",
-        "textApplied": "Bạn đã ứng tuyển! Vui lòng vào hồ sơ ứng tuyển để theo dõi tình trạng hồ sơ"
+        "textNoApply":"Bạn không thuộc đối tượng ứng tuyển",
+        "textApplied":"Bạn đã ứng tuyển! Vui lòng vào hồ sơ ứng tuyển để theo dõi tình trạng hồ sơ"
     },
     "ListJobApplyComponent": {
+        "listJobApply":"Danh sách ứng tuyển",
         "listEmpty": "Không có hồ sơ ứng tuyển",
         "updateNull": "Chưa cập nhật",
         "seeDetailCV": "Xem cv",
@@ -63,7 +66,8 @@
         "textChangeStatus": "Đổi trạng thái",
         "textCancel": "Hủy",
         "textChange": "Thay đổi",
-        "textNotification": "Thông báo"
+        "textNotification": "Thông báo",
+        "textDownload":"Tải hồ sơ"
     },
     "RegisterStudentComponent": {
         "titleRegisterStudent": "Đăng ký sinh viên",
@@ -111,7 +115,7 @@
         "titleLogin": "Đăng nhập",
         "requestLogin": "Đã có tài khoản?",
         "titleNotification": "Thông báo",
-        "textAccountAuthen": "Xác thực tài khoản"
+        "textAccountAuthen":"Xác thực tài khoản"
     },
     "RegisterBusinessComponent": {
         "titleRegisterBusiness": "Đăng ký doanh nghiệp",
@@ -164,9 +168,10 @@
         "titleLogin": "Đăng nhập",
         "requestLogin": "Đã có tài khoản?",
         "titleNotification": "Thông báo",
-        "textAccountAuthen": "Xác thực tài khoản"
+        "textAccountAuthen":"Xác thực tài khoản"
     },
     "ManageJobApply": {
+        "manageJobApply":"Quản lý hồ sơ ứng tuyển",
         "textReceived": "Đã nhận",
         "textIn_progress": "Đang xử lý",
         "textNot_meet_standard_quality": "Xem xét",
@@ -377,19 +382,19 @@
     "BarItemComponentNumberVote": {
         "barItemComponentNumberOfVote": " lượt bình chọn"
     },
-    "Post": {
+    "Post":{
         "normalPostIdentifyAuthorCompany": "Doanh nghiệp",
         "normalPostIdentifyAuthorFaculty": "Khoa",
         "normalPostIdentifyAuthorStudent": "",
-        "typePostRecruitment": "Tuyển dụng",
-        "typePostSurvey": "Khảo sát",
-        "normalPostLikeBy": "Thích bởi",
-        "normalPostSeeMoreContent": "Thích bởi",
-        "normalPostHiddentContent": "Ẩn bớt"
+        "typePostRecruitment":"Tuyển dụng",
+        "typePostSurvey":"Khảo sát",
+        "normalPostLikeBy" : "Thích bởi",
+        "normalPostSeeMoreContent" : "Thích bởi",
+        "normalPostHiddentContent" : "Ẩn bớt"
     },
     "Comment": {
-        "commentReplyComment": "Trả lời",
-        "commentDeleteComment": "Xóa",
+        "commentReplyComment":"Trả lời",
+        "commentDeleteComment":"Xóa",
         "commentAuthor": "Tác giả",
         "modalListCommentTitle": "Bình luận"
     },
@@ -397,15 +402,15 @@
         "commentContainerComponentSeeMore": "Xem thêm",
         "commentContainerComponentHidden": "Ẩn bớt"
     },
-    "CreateCommentToolbar": {
+    "CreateCommentToolbar":{
         "commentCreateComment": "Đăng bình luận",
-        "commentPlaceholderInput": "Hãy nhập nội dung bình luận"
+        "commentPlaceholderInput":"Hãy nhập nội dung bình luận"
     },
     "RecruitmentPost": {
         "recruitmentPostType": "Tuyển dụng",
         "recruitmentPostButtonSeeDetail": "Xem chi tiết",
-        "recruitmentPostCurrency": "vnd/Tháng"
-    },
+        "recruitmentPostCurrency":"vnd/Tháng"
+    },    
     "SurveyPost": {
         "surveyPostType": "Khảo sát",
         "surveyPostButton": "Tiến hành khảo sát",
@@ -426,10 +431,10 @@
         "departmentOfKoreanLanguage": "Khoa Tiếng Hàn",
         "japaneseLanguageDepartment": "Khoa Bộ Môn Tiếng Nhật"
     },
-    "ModalUserLiked": {
-        "modalUserLikedTitle": "Danh sách người dùng đã like"
+    "ModalUserLiked":{
+        "modalUserLikedTitle":"Danh sách người dùng đã like"
     },
-    "MenuOption": {
+    "MenuOption":{
         "menuOptionSaveArticle": "Lưu bài viết",
         "menuOptionUnSaveArticle": "Hủy lưu bài viết",
         "menuOptionDeleteArticle": "Xóa bài viết",
@@ -444,39 +449,39 @@
         "createPostToolbarRecruitmentPost": "Tin Tuyển Dụng"
     },
     "ModalCreateNormalPost": {
-        "modalCreateNormalPostTitle": "Tạo bài viết",
-        "modalCreateNormalPostPlaceholder": "Vui lòng nhập nội dung bài viết",
-        "modalCreateNormalPostEntryImages": "Ảnh",
-        "modalCreateNormalPostButton": "Đăng bài viết"
+      "modalCreateNormalPostTitle": "Tạo bài viết",
+      "modalCreateNormalPostPlaceholder": "Vui lòng nhập nội dung bài viết",
+      "modalCreateNormalPostEntryImages": "Ảnh",
+      "modalCreateNormalPostButton": "Đăng bài viết"
     },
-    "BusinessSelectFacultyToolbar": {
-        "businessSelectFacultyToolbarTitle": "Hãy lựa chọn khoa mà bạn muốn hiển thị bài viết"
+    "BusinessSelectFacultyToolbar":{
+        "businessSelectFacultyToolbarTitle":"Hãy lựa chọn khoa mà bạn muốn hiển thị bài viết"
     },
     "NotifyFacultyDontHaveAnyPost": {
         "textNotifyFacultyDontHaveAnyPost": "Chưa có bài viết nào ở khoa này"
     },
-    "Profile": {
-        "profileOperatingHours": "Giờ làm việc",
-        "profileTaxID": "Mã số thuế",
-        "profileRepresentative": "Đại diện",
-        "profileAddress": "Địa chỉ",
-        "profilePhone": "Điện thoại",
-        "profileEmail": "Email",
-        "profileArticles": "Bài viết",
-        "profilePosition": "Vị trí",
-        "profileRole": "Sinh viên",
-        "chat": "Nhắn tin",
-        "call": "Gọi điện",
-        "unFollow": "Hủy theo dõi",
-        "follow": "Theo dõi",
-        "updateProfile": "Cập nhật thông tin cá nhân",
-        "unUpdate": "chưa được cập nhật "
-    },
-    "Group": {
-        "groupTdc": "Nhóm TDC - Trường Cao Đẳng Công Nghệ Thủ Đức",
-        "groupConnectBusiness": "Nhóm Kết nối Doanh nghiệp",
-        "electricalElectronicsGroup": "Nhóm Điện - Điện tử",
-        "informationTechnologyGroup": "Nhóm Công nghệ Thông tin",
+      "Profile": {
+          "profileOperatingHours": "Giờ làm việc",
+          "profileTaxID": "Mã số thuế",
+          "profileRepresentative": "Đại diện",
+          "profileAddress": "Địa chỉ",
+          "profilePhone": "Điện thoại",
+          "profileEmail": "Email",
+          "profileArticles": "Bài viết",
+          "profilePosition": "Vị trí",
+          "profileRole": "Sinh viên",
+          "chat": "Nhắn tin",
+          "call": "Gọi điện",
+          "unFollow": "Hủy theo dõi",
+          "follow": "Theo dõi",
+          "updateProfile": "Cập nhật thông tin cá nhân",
+          "unUpdate":"chưa được cập nhật "
+        },
+        "Group": {
+            "groupTdc": "Nhóm TDC - Trường Cao Đẳng Công Nghệ Thủ Đức",
+            "groupConnectBusiness": "Nhóm Kết nối Doanh nghiệp",
+            "electricalElectronicsGroup": "Nhóm Điện - Điện tử",
+            "informationTechnologyGroup": "Nhóm Công nghệ Thông tin",
         "automationTechnologyGroup": "Nhóm Công nghệ Tự động hóa",
         "mechanicalEngineeringAndManufacturingGroup": "Nhóm Kỹ thuật Cơ khí và Chế tạo",
         "automotiveMechanicalGroup": "Nhóm Cơ khí Ô tô",
@@ -486,7 +491,7 @@
         "englishGroup": "Nhóm Tiếng Anh",
         "koreanGroup": "Nhóm Tiếng Hàn",
         "japaneseLanguageDepartmentGroup": "Nhóm Bộ môn Tiếng Nhật"
-    },
+    },    
     "ModalUpdate": {
         "modalUpdateTitle": "Cập Nhật Thông Tin Tài Khoản",
         "modalUpdatePlaceholderPhoneNumber": "Số Điện Thoại",
@@ -495,27 +500,27 @@
         "modalUpdateAvatar": "Ảnh Đại Diện",
         "modalUpdateButtonText": "Cập Nhật"
     },
-    "Validate": {
-        "validatePhoneNull": "Số điện thoại không được để trống",
-        "validatePhoneUnCorrectFormat": "Số điện thoại sai định dạng",
-        "validateEmailNull": "Email không được để trống",
-        "validateEmailUnCorrectFormat": "Email sai định dạng",
-        "validateEmailHadUsed": "Email đã đươck đăng ký, vui lòng nhập email khác",
+    "Validate":{
+        "validatePhoneNull":"Số điện thoại không được để trống",
+        "validatePhoneUnCorrectFormat":"Số điện thoại sai định dạng",
+        "validateEmailNull":"Email không được để trống",
+        "validateEmailUnCorrectFormat":"Email sai định dạng",
+        "validateEmailHadUsed":"Email đã đươck đăng ký, vui lòng nhập email khác",
         "validateEmailHasMaxLength": "Email không vượt quá 255 ký tự",
-        "validateNameHasMaxLength": "Tên không được vượt quá 255 ký tự ",
-        "validateNameHasSpecialCharacter": "Tên không được chứa các ký tự đặc biệt ",
-        "validateAddressNull": "Địa chỉ không được để trống",
-        "validatePresentorNull": "Tên người đại diện không được để trống",
-        "validateRepresentorSpecialCharacter": "Tên không được chứa các ký tự đặc biệt",
-        "validateRepresentorMaxLength": "Tên không được vượt quá 255 ký tự ",
-        "validateTaxCodeNull": "Mã số thuế không được để trống",
-        "validateNameNull": "Tên không được để trống",
-        "validateNameSpecialCharacter": "Tên không được chứa các ký tự đặc biệt",
-        "validateNameMaxLength": "Tên không được vượt quá 255 ký tự ",
+        "validateNameHasMaxLength":"Tên không được vượt quá 255 ký tự ",
+        "validateNameHasSpecialCharacter":"Tên không được chứa các ký tự đặc biệt ",
+        "validateAddressNull":"Địa chỉ không được để trống",
+        "validatePresentorNull":"Tên người đại diện không được để trống",
+        "validateRepresentorSpecialCharacter":"Tên không được chứa các ký tự đặc biệt",
+        "validateRepresentorMaxLength":"Tên không được vượt quá 255 ký tự ",
+        "validateTaxCodeNull":"Mã số thuế không được để trống",
+        "validateNameNull":"Tên không được để trống",
+        "validateNameSpecialCharacter":"Tên không được chứa các ký tự đặc biệt",
+        "validateNameMaxLength":"Tên không được vượt quá 255 ký tự ",
         "validateNameTimeActiveUnCorrect": "Thời gian hoạt động sai quy định",
         "validateTaxCodeFormat": "Mã thuế sai quy định",
-        "validateTaxCodeMaxLength": "Mã số thuế không vượt quá 255 ký tự",
-        "validateAddressMaxLength": "Địa chỉ không vượt quá 255 ký tự"
+        "validateTaxCodeMaxLength":  "Mã số thuế không vượt quá 255 ký tự",
+        "validateAddressMaxLength":  "Địa chỉ không vượt quá 255 ký tự"
     },
     "ModalListUserLiked": {
         "modalListUserLikedTitle": "Danh sách người thích"
@@ -529,9 +534,9 @@
         "createPostSelectorRecruitmentText": "Tuyển dụng",
         "createPostSelectorNormalText": "Thông thường"
     },
-    "SelectFaculty": {
-        "selectFacultyPlaceholder": "Chọn khoa...",
-        "selectFacultyTextSearch": "Tìm kiếm.."
+    "SelectFaculty":{
+        "selectFacultyPlaceholder":"Chọn khoa...",
+        "selectFacultyTextSearch":"Tìm kiếm.."
     },
     "FacultyDashboard": {
         "facultyDashboardNotifyNotHavePost": "Chưa có bài viết nào",
@@ -564,40 +569,40 @@
         "businessUpdateCompanyPhoneNumberPlaceholder": "Nhập số điện thoại",
         "businessUpdateTimeActive": "Đến"
     },
-    "CreateNormalPost": {
-        "createNormalPostTitle": "Thêm bài viết",
-        "updateNormalPostTitle": "Cập nhật bài viết",
-        "createNormalPostPlaceholder": "Hãy nhập nội dung bài viết",
-        "createNormalPostButtonText": "Thêm hình ảnh",
-        "createNormalPostButtonFinish": "Hoàn tất",
-        "createNormalPostAllertButton": "đồng ý",
-        "createNormalPostAllertTextChar": "ký tự",
-        "createNormalPostAllertQuestion": "Bạn có thực sự muốn xóa bức ảnh này chứ",
-        "createNormalPostAllerTitle": "Cảnh báo"
+    "CreateNormalPost":{
+        "createNormalPostTitle":"Thêm bài viết",
+        "updateNormalPostTitle":"Cập nhật bài viết",
+        "createNormalPostPlaceholder":"Hãy nhập nội dung bài viết",
+        "createNormalPostButtonText":"Thêm hình ảnh",
+        "createNormalPostButtonFinish":"Hoàn tất",
+        "createNormalPostAllertButton":"đồng ý",
+        "createNormalPostAllertTextChar":"ký tự",
+        "createNormalPostAllertQuestion":"Bạn có thực sự muốn xóa bức ảnh này chứ",
+        "createNormalPostAllerTitle":"Cảnh báo"
     },
-    "ModalReviewBackground": {
-        "modalReviewBackgroundTextSave": "Lưu",
-        "modalReviewBackgroundTextCancel": "Hủy lưu"
+    "ModalReviewBackground":{
+        "modalReviewBackgroundTextSave":"Lưu",
+        "modalReviewBackgroundTextCancel":"Hủy lưu"
     },
-    "AlertNotify": {
-        "alertNotifyTitle": "Thông báo",
-        "alertNotifyCreateNewPostFail": "Tạo bài viết không thành công",
-        "alertNotifyCreateNewPostSuccess": "Đã tạo bài viết thành công",
-        "alertNotifyUpdatePostFail": "Cập nhật bài viết không thành công",
-        "alertNotifyUpdatePostSuccess": "Cập nhật bài viết thành công",
-        "alertNotifyPostContentCannotNull": "nội dung bài viết không thể để trống",
-        "alertNotifyCharacter": "Ký tự",
-        "alertNotifyTextAccept": "Đồng ý",
-        "alertNotifyTextReject": "Hủy bỏ",
-        "alertNotifyPostContentHaveNumberCharacterGreaterThanLimitedNumber": "số  lượng ký tự không được vượt quá"
+    "AlertNotify":{
+        "alertNotifyTitle":"Thông báo",
+        "alertNotifyCreateNewPostFail":"Tạo bài viết không thành công",
+        "alertNotifyCreateNewPostSuccess":"Đã tạo bài viết thành công",
+        "alertNotifyUpdatePostFail":"Cập nhật bài viết không thành công",
+        "alertNotifyUpdatePostSuccess":"Cập nhật bài viết thành công",
+        "alertNotifyPostContentCannotNull":"nội dung bài viết không thể để trống",
+        "alertNotifyCharacter":"Ký tự",
+        "alertNotifyTextAccept":"Đồng ý",
+        "alertNotifyTextReject":"Hủy bỏ",
+        "alertNotifyPostContentHaveNumberCharacterGreaterThanLimitedNumber":"số  lượng ký tự không được vượt quá"
     },
-    "UpdateProfile": {
-        "updateProfileAlertSuccess": "Cập nhật thành công",
-        "updateProfileAlertFail": "Cập nhật thất bại vui lòng thử lại"
+    "UpdateProfile":{
+        "updateProfileAlertSuccess":"Cập nhật thành công",
+        "updateProfileAlertFail":"Cập nhật thất bại vui lòng thử lại"
     },
-    "ToastMessenger": {
-        "toastMessengerTextTitle": "Cảnh báo",
-        "toastMessengerTextWarning": "Lỗi hệ thống vui lòng thử lại sau"
+    "ToastMessenger":{
+        "toastMessengerTextTitle":"Cảnh báo",
+        "toastMessengerTextWarning":"Lỗi hệ thống vui lòng thử lại sau"
     },
     "FacultyUpdate": {
         "facultyUpdateName": "Tên khoa",
@@ -607,23 +612,23 @@
         "studentUpdateName": "Họ và tên",
         "facultyUpdateNamePlaceholder": "Hãy nhập tên của bạn"
     },
-    "Update": {
+    "Update":{
         "updatePhoneNumber": "Số điện thoại",
         "updatePhoneNumberPlaceholder": "Nhập số điện thoại",
         "updateAvatarTitle": "Ảnh đại diện",
         "updateProfileButtonTitle": "Cập nhật thông tin cá nhân"
     },
-    "Notify": {
+    "Notify":{
         "updatePhoneNumber": "Số điện thoại",
         "updatePhoneNumberPlaceholder": "Nhập số điện thoại",
         "updateAvatarTitle": "Ảnh đại diện",
         "updateProfileButtonTitle": "Cập nhật thông tin cá nhân"
     },
-    "ModalComment": {
-        "modalCommentTextChar": "ký tự",
-        "modalCommentCommentNotNull": "nội dung bình luận không thể để trống",
-        "modalCommentTextNumberLimited": "nội dung bình luận không thể quá",
-        "modalCommentCreateFail": "Tạo bình luận thất bại"
+    "ModalComment":{
+        "modalCommentTextChar":"ký tự",
+        "modalCommentCommentNotNull":"nội dung bình luận không thể để trống",
+        "modalCommentTextNumberLimited":"nội dung bình luận không thể quá",
+        "modalCommentCreateFail":"Tạo bình luận thất bại"
     },
     "ApprovingScreen": {
         "isLoading": "Đang tải dữ liệu...",
@@ -663,29 +668,29 @@
     "ApplicationOptionComponent": {
         "language": "Ngôn ngữ",
         "info": "Thông tin cá nhân",
-        "password": "Mật khẩu",
+        "password":"Mật khẩu",
         "cancel": "Hủy",
         "change": "Thay đổi"
     },
-    "ForgettenPassword": {
+    "ForgettenPassword":{
         "textForgetPassword": "Quên mật khẩu",
         "textNotification": "Email sai định dạng hoặc rỗng",
         "textSubjectResetPassword": "Cập nhật mật khẩu",
         "titleSubjectResetPassword": " thay đổi mật khẩu",
-        "textAccept": "Xác nhận",
+        "textAccept":"Xác nhận",
         "textBack": "Quay lại"
     },
-    "AcceptScreen": {
+    "AcceptScreen":{
         "checkEmail": "Kiểm tra email",
-        "description1": "Chúng tôi đã gửi đến email bạn liên kết",
-        "description2": ", vui lòng kiểm tra email",
-        "titleNotify": "Thông báo",
-        "descriptionNotify": "Đã gửi lại liên kết tới ",
+        "description1":"Chúng tôi đã gửi đến email bạn liên kết",
+        "description2":", vui lòng kiểm tra email",
+        "titleNotify":"Thông báo",
+        "descriptionNotify":"Đã gửi lại liên kết tới ",
         "back": "Quay về",
         "notSend": "Chưa nhận được email ??,",
         "sendAgain": "Gửi lại"
     },
-    "AuthenticateRegistraion": {
+    "AuthenticateRegistraion":{
         "textSubjectAuthenRegistration": "Xác thực tài khoản",
         "titleSubjectAuthenRegistration": " xác thực tài khoản"
     },

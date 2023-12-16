@@ -15,23 +15,9 @@ import TextValidate from '../components/TextValidate'
 import ReactLoading from 'react-loading'
 import { useNavigate } from 'react-router-dom'
 import '../assets/css/login.css'
-import {
-  TEXT_ALERT_LOGIN_FAILT,
-  TEXT_ERROR_EMAIL_NOTFORMAT,
-  TEXT_ERROR_EMAIL_NOTIMPTY,
-  TEXT_ERROR_EMAIL_NOTLENGTH,
-  TEXT_ERROR_PASSWORD_NOTFORMAT,
-  TEXT_ERROR_PASSWORD_NOTIMPTY,
-  TEXT_ERROR_PASSWORD_NOTLENGTH,
-  TEXT_FORGOT_PASSWORD,
-  TEXT_LOGIN,
-  TEXT_PLACEHOLDER_EMAIL,
-  TEXT_PLACEHOLDER_PASSWORD,
-  TEXT_REGISTER,
-  TEXT_REQUEST_REGISTER,
-  TEXT_TITLE_LOGIN
-} from '../constants/StringVietnamese'
 import { BUSINESS_DASHBOARD_PAGE, FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from '../constants/Page'
+import { useTranslation } from 'react-multi-lang'
+
 interface UserLogin {
   emailUser: InputTextValidate
   passwordUser: InputTextValidate
@@ -45,11 +31,11 @@ const isAllFieldsValid = (validate: UserLogin): boolean => {
       return false
     }
   }
-
   return true
 }
 
 export default function LoginPage() {
+  const t = useTranslation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -59,12 +45,12 @@ export default function LoginPage() {
   })
   const [validate, setValidate] = useState<UserLogin>({
     emailUser: {
-      textError: TEXT_ERROR_EMAIL_NOTIMPTY,
+      textError: t('LoginComponent.errorEmail'),
       isVisible: false,
       isError: true
     },
     passwordUser: {
-      textError: TEXT_ERROR_PASSWORD_NOTIMPTY,
+      textError: t('LoginComponent.errorPass'),
       isVisible: false,
       isError: true
     }
@@ -78,17 +64,7 @@ export default function LoginPage() {
           ...validate.emailUser,
           isError: true,
           isVisible: true,
-          textError: TEXT_ERROR_EMAIL_NOTIMPTY
-        }
-      })
-    } else if (!isLengthInRange(e.target.value, 1, 255)) {
-      setValidate({
-        ...validate,
-        emailUser: {
-          ...validate.emailUser,
-          isError: true,
-          isVisible: true,
-          textError: TEXT_ERROR_EMAIL_NOTLENGTH
+          textError: t('LoginComponent.errorEmail')
         }
       })
     } else if (!isEmail(e.target.value)) {
@@ -98,7 +74,7 @@ export default function LoginPage() {
           ...validate.emailUser,
           isError: true,
           isVisible: true,
-          textError: TEXT_ERROR_EMAIL_NOTFORMAT
+          textError: t('LoginComponent.errorEmailNotFormat')
         }
       })
     } else {
@@ -122,7 +98,7 @@ export default function LoginPage() {
           ...validate.passwordUser,
           isVisible: true,
           isError: true,
-          textError: TEXT_ERROR_PASSWORD_NOTIMPTY
+          textError: t('LoginComponent.errorPass')
         }
       })
     } else if (!isLengthInRange(e.target.value, 1, 8)) {
@@ -132,7 +108,7 @@ export default function LoginPage() {
           ...validate.passwordUser,
           isVisible: true,
           isError: true,
-          textError: TEXT_ERROR_PASSWORD_NOTLENGTH
+          textError: t('LoginComponent.errorPassNotLengthMax')
         }
       })
     } else if (!isPassword(e.target.value)) {
@@ -142,7 +118,7 @@ export default function LoginPage() {
           ...validate.passwordUser,
           isVisible: true,
           isError: true,
-          textError: TEXT_ERROR_PASSWORD_NOTFORMAT
+          textError: t('LoginComponent.errorPassNotFormat')
         }
       })
     } else {
@@ -181,9 +157,9 @@ export default function LoginPage() {
         })
         .catch((error: any) => {
           setIsLoading(false)
-          alert(TEXT_ALERT_LOGIN_FAILT)
+          alert(t('LoginComponent.alertLoginFail'))
         })
-    } else {
+  } else {
       let key: keyof UserLogin
 
       for (key in validate) {
@@ -196,11 +172,6 @@ export default function LoginPage() {
     }
   }
 
-  useEffect(() => {
-    if (userLogin) {
-      navigate(BUSINESS_DASHBOARD_PAGE)
-    }
-  }, [])
   return (
     <Fragment>
       <div className='main-wrap'>
@@ -221,16 +192,16 @@ export default function LoginPage() {
             style={{ backgroundImage: `url("assets/images/login-bg.jpg")` }}
           ></div>
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
-            <div className='card login-card me-auto ms-auto border-0 shadow-none'>
+            <div className='login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
-                <h2 className='fw-700 display1-size display2-md-size mb-3'>{TEXT_TITLE_LOGIN}</h2>
+                <h2 className='fw-700 display1-size display2-md-size mb-3'>{t('LoginComponent.titleLogin')}</h2>
                 <form>
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-email text-grey-500 pe-0'></i>
                     <input
                       type='text'
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_EMAIL}
+                      placeholder={t('LoginComponent.emailId')}
                       onChange={(e) => checkEmailChange(e)}
                     />
                     <TextValidate
@@ -244,7 +215,7 @@ export default function LoginPage() {
                     <input
                       type='Password'
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_PASSWORD}
+                      placeholder={t('LoginComponent.password')}
                       onChange={(e) => checkPasswordChange(e)}
                     />
                     <TextValidate
@@ -260,7 +231,7 @@ export default function LoginPage() {
                       type='button'
                       className='fw-600 font-xsss text-grey-700 float-right'
                     >
-                      {TEXT_FORGOT_PASSWORD}
+                      {t('LoginComponent.forgotPass')}
                     </button>
                   </div>
                 </form>
@@ -273,7 +244,7 @@ export default function LoginPage() {
                         onClick={(e) => onSubmit(e)}
                         className='form-control style2-input fw-600 bg-blue border-0 p-0 text-center text-white '
                       >
-                        {TEXT_LOGIN}
+                        {t('LoginComponent.textLogin')}
                       </button>
                       <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#fff' height={50} width={50} />
@@ -281,9 +252,9 @@ export default function LoginPage() {
                     </div>
                   </div>
                   <h6 className='text-grey-500 font-xsss fw-500 lh-32 mb-0 mt-0'>
-                    {TEXT_REQUEST_REGISTER}{' '}
+                    {t('LoginComponent.requestRegister')}{' '}
                     <button type='button' className='txt-blue' onClick={() => navigate(REGISTER_PAGE)}>
-                      {TEXT_REGISTER}
+                      {t('LoginComponent.titleRegister')}
                     </button>
                   </h6>
                 </div>

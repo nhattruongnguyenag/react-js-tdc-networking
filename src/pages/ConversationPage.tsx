@@ -24,21 +24,17 @@ export default function ConversationPage() {
       <Header />
       <div id='main-content-wrap' className='main-content'>
         <div className='middle-sidebar-bottom'>
-          <div className='middle-sidebar-left ps-lg-3 me-0 ms-0 pe-0' style={{ maxWidth: '100%' }}>
-            <div className='row'>
-              <div className='col-lg-12'>
-                <div className='chat-wrapper w-100 position-relative scroll-bar theme-dark-bg bg-white p-3'>
-                  <ul className='email-message'>
-                    {conversations.map((item, index) => (
-                      <ConversationItem key={index.toString()} data={item} />
-                    ))}
-                  </ul>
-                </div>
-              </div>
+          <div className='middle-sidebar-left' style={{ maxWidth: '100%' }}>
+            <div className='chat-wrapper w-100 position-relative scroll-bar theme-dark-bg bg-white p-3'>
+              <ul className='email-message'>
+                {conversations.map((item, index) => (
+                  <ConversationItem key={index.toString()} data={item} />
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </div>
-    </Fragment>
+    </Fragment >
   )
 }
