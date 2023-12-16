@@ -97,7 +97,7 @@ export default function RecruitmentDetailsPage() {
               <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                 <i className='ti-arrow-left font-sm text-white' />
               </button>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{t('RecuitmentPostDetailComponent.recruitmentDetail')}</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{t('ToolbarTitle.recruitmentDetailScreen')}</h4>
             </div>
             {isLoading ? (
               <div className='ml-[-320px] mt-[-100px] flex h-screen items-center justify-center'>
