@@ -28,6 +28,7 @@ import {
   STUDENT_DASHBOARD_PAGE,
   SURVEY_DETAILS_PAGE,
   SURVEY_RESULT_PAGE,
+  UPDATE_SURVEY_POST_PAGE,
   USER_DETAILS_PAGE
 } from './constants/Page'
 import AcceptSendEmailPage from './pages/AcceptEmailPage'
@@ -98,6 +99,7 @@ export default function AppRouter() {
             <Route path={SEARCH_PAGE} element={<SearchPage />} />
             <Route path={CREATE_RECRUITMENT_POST_PAGE} element={<CreateRecruitmentPostPage />} />
             <Route path={CREATE_SURVEY_POST_PAGE} element={<CreateSurveyPostPage />} />
+            <Route path={UPDATE_SURVEY_POST_PAGE + '/:slug'} element={<CreateSurveyPostPage />} />
             <Route path={ADD_QUESTION_PAGE} element={<AddQuestionPage />} />
             <Route path={REVIEW_SURVEY_POST_PAGE} element={<ReviewSurveyPostPage />} />
             <Route path={REGISTER_BUSINESS_PAGE} element={<BusinessRegistationPage />} />

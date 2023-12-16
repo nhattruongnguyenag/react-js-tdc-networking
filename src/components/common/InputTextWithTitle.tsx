@@ -18,7 +18,6 @@ const InputTextWithTitle = React.forwardRef(
         <div className='form-gorup'>
           <label className='mont-font fw-600 font-xsss text-dark mb-2'>{props.title ?? 'Title'}</label>
           <input
-            value={props.value}
             ref={ref}
             disabled={Boolean(props.disabled)}
             defaultValue={props.defaultValue}
