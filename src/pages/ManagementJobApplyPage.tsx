@@ -96,7 +96,7 @@ export default function ManagementJobApplyPage() {
                           <div className='manage-item-job-apply' key={index}>
                             <div className='tam'>
                               <div className='img-job-apply'>
-                                {item.companyName == '' ? (
+                                {item.companyAvatar == null ? (
                                   <DefaultAvatar
                                     name={item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
                                     size={80}

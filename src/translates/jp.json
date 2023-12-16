@@ -13,12 +13,16 @@
         "password": "パスワード",
         "errorEmail": "不正確または空のメールアドレス形式",
         "errorPass": "不正確または空のパスワード形式",
+        "errorEmailNotFormat": "不正確なメールアドレス形式",
+        "errorPassNotLengthMax": "パスワードは8文字を超えることはできません",
+        "errorPassNotFormat": "不正確なパスワード形式",
         "showPass": "表示",
         "hidePass": "非表示",
         "loginFail": "ログインに失敗しました",
         "alertLoginFail": "不正確なメールアドレスまたはパスワード",
         "forgotPass": "パスワードを忘れましたか？",
         "titleRegister": "登録",
+        "textLogin": "ログイン",
         "requestRegister": "アカウントをお持ちでないですか？"
     },
     "RegisterComponent": {
@@ -48,6 +52,7 @@
         "textApplied": "応募済みです。ステータスを確認するには、アプリケーションプロフィールを確認してください"
     },
     "ListJobApplyComponent": {
+        "listJobApply":"応募リスト",
         "listEmpty": "求人応募がありません",
         "updateNull": "未更新",
         "seeDetailCV": "CVを見る",
@@ -63,7 +68,8 @@
         "textChangeStatus": "ステータスを変更",
         "textCancel": "キャンセル",
         "textChange": "変更",
-        "textNotification": "お知らせ"
+        "textNotification": "お知らせ",
+        "textDownload":"ダウンロード"
     },
     "RegisterStudentComponent": {
         "titleRegisterStudent": "学生登録",
@@ -167,6 +173,7 @@
         "textAccountAuthen": "アカウントの認証"
     },
     "ManageJobApply": {
+        "manageJobApply":"応募管理",
         "textReceived": "受け取り済み",
         "textIn_progress": "進行中",
         "textNot_meet_standard_quality": "レビュー",

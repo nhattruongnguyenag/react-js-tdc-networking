@@ -45,12 +45,12 @@ export default function LoginPage() {
   })
   const [validate, setValidate] = useState<UserLogin>({
     emailUser: {
-      textError: t('LoginComponent.errorEmailEmpty'),
+      textError: t('LoginComponent.errorEmail'),
       isVisible: false,
       isError: true
     },
     passwordUser: {
-      textError: t('LoginComponent.errorPassEmpty'),
+      textError: t('LoginComponent.errorPass'),
       isVisible: false,
       isError: true
     }
@@ -64,17 +64,7 @@ export default function LoginPage() {
           ...validate.emailUser,
           isError: true,
           isVisible: true,
-          textError: t('LoginComponent.errorEmailEmpty')
-        }
-      })
-    } else if (!isLengthInRange(e.target.value, 1, 255)) {
-      setValidate({
-        ...validate,
-        emailUser: {
-          ...validate.emailUser,
-          isError: true,
-          isVisible: true,
-          textError: t('LoginComponent.errorEmailMaxLength')
+          textError: t('LoginComponent.errorEmail')
         }
       })
     } else if (!isEmail(e.target.value)) {
@@ -108,7 +98,7 @@ export default function LoginPage() {
           ...validate.passwordUser,
           isVisible: true,
           isError: true,
-          textError: t('LoginComponent.errorPassEmpty')
+          textError: t('LoginComponent.errorPass')
         }
       })
     } else if (!isLengthInRange(e.target.value, 1, 8)) {
@@ -118,7 +108,7 @@ export default function LoginPage() {
           ...validate.passwordUser,
           isVisible: true,
           isError: true,
-          textError: t('LoginComponent.errorPassNotMaxLength')
+          textError: t('LoginComponent.errorPassNotLengthMax')
         }
       })
     } else if (!isPassword(e.target.value)) {
@@ -182,11 +172,6 @@ export default function LoginPage() {
     }
   }
 
-  // useEffect(() => {
-  //   if (userLogin) {
-  //     navigate(BUSINESS_DASHBOARD_PAGE)
-  //   }
-  // }, [])
   return (
     <Fragment>
       <div className='main-wrap'>
@@ -207,7 +192,7 @@ export default function LoginPage() {
             style={{ backgroundImage: `url("assets/images/login-bg.jpg")` }}
           ></div>
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
-            <div className='card login-card me-auto ms-auto border-0 shadow-none'>
+            <div className='login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
                 <h2 className='fw-700 display1-size display2-md-size mb-3'>{t('LoginComponent.titleLogin')}</h2>
                 <form>

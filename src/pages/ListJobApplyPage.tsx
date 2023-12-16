@@ -125,7 +125,7 @@ export default function ListJobApplyPage() {
                         <div className='item-job-apply'>
                           <div className='tam'>
                             <div className='img-job-apply'>
-                              {data.studentName == '' ? (
+                              {data.studentAvatar == null ? (
                                 <DefaultAvatar
                                   name={data.studentName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
                                   size={80}
@@ -146,7 +146,7 @@ export default function ListJobApplyPage() {
                               <h1 className='fw-900 title text-black text-p'>{data.jobTitle}</h1>
                               <div className='item-job'>
                                 <FontAwesomeIcon icon={faPhoneVolume} />
-                                {data.phone === '' ? (
+                                {data.phone == null ? (
                                   <p className='fw-500 mb-0 ms-2 text-black text-p'>{t('ListJobApplyComponent.updateNull')}</p>
                                 ) : (
                                   <p className='fw-500 mb-0 ms-2 text-black text-p'>{data.phone}</p>

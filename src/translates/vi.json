@@ -11,14 +11,16 @@
         "titleLogin": "Đăng nhập",
         "emailId": "Email ID",
         "password": "Mật khẩu",
-        "errorEmail": "Email sai định dạng hoặc rỗng",
-        "errorPass": "Mật khẩu sai định dạng hoặc rỗng",
-        "showPass": "Hiện",
-        "hidePass": "Ẩn",
+        "errorEmail": "Email không được để trống",
+        "errorPass": "Mật khẩu không được để trống",
+        "errorEmailNotFormat": "Email sai định dạng",
+        "errorPassNotLengthMax": "Mật khẩu không vượt quá 8 ký tự",
+        "errorPassNotFormat": "Mật khẩu sai định dạng",
         "loginFail": "Đăng nhập thất bại",
         "alertLoginFail": "Sai thông tin email hoặc mật khẩu",
         "forgotPass": "Quên mật khẩu?",
         "titleRegister": "Đăng ký",
+        "textLogin": "Đăng nhập",
         "requestRegister": "Chưa có tài khoản?"
     },
     "RegisterComponent": {
@@ -48,6 +50,7 @@
         "textApplied":"Bạn đã ứng tuyển! Vui lòng vào hồ sơ ứng tuyển để theo dõi tình trạng hồ sơ"
     },
     "ListJobApplyComponent": {
+        "listJobApply":"Danh sách ứng tuyển",
         "listEmpty": "Không có hồ sơ ứng tuyển",
         "updateNull": "Chưa cập nhật",
         "seeDetailCV": "Xem cv",
@@ -63,7 +66,8 @@
         "textChangeStatus": "Đổi trạng thái",
         "textCancel": "Hủy",
         "textChange": "Thay đổi",
-        "textNotification": "Thông báo"
+        "textNotification": "Thông báo",
+        "textDownload":"Tải hồ sơ"
     },
     "RegisterStudentComponent": {
         "titleRegisterStudent": "Đăng ký sinh viên",
@@ -167,6 +171,7 @@
         "textAccountAuthen":"Xác thực tài khoản"
     },
     "ManageJobApply": {
+        "manageJobApply":"Quản lý hồ sơ ứng tuyển",
         "textReceived": "Đã nhận",
         "textIn_progress": "Đang xử lý",
         "textNot_meet_standard_quality": "Xem xét",
