@@ -63,7 +63,7 @@ export default function JobApplyPage() {
   }
 
   const onSuccess = () => {
-    if (profile && fileName) {
+    if (profile) {
       axios({
         method: 'PUT',
         url: `${SERVER_ADDRESS}api/job/update`,
@@ -74,7 +74,7 @@ export default function JobApplyPage() {
       }).then((res) => {
         setIsAnonymous(true)
         navigate(-1)
-        toast.success(t('JobApplyScreen.jobApplyScreenUpdateSuccess'))
+        toast.success(t('JobApplyScreen.jobApplyScreenChangeSuccessTextContent'))
         sessionStorage.removeItem(PROFILE_ID)
         sessionStorage.removeItem(CVURL)
       }).catch((error)=>{
