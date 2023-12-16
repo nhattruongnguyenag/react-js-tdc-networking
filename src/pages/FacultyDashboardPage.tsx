@@ -79,49 +79,49 @@ export default function FacultyDashboardPage() {
       <Header />
 
       {
-        userLogin?.roleCodes !== TYPE_POST_BUSINESS ? <div className='main-content'>
+        userLogin?.roleCodes !== TYPE_POST_BUSINESS ? <div className='main-content bg-lightblue theme-dark-bg'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
-              <div className='row feed-body'>
-                <div className='col-xl-8 col-xxl-9 col-lg-8'>
-                  {/* Skeleton */}
-                  {
-                    isLoading && <div>
-                      <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
-                        <CustomizeSkeleton />
-                      </div>
-                      <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
-                        <CustomizeSkeleton />
-                      </div>
+              <div className='middle-wrap'>
+                {/* Skeleton */}
+                {
+                  isLoading && <div>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
                     </div>
-                  }
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
+                    </div>
+                  </div>
+                }
 
-                  {/* Modal */}
-                  {
+                {/* Modal */}
+                {
 
-                    userLogin?.roleCodes !== TYPE_POST_BUSINESS && <CreatePostSelector
-                      id={userLogin?.id ?? 0}
-                      group={userLogin?.facultyGroupId ?? 0}
-                      avatar={userLogin?.image ?? ''}
-                      name={userLogin?.name ?? ''}
-                      groupName={code}
-                    />
-                  }
-                  {/* Render post */}
-                  {data?.data.map((item: any) => renderItem(item))}
-                </div>
+                  userLogin?.roleCodes !== TYPE_POST_BUSINESS && <CreatePostSelector
+                    id={userLogin?.id ?? 0}
+                    group={userLogin?.facultyGroupId ?? 0}
+                    avatar={userLogin?.image ?? ''}
+                    name={userLogin?.name ?? ''}
+                    groupName={code}
+                  />
+                }
+                {/* Render post */}
+                {data?.data.map((item: any) => renderItem(item))}
               </div>
             </div>
           </div>
-        </div> : <div className='main-content'>
+        </div> : <div className='main-content bg-lightblue theme-dark-bg'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
-              <div className='row feed-body'>
-                <div className='col-xl-8 col-xxl-9 col-lg-8'>
-                  <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4 text-center'>
-                    {
-                      TEXT_WARNING_AREA_BY_ROLE
-                    }
+              <div className='middle-wrap'>
+                <div className='row feed-body'>
+                  <div className='col-xl-8 col-xxl-9 col-lg-8'>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4 text-center'>
+                      {
+                        TEXT_WARNING_AREA_BY_ROLE
+                      }
+                    </div>
                   </div>
                 </div>
               </div>
