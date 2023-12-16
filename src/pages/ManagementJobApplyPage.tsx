@@ -88,6 +88,10 @@ export default function ManagementJobApplyPage() {
                   <div className='ml-[-320px] mt-[-100px] flex h-screen items-center justify-center'>
                     <Loading />
                   </div>
+                ) : data?.data.length == 0 ? (
+                  <div className='text-center mt-3'>
+                    <p className='text-black fw-600'>{t('ManageJobApply.textListJobNull')}</p>
+                  </div>
                 ) : (
                   <div className='card-body p-lg-5 w-100 border-0 p-2'>
                     {data?.data.map(
@@ -110,13 +114,13 @@ export default function ManagementJobApplyPage() {
                                 )}
                               </div>
                               <div className='content-job-apply'>
-                                <h1 className='fw-900 title text-black text-p'>{item.jobTitle}</h1>
-                                <h1 className='fw-900 title text-black text-p'>
+                                <h1 className='fw-900 title text-p text-black'>{item.jobTitle}</h1>
+                                <h1 className='fw-900 title text-p text-black'>
                                   {item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
                                 </h1>
                                 <div className='datetime'>
                                   <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
-                                  <p className='fw-600 mb-0 ms-2 text-p'>{formatDateTime(item.createdAt)}</p>
+                                  <p className='fw-600 text-p mb-0 ms-2'>{formatDateTime(item.createdAt)}</p>
                                 </div>
                               </div>
                             </div>
