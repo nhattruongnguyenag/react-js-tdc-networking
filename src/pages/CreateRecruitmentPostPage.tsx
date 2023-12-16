@@ -110,7 +110,7 @@ export default function CreateRecruitmentPostPage() {
   const [updateRecruitmentPostRequest, updateRecruitmentPostResponse] = useUpdateRecruitmentPostMutation()
   const navigate = useNavigate()
   const { state } = useLocation()
-  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { userLogin, previousPage } = useAppSelector((state) => state.TDCSocialNetworkReducer)
 
   const defaultrecruitmentPostRequest: RecruitmentPostRequest = {
     id: state.id ?? undefined,
@@ -287,14 +287,16 @@ export default function CreateRecruitmentPostPage() {
 
   useEffect(() => {
     if (createRecruitmentPostResponse.data) {
-      navigate(BUSINESS_DASHBOARD_PAGE)
+      console.log(previousPage)
+      navigate(previousPage)
       toast.success('RecruitmentScreen.recruitmentSaveSuccessContent')
     }
   }, [createRecruitmentPostResponse])
 
   useEffect(() => {
     if (updateRecruitmentPostResponse.data) {
-      navigate(BUSINESS_DASHBOARD_PAGE)
+      console.log(previousPage)
+      navigate(previousPage)
       toast.success('RecruitmentScreen.recruitmentUpdateSuccessContent')
     }
   }, [updateRecruitmentPostResponse])

@@ -67,28 +67,28 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
     let options: MenuOptionItem[] = [
       {
         type: ACCEPT_POST,
-        name: t('HeaderPostApproveItem.acceptMenuItem'),
+        name: t('ModalPostRejectReason.acceptPostMenuItem'),
         visible: props.type === POST_APPROVAL
       },
       {
         type: REJECT_POST,
-        name: t('HeaderPostApproveItem.rejectMenuItem'),
+        name: t('ModalPostRejectReason.rejectPostMenuItem'),
         visible: props.type === POST_APPROVAL,
         color: 'red'
       },
       {
         type: REJECT_POST_DETAIL,
-        name: t('HeaderPostApproveItem.rejectDetail'),
+        name: t('ModalPostRejectReason.rejectDetail'),
         visible: props.type === POST_REJECT
       },
       {
         type: UPDATE_POST,
-        name: t('HeaderPostApproveItem.editPost'),
+        name: t('ModalPostRejectReason.pendingPostUpdate'),
         visible: props.type === POST_REJECT || props.type === POST_PENDING
       },
       {
         type: DELETE_POST,
-        name: t('HeaderPostApproveItem.deletePost'),
+        name: t('ModalPostRejectReason.pendingPostDelete'),
         visible: props.type === POST_REJECT || props.type === POST_PENDING,
         color: 'red'
       }
@@ -141,7 +141,7 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
   const onUpdatePost = (post?: PostResponseModel) => {
     if (post) {
       dispatch(setPreviousPage(location.pathname))
-
+      console.log(location.pathname)
       if (isRecruitmentPost(props.post)) {
         navigate(CREATE_RECRUITMENT_POST_PAGE, { state: props.post })
       } else if (isSurveyPost(props.post)) {
@@ -158,7 +158,7 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
 
   useEffect(() => {
     if (acceptPostResponse.data) {
-      toast(t('HeaderPostApproveItem.acceptPostSuccess'))
+      toast(t('ModalPostRejectReason.acceptSuccessageMessage'))
     }
   }, [acceptPostResponse.data])
 

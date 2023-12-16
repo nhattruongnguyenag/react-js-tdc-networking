@@ -84,7 +84,7 @@ export const TDCSocialNetworkSlice = createSlice({
     toggleDarkMode: (state, action: PayloadAction<void>) => {
       state.darkMode = !state.darkMode
     },
-    setUserLogin: (state, action: PayloadAction<Student | Faculty | Business>) => {
+    setUserLogin: (state, action: PayloadAction<Student | Faculty | Business | null>) => {
       state.userLogin = action.payload
     },
     setDeviceToken: (state, action: PayloadAction<string>) => {

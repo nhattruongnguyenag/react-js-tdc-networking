@@ -35,7 +35,11 @@ export default function CreatePostSelector(props: Readonly<CreatePostSelectorTyp
 
   const startAddSurveyPost = () => {
     dispatch(setPreviousPage(location.pathname))
-    navigate(CREATE_SURVEY_POST_PAGE)
+    navigate(CREATE_SURVEY_POST_PAGE, {
+      state: {
+        group: props.group
+      }
+    })
   }
 
   const startAddRecruitmentPost = () => {

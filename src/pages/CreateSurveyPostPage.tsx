@@ -89,13 +89,15 @@ export default function CreateSurveyPostPage() {
 
       dispatch(setQuestionValidates(validates))
     } else {
-      dispatch(
-        setSurveyPostRequest({
-          ...surveyPostRequest,
-          userId: userLogin?.id ?? -1,
-          groupId: 1
-        })
-      )
+      if (state && state.group) {
+        dispatch(
+          setSurveyPostRequest({
+            ...surveyPostRequest,
+            userId: userLogin?.id ?? -1,
+            groupId: state.group
+          })
+        )
+      }
     }
   }, [])
 
