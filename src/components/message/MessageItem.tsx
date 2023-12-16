@@ -4,6 +4,7 @@ import moment from 'moment'
 import 'photoswipe/dist/photoswipe.css'
 import { Fragment } from 'react'
 import { Gallery, Item } from 'react-photoswipe-gallery'
+import { IMAGE_URL } from '../../constants/Path'
 import { MESSAGE_ITEM_STATUS_RECEIVED, MESSAGE_ITEM_STATUS_SEEN, MESSAGE_SENDING_STATUS } from '../../constants/StringVietnamese'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { useAppSelector } from '../../redux/Hook'
@@ -106,7 +107,7 @@ export default function MessageItem(props: MessageItemProps) {
         <div className='message-user'>
           <figure className='avatar mb-2 mt-2'>
             {props.data.receiver.image ? (
-              <img src='assets/images/user-12.png' alt='user' className='me-2 w-12' />
+              <img src={IMAGE_URL + props.data.receiver.image} alt='user' className='me-2 w-12' />
             ) : (
               <div
                 className={classNames(
