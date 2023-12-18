@@ -166,8 +166,8 @@ const CustomizePost = (props: Post) => {
         handleSavePost();
         break;
       case CLICK_UN_SAVE_POST_EVENT:
-        handleSavePost();
         props.handleUnSave(props.id);
+        handleSavePost();
         break;
       case CLICK_DELETE_POST_EVENT:
         handleDeletePostEvent();
@@ -175,8 +175,8 @@ const CustomizePost = (props: Post) => {
       case CLICK_SEE_LIST_CV_POST_EVENT:
         handleSeeListCvPost(props.id, props.title || '');
         break
-        case CLICK_SEE_RESULT_POST_EVENT:
-          navigate(`${SURVEY_RESULT_PAGE}/${slugify(props.title ?? '')}-${props.id}`)
+      case CLICK_SEE_RESULT_POST_EVENT:
+        navigate(`${SURVEY_RESULT_PAGE}/${slugify(props.title ?? '')}-${props.id}`)
         break
       default:
         return '';

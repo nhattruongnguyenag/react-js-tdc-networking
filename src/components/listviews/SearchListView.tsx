@@ -6,21 +6,16 @@ import { LikeAction } from '../../types/LikeActions'
 
 export interface SearchListViewProps {
   data: any
-  type: string
+  sub: string
   handleFollow: (userId: number) => void
+  likeAction: (obj: LikeAction) => void;
+  handleUnSave: (userId: number) => void;
+  handleDelete: (userId: number) => void;
 }
-// id={item.id} image={item.image} name={item.name} isFollow={item.isFollow} handleFollow={handleFollow}
-export default function SearchListView({ data, type, handleFollow }: SearchListViewProps) {
-  const likeAction = (obj: LikeAction) => {
-    // obj.code = TYPE_POST_BUSINESS
-    // like(obj)
-  }
-  const handleUnSave = () => {
-    // obj.code = TYPE_POST_BUSINESS
-    // like(obj)
-  }
+export default function SearchListView({ data, sub, handleFollow, handleUnSave, handleDelete, likeAction }: SearchListViewProps) {
+
   const checkType = () => {
-    switch (type) {
+    switch (sub) {
       case 'user':
         return data.map((item: any) => (
           <UserItem
@@ -62,8 +57,9 @@ export default function SearchListView({ data, type, handleFollow }: SearchListV
                   description={item.description ?? null}
                   isConduct={item.isConduct ?? null}
                   isSave={item.isSave}
-                  group={''} 
-                  handleUnSave={handleUnSave}                />
+                  group={''}
+                  handleUnSave={handleUnSave}
+                />
               ))}
           </>
         )
@@ -75,7 +71,7 @@ export default function SearchListView({ data, type, handleFollow }: SearchListV
   }
   return (
     <div className=''>
-      <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 630 }}>
+      <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 590 }}>
         {checkType()}
       </div>
     </div>

@@ -13,6 +13,7 @@ import { NotificationModel } from '../types/response/NotificationModel'
 import { useGetNotificationsUserByIdQuery } from '../redux/Service'
 import { useAppSelector } from '../redux/Hook'
 import { useTranslation } from 'react-multi-lang'
+import NotificationListView from './listviews/NotificationListView'
 interface NotificationPopupProps {
   show?: boolean
 }
@@ -23,11 +24,17 @@ export default function NotificationPopup(props: NotificationPopupProps) {
   const { data, isFetching } = useGetNotificationsUserByIdQuery(
     {
       id: userLogin?.id ?? -1
-    }, 
+    },
     {
       pollingInterval: 1000
     }
   )
+  const [arr, setArr] = useState<NotificationModel[]>()
+
+  useEffect(() => {
+    // setIsLoading(false)
+    setArr(data?.data)
+  }, [isFetching])
 
   const handleAllIsRead = () => {
     axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus/all`, {
@@ -35,13 +42,13 @@ export default function NotificationPopup(props: NotificationPopupProps) {
     })
   }
 
-  const handleIsRead = (id: number) => {
+  const handleItem = (id: number) => {
     axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus`, {
       id: id,
       userId: userLogin?.id ?? -1
     })
   }
-
+  //Danh dau chua doc
   const handleIsNotRead = (id: number) => {
     axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus/makeNotSeen`, {
       id: id,
@@ -63,35 +70,33 @@ export default function NotificationPopup(props: NotificationPopupProps) {
       <div
         key={item.id}
         className='card bg-transparent-card w-100 itemNotification mb-0 border-0 ps-0'
-        style={{ background: item.status == '0' ? '#f5f5f5' : '#fff', flexDirection: 'row', padding: 10 }}
-        onClick={() => handleIsRead(item.id)}
+        style={{ background: item.status == '0' ? '#e6e6e6' : '#fff', flexDirection: 'row', padding: 10 }}
+        onClick={() => handleItem(item.id)}
       >
-        <img src='/assets/images/user-8.png' alt='user' style={{ width: 60, height: 60, marginLeft: 10 }} />
-        <div style={{ paddingLeft: 10, width: 250 }}>
-          <h5 className='font-xsss text-grey-900 fw-700 d-block mb-1 mt-1' style={{ width: 225 }}>
-            Hanna
-            <span className='text-grey-400 font-xsssss fw-600 float-right mt-1'>
-              {moment(item.createdAt).fromNow()}
-            </span>
+        <img src='/assets/images/user-8.png' alt='user' className='image_item' />
+        <div className='content_item'>
+          <h5 className='text-grey-900 fw-500 font-xsss lh-4 txt_content' >
+            Lorem
+            {/* {item.content.length > 100 ? `${item.content.substring(0, 100)}...` : item.content} */}
           </h5>
-          <h6 className='text-grey-500 fw-500 font-xssss lh-4' style={{ maxLines: 2 }}>
-            {item.content.length > 100 ? `${item.content.substring(0, 100)}...` : item.content}
+          <h6 className='font-xssss text-grey-500 fw-500 d-block mb-1 mt-1 txt_name'>
+            {moment(item.createdAt).fromNow()}
           </h6>
         </div>
         <Menu
           menuButton={
-            <MenuButton style={{ width: 30, height: 50, borderRadius: 30 }}>
-              <FaEllipsisV style={{ position: 'absolute', fontSize: 17, marginLeft: 7 }} />
+            <MenuButton className='menu_btn '>
+              <FaEllipsisV />
             </MenuButton>
           }
           transition
         >
           <MenuItem onClick={() => handleIsNotRead(item.id)}>
-            <FaBullhorn style={{ marginRight: 20 }} />
+            <FaBullhorn className='icon_option' />
             {t('NotificationsComponent.unReadNotification')}
           </MenuItem>
           <MenuItem onClick={() => handleDelNotification(item.id)}>
-            <FaTimes style={{ marginRight: 20 }} />
+            <FaTimes className='icon_option' />
             {t('NotificationsComponent.deleteNotification')}
           </MenuItem>
         </Menu>
@@ -102,12 +107,12 @@ export default function NotificationPopup(props: NotificationPopupProps) {
   return (
     <div
       className={classNames(
-        'dropdown-menu notification-dropdown rounded-xxl right-0 border-0 p-4 shadow-lg',
+        'dropdown-menu notification-dropdown rounded-xxl right-0 border-0 p-4 shadow-lg ',
         props.show ? 'show' : ''
       )}
       aria-labelledby='dropdownMenu3'
     >
-      <h4 className='fw-700 font-xss mb-2'>{t('NotificationsComponent.notification')}</h4>
+      <h4 className='fw-700 font-xss mb-2 title_notification'>{t('NotificationsComponent.notification')}</h4>
       <div className='mb-3'>
         <button
           onClick={handleAllIsRead}
@@ -120,15 +125,20 @@ export default function NotificationPopup(props: NotificationPopupProps) {
             paddingLeft: 10,
             paddingRight: 10,
             fontSize: 13,
+            marginLeft: 10,
             fontWeight: 'bold'
           }}
         >
           {t('NotificationsComponent.readAll')}
         </button>
       </div>
-      <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 700 }}>
-        {data?.data.map((notification) => notificationItems(notification))}
-      </div>
+      <NotificationListView
+        data={arr}
+        handleItem={handleItem}
+        handleDelNotification={handleDelNotification}
+        handleIsNotRead={handleIsNotRead}
+      // handleItemCanNotClick={handleItemCanNotClick} 
+      />
     </div>
   )
 } 
