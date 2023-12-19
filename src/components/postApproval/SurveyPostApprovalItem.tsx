@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { SURVEY_DETAILS_PAGE, USER_DETAILS_PAGE } from '../../constants/Page'
-import { SurveyPostResponseModel } from '../../types/response/SurveyResponsePostModal'
+import { SurveyPostResponseModel } from '../../types/response/SurveyPostResponseModel'
 import { slugify } from '../../utils/CommonUtls'
 import CustomizeSurveyPost from '../surveyPost/CustomizeSurveyPost'
 import { useTranslation } from 'react-multi-lang'

@@ -3,7 +3,7 @@ import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { COLOR_BTN_BLUE } from '../../constants/Color'
-import { CLICK_SAVE_POST_EVENT, CLICK_DELETE_POST_EVENT, CLICK_SEE_LIST_CV_POST_EVENT, CLICK_SEE_RESULT_POST_EVENT, GO_TO_PROFILE_ACTIONS, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST, CLICK_UN_SAVE_POST_EVENT, CLICK_UPDATE_POST_EVENT } from '../../constants/Variables'
+import { CLICK_SAVE_POST_EVENT, CLICK_DELETE_POST_EVENT, CLICK_SEE_LIST_CV_POST_EVENT, CLICK_SEE_RESULT_POST_EVENT, GO_TO_PROFILE_ACTIONS, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST, CLICK_UN_SAVE_POST_EVENT, CLICK_UPDATE_POST_EVENT, NUMBER_POST_UN_ACTIVE, NUMBER_POST_HAD_SAVE, NUMBER_POST_UN_SAVE } from '../../constants/Variables'
 import DefaultAvatar from '../common/DefaultAvatar'
 import { TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
 import { useAppSelector } from '../../redux/Hook'
@@ -22,6 +22,7 @@ export interface HeaderPostPropsType {
   type: string | null,
   role: string,
   isSave: number,
+  active: number,
   handleClickMenuOption: (flag: number) => void,
   handleClickIntoAvatarAndNameAndMenuEvent: (flag: number) => void,
 }
@@ -33,12 +34,12 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
       {
         type: CLICK_SAVE_POST_EVENT,
         name: props.t("MenuOption.menuOptionSaveArticle"),
-        visible: props.isSave === 0 && userLogin?.id !== props.userId
+        visible: props.isSave === NUMBER_POST_UN_SAVE && userLogin?.id !== props.userId
       },
       {
         type: CLICK_UN_SAVE_POST_EVENT,
         name: props.t("MenuOption.menuOptionUnSaveArticle"),
-        visible: props.isSave === 1
+        visible: props.isSave === NUMBER_POST_HAD_SAVE
       }
     ];
 
@@ -46,15 +47,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
       options.push({
         type: CLICK_UPDATE_POST_EVENT,
         name: props.t("MenuOption.menuOptionUpdateArticle"),
-        visible: true
-      });
-    }
-
-    if (userLogin?.id === props.userId) {
-      options.push({
-        type: CLICK_DELETE_POST_EVENT,
-        name: props.t("MenuOption.menuOptionDeleteArticle"),
-        visible: true
+        visible: props.active === NUMBER_POST_UN_ACTIVE
       });
     }
 
@@ -74,8 +67,16 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
       });
     }
 
+    if (userLogin?.id === props.userId) {
+      options.push({
+        type: CLICK_DELETE_POST_EVENT,
+        name: props.t("MenuOption.menuOptionDeleteArticle"),
+        visible: true
+      });
+    }
+
     return options;
-  }, [props.isSave, props.userId, props.type, props.t]);
+  }, [props.isSave, props.userId, props.type, props.t, props.active]);
 
   return (
     <div className='card-body d-flex w-100 m-0 p-0'>
@@ -100,7 +101,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
           {' '}
           {props.name}{' '}
           {props.role !== TYPE_POST_STUDENT && (
-            <span>
+            <span className='showTypePost'>
               <FontAwesomeIcon icon={faCheckCircle} size='lg' color={COLOR_BTN_BLUE} />
             </span>
           )}

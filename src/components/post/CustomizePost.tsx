@@ -253,6 +253,7 @@ const CustomizePost = (props: Post) => {
               handleClickMenuOption={handleClickMenuOption}
               handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
               isSave={props.isSave}
+              active={props.active}
             />
             {/* Body */}
             <CustomizeBodyPost t={t} content={props.content} />
@@ -323,6 +324,7 @@ const CustomizePost = (props: Post) => {
               handleClickMenuOption={handleClickMenuOption}
               handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
               isSave={props.isSave}
+              active={props.active}
             />
             <CustomizeRecruitmentPost
               id={props.id}
@@ -404,6 +406,7 @@ const CustomizePost = (props: Post) => {
             handleClickMenuOption={handleClickMenuOption}
             handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
             isSave={props.isSave}
+            active={props.active}
           />
           <CustomizeSurveyPost
             id={props.id}

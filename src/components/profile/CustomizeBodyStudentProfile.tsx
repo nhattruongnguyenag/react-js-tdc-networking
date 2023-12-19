@@ -4,7 +4,6 @@ import { faBriefcase, faPhone, faEnvelope, faUserPlus, faBars, faPaste, faUserMi
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 import { COLOR_BLACK, COLOR_WHITE } from '../../constants/Color'
 import { CALL_ACTION, CHANGE_INFO_USER_CLICK_ACTION, FOLLOW_ACTION, MENU_CLICK_ACTION, MESSENGER_ACTION } from '../../constants/Variables';
-import { TEXT_EMAIL, TEXT_PHONE, TEXT_POSITION, TEXT_POST } from '../../constants/StringVietnamese';
 import { useTranslation } from 'react-multi-lang';
 export interface StudentProfileType {
     t:ReturnType<typeof useTranslation>,

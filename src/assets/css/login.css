@@ -95,6 +95,7 @@ h4 {
   padding: 10px !important;
   border-radius: 10px !important;
   padding-left: 20px;
+  width: 400px;
 }
 
 .bg-recruitment:active {
@@ -154,7 +155,7 @@ h4 {
   content: '';
   width: 4px;
   height: 4px;
-  background-color: black;
+  background-color: #000;
   position: absolute;
   border-radius: 50%;
   left: -5px;
@@ -174,6 +175,8 @@ h4 {
 /* css list job apply */
 .item-job-apply {
   display: flex;
+}
+.group-job-apply {
   background-color: #fff;
   box-shadow: 2px 2px 5px 3px #E0F4FF;
   border-radius: 10px;
@@ -192,6 +195,7 @@ h4 {
 
 .date {
   text-align: right;
+  margin-top: 0;
 }
 
 .tam {
@@ -221,17 +225,17 @@ h4 {
 }
 
 .download {
-  color: #fff;
-  background-color: #3cb371;
+  color: #3cb371;
   font-weight: bold;
-  padding: 5px;
-  margin-left: 20px;
-  border-radius: 10px;
+  padding: 3px;
+  border-radius: 5px;
 }
 
 .download:hover {
   color: #fff;
+  background-color: #61d897;
   box-shadow: 2px 2px 5px #3cb371 !important;
+  border-color: #fff;
 }
 
 h1,
@@ -255,5 +259,28 @@ h2 {
 
 .element.style {
   border-color: rgb(238, 238, 238);
+}
+
+.btnBottom{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.css-b62m3t-container{
+  width: 70%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+  border-color: #000;
+}
+
+.css-1dimb5e-singleValue {
+  font-weight: bold;
+}
+
+.text-p{
+  word-break: break-all;
 }
 

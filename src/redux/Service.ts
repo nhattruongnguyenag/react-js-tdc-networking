@@ -14,6 +14,10 @@ import { QuestionResponse, SurveyResponse } from '../types/response/QuestionResp
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 import { FollowUserModel } from '../types/response/FollowUserModel'
 import { SurveyItemResult } from '../types/response/SurveyResult'
+import { JobApplyRespose } from '../types/response/JobApplyResponse'
+import { JobApplyResponseData } from '../types/response/JobApplyResponseData'
+import { JobApplyUpdateRequest } from '../types/request/JobApplyUpdateRequest'
+import { JobUpdateStatus } from '../types/request/JobUpdateStatus'
 import { PostSavedModel } from '../types/response/PostSavedModel'
 import { PostResponseModel } from '../types/response/PostResponseModel'
 import { PostSearchRequest } from '../types/request/PostSearchRequest'
@@ -149,11 +153,30 @@ export const TDCSocialNetworkAPI = createApi({
         url: `api/posts/survey/${surveyPostId}/result`
       })
     }),
+    getJobProfile: builder.query<Data<JobApplyRespose[]>, number | undefined>({
+      query: (userId) => ({
+        url: `api/job/user/${userId}`
+      })
+    }),
+    getProfileApply: builder.query<Data<JobApplyResponseData[]>, number | undefined>({
+      query: (postId) => ({
+        url: `api/job/post/${postId}`
+      })
+    }),
+    jobApplyUpdate: builder.mutation<MessageResponseData, JobApplyUpdateRequest | JobUpdateStatus>({
+      query: (data) => ({
+        url: 'api/job/update',
+        method: 'PUT',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      })
+    }),
     getPosts: builder.query<Data<PostResponseModel[]>, PostSearchRequest>({
-      query: (data) => (
-        {
-          url: `api/posts/search?${buildPostSearchRequest(data)}`
-        }),
+      query: (data) => ({
+        url: `api/posts/search?${buildPostSearchRequest(data)}`
+      }),
       providesTags: (result) => {
         if (result) {
           return [
@@ -188,10 +211,9 @@ export const TDCSocialNetworkAPI = createApi({
       invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: 'LIST' }])
     }),
     getPostRejectLog: builder.query<Data<PostRejectedLog>, { postId: number }>({
-      query: (data) => (
-        {
-          url: `api/approval/log/post/${data.postId}`
-        })
+      query: (data) => ({
+        url: `api/approval/log/post/${data.postId}`
+      })
     }),
     deletePost: builder.mutation<MessageResponseData, { postId: number }>({
       query: (data) => ({
@@ -205,10 +227,9 @@ export const TDCSocialNetworkAPI = createApi({
       invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: 'LIST' }])
     }),
     getRecruitmentPostUpdate: builder.query<RecruitmentPost, { postId: number }>({
-      query: (data) => (
-        {
-          url: `api/posts/recruitment/${data.postId}/update`
-        })
+      query: (data) => ({
+        url: `api/posts/recruitment/${data.postId}/update`
+      })
     }),
     updateRecruitmentPost: builder.mutation<MessageResponseData, RecruitmentPost>({
       query: (data) => ({
@@ -222,10 +243,9 @@ export const TDCSocialNetworkAPI = createApi({
       invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: data.id }])
     }),
     getSurveyPostUpdate: builder.query<Data<SurveyPostRequest>, { postId: number }>({
-      query: (data) => (
-        {
-          url: `api/posts/survey/${data.postId}/update`
-        })
+      query: (data) => ({
+        url: `api/posts/survey/${data.postId}/update`
+      })
     }),
     updateSurveyPost: builder.mutation<MessageResponseData, SurveyPostRequest>({
       query: (data) => ({
@@ -244,6 +264,9 @@ export const TDCSocialNetworkAPI = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useJobApplyUpdateMutation,
+  useGetJobProfileQuery,
+  useGetProfileApplyQuery,
   useGetListPostSavedQuery,
   useGetFollowerUserQuery,
   useGetSurveyResultQuery,

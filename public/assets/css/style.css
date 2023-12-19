@@ -13959,11 +13959,6 @@ strong,
 
 @media (min-width: 992px) {
   .navigation .nav-content ul {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: column;
@@ -13971,6 +13966,10 @@ strong,
     -moz-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+  }
+
+  .navigation {
+    display: none;
   }
 }
 
@@ -14207,8 +14206,6 @@ strong,
     -ms-flex-positive: 1;
     flex-grow: 1;
     padding-top: 90px;
-    padding-left: 350px;
-    padding-right: 290px;
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;

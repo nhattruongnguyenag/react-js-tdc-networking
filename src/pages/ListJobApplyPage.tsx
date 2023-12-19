@@ -5,65 +5,89 @@ import '../assets/css/login.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faFilePdf, faPhoneVolume } from '@fortawesome/free-solid-svg-icons'
 import { getIdFromSlug, slugify } from '../utils/CommonUtls'
-import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import DefaultAvatar from '../components/common/DefaultAvatar'
 import { formatDateTime } from '../utils/FormatTime'
 import { toast } from 'react-toastify'
 import Loading from '../components/common/Loading'
-import {
-  TEXT_NOTIFICATION_LIST_EMPTY,
-  TEXT_NOTIFICATION_PHONE_NULL,
-  TEXT_SEE_CV,
-  TEXT_TITLE_DOWNLOAD_CV,
-  TEXT_TITLE_LIST_JOB_APPLY
-} from '../constants/StringVietnamese'
-import { BUSINESS_DASHBOARD_PAGE, DETAILS_JOB_APPLY } from '../constants/Page'
+import { DETAILS_JOB_APPLY } from '../constants/Page'
+import { useGetProfileApplyQuery, useJobApplyUpdateMutation } from '../redux/Service'
+import { COLOR_SUCCESS } from '../constants/Color'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+import Select from 'react-select'
+import { t } from 'react-multi-lang'
+
+export interface JobApplyResponseData {
+  status: string
+  isOpen: boolean
+}
+const defaultModal: JobApplyResponseData = {
+  status: 'received',
+  isOpen: false
+}
 
 export default function ListJobApplyPage() {
-  const navigate = useNavigate()
-  const [listJob, setListJob] = useState([
+  const dataType = [
+    { label: t('ListJobApplyComponent.textReceived'), value: 'received' },
+    { label: t('ListJobApplyComponent.textIn_progress'), value: 'in_progress' },
+    { label: t('ListJobApplyComponent.textNot_meet_standard_quality'), value: 'not_meet_standard_quality' },
+    { label: t('ListJobApplyComponent.textInterview'), value: 'interview' },
     {
-      id: 0,
-      createdAt: '',
-      user: {
-        image: '',
-        name: '',
-        phone: '',
-        email: ''
-      },
-      cvUrl: ''
-    }
-  ])
-  const [isLoading, setIsLoading] = useState(false)
+      label: t('ListJobApplyComponent.textInterview_not_meet_standard_quality'),
+      value: 'interview_not_meet_standard_quality'
+    },
+    { label: t('ListJobApplyComponent.textAccept'), value: 'accept' }
+  ]
+  const navigate = useNavigate()
   const { slug } = useParams()
   const postId = getIdFromSlug(slug ?? '')
-
-  useEffect(() => {
-    if (postId) {
-      setIsLoading(true)
-      axios
-        .get(SERVER_ADDRESS + 'api/job/post/' + postId)
-        .then((response) => {
-          setIsLoading(false)
-          setListJob(response.data.data)
-        })
-        .catch((error) => {
-          setIsLoading(false)
-          console.log(error)
-        })
-    }
-  }, [postId])
-
-  useEffect(() => {
-    if (listJob.length == 0) {
-      navigate(-1)
-      toast(TEXT_NOTIFICATION_LIST_EMPTY)
-    }
+  const [value, setValue] = useState('received')
+  const [item, setItem] = useState(t('ListJobApplyComponent.textReceived'))
+  const [modalVisible, setModalVisible] = useState<JobApplyResponseData>(defaultModal)
+  const [jobApplyUpdateRequest, jobApplyUpdateResponse] = useJobApplyUpdateMutation()
+  const { data, isLoading } = useGetProfileApplyQuery(postId || -1, {
+    pollingInterval: 1000
   })
+  const openModal = (status: string) => {
+    setModalVisible({
+      status: status,
+      isOpen: true
+    })
+  }
+
+  const closeModal = () => {
+    setModalVisible({
+      status: 'received',
+      isOpen: false
+    })
+  }
+
+  useEffect(() => {
+    if (data?.data.length == 0) {
+      toast(t('ListJobApplyComponent.listEmpty'))
+    }
+  },[data?.data])
+
   const handleBtnJobApply = (username: string, cvID: number) => {
     navigate(`${DETAILS_JOB_APPLY}/${slugify(username)}-${cvID}`)
   }
+
+  const handleChangeStatusJob = (profileId: number) => {
+    jobApplyUpdateRequest({
+      profileId: profileId,
+      status: modalVisible.status
+    })
+    setModalVisible({
+      status: 'received',
+      isOpen: false
+    })
+  }
+  useEffect(() => {
+    if (jobApplyUpdateResponse.isSuccess || jobApplyUpdateResponse.data) {
+      alert(t('ListJobApplyComponent.textChangeSucces'))
+    }
+  }, [jobApplyUpdateResponse])
 
   return (
     <Fragment>
@@ -75,69 +99,139 @@ export default function ListJobApplyPage() {
               <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                 <i className='ti-arrow-left font-sm text-white' />
               </button>
-              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{TEXT_TITLE_LIST_JOB_APPLY}</h4>
+              <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{t('ListJobApplyComponent.listJobApply')}</h4>
             </div>
+            <Select
+              defaultValue={dataType[0]}
+              options={dataType}
+              getOptionValue={(option) => option.value}
+              getOptionLabel={(option) => option.label}
+              onChange={(item) => {
+                setValue(item?.value ?? '')
+                setItem(item?.label ?? '')
+              }}
+            />
+
             {isLoading ? (
               <div className='ml-[-320px] mt-[-100px] flex h-screen items-center justify-center'>
                 <Loading />
               </div>
             ) : (
               <div className='card-body p-lg-5 w-100 border-0 p-2'>
-                {listJob.map((item, index) => (
-                  <div className='item-job-apply' key={index}>
-                    <div className='tam'>
-                      <div className='img-job-apply'>
-                        {item.user.image == '' ? (
-                          <DefaultAvatar
-                            name={item.user.name.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
-                            size={80}
-                            styleBootstrap={'defaultImage'}
-                          />
-                        ) : (
-                          <img
-                            src={item.user.image ? SERVER_ADDRESS + 'api/images/' + item.user.image : ''}
-                            className='avatar p-0'
-                            alt='avatar'
-                          />
-                        )}
-                      </div>
-                      <div className='content-job-apply'>
-                        <h1 className='fw-900 text-black title'>
-                          {item.user.name.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
-                        </h1>
-                        <div className='item-job'>
-                          <FontAwesomeIcon icon={faPhoneVolume} />
-                          {item.user.phone === null ? (
-                            <p className='fw-500 ms-2 mb-0 text-black'>{TEXT_NOTIFICATION_PHONE_NULL}</p>
-                          ) : (
-                            <p className='fw-500 ms-2 mb-0 text-black'>{item.user.phone}</p>
-                          )}
+                {data?.data.map(
+                  (data, index) =>
+                    data.status === value && (
+                      <div className='group-job-apply' key={index}>
+                        <div className='item-job-apply'>
+                          <div className='tam'>
+                            <div className='img-job-apply'>
+                              {data.studentAvatar == null ? (
+                                <DefaultAvatar
+                                  name={data.studentName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
+                                  size={80}
+                                  styleBootstrap={'defaultImage'}
+                                />
+                              ) : (
+                                <img
+                                  src={data.studentAvatar ? SERVER_ADDRESS + 'api/images/' + data.studentAvatar : ''}
+                                  className='avatar p-0'
+                                  alt='avatar'
+                                />
+                              )}
+                            </div>
+                            <div className='content-job-apply'>
+                              <h1 className='fw-900 title text-black text-p'>
+                                {data.studentName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
+                              </h1>
+                              <h1 className='fw-900 title text-black text-p'>{data.jobTitle}</h1>
+                              <div className='item-job'>
+                                <FontAwesomeIcon icon={faPhoneVolume} />
+                                {data.phone == null ? (
+                                  <p className='fw-500 mb-0 ms-2 text-black text-p'>{t('ListJobApplyComponent.updateNull')}</p>
+                                ) : (
+                                  <p className='fw-500 mb-0 ms-2 text-black text-p'>{data.phone}</p>
+                                )}
+                              </div>
+                              <div className='item-job'>
+                                <FontAwesomeIcon icon={faEnvelope} />
+                                <p className='fw-500 txt mb-0 ms-2 text-black text-p'>{data.email}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className='date'>
+                            <p className='fw-600 mb-0 text-p'>{formatDateTime(data.createdAt)}</p>
+                          </div>
                         </div>
-                        <div className='item-job'>
-                          <FontAwesomeIcon icon={faEnvelope} />
-                          <p className='fw-500 txt ms-2 mb-0 text-black'>{item.user.email}</p>
-                        </div>
-                        <div className='item-job'>
-                          <FontAwesomeIcon icon={faFilePdf} />
+                        <div className='btnBottom'>
                           <button
                             type='button'
-                            className='txt text-green ms-2'
-                            onClick={() => handleBtnJobApply(item.user.name, item.id)}
+                            className='txt text-green download ms-2'
+                            onClick={() => handleBtnJobApply(data.studentName, data.id)}
                           >
-                            {TEXT_SEE_CV}
+                            <FontAwesomeIcon icon={faFilePdf} color={COLOR_SUCCESS} />{t('ListJobApplyComponent.seeDetailCV')}
                           </button>
+                          <button className='txt text-green download ms-4' onClick={() => openModal(data.status)}>
+                          {t('ListJobApplyComponent.textChangeStatus')}
+                          </button>
+                          <Modal
+                            show={modalVisible.isOpen}
+                            onHide={closeModal}
+                            aria-labelledby='contained-modal-title-vcenter'
+                            backdrop='static'
+                            keyboard={false}
+                          >
+                            <Modal.Header closeButton>
+                              <Modal.Title>{t('ListJobApplyComponent.textChangeStatus')}</Modal.Title>
+                              <button
+                                style={{ position: 'absolute', top: 10, right: 30 }}
+                                type='button'
+                                className='btn-close-modal-header close font-xl'
+                                onClick={closeModal}
+                              >
+                                <span aria-hidden='true'>&times;</span>
+                              </button>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <select
+                                className='style2-input form-control selectType pe-5 ps-5'
+                                onChange={(e) => {
+                                  setModalVisible({
+                                    status: e.target.value,
+                                    isOpen: true
+                                  })
+                                }}
+                              >
+                                <option hidden value={modalVisible.status}>
+                                  {item}
+                                </option>
+                                {dataType.map((item, index) => (
+                                  <option value={item.value} key={index}>
+                                    {item.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant='secondary' onClick={closeModal}>
+                              {t('ListJobApplyComponent.textCancel')}
+                              </Button>
+                              <Button variant='primary' onClick={() => handleChangeStatusJob(data.id)}>
+                              {t('ListJobApplyComponent.textChange')}
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                          <a
+                            className='download ms-4'
+                            href={SERVER_ADDRESS + 'api/files/' + data.cvUrl}
+                            download={data.cvUrl}
+                          >
+                            {t('ListJobApplyComponent.textDownload')}
+                          </a>
                         </div>
                       </div>
-                    </div>
-
-                    <div className='date'>
-                      <p className='fw-600 mb-0'>{formatDateTime(item.createdAt)}</p>
-                      <a className='download' href={SERVER_ADDRESS + 'api/files/' + item.cvUrl} download={item.cvUrl}>
-                        {TEXT_TITLE_DOWNLOAD_CV}
-                      </a>
-                    </div>
-                  </div>
-                ))}
+                    )
+                )}
               </div>
             )}
           </div>

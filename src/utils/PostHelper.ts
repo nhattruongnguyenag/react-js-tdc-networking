@@ -1,7 +1,7 @@
 import { TYPE_NORMAL_POST, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST } from "../constants/Variables";
 import { PostSearchRequest } from "../types/request/PostSearchRequest";
 import { RecruitmentPostResponseModel } from "../types/response/RecruitmentPostResponseModel";
-import { SurveyPostResponseModel } from "../types/response/SurveyResponsePostModal";
+import { SurveyPostResponseModel } from "../types/response/SurveyPostResponseModel";
 import { TextImagePostResponseModel } from "../types/response/TextImagePostResponseModel";
 
 export function buildPostSearchRequest(postSearchRequest: PostSearchRequest) {

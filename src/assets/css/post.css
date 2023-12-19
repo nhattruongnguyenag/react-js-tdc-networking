@@ -104,12 +104,13 @@
 }
 
 .avatar-wrapper-header {
-  width: 10%;
+  width: 7%;
 }
 
 .text-header-name-wrapper {
-  width: 80%;
+  width: 83%;
 }
+
 
 .button-menu-header-wrapper {
   width: 10%;
@@ -177,6 +178,7 @@
   border-radius: 10px;
   color: black;
   font-weight: 300;
+  margin-left: 5px;
 }
 
 .userLikedWrapper {

@@ -18,9 +18,10 @@ import { SERVER_ADDRESS } from '../constants/SystemConstant';
 import vi from '../translates/vi.json';
 import en from '../translates/en.json';
 import jp from '../translates/jp.json';
-import {setTranslations, useTranslation } from 'react-multi-lang';
+import { setTranslations, useTranslation } from 'react-multi-lang';
 import { getFacultyTranslated } from '../utils/TranslateFaculty';
 import CustomizePost from '../components/post/CustomizePost'
+import { getPostActive } from '../utils/GetPostActive'
 
 setTranslations({ vi, en, jp });
 
@@ -69,117 +70,120 @@ export default function FacultyDashboardPage() {
     // TODO
   }
 
-  const renderItem = (item: any) => (
-    <CustomizePost
-      key={item.id}
-      id={item.id}
-      userId={item.user?.id}
-      name={item.user?.name}
-      avatar={item.user?.image}
-      typeAuthor={TYPE_POST_FACULTY}
-      available={null}
-      timeCreatePost={numberDayPassed(item.createdAt)}
-      content={item.content}
-      type={item.type}
-      likes={item.likes}
-      comments={item.comment}
-      commentQty={item.commentQuantity}
-      images={item.images}
-      role={item.user?.roleCodes}
-      likeAction={likeAction}
-      location={item.location ?? null}
-      title={item.title ?? null}
-      expiration={item.expiration ?? null}
-      salary={item.salary ?? null}
-      employmentType={item.employmentType ?? null}
-      description={item.description ?? null}
-      isConduct={null}
-      isSave={item.isSave}
-      group={code}
-      handleUnSave={handleUnSave}
-    />
-  );
+  const renderItem = (item: any) => {
+    if (getPostActive(item.active)) {
+      return (
+        <CustomizePost
+          key={item.id}
+          id={item.id}
+          userId={item.user?.id}
+          name={item.user?.name}
+          avatar={item.user?.image}
+          typeAuthor={TYPE_POST_FACULTY}
+          available={null}
+          timeCreatePost={numberDayPassed(item.createdAt)}
+          content={item.content}
+          type={item.type}
+          likes={item.likes}
+          comments={item.comment}
+          commentQty={item.commentQuantity}
+          images={item.images}
+          role={item.user?.roleCodes}
+          likeAction={likeAction}
+          location={item.location ?? null}
+          title={item.title ?? null}
+          expiration={item.expiration ?? null}
+          salary={item.salary ?? null}
+          employmentType={item.employmentType ?? null}
+          description={item.description ?? null}
+          isConduct={null}
+          isSave={item.isSave}
+          group={code}
+          handleUnSave={handleUnSave}
+          active={item.active}
+        />
+      )
+    } else {
+      return null;
+    }
+  }
 
   return (
     <>
       <Header />
       {userLogin?.roleCodes !== TYPE_POST_BUSINESS ? (
-        <div className='main-content'>
+        <div className='main-content bg-lightblue theme-dark-bg'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
-              <div className='row feed-body'>
-                <div className='col-xl-8 col-xxl-9 col-lg-8'>
-                  {isLoading && (
-                    <Fragment>
-                      <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
-                        <CustomizeSkeleton />
-                      </div>
-                      <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
-                        <CustomizeSkeleton />
-                      </div>
-                    </Fragment>
-                  )}
-                  {(userLogin?.roleCodes !== TYPE_POST_BUSINESS && userLogin?.roleCodes !== TYPE_POST_STUDENT) && (
-                    <CreatePostSelector
-                      id={userLogin?.id ?? 0}
-                      group={userLogin?.facultyGroupId ?? 0}
-                      avatar={userLogin?.image ?? ''}
-                      name={userLogin?.name ?? ''}
-                      groupName={code}
-                    />
-                  )}
-                  {data?.data.map((item: any) => renderItem(item))}
-                </div>
+              <div className='middle-wrap'>
+                {isLoading && (
+                  <Fragment>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
+                    </div>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
+                    </div>
+                  </Fragment>
+                )}
+                {(userLogin?.roleCodes !== TYPE_POST_BUSINESS && userLogin?.roleCodes !== TYPE_POST_STUDENT) && (
+                  <CreatePostSelector
+                    id={userLogin?.id ?? 0}
+                    group={userLogin?.facultyGroupId ?? 0}
+                    avatar={userLogin?.image ?? ''}
+                    name={userLogin?.name ?? ''}
+                    groupName={code}
+                  />
+                )}
+                {data?.data.map((item: any) => renderItem(item))}
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <div className='main-content'>
+        <div className='main-content bg-lightblue theme-dark-bg'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
-              <div className='row feed-body'>
-                <div className='col-xl-8 col-xxl-9 col-lg-8'>
-                  <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-2 text-center'>
-                    <select
-                      className='style2-input form-control font-xsss fw-600 ps-5 pt-0'
-                      onChange={handleFacultyNameChange}
-                      style={{ border: 'none', outline: 'none' }}
-                    >
-                      <option hidden>{t("BusinessSelectFacultyToolbar.businessSelectFacultyToolbarTitle")}</option>
-                      {dataRequest.map((item, index) => (
-                        <option value={item.facultyGroupCode} key={item.id}>
-                          {getFacultyTranslated(item.name, t)}
-                        </option>
-                      ))}
-                    </select>
-                    {isLoadingCallData && (
-                      <ReactLoading className='spinnerLoading' type={'spin'} color={COLOR_BLUE_BANNER} height={30} width={30} />
-                    )}
-                  </div>
-                  {isLoading && (
-                    <Fragment>
-                      <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
-                        <CustomizeSkeleton />
-                      </div>
-                      <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
-                        <CustomizeSkeleton />
-                      </div>
-                    </Fragment>
-                  )}
-                  {data?.data.length !== 0 ? (
-                    data?.data.map((item: any) => renderItem(item))
-                  ) : (
-                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-3 text-center'>
-                      {t("NotifyFacultyDontHaveAnyPost.textNotifyFacultyDontHaveAnyPost")}
-                    </div>
+              <div className='middle-wrap'>
+                <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-2 text-center'>
+                  <select
+                    className='style2-input form-control font-xsss fw-600 ps-5 pt-0'
+                    onChange={handleFacultyNameChange}
+                    style={{ border: 'none', outline: 'none' }}
+                  >
+                    <option hidden>{t("BusinessSelectFacultyToolbar.businessSelectFacultyToolbarTitle")}</option>
+                    {dataRequest.map((item, index) => (
+                      <option value={item.facultyGroupCode} key={item.id}>
+                        {getFacultyTranslated(item.name, t)}
+                      </option>
+                    ))}
+                  </select>
+                  {isLoadingCallData && (
+                    <ReactLoading className='spinnerLoading' type={'spin'} color={COLOR_BLUE_BANNER} height={30} width={30} />
                   )}
                 </div>
+                {isLoading && (
+                  <Fragment>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
+                    </div>
+                    <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+                      <CustomizeSkeleton />
+                    </div>
+                  </Fragment>
+                )}
+                {data?.data.length !== 0 ? (
+                  data?.data.map((item: any) => renderItem(item))
+                ) : (
+                  <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-3 text-center'>
+                    {t("NotifyFacultyDontHaveAnyPost.textNotifyFacultyDontHaveAnyPost")}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       )}
     </>
-  );
+  )
 }

@@ -6,6 +6,10 @@ import CustomizeBodyFacultyProfile from './CustomizeBodyFacultyProfile'
 import { useTranslation } from 'react-multi-lang'
 import { getFacultyTranslated } from '../../utils/TranslateFaculty'
 import { TYPE_POST_BUSINESS, TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
+import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { COLOR_GREY_FEEBLE } from '../../constants/Color'
+import { useNavigate } from 'react-router-dom'
 
 export interface CustomizeProfileType {
     t: ReturnType<typeof useTranslation>
@@ -18,8 +22,8 @@ export interface CustomizeProfileType {
     handleClickIntoHeaderComponentEvent: (a: number) => void,
 }
 
-const CustomizeProfile = (props: Readonly<CustomizeProfileType>)=> {
-    console.log('==============CustomizeProfile======================');
+const CustomizeProfile = (props: Readonly<CustomizeProfileType>) => {
+    const navigate = useNavigate();
     const getBody = () => {
         let body;
         switch (props.role) {
@@ -73,7 +77,17 @@ const CustomizeProfile = (props: Readonly<CustomizeProfileType>)=> {
 
     return (
         <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4'>
-            <div className='snippet me-auto ms-auto mt-2' data-title='.dot-typing'>
+            <button
+                onClick={() => { navigate(-1) }}
+                className='buttonHeaderGoBack'
+            >
+                <FontAwesomeIcon
+                    icon={faCircleArrowLeft}
+                    size='2x'
+                    color={COLOR_GREY_FEEBLE}
+                />
+            </button>
+            <div className='snippet me-auto ms-auto mt-2 pb-5' data-title='.dot-typing'>
                 {
                     props.userData && <CustomizeHeaderProfile
                         background={props.userData.background}
@@ -82,6 +96,7 @@ const CustomizeProfile = (props: Readonly<CustomizeProfileType>)=> {
                         handleClickIntoHeaderComponentEvent={
                             props.handleClickIntoHeaderComponentEvent
                         }
+                        handleClickButtonEvent={props.handleClickButtonEvent}
                     />
                 }
             </div>

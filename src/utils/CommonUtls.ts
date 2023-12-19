@@ -68,6 +68,14 @@ export function getIdFromSlug(slug: string): number | null {
   return null
 }
 
+export function getIdFromMultiSlug(slug: string): number | null {
+  const postId = slug.substring(slug.lastIndexOf('-') + 1)
+  if (!isNaN(+postId)) {
+    return parseInt(postId)
+  }
+  return null
+}
+
 export function getTokenFromSlug(slug: string): string | null {
   const string = slug;
   if (string != '') {

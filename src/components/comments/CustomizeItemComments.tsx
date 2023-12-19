@@ -2,7 +2,7 @@ import React from 'react'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import DefaultAvatar from '../common/DefaultAvatar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faMicrophone} from '@fortawesome/free-solid-svg-icons'
+import { faMicrophone } from '@fortawesome/free-solid-svg-icons'
 import { COLOR_BLACK } from '../../constants/Color'
 
 interface CustomizeCommentType {
@@ -18,7 +18,7 @@ interface CustomizeCommentType {
     timeCreated: string,
     textReply: string,
     textDelete: string,
-    textCommentOfAuthor:string,
+    textCommentOfAuthor: string,
     handleClickToCommentReplyEvent: (id: number, name: string) => void,
     handleClickToDeleteCommentsEvent: (idComments: number) => void
     handleClickToAvatarAndName: (userId: number) => void
@@ -26,7 +26,7 @@ interface CustomizeCommentType {
 
 export default function CustomizeItemComments(props: Readonly<CustomizeCommentType>) {
     return (
-        <div className={props.type === 0 ? 'containerCommentsType0' : 'containerCommentsType1'}>
+        <div className={props.type === 0 ? 'containerCommentsType0   text-grey-900 text-dark' : 'containerCommentsType1  text-grey-900 text-dark'}>
             {/* Avatar */}
             <div className='wrapperInfo'>
                 <button

@@ -33,7 +33,7 @@ export default function CustomizeRecruitmentPost(props: RecruitmentPostType) {
       <div className='col-md-1'></div>
       <div className='col-md-11'>
         <div className='wrapper-infor-job'>
-          <div className='text-location-body-recruitment'>
+          <div className='text-location-body-recruitment text-grey-900 text-dark'>
             <FontAwesomeIcon icon={faMapLocation} size='1x' color={COLOR_GREY} className='icon-location-recruitment' />
             <div className='textLocationRecruitment'>{props.location}</div>
           </div>
@@ -41,7 +41,7 @@ export default function CustomizeRecruitmentPost(props: RecruitmentPostType) {
             <p className='textLocationRecruitment' color={COLOR_GREY}>{props.title}</p>
           </div>
           {/*  */}
-          <div className='list-infor-about-recruitment'>
+          <div className='list-infor-about-recruitment text-grey-900 text-dark'>
             <div className='icon-item-infor-job-recruitment'>
               <FontAwesomeIcon icon={faClock} size='1x' color={COLOR_GREY} className='icon-location-recruitment' />
               <div className='txt-item-recruitment textLocationRecruitment'>{props.createdAt}</div>
