@@ -728,5 +728,21 @@
         "user_create_watch_job": " has applied for the job posting:",
         "in_group": " in",
         "survey_txt": "Survey now >>"
+    },
+    "ChangePassword": {
+        "setting":"Change password",
+        "password_no_null": "The old password cannot be blank",
+        "new_password_no_null": "The new password cannot be blank",
+        "re_new_password_no_null": "This box cannot be left blank",
+        "new_password_not_valid": "The new password is not in the correct format",
+        "new_password_not_same_old_password":"The new password must not be the same as the old password",
+        "re_new_password_not_same": "Re-entered password is incorrect",
+        "change_success": "Password changed successfully",
+        "change_error": "Old passwords do not match",
+        "title": "Change the password",
+        "place_holder_password": "Password",
+        "place_holder_new_password": "New password",
+        "place_holder_re_new_password": "Retype new password",
+        "accept": "Confirm"
     }
 }

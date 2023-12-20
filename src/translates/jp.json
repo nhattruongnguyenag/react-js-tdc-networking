@@ -730,5 +730,21 @@
         "user_create_watch_job": " が次の求人に応募しました:",
         "in_group": " に",
         "survey_txt": "すぐに調査 >>"
+    },
+    "ChangePassword": {
+        "setting":"パスワードを変更する",
+        "password_no_null": "古いパスワードを空白にすることはできません",
+        "new_password_no_null": "新しいパスワードを空白にすることはできません",
+        "re_new_password_no_null": "このボックスを空白のままにすることはできません",
+        "new_password_not_valid": "新しいパスワードの形式が正しくありません",
+        "new_password_not_same_old_password":"新しいパスワードは古いパスワードと同じであってはなりません",
+        "re_new_password_not_same": "再入力したパスワードが間違っています",
+        "change_success": "パスワードは正常に変更されました",
+        "change_error": "古いパスワードが一致しません",
+        "title": "パスワードを変更する",
+        "place_holder_password": "パスワード",
+        "place_holder_new_password": "新しいパスワード",
+        "place_holder_re_new_password": "再入力",
+        "accept": "確認する"
     }
 }

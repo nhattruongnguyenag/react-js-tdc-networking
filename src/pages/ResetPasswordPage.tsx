@@ -174,7 +174,7 @@ export default function ResetPasswordPage() {
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-key text-grey-500 pe-0'></i>
                     <input
-                      type='text'
+                      type='Password'
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
                       placeholder='Password'
                       name='password'
@@ -191,7 +191,7 @@ export default function ResetPasswordPage() {
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-reload text-grey-500 pe-0'></i>
                     <input
-                      type='text'
+                      type='Password'
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
                       placeholder='Re-Password'
                       name='repassword'

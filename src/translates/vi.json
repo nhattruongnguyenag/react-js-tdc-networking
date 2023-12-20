@@ -728,5 +728,21 @@
         "user_create_watch_job": " vừa ứng tuyển bài đăng:",
         "in_group": " trong",
         "survey_txt": "Khảo sát ngay >>"
+    },
+    "ChangePassword": {
+        "setting":"Thay đổi mật khẩu",
+        "password_no_null": "Mật khẩu cũ không được để trống",
+        "new_password_no_null": "Mật khẩu mới không được để trống",
+        "re_new_password_no_null": "Ô này không được để trống",
+        "new_password_not_valid": "Mật khẩu mới không đúng định dạng",
+        "new_password_not_same_old_password":"Mật khẩu mới không được trùng với mật khẩu cũ",
+        "re_new_password_not_same": "Mật khẩu nhập lại không đúng",
+        "change_success": "Thay đổi mật khẩu thành công",
+        "change_error": "Mật khẩu cũ không trùng khớp",
+        "title": "Thay đổi mật khẩu",
+        "place_holder_password": "Mật khẩu",
+        "place_holder_new_password": "Mật khẩu mới",
+        "place_holder_re_new_password": "Nhập lại",
+        "accept": "Xác nhận"
     }
 }

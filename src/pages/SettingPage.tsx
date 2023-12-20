@@ -13,6 +13,7 @@ import { APPROVAL_POST_PAGE, LIST_JOB_APPLY_PAGE, LOGIN_PAGE, MANAGEMENT_JOB_APP
 import { isAdmin, isBusiness, isFaculty, isStudent } from '../utils/UserHelper'
 import { TOKEN_KEY, USER_LOGIN_KEY } from '../constants/KeyValue'
 import { slugify } from '../utils/CommonUtls'
+import { useTranslation } from 'react-multi-lang'
 
 const data = [
   { label: 'Vietnamese', value: 'vi' },
@@ -20,6 +21,7 @@ const data = [
   { label: 'Japanese', value: 'ja' }
 ]
 export default function SettingPage() {
+  const t = useTranslation()
   const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
   const dispatch = useAppDispatch()
   const [show, setShow] = useState(false)
@@ -127,6 +129,13 @@ export default function SettingPage() {
                           <a href='/helpbox' className='d-flex align-items-center pb-2 pt-2'>
                             <i className='btn-round-md bg-primary-gradiant feather-help-circle font-md me-3 text-white' />{' '}
                             <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Help</h4>
+                            <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
+                          </a>
+                        </li>
+                        <li className='list-inline-item d-block border-bottom me-0'>
+                          <a href='/thay-doi-mat-khau' className='d-flex align-items-center pb-2 pt-2'>
+                            <i className='btn-round-md bg-gold-gradiant feather-repeat font-md me-3 text-white' />{' '}
+                            <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{t('ChangePassword.setting')}</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                           </a>
                         </li>
