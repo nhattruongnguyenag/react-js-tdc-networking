@@ -23,6 +23,8 @@ import { ACCEPT_SEND_EMAIL_PAGE, LOGIN_PAGE } from '../constants/Page'
 import { toast } from 'react-toastify'
 import { useCookies } from 'react-cookie'
 import { useTranslation } from 'react-multi-lang'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 interface RegisterBusiness {
   name: InputTextValidate
@@ -74,6 +76,22 @@ export default function BusinessRegistationPage() {
     subject: '',
     content: ''
   })
+  const [isCheck, setCheck] = useState(true)
+  const [isCheck1, setCheck1] = useState(true)
+  const onCheck = () => {
+    if (isCheck) {
+      setCheck(false)
+    } else {
+      setCheck(true)
+    }
+  }
+  const onCheck1 = () => {
+    if (isCheck1) {
+      setCheck1(false)
+    } else {
+      setCheck1(true)
+    }
+  }
   const [timeStart, setTimeStart] = useState('07:00')
   const [timeEnd, setTimeEnd] = useState('17:00')
   const [validate, setValidate] = useState<RegisterBusiness>({
@@ -253,7 +271,7 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError:  t('RegisterBusinessComponent.errorEmailNotLengthMax'),
+            textError: t('RegisterBusinessComponent.errorEmailNotLengthMax'),
             isVisible: true
           }
         })
@@ -524,7 +542,7 @@ export default function BusinessRegistationPage() {
 
   const onSubmit = useCallback(() => {
     if (isAllFieldsValid(validate)) {
-      setBusiness({ ...business, subject: t('RegisterBusinessComponent.textAccountAuthen')})
+      setBusiness({ ...business, subject: t('RegisterBusinessComponent.textAccountAuthen') })
       setIsLoading(true)
       axios
         .post<Business, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/business/register', business)
@@ -581,7 +599,9 @@ export default function BusinessRegistationPage() {
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
             <div className='login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
-                <h5 className='fw-700 display1-size display2-md-size mb-4'>{t('RegisterBusinessComponent.titleRegisterBusiness')}</h5>
+                <h5 className='fw-700 display1-size display2-md-size mb-4'>
+                  {t('RegisterBusinessComponent.titleRegisterBusiness')}
+                </h5>
                 <form className='register'>
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-direction-alt text-grey-500 pe-0'> </i>
@@ -674,7 +694,9 @@ export default function BusinessRegistationPage() {
                       isVisible={validate.phone?.isVisible}
                     />
                   </div>
-                  <label className='form-group text-grey-600 fw-600'>{t('RegisterBusinessComponent.titleTimeStart')}</label>
+                  <label className='form-group text-grey-600 fw-600'>
+                    {t('RegisterBusinessComponent.titleTimeStart')}
+                  </label>
                   <div className='form-group icon-input mb-3'>
                     <div className='clock'>
                       <input
@@ -699,36 +721,48 @@ export default function BusinessRegistationPage() {
                       isVisible={validate.activeTime?.isVisible}
                     />
                   </div>
-                  <div className='form-group icon-input mb-3'>
+                  <div className='form-group icon-input gr mb-3'>
                     <input
-                      type='Password'
+                      type={!isCheck ? 'text' : 'password'}
                       onChange={(e) => handlePasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder={t('RegisterBusinessComponent.titlePass')}
+                      placeholder={t('RegisterStudentComponent.titlePass')}
                       style={{ borderColor: !validate.password?.isError ? '#228b22' : '#eee' }}
                     />
-                    <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
-                    <TextValidate
-                      textError={validate.password?.textError}
-                      isError={validate.password?.isError}
-                      isVisible={validate.password?.isVisible}
-                    />
+                    <i className='font-sm ti-lock text-grey-500 pe-0'> </i>
+                    <button type='button' onClick={() => onCheck()}>
+                      <FontAwesomeIcon
+                        style={{ position: 'absolute', right: 15, bottom: 20, color: 'grey' }}
+                        icon={!isCheck ? faEye : faEyeSlash}
+                      />
+                    </button>
                   </div>
-                  <div className='form-group icon-input mb-1'>
+                  <TextValidate
+                    textError={validate.password?.textError}
+                    isError={validate.password?.isError}
+                    isVisible={validate.password?.isVisible}
+                  />
+                  <div className='form-group icon-input gr mb-3'>
                     <input
-                      type='Password'
+                      type={!isCheck1 ? 'text' : 'password'}
                       onChange={(e) => handleConfirmPasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder={t('RegisterBusinessComponent.titleConfimPass')}
+                      placeholder={t('RegisterStudentComponent.titleConfimPass')}
                       style={{ borderColor: !validate.confimPassword?.isError ? '#228b22' : '#eee' }}
                     />
                     <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
-                    <TextValidate
-                      textError={validate.confimPassword?.textError}
-                      isError={validate.confimPassword?.isError}
-                      isVisible={validate.confimPassword?.isVisible}
-                    />
+                    <button type='button' onClick={() => onCheck1()}>
+                      <FontAwesomeIcon
+                        style={{ position: 'absolute', right: 15, bottom: 20, color: 'grey' }}
+                        icon={!isCheck1 ? faEye : faEyeSlash}
+                      />
+                    </button>
                   </div>
+                  <TextValidate
+                    textError={validate.confimPassword?.textError}
+                    isError={validate.confimPassword?.isError}
+                    isVisible={validate.confimPassword?.isVisible}
+                  />
                   <div className='card-body d-flex mt-3 p-0'>
                     <input
                       type={'file'}

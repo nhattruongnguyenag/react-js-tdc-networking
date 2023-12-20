@@ -17,6 +17,8 @@ import { useNavigate } from 'react-router-dom'
 import '../assets/css/login.css'
 import { BUSINESS_DASHBOARD_PAGE, FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from '../constants/Page'
 import { useTranslation } from 'react-multi-lang'
+import { Checkbox } from '@mui/material'
+import { toast } from 'react-toastify'
 
 interface UserLogin {
   emailUser: InputTextValidate
@@ -56,6 +58,10 @@ export default function LoginPage() {
     }
   })
   const [isLoading, setIsLoading] = useState(false)
+  const [isChecked, setIsChecked] = useState(false)
+  const handleCheckBoxToggle = () => {
+    setIsChecked(!isChecked)
+  }
   const checkEmailChange = (e: any) => {
     if (isBlank(e.target.value)) {
       setValidate({
@@ -150,16 +156,16 @@ export default function LoginPage() {
                 sessionStorage.setItem(TOKEN_KEY, JSON.stringify(token))
                 sessionStorage.setItem(USER_LOGIN_KEY, JSON.stringify(response.data.data))
                 dispatch(setUserLogin(response.data.data))
-                console.log(response.data.data)
                 navigate(BUSINESS_DASHBOARD_PAGE)
+                toast.success('Đăng nhập thành công')
               }
             })
         })
         .catch((error: any) => {
           setIsLoading(false)
-          alert(t('LoginComponent.alertLoginFail'))
+          toast.error(t('LoginComponent.alertLoginFail'))
         })
-  } else {
+    } else {
       let key: keyof UserLogin
 
       for (key in validate) {
@@ -213,7 +219,7 @@ export default function LoginPage() {
 
                   <div className='form-group icon-input mb-1'>
                     <input
-                      type='Password'
+                      type={isChecked ? 'text' : 'password'}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
                       placeholder={t('LoginComponent.password')}
                       onChange={(e) => checkPasswordChange(e)}
@@ -225,7 +231,15 @@ export default function LoginPage() {
                     />
                     <i className='font-sm ti-lock text-grey-500 pe-0'></i>
                   </div>
-                  <div className='form-check mb-3 text-left'>
+                  <div
+                    className='form-check mb-3 pl-0 text-left'
+                    style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+                  >
+                    <div className='div' style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                      <Checkbox checked={isChecked} onClick={() => handleCheckBoxToggle()} />
+                      <p className='mb-0'>{isChecked ? 'Ẩn' : 'Hiện'}</p>
+                    </div>
+
                     <button
                       onClick={() => navigate(FORGOT_PASSWORD_PAGE)}
                       type='button'
