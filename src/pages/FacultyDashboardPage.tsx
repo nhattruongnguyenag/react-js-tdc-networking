@@ -90,7 +90,7 @@ export default function FacultyDashboardPage() {
   }, [])
 
   const renderItem = (item: any) => {
-    // if (getPostActive(item.active)) {
+    if (getPostActive(item.active)) {
     return (
       <CustomizePost
         key={item.id}
@@ -122,9 +122,9 @@ export default function FacultyDashboardPage() {
         active={item.active}
       />
     )
-    // } else {
-    //   return null;
-    // }
+    } else {
+      return null;
+    }
   }
 
   return (

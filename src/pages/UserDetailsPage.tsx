@@ -34,6 +34,7 @@ import { Faculty } from '../types/Faculty';
 import { Business } from '../types/Business';
 import { Student } from '../types/Student';
 import { toast } from 'react-toastify';
+import { getPostActive } from '../utils/GetPostActive';
 
 interface UserInformation {
   userId: number;
@@ -163,36 +164,40 @@ export default function UserDetailsPage() {
   }, []);
 
   const renderItem = (item: any) => {
-    return (
-      <CustomizePost
-        id={item.id}
-        userId={item.user['id']}
-        name={item.user['name']}
-        avatar={item.user['image']}
-        typeAuthor={(userInfo?.roleCodes !== "" && userInfo?.roleCodes.includes(TYPE_POST_FACULTY)) ? TYPE_POST_FACULTY : TYPE_POST_BUSINESS}
-        available={null}
-        timeCreatePost={numberDayPassed(item.createdAt)}
-        content={item.content}
-        type={item.type}
-        likes={item.likes}
-        comments={item.comment}
-        commentQty={item.commentQuantity}
-        images={item.images}
-        role={item.user['roleCodes']}
-        likeAction={likeAction}
-        location={item.location ?? null}
-        title={item.title ?? null}
-        expiration={item.expiration ?? null}
-        salary={item.salary ?? null}
-        employmentType={item.employmentType ?? null}
-        description={item.description ?? null}
-        isConduct={null}
-        isSave={item.isSave}
-        group={group}
-        handleUnSave={handleUnSave}
-        active={item.active}
-      />
-    )
+    if (getPostActive(item.active)) {
+      return (
+        <CustomizePost
+          id={item.id}
+          userId={item.user['id']}
+          name={item.user['name']}
+          avatar={item.user['image']}
+          typeAuthor={(userInfo?.roleCodes !== "" && userInfo?.roleCodes.includes(TYPE_POST_FACULTY)) ? TYPE_POST_FACULTY : TYPE_POST_BUSINESS}
+          available={null}
+          timeCreatePost={numberDayPassed(item.createdAt)}
+          content={item.content}
+          type={item.type}
+          likes={item.likes}
+          comments={item.comment}
+          commentQty={item.commentQuantity}
+          images={item.images}
+          role={item.user['roleCodes']}
+          likeAction={likeAction}
+          location={item.location ?? null}
+          title={item.title ?? null}
+          expiration={item.expiration ?? null}
+          salary={item.salary ?? null}
+          employmentType={item.employmentType ?? null}
+          description={item.description ?? null}
+          isConduct={null}
+          isSave={item.isSave}
+          group={group}
+          handleUnSave={handleUnSave}
+          active={item.active}
+        />
+      )
+    } else {
+      return null;
+    }
   }
 
   const handleClickButtonEvent = (flag: number) => {

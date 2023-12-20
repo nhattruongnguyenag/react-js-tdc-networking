@@ -63,7 +63,7 @@ const CreatePostSelector = (props: Readonly<CreatePostSelectorType>) => {
               )}
             </button>
             <Dropdown
-              className='z-50 ms-4 text-black '
+              className='createPostDropdown z-50 ms-4 text-black'
               label=''
               dismissOnClick={true}
               renderTrigger={() => (
@@ -72,9 +72,9 @@ const CreatePostSelector = (props: Readonly<CreatePostSelectorType>) => {
                 </span>
               )}
             >
-              <Dropdown.Item onClick={() => setCreateNormalPostModalShow(true)}>Text/Hình ảnh</Dropdown.Item>
-              <Dropdown.Item onClick={() => startAddSurveyPost()}>Khảo sát</Dropdown.Item>
-              <Dropdown.Item onClick={() => startAddRecruitmentPost()}>Tin tuyển dụng</Dropdown.Item>
+              <Dropdown.Item onClick={() => setCreateNormalPostModalShow(true)}>{t("CreatePostSelector.createPostSelectorNormalText")}</Dropdown.Item>
+              <Dropdown.Item onClick={() => startAddSurveyPost()}>{t("CreatePostSelector.createPostSelectorSurveyText")}</Dropdown.Item>
+              <Dropdown.Item onClick={() => startAddRecruitmentPost()}>{t("CreatePostSelector.createPostSelectorRecruitmentText")}</Dropdown.Item>
             </Dropdown>
           </div>
           <CreatePostModal

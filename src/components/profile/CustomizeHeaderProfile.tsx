@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import DefaultAvatar from '../common/DefaultAvatar'
 import { AVATAR_CLICK, AVATAR_CLICK_UPLOAD, BACKGROUND_CLICK, BACKGROUND_CLICK_UPLOAD, bigLoading, smallLoading } from '../../constants/Variables'
@@ -17,6 +17,12 @@ interface HeaderProfileType {
 export default function CustomizeHeaderProfile(props: Readonly<HeaderProfileType>) {
     const [isImageBackgroundLoaded, setImageBackgroundLoaded] = useState<boolean>(false);
     const [isImageAvatarLoaded, setImageAvatarLoaded] = useState<boolean>(false);
+
+    useEffect(() => {
+        !Boolean(props.background) && setImageBackgroundLoaded(true);
+        !Boolean(props.avatar) && setImageAvatarLoaded(true);
+    }, [props.background, props.avatar])
+
     return (
         <>
             <div className='containerImagesProfileHeader'>

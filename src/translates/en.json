@@ -747,6 +747,9 @@
         "user_create_watch_job": " has applied for the job posting:",
         "in_group": " in",
         "survey_txt": "Survey now >>"
+    },
+    "Setting": {
+        "userInformation": "User Information"
     }
      
 }

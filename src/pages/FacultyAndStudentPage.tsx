@@ -14,9 +14,15 @@ import { numberDayPassed } from '../utils/FormatTime';
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import CreatePostSelector from '../components/CreatePostSelector';
 import { TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../constants/StringVietnamese';
+import { useNavigate } from 'react-router-dom'
+import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { COLOR_GREY_FEEBLE } from '../constants/Color';
+import '../assets/css/studentAndFaculty.css'
 
 export default function FacultyAndStudentPage() {
     const t = useTranslation();
+    const navigate = useNavigate();
     const [isCalled, setIsCalled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [flag, setFlag] = useState(true);
@@ -70,41 +76,41 @@ export default function FacultyAndStudentPage() {
     }
 
     const renderItem = (item: any) => {
-        // if (getPostActive(item.active)) {
-        return (
-            <CustomizePost
-                key={item.id}
-                id={item.id}
-                userId={item.user?.id}
-                name={item.user?.name}
-                avatar={item.user?.image}
-                typeAuthor={item.user['roleCodes']}
-                available={null}
-                timeCreatePost={numberDayPassed(item.createdAt)}
-                content={item.content}
-                type={item.type}
-                likes={item.likes}
-                comments={item.comment}
-                commentQty={item.commentQuantity}
-                images={item.images}
-                role={item.user?.roleCodes}
-                likeAction={likeAction}
-                location={item.location ?? null}
-                title={item.title ?? null}
-                expiration={item.expiration ?? null}
-                salary={item.salary ?? null}
-                employmentType={item.employmentType ?? null}
-                description={item.description ?? null}
-                isConduct={null}
-                isSave={item.isSave}
-                group={code}
-                handleUnSave={handleUnSave}
-                active={item.active}
-            />
-        )
-        // } else {
-        //     return null;
-        // }
+        if (getPostActive(item.active)) {
+            return (
+                <CustomizePost
+                    key={item.id}
+                    id={item.id}
+                    userId={item.user?.id}
+                    name={item.user?.name}
+                    avatar={item.user?.image}
+                    typeAuthor={item.user['roleCodes']}
+                    available={null}
+                    timeCreatePost={numberDayPassed(item.createdAt)}
+                    content={item.content}
+                    type={item.type}
+                    likes={item.likes}
+                    comments={item.comment}
+                    commentQty={item.commentQuantity}
+                    images={item.images}
+                    role={item.user?.roleCodes}
+                    likeAction={likeAction}
+                    location={item.location ?? null}
+                    title={item.title ?? null}
+                    expiration={item.expiration ?? null}
+                    salary={item.salary ?? null}
+                    employmentType={item.employmentType ?? null}
+                    description={item.description ?? null}
+                    isConduct={null}
+                    isSave={item.isSave}
+                    group={code}
+                    handleUnSave={handleUnSave}
+                    active={item.active}
+                />
+            )
+        } else {
+            return null;
+        }
     }
 
     return (
@@ -113,6 +119,16 @@ export default function FacultyAndStudentPage() {
             <div className='main-content bg-lightblue theme-dark-bg'>
                 <div className='middle-sidebar-bottom'>
                     <div className='middle-sidebar-left'>
+                        <button
+                            onClick={() => { navigate(-1) }}
+                            className='buttonGoBackFacultyAndStudent'
+                        >
+                            <FontAwesomeIcon
+                                icon={faCircleArrowLeft}
+                                size='2x'
+                                color={COLOR_GREY_FEEBLE}
+                            />
+                        </button>
                         <div className='middle-wrap'>
                             {
                                 userLoginAllowCreatePost(userLogin?.roleCodes ?? "") && <CreatePostSelector

@@ -743,6 +743,9 @@
         "typePostSurvey": "調査",
         "normalPostLike": "いいね",
         "normalPostComment": "コメント"
+    },
+    "Setting": {
+        "userInformation": "ユーザー情報"
     }
     
 }

@@ -748,5 +748,8 @@
         "user_create_watch_job": " vừa ứng tuyển bài đăng:",
         "in_group": " trong",
         "survey_txt": "Khảo sát ngay >>"
+    },
+    "Setting":{
+        "userInformation":"Thông tin cá nhân"
     }
 }

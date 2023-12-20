@@ -92,8 +92,9 @@ export default function SettingPage() {
                       <ul className='list-inline mb-4'>
                         <li className='list-inline-item d-block border-bottom me-0'>
                           <a href="#" onClick={(e) => { e.preventDefault(); handleClickToAvatarAndName(); }} className='d-flex align-items-center pb-2 pt-2'>
-                            <i className='btn-round-md bg-primary-gradiant feather-home font-md me-3 text-white' />{' '}
-                            <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Thông tin tài khoản</h4>
+                            <i className='btn-round-md bg-primary-gradiant feather-user  font-md me-3 text-white' />
+                            {' '}
+                            <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{t("Setting.userInformation")}</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                           </a>
                         </li>
@@ -111,7 +112,7 @@ export default function SettingPage() {
                           (isStudent(userLogin) || isFaculty(userLogin)) &&
                           <li className='list-inline-item d-block border-bottom me-0'>
                             <Link className='d-flex align-items-center pb-2 pt-2' to={FACULTY_STUDENT_PAGE}>
-                              <i className='btn-round-md bg-gold-gradiant feather-list font-md me-3 text-white' />{' '}
+                              <i className='btn-round-md bg-red-gradiant feather-users font-md me-3 text-white' />
                               <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{getGroupForPost(groupCode ?? "", t)}</h4>
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>

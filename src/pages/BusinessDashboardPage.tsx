@@ -45,7 +45,7 @@ export default function BusinessDashboardPage() {
   }
 
   const renderItem = (item: any) => {
-    // if (getPostActive(item.active)) {
+    if (getPostActive(item.active)) {
       return (
         <CustomizePost
           key={item.id}
@@ -77,9 +77,9 @@ export default function BusinessDashboardPage() {
           active={item.active}
         />
       )
-    // } else {
-    //   return null;
-    // }
+    } else {
+      return null;
+    }
   }
 
   return (
