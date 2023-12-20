@@ -9,11 +9,14 @@ import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { setDefaultLanguage, setUserLogin } from '../redux/Slice'
 import { toast } from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom'
-import { APPROVAL_POST_PAGE, LIST_JOB_APPLY_PAGE, LOGIN_PAGE, MANAGEMENT_JOB_APPLY_PAGE, PENDING_POST_PAGE, USER_DETAILS_PAGE } from '../constants/Page'
+import { APPROVAL_POST_PAGE, FACULTY_STUDENT_PAGE, LOGIN_PAGE, MANAGEMENT_JOB_APPLY_PAGE, PENDING_POST_PAGE, USER_DETAILS_PAGE } from '../constants/Page'
 import { isAdmin, isBusiness, isFaculty, isStudent } from '../utils/UserHelper'
 import { TOKEN_KEY, USER_LOGIN_KEY } from '../constants/KeyValue'
 import { slugify } from '../utils/CommonUtls'
-import { TYPE_POST_BUSINESS } from '../constants/StringVietnamese'
+import { Faculty } from '../types/Faculty'
+import { Student } from '../types/Student'
+import { getGroupForPost } from '../utils/GetGroup'
+import { useTranslation } from 'react-multi-lang'
 
 const data = [
   { label: 'Vietnamese', value: 'vi' },
@@ -21,6 +24,7 @@ const data = [
   { label: 'Japanese', value: 'ja' }
 ]
 export default function SettingPage() {
+  const t = useTranslation();
   const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
   const dispatch = useAppDispatch()
   const [show, setShow] = useState(false)
@@ -69,6 +73,8 @@ export default function SettingPage() {
     }
   }
 
+  const isUserFacultyOrStudent = (isFaculty(userLogin) || isStudent(userLogin));
+  const groupCode = isUserFacultyOrStudent ? (userLogin as unknown as Faculty || userLogin as unknown as Student).facultyGroupCode : "";
 
   return (
     <Fragment>
@@ -85,7 +91,7 @@ export default function SettingPage() {
                       <div className='nav-caption fw-600 font-xssss text-grey-500 mb-2'>Genaral</div>
                       <ul className='list-inline mb-4'>
                         <li className='list-inline-item d-block border-bottom me-0'>
-                          <a href="#" onClick={() => { handleClickToAvatarAndName() }} className='d-flex align-items-center pb-2 pt-2'>
+                          <a href="#" onClick={(e) => { e.preventDefault(); handleClickToAvatarAndName(); }} className='d-flex align-items-center pb-2 pt-2'>
                             <i className='btn-round-md bg-primary-gradiant feather-home font-md me-3 text-white' />{' '}
                             <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Thông tin tài khoản</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
@@ -101,7 +107,16 @@ export default function SettingPage() {
                             </Link>
                           </li>
                         }
-
+                        {
+                          (isStudent(userLogin) || isFaculty(userLogin)) &&
+                          <li className='list-inline-item d-block border-bottom me-0'>
+                            <Link className='d-flex align-items-center pb-2 pt-2' to={FACULTY_STUDENT_PAGE}>
+                              <i className='btn-round-md bg-gold-gradiant feather-list font-md me-3 text-white' />{' '}
+                              <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{getGroupForPost(groupCode ?? "", t)}</h4>
+                              <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
+                            </Link>
+                          </li>
+                        }
                         {
                           (isStudent(userLogin) || isBusiness(userLogin)) &&
                           <li className='list-inline-item d-block border-bottom me-0'>

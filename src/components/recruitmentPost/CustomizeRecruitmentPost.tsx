@@ -8,7 +8,6 @@ import {
   faAnglesRight
 } from '@fortawesome/free-solid-svg-icons'
 import { COLOR_GREY, COLOR_WHITE } from '../../constants/Color'
-import { formatVietNamCurrency } from '../../utils/FormatCurrency'
 
 export interface RecruitmentPostType {
   id: number,

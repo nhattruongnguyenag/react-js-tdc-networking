@@ -87,9 +87,10 @@ const CustomizeProfile = (props: Readonly<CustomizeProfileType>) => {
                     color={COLOR_GREY_FEEBLE}
                 />
             </button>
-            <div className='snippet me-auto ms-auto mt-2 pb-5' data-title='.dot-typing'>
+            <div className='snippet me-auto ms-auto mt-2 pb-1' data-title='.dot-typing'>
                 {
                     props.userData && <CustomizeHeaderProfile
+                        isSameUser={props.isSameUser}
                         background={props.userData.background}
                         avatar={props.userData.image}
                         name={getFacultyTranslated(props.userData.name, props.t)}

@@ -548,7 +548,9 @@
         "follow": "Follow",
         "updateProfile": "Update Profile",
         "unUpdate": "Not updated",
-        "profileActiveTimeTo":"To"
+        "profileActiveTimeTo":"To",
+        "uploadAvatarTitle": "Update Profile Picture",
+        "uploadBackgroundTitle": "Update Cover Photo"
     },
     "Post": {
         "normalPostIdentifyAuthorCompany": "Company",
@@ -632,7 +634,7 @@
         "groupTdc": "Group by TDC - Thu Duc College of Technology",
         "groupConnectBusiness": "Connect Business Community",
         "electricalElectronicsGroup": "Electrical - Electronics Group",
-        "informationTechnologyGroup": "Information Technology Group",
+        "informationTechnologyGroup": "Information Technology Faculty",
         "automationTechnologyGroup": "Automation Technology Group",
         "mechanicalEngineeringAndManufacturingGroup": "Mechanical Engineering and Manufacturing Group",
         "automotiveMechanicalGroup": "Automotive Mechanical Group",

@@ -11,6 +11,7 @@ import CustomizePost from '../components/post/CustomizePost'
 import CreatePostSelector from '../components/CreatePostSelector'
 import { useAppSelector } from '../redux/Hook'
 import { getPostActive } from '../utils/GetPostActive'
+import { BUSINESS_GROUP } from '../constants/Variables'
 
 export default function BusinessDashboardPage() {
   const code = 'group_connect_business'
@@ -44,7 +45,7 @@ export default function BusinessDashboardPage() {
   }
 
   const renderItem = (item: any) => {
-    if (getPostActive(item.active)) {
+    // if (getPostActive(item.active)) {
       return (
         <CustomizePost
           key={item.id}
@@ -76,9 +77,9 @@ export default function BusinessDashboardPage() {
           active={item.active}
         />
       )
-    } else {
-      return null;
-    }
+    // } else {
+    //   return null;
+    // }
   }
 
   return (
@@ -104,7 +105,7 @@ export default function BusinessDashboardPage() {
               {
                 userLogin?.roleCodes === TYPE_POST_BUSINESS && <CreatePostSelector
                   id={userLogin?.id}
-                  group={2}
+                  group={BUSINESS_GROUP}
                   avatar={userLogin?.image}
                   name={userLogin?.name}
                   groupName={code}

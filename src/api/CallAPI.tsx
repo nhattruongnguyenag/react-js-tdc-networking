@@ -90,3 +90,11 @@ export const updateNormalPostAPI = async (urlUpdate: string, data: any) => {
     } catch (error) {
     }
 }
+
+export const updateImageUserProfile = async (urlUpdate: string, data: any) => {
+    try {
+        const response = await axios.post(urlUpdate, data);
+        return response.data.status;
+    } catch (error) {
+    }
+}

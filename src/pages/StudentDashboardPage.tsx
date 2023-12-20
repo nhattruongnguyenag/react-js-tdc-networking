@@ -11,6 +11,7 @@ import CreatePostSelector from '../components/CreatePostSelector';
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { useAppSelector } from '../redux/Hook';
 import { getPostActive } from '../utils/GetPostActive';
+import { TDC_GROUP } from '../constants/Variables';
 
 export default function StudentDashboardPage() {
   const code = 'group_tdc'
@@ -43,7 +44,7 @@ export default function StudentDashboardPage() {
   }
 
   const renderItem = (item: any) => {
-    if (getPostActive(item.active)) {
+    // if (getPostActive(item.active)) {
       return <CustomizePost
         key={item.id}
         id={item.id}
@@ -73,9 +74,9 @@ export default function StudentDashboardPage() {
         handleUnSave={handleUnSave}
         active={item.active}
       />
-    } else {
-      return null;
-    }
+    // } else {
+    //   return null;
+    // }
   }
 
   return (
@@ -101,7 +102,7 @@ export default function StudentDashboardPage() {
               {
                 userLogin?.roleCodes == TYPE_POST_STUDENT && <CreatePostSelector
                   id={userLogin?.id}
-                  group={1}
+                  group={TDC_GROUP}
                   avatar={userLogin?.image}
                   name={userLogin?.name}
                   groupName={code}

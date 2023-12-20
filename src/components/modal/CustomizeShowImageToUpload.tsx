@@ -1,17 +1,17 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { SERVER_ADDRESS } from '../../constants/SystemConstant';
 import { useState } from 'react';
 import { bigLoading } from '../../constants/Variables';
 
 interface ModalType {
-    typeImage: boolean
+    isBackground: boolean
     name: string
     image: string
     show: boolean
+    onSelectImage: (isBackground: boolean, flag: boolean) => void
     onHide: () => void
 }
-export function CustomizeModalShowImage(props: Readonly<ModalType>) {
+export function CustomizeShowImageToUpload(props: Readonly<ModalType>) {
     const [isImageLoaded, setIsImageLoaded] = useState(false);
     const handleImageLoad = () => {
         setIsImageLoaded(true);
@@ -21,7 +21,6 @@ export function CustomizeModalShowImage(props: Readonly<ModalType>) {
             {...props}
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            size={props.typeImage ? 'xl' : undefined}
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter" className="fs-5">
@@ -43,7 +42,7 @@ export function CustomizeModalShowImage(props: Readonly<ModalType>) {
                         style={{
                             opacity: isImageLoaded ? 1 : 0,
                         }}
-                        src={SERVER_ADDRESS + 'api/images/' + props.image}
+                        src={props.image}
                         alt="Your Image"
                         onLoad={handleImageLoad}
                     />
@@ -53,7 +52,13 @@ export function CustomizeModalShowImage(props: Readonly<ModalType>) {
                 <Button onClick={() => {
                     props.onHide();
                     setIsImageLoaded(false);
-                }} className='btn btn-outline-secondary bg-primary'>Close</Button>
+                    props.onSelectImage(props.isBackground, true);
+                }} className='btn btn-outline-secondary bg-primary'>Cập nhật</Button>
+                <Button onClick={() => {
+                    props.onHide();
+                    setIsImageLoaded(false);
+                    props.onSelectImage(props.isBackground, false);
+                }} className='btn btn-outline-secondary bg-primary'>Hủy cập nhật</Button>
             </Modal.Footer>
         </Modal>
 
