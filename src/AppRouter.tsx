@@ -76,6 +76,7 @@ import RejectPostsPage from './pages/RejectPostsPage'
 import ChangePasswordPage from './pages/ChangePasswordPage'
 
 setTranslations({ vi, en, ja })
+setDefaultLanguage('vi')
 
 
 export default function AppRouter() {
