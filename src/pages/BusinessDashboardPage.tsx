@@ -10,9 +10,6 @@ import { TYPE_POST_BUSINESS } from '../constants/StringVietnamese'
 import CustomizePost from '../components/post/CustomizePost'
 import CreatePostSelector from '../components/CreatePostSelector'
 import { useAppSelector } from '../redux/Hook'
-import axios from 'axios'
-import { SERVER_ADDRESS } from '../constants/SystemConstant'
-import { setDefaultLanguage } from 'react-multi-lang'
 
 export default function BusinessDashboardPage() {
   const code = 'group_connect_business'
@@ -26,13 +23,6 @@ export default function BusinessDashboardPage() {
     }
   );
   useEffect(() => {
-    axios.post(`${SERVER_ADDRESS}api/option/get`,{
-      userId: userLogin?.id,
-      optionKey: 'language'
-    }).then(response =>{
-      console.log(response.data.data.value);
-      setDefaultLanguage(response.data.data.value)
-    })
     setIsLoading(true)
   }, [])
 
