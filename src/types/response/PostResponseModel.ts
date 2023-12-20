@@ -1,10 +1,11 @@
-import { Base } from "../Base"
-import { Comment } from "../Comment"
-import { Group } from "../Group"
-import { Like } from "../Like"
-import { User } from "../User"
+import { Base } from '../Base'
+import { Comment } from '../Comment'
+import { Group } from '../Group'
+import { Like } from '../Like'
+import { User } from '../User'
 
 export interface PostResponseModel extends Base {
+  [x: string]: any
   user: User
   status: number
   active: number

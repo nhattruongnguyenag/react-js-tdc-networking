@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { useGetPostsQuery } from '../redux/Service'
 import { setPostRejectId } from '../redux/Slice'
 import { isAdmin, isFaculty } from '../utils/UserHelper'
+import { UpdateNormalPost } from '../types/UpdateNormalPost'
+import { TYPE_NORMAL_POST } from '../constants/Variables'
 
 export default function PendingPostPage() {
     const navigate = useNavigate()
@@ -65,7 +67,8 @@ export default function PendingPostPage() {
                                 data?.data.map((item, index) => <PostApprovalItem
                                     type={POST_PENDING}
                                     key={index.toString()}
-                                    post={item} />)
+                                    post={item}
+                                />)
                             }
                         </div>
                     </div>

@@ -18,9 +18,6 @@ import { useNavigate } from 'react-router-dom'
 import { RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, SURVEY_RESULT_PAGE, USER_DETAILS_PAGE, LIST_JOB_APPLY_PAGE } from '../../constants/Page'
 import { slugify } from '../../utils/CommonUtls'
 import { deleteCommentAPI, deletePostAPI, getAllCommentAPI, likeAPI, savePostAPI } from '../../api/CallAPI'
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import DefaultAvatar from '../common/DefaultAvatar'
 import { TYPE_POST_BUSINESS, TYPE_POST_FACULTY } from '../../constants/StringVietnamese'
 import '../../assets/css/comments.css'
 import '../../assets/css/createCommentsToolbar.css'
@@ -34,6 +31,7 @@ import { getFacultyTranslated } from '../../utils/TranslateFaculty'
 import { formatVietNamCurrency } from '../../utils/FormatCurrency'
 import { CreatePostModal } from '../modal/CustomizeNormalPostModal'
 import { UpdateNormalPost } from '../../types/UpdateNormalPost'
+import { ModalUserLiked } from '../modal/ModalUserLiked'
 setTranslations({ vi, en, jp })
 
 const CustomizePost = (props: Post) => {
@@ -493,66 +491,3 @@ const CustomizePost = (props: Post) => {
 }
 
 export default memo(CustomizePost)
-
-
-
-interface ModalType {
-  show: boolean,
-  onHide: () => void,
-  likes: Like[],
-  t: ReturnType<typeof useTranslation>,
-  handleClickToAvatarAndName: (userId: number) => void,
-}
-
-function ModalUserLiked(props: Readonly<ModalType>) {
-
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header>
-        <div className='header-modal'>
-          <Modal.Title className='font-xss'>{props.t("ModalUserLiked.modalUserLikedTitle")}</Modal.Title>
-          <button
-            style={{ position: 'absolute', top: 0, right: 10 }}
-            type='button'
-            className='btn-close-modal-header close font-xl'
-            onClick={props.onHide}
-          >
-            <span aria-hidden='true'>&times;</span>
-          </button>
-        </div>
-      </Modal.Header>
-      <Modal.Body>
-        {
-          props.likes.map((item, index) => {
-            return Boolean(item.image) ?
-              <button
-                onClick={() => props.handleClickToAvatarAndName(item.id)}
-                className='userLikedWrapper' key={item.id}>
-                <img alt='avatar' className='avatar-user-reacted-list me-1 shadow-sm list-user-liked'
-                  src={SERVER_ADDRESS + 'api/images/' + item.image} />
-                <span>
-                  {getFacultyTranslated(item.name, props.t)}
-                </span>
-              </button> :
-              <button
-                onClick={() => props.handleClickToAvatarAndName(item.id)}
-                className='userLikedWrapper'>
-                <DefaultAvatar key={item.id} name={item.name} size={35} styleBootstrap={'me-1 list-user-liked'} />
-                <span>
-                  {getFacultyTranslated(item.name, props.t)}
-                </span>
-              </button>
-          })
-        }
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className='btn btn-outline-secondary bg-primary' onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
