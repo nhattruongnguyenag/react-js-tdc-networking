@@ -9,11 +9,19 @@ import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { setDefaultLanguage, setUserLogin } from '../redux/Slice'
 import { toast } from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom'
-import { APPROVAL_POST_PAGE, LIST_JOB_APPLY_PAGE, LOGIN_PAGE, MANAGEMENT_JOB_APPLY_PAGE, PENDING_POST_PAGE } from '../constants/Page'
+import {
+  APPROVAL_POST_PAGE,
+  LIST_JOB_APPLY_PAGE,
+  LOGIN_PAGE,
+  MANAGEMENT_JOB_APPLY_PAGE,
+  PENDING_POST_PAGE
+} from '../constants/Page'
 import { isAdmin, isBusiness, isFaculty, isStudent } from '../utils/UserHelper'
 import { TOKEN_KEY, USER_LOGIN_KEY } from '../constants/KeyValue'
 import { slugify } from '../utils/CommonUtls'
 import { useTranslation } from 'react-multi-lang'
+import axios from 'axios'
+import { SERVER_ADDRESS } from '../constants/SystemConstant'
 
 const data = [
   { label: 'Vietnamese', value: 'vi' },
@@ -21,8 +29,9 @@ const data = [
   { label: 'Japanese', value: 'ja' }
 ]
 export default function SettingPage() {
+  const [label, setLabel] = useState('')
   const t = useTranslation()
-  const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const dispatch = useAppDispatch()
   const [show, setShow] = useState(false)
   const [search, setSearch] = useState('')
@@ -43,9 +52,17 @@ export default function SettingPage() {
   const handleClose = () => setShow(false)
   const handleChange = () => {
     if (language) {
-      dispatch(setDefaultLanguage(language))
-      toast.success('Thay đổi ngôn ngữ thành công')
-      setShow(false)
+      axios
+        .post(`${SERVER_ADDRESS}api/option/language`, {
+          userId: userLogin?.id,
+          value: language
+        })
+        .then((respone) => {
+          dispatch(setDefaultLanguage(language))
+          setLabel(language)
+          toast.success('Thay đổi ngôn ngữ thành công')
+          setShow(false)
+        })
     } else {
       toast.error('Thay đổi ngôn ngữ không thành công')
     }
@@ -81,8 +98,7 @@ export default function SettingPage() {
                           </a>
                         </li>
 
-                        {
-                          (isAdmin(userLogin) || isFaculty(userLogin)) &&
+                        {(isAdmin(userLogin) || isFaculty(userLogin)) && (
                           <li className='list-inline-item d-block border-bottom me-0'>
                             <Link className='d-flex align-items-center pb-2 pt-2' to={APPROVAL_POST_PAGE}>
                               <i className='btn-round-md bg-gold-gradiant feather-list font-md me-3 text-white' />{' '}
@@ -90,10 +106,9 @@ export default function SettingPage() {
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>
                           </li>
-                        }
+                        )}
 
-                        {
-                          (isStudent(userLogin) || isBusiness(userLogin)) &&
+                        {(isStudent(userLogin) || isBusiness(userLogin)) && (
                           <li className='list-inline-item d-block border-bottom me-0'>
                             <Link className='d-flex align-items-center pb-2 pt-2' to={PENDING_POST_PAGE}>
                               <i className='btn-round-md bg-gold-gradiant feather-clock font-md me-3 text-white' />{' '}
@@ -101,18 +116,20 @@ export default function SettingPage() {
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>
                           </li>
-                        }
+                        )}
 
-                        {
-                          isStudent(userLogin) &&
+                        {isStudent(userLogin) && (
                           <li className='list-inline-item d-block me-0'>
-                            <Link className='d-flex align-items-center pb-2 pt-2' to={`${MANAGEMENT_JOB_APPLY_PAGE}/${slugify(userLogin.name)}-${userLogin.id}`}>
+                            <Link
+                              className='d-flex align-items-center pb-2 pt-2'
+                              to={`${MANAGEMENT_JOB_APPLY_PAGE}/${slugify(userLogin.name)}-${userLogin.id}`}
+                            >
                               <i className='btn-round-md bg-red-gradiant feather-list font-md me-3 text-white' />{' '}
                               <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Hồ sơ ứng tuyển</h4>
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>
                           </li>
-                        }
+                        )}
                       </ul>
                       <div className='nav-caption fw-600 font-xsss text-grey-500 mb-2'>Other</div>
                       <ul className='list-inline'>
@@ -183,27 +200,27 @@ export default function SettingPage() {
             <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 500 }}>
               {search == ''
                 ? data.map((data: any, index) => (
-                  <div key={index.toString()}>
-                    <div className='item-language' style={{ background: data.value == language ? '#dadde1' : '' }}>
-                      <div>
-                        <p className='name-language' onClick={() => setLanguage(data.value)}>
-                          {data.label}
-                        </p>
+                    <div key={index.toString()}>
+                      <div className='item-language' style={{ background: data.value == label ? '#dadde1' : '' }}>
+                        <div>
+                          <p className='name-language' onClick={() => setLanguage(data.value)}>
+                            {data.label}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  ))
                 : filter.map((data: any, index) => (
-                  <div key={index.toString()}>
-                    <div className='item-language' style={{ background: data.value == language ? '#dadde1' : '' }}>
-                      <div>
-                        <p className='name-language' onClick={() => setLanguage(data.value)}>
-                          {data.label}
-                        </p>
+                    <div key={index.toString()}>
+                      <div className='item-language' style={{ background: data.value == language ? '#dadde1' : '' }}>
+                        <div>
+                          <p className='name-language' onClick={() => setLanguage(data.value)}>
+                            {data.label}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
             </div>
           </Modal.Body>
           <Modal.Footer>

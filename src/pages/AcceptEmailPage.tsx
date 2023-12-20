@@ -32,6 +32,7 @@ export default function AcceptSendEmailPage() {
     })
       .then((res) => {
         setIsLoading(false)
+        console.log(cookies['subject'])
         toast.success(t('AcceptScreen.send_success'))
       })
       .catch((err) => {
