@@ -679,28 +679,6 @@
         "cancel": "Cancel",
         "change": "Change"
     },
-    "ForgettenPassword": {
-        "textForgetPassword": "Forgot password",
-        "textNotification": "Incorrect or empty email format",
-        "textSubjectResetPassword": "Update password",
-        "titleSubjectResetPassword": " change password",
-        "textAccept": "Confirm",
-        "textBack": "Back"
-    },
-    "AcceptScreen": {
-        "checkEmail": "Check email",
-        "description1": "We have sent a link to your email",
-        "description2": ", please check your email",
-        "titleNotify": "Notification",
-        "descriptionNotify": "Resent link to ",
-        "back": "Back",
-        "notSend": "Not received email yet?",
-        "sendAgain": "Resend"
-    },
-    "AuthenticateRegistraion": {
-        "textSubjectAuthenRegistration": "Account verification",
-        "titleSubjectAuthenRegistration": " account verification"
-    },
     "NoMorePost": {
         "noMorePost": "No new posts"
     },
@@ -744,5 +722,42 @@
         "place_holder_new_password": "New password",
         "place_holder_re_new_password": "Retype new password",
         "accept": "Confirm"
+    },
+    "ForgotPassword": {
+        "email_no_valid": "Email invalidate",
+        "password_reset": "Update password",
+        "send_success": "Submitted successfully",
+        "this_email_has_not_registered": "This email is not registered",
+        "email_no_blank": "Email cannot be blank",
+        "email_no_more_length": "Email must not exceed 255 characters",
+        "title": "Enter email to change password",
+        "confirm": "Confirm Email"
+    },
+    "ResetPassword": {
+        "password_no_blank" : "Password can not be blank" ,
+        "re_password_no_blank" : "The second password cannot be blank",
+        "update_success": "Updated password successfully",
+        "password_length_no_more": "Password must not exceed 8 characters",
+        "password_no_valid": "Password format is wrong",
+        "re_password_no_valid": "The re-entered password does not match",
+        "title": "Update password",
+        "plhd_password": "Password",
+        "plhd_re_password": "Enter the re-password",
+        "confirm": "Confirm",
+        "link_expirated": "Sorry, your link has expired!!!"
+    },
+    "AcceptScreen":{
+        "send_success": "Submitted successfully",
+        "description1":"We have sent the link to your email, please check your email!!!",
+        "titleNotify":"Notification",
+        "descriptionNotify":"Link sent again",
+        "back": "Back the homepage !!",
+        "notSend": "+ Haven't received email??,",
+        "sendAgain": "Click here!!"
+    },
+    "AuthenticateRegistration":{
+        "success": "Account activated successfully!!",
+        "link_expirated": "Sorry, your link has expired!!!",
+        "back": "Back the homepage !!"
     }
 }

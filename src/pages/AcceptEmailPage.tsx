@@ -7,9 +7,11 @@ import { ACCEPT_SEND_EMAIL_PAGE } from '../constants/Page'
 import { toast } from 'react-toastify'
 import ReactLoading from 'react-loading'
 import '../assets/css/forgotPasswordPage.css'
+import { useTranslation } from 'react-multi-lang'
 
 export default function AcceptSendEmailPage() {
-  const [cookies, setCookie] = useCookies(['email','url','subject'])
+  const t = useTranslation()
+  const [cookies, setCookie] = useCookies(['email', 'url', 'subject'])
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -30,11 +32,10 @@ export default function AcceptSendEmailPage() {
     })
       .then((res) => {
         setIsLoading(false)
-        toast.success('Gửi thành công')
+        toast.success(t('AcceptScreen.send_success'))
       })
       .catch((err) => {
         setIsLoading(false)
-        toast.error('Email này chưa được đăng ký !!!')
       })
   }
 
@@ -44,13 +45,13 @@ export default function AcceptSendEmailPage() {
         <div className='formbold-main-wrapper'>
           <div className='formbold-form-wrapper'>
             <div className='formbold-form-title'>
-              <h3>Chúng tôi đã gửi liên kết đến email của bạn , hãy kiểm tra email !!!</h3>
+              <h3>{t('AcceptScreen.description1')}</h3>
             </div>
 
             <div className='fw-600 btn_resend border-0 text-black'>
-              + Chưa nhận được email ???
+              {t('AcceptScreen.notSend')}
               <a className='clickHere' onClick={sendEmail}>
-                Nhấn tại đây !!
+                {t('AcceptScreen.sendAgain')}
               </a>
               <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                 <ReactLoading type='bubbles' color='#1828ED' height={50} width={50} />
@@ -59,7 +60,7 @@ export default function AcceptSendEmailPage() {
             <div className='fw-600 btn_resend border-0 text-black'>
               +
               <a onClick={() => navigate('/')} className='clickHere'>
-                Về trang chủ !!
+                {t('AcceptScreen.back')}
               </a>
             </div>
           </div>
