@@ -316,12 +316,17 @@ export default function NotificationItem(props: NotificationItemProps) {
         >
             <div className='image_item'>
                 {value.image ? (
+                    
                     <img
                         src={SERVER_ADDRESS + 'api/images/' + value.image}
                         alt='user'
                         className='image_noNull'
                     />
                 ) : (
+                    value.defaultImage == 'admin' ?
+                    <img className='image_noNull' src={'/assets/images/logo.png'} 
+                    /> :
+                            
                     <DefaultAvatar name={value.defaultImage} size={60} styleBootstrap={undefined} />
                     // value.defaultImage == 'admin' ?
 

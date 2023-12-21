@@ -32,8 +32,9 @@ export default function PostDetail() {
 
   useEffect(() => {
     setData(data?.data)
-    console.log(notificationType);
-
+    // console.log(data);
+    // console.log(userLogin?.id + ' ' + id);
+    
   }, [data])
 
   const likeAction = (obj: LikeAction) => {
@@ -46,65 +47,51 @@ export default function PostDetail() {
   const handleUnSave = (idPost: number) => {
   }
 
-  if (notificationType == POST_LOG) {
-    return (
 
-      <div >
-        <Header />
-        <div className='main-content'>
-          <div className='middle-sidebar-bottom'>
-            <div className='middle-sidebar-left'>
-              <div className='row feed-body'>
-              </div>
+  return (
+    <>
+      <Header />
+      <div className='main-content'>
+        <div className='middle-sidebar-bottom'>
+          <div className='middle-sidebar-left'>
+            <div className='row feed-body'>
+              {
+                data1 ? <CustomizePost
+                  key={data1.id}
+                  id={data1.id}
+                  userId={data1.user['id']}
+                  name={data1.user['name']}
+                  avatar={data1.user['image']}
+                  typeAuthor={'Doanh Nghiệp'}
+                  available={null}
+                  timeCreatePost={numberDayPassed(data1.createdAt)}
+                  content={data1.content}
+                  type={data1.type}
+                  likes={data1.likes}
+                  comments={data1.comment}
+                  commentQty={data1.commentQuantity}
+                  images={data1.images}
+                  role={data1.user['roleCodes']}
+                  likeAction={likeAction}
+                  location={data1.location ?? null}
+                  title={data1.title ?? null}
+                  expiration={data1.expiration ?? null}
+                  salary={data1.salary ?? null}
+                  employmentType={data1.employmentType ?? null}
+                  description={data1.description ?? null}
+                  isConduct={data1.isConduct ?? null}
+                  isSave={data1.isSave}
+                  group={''}
+                  handleUnSave={handleUnSave} 
+                  active={1}
+                /> : <></>
+              }
             </div>
           </div>
         </div>
       </div>
-    )
-  } else {
-    return (
-      <>
-        <Header />
-        <div className='main-content'>
-          <div className='middle-sidebar-bottom'>
-            <div className='middle-sidebar-left'>
-              <div className='row feed-body'>
-                {
-                  data1 ? <CustomizePost
-                    key={data1.id}
-                    id={data1.id}
-                    userId={data1.user['id']}
-                    name={data1.user['name']}
-                    avatar={data1.user['image']}
-                    typeAuthor={'Doanh Nghiệp'}
-                    available={null}
-                    timeCreatePost={numberDayPassed(data1.createdAt)}
-                    content={data1.content}
-                    type={data1.type}
-                    likes={data1.likes}
-                    comments={data1.comment}
-                    commentQty={data1.commentQuantity}
-                    images={data1.images}
-                    role={data1.user['roleCodes']}
-                    likeAction={likeAction}
-                    location={data1.location ?? null}
-                    title={data1.title ?? null}
-                    expiration={data1.expiration ?? null}
-                    salary={data1.salary ?? null}
-                    employmentType={data1.employmentType ?? null}
-                    description={data1.description ?? null}
-                    isConduct={data1.isConduct ?? null}
-                    isSave={data1.isSave}
-                    group={''}
-                    handleUnSave={handleUnSave}
-                  /> : <></>
-                }
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    )
-  }
+    </>
+  )
+
 
 }

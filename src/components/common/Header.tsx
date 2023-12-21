@@ -23,7 +23,6 @@ function Header() {
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
-<<<<<<< HEAD
   const [qty, setQty] = useState<any>()
   const { data, isFetching } = useGetQualityNotificationQuery(
     {
@@ -38,13 +37,11 @@ function Header() {
     setQty(data?.data)
   }, [data, isFetching])
 
-=======
   const getFacultyByFacultyGroupCode = (group: string): string => {
     let faculty = group.substring(group.indexOf('_') + 1)
     faculty = "khoa_" + faculty;
     return faculty;
   }
->>>>>>> develop
   return (
     <Fragment>
       <div className='nav-header shadow-xs border-0 bg-white'>
