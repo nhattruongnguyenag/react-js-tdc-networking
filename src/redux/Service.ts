@@ -24,12 +24,27 @@ import { PostSearchRequest } from '../types/request/PostSearchRequest'
 import { buildPostSearchRequest } from '../utils/PostHelper'
 import { PostRejectedLog } from '../types/PostRejectLog'
 import { RecruitmentPost } from '../types/RecruitmentPost'
+import { QualityNotificationModel } from '../types/response/QualityNotificationModel'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['Posts'],
   endpoints: (builder) => ({
+    getDetailPost: builder.query<Data<Post[]>, { userId: number |undefined, postId: number|undefined }>({
+      query: (data) => ({
+        url: 'api/posts/get',
+        method: 'POST',
+        body: data
+      })
+    }),
+    getQualityNotification: builder.query<Data<QualityNotificationModel[]>, { id: number }>({
+      query: (data) => ({
+        url: 'api/notifications/user/count',
+        method: 'POST',
+        body: data
+      })
+    }),
     getListPostSaved: builder.query<Data<PostSavedModel[]>, number>({
       query: (userId) => `api/posts/user/save/${userId}`
     }),
@@ -264,6 +279,8 @@ export const TDCSocialNetworkAPI = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useGetDetailPostQuery,
+  useGetQualityNotificationQuery,
   useJobApplyUpdateMutation,
   useGetJobProfileQuery,
   useGetProfileApplyQuery,

@@ -8,6 +8,11 @@ import moment from 'moment'
 import { useTranslation } from 'react-multi-lang'
 import { useAppSelector } from '../../redux/Hook'
 import { ACCEPT_POST, CHANGE_PASSWORD_SUCCESS, CREATE_SURVEY, POST_LOG, REGISTER_SUCCESS, SAVE_POST, UPDATE_POST, USER_APPLY_JOB, USER_CHANGE_LANGUAGE, USER_COMMENT_POST, USER_CONDUCT_SURVEY, USER_CREATE_WATCH_JOB, USER_FOLLOW, USER_LIKE_POST, USER_REPLY_COMMENT, USER_UPDATE, USER_UPDATE_AVATAR } from '../../constants/TypeNotification';
+import { Button } from 'flowbite-react'
+import { SURVEY_DETAILS_PAGE } from '../../constants/Page'
+import { slugify } from '../../utils/CommonUtls'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 export interface NotificationItemProps {
     id: any
     status: string
@@ -19,7 +24,7 @@ export interface NotificationItemProps {
     handleItem: (id: number) => void;
     handleIsNotRead: (id: number) => void;
     handleDelNotification: (id: number) => void;
-    // handleItemCanNotClick: (id: number) => void;
+    handleItemCanNotClick: (id: number) => void;
 }
 
 export interface Value {
@@ -41,6 +46,7 @@ export interface Value {
 export default function NotificationItem(props: NotificationItemProps) {
     let item = props
     const t = useTranslation()
+    const navigate = useNavigate()
     const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
     const [value, setValue] = useState<Value>({
         header: '',
@@ -269,12 +275,12 @@ export default function NotificationItem(props: NotificationItemProps) {
             if (props.dataValue.post) {
                 title += 'Bài viết: "'
                 if (props.dataValue.post.title) {
-                    if (props.dataValue.post.title > 15) {
+                    if (props.dataValue.post.title > 30) {
 
-                        title += props.dataValue.post.title.substring(0, 15) + '..." bị từ chối'
+                        title += props.dataValue.post.title.substring(0, 30) + '..." bị từ chối'
                     }
                 } else {
-                    title += props.dataValue.post.content
+                    title += props.dataValue.post.content + '..." bị từ chối'
                 }
             }
 
@@ -283,26 +289,62 @@ export default function NotificationItem(props: NotificationItemProps) {
         }
         return title
     }
+
+    const handleConductNow = (surveyPostId: number, notificationId: number) => {
+        console.log('1233123321');
+        
+        navigate(`${SURVEY_DETAILS_PAGE}/${slugify(props.dataValue.title)}-${surveyPostId}`)
+        try {
+            axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus`, {
+                id: notificationId,
+                userId: userLogin?.id
+            })
+        } catch (error) {
+            console.error('Error updating name:', error)
+        }
+    }
+
+
+
+
     return (
         <div
             key={item.id}
             className='card bg-transparent-card w-100 itemNotification mb-0 border-0 ps-0'
             style={{ background: item.status == '0' ? '#e6e6e6' : '#fff', flexDirection: 'row', padding: 10 }}
-            onClick={() => item.handleItem(item.id)}
+            onClick={() => value.canClick == true ? item.handleItem(item.id) : item.handleItemCanNotClick(item.id)}
         >
             <div className='image_item'>
+                {value.image ? (
+                    <img
+                        src={SERVER_ADDRESS + 'api/images/' + value.image}
+                        alt='user'
+                        className='image_noNull'
+                    />
+                ) : (
+                    <DefaultAvatar name={value.defaultImage} size={60} styleBootstrap={undefined} />
+                    // value.defaultImage == 'admin' ?
 
-                <img src='/assets/images/user-8.png' alt='user' />
+
+                )}
             </div>
             <div className='content_item' >
                 <h5 className='text-grey-900 fw-500 font-xsss lh-4 txt_content' >
-                    <p className='txt_cnt' style={{ color: item.status == '0' ? '#000' : '#949393'}}>
-                    
+                    <p className='txt_cnt' style={{ color: item.status == '0' ? '#000' : '#949393' }}>
                         <p className='txt_content_notification_hasUser'>{value.header}</p>
                         <p className='txt_content_notification'>{value.body}</p>
-                        <p className='txt_content_notification'>
-                            <p className='txt_content_notification'>{value.group != '' ? t('Notifications.in_group') : '.'}</p></p>
-                            <p className='txt_content_notification_hasUser'> {value.group != '' ? (value.group) + '.' : ''}</p>
+                        <p className='txt_content_notification'>{value.group != '' ? t('Notifications.in_group') : '.'}</p>
+                        <p className='txt_content_notification_hasUser'> {value.group != '' ? (value.group) + '.' : ''}</p>
+                        {
+                            props.type == 'create_survey' ?
+                                <Button
+                                    onClick={() => {
+                                        handleConductNow(props.dataValue.id, props.id)
+                                    }}>
+                                    <a >{t('Notifications.survey_txt')}</a>
+                                </Button>
+                                : null
+                        }
                     </p>
 
 

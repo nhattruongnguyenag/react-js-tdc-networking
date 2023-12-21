@@ -30,3 +30,5 @@ export const MANAGEMENT_JOB_APPLY_PAGE = '/quan-ly-ho-so-ung-tuyen'
 export const APPROVAL_POST_PAGE = '/duyet-bai-viet'
 export const PENDING_POST_PAGE = '/bai-viet-dang-cho'
 export const REJECT_POST_PAGE = '/bai-viet-khong-duoc-duyet'
+export const POST_DETAIL = '/chi-tiet-bai-viet'
+

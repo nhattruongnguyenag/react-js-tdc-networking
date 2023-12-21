@@ -14,6 +14,12 @@ import { useGetNotificationsUserByIdQuery } from '../redux/Service'
 import { useAppSelector } from '../redux/Hook'
 import { useTranslation } from 'react-multi-lang'
 import NotificationListView from './listviews/NotificationListView'
+import { ACCEPT_POST, CHANGE_PASSWORD_SUCCESS, CREATE_SURVEY, POST_LOG, REGISTER_SUCCESS, SAVE_POST, UPDATE_POST, USER_APPLY_JOB, USER_CHANGE_LANGUAGE, USER_COMMENT_POST, USER_CONDUCT_SURVEY, USER_CREATE_WATCH_JOB, USER_FOLLOW, USER_LIKE_POST, USER_REPLY_COMMENT, USER_UPDATE, USER_UPDATE_AVATAR } from '../constants/TypeNotification';
+import Modal from 'react-bootstrap/Modal'
+import { useNavigate } from 'react-router-dom'
+import { LIST_JOB_APPLY_PAGE, POST_DETAIL } from '../constants/Page'
+import { slugify } from '../utils/CommonUtls'
+import Button from 'react-bootstrap/Button'
 interface NotificationPopupProps {
   show?: boolean
 }
@@ -21,6 +27,9 @@ interface NotificationPopupProps {
 export default function NotificationPopup(props: NotificationPopupProps) {
   const t = useTranslation()
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const [show, setShow] = useState(false)
+  const [log, setLog] = useState('')
+  const navigate = useNavigate()
   const { data, isFetching } = useGetNotificationsUserByIdQuery(
     {
       id: userLogin?.id ?? -1
@@ -43,6 +52,52 @@ export default function NotificationPopup(props: NotificationPopupProps) {
   }
 
   const handleItem = (id: number) => {
+    const notification = data?.data.find(item => id === item.id)
+    const state = {
+      postId: notification?.dataValue.id,
+      notificationContent: notification?.dataValue.content,
+      notificationType: notification?.type
+    }
+
+
+    if (notification) {
+      switch (notification.type) {
+        case CREATE_SURVEY:
+          // navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case SAVE_POST:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case USER_LIKE_POST:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case USER_COMMENT_POST:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case USER_REPLY_COMMENT:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case USER_CONDUCT_SURVEY:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case ACCEPT_POST:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case USER_CREATE_WATCH_JOB:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case POST_LOG:
+          setShow(true)
+          setLog(notification?.dataValue.content)
+          // navigate(`${POST_DETAIL}/${slugify('thong-bao')}-bai-viet`, { state })
+          break
+        case USER_APPLY_JOB:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        default:
+          break
+      }
+    }
     axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus`, {
       id: id,
       userId: userLogin?.id ?? -1
@@ -64,6 +119,21 @@ export default function NotificationPopup(props: NotificationPopupProps) {
       }
     })
   }
+
+  const handleItemCanNotClick = (id: number) => {
+    console.log('123');
+
+    try {
+      axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus`, {
+        id: id,
+        userId: userLogin?.id
+      })
+    } catch (error) {
+      console.error('Error updating name:', error)
+    }
+  }
+
+  const handleClose = () => { setShow(false) }
 
   const notificationItems = (item: NotificationModel) => {
     return (
@@ -100,9 +170,12 @@ export default function NotificationPopup(props: NotificationPopupProps) {
             {t('NotificationsComponent.deleteNotification')}
           </MenuItem>
         </Menu>
+
       </div>
     )
   }
+
+
 
   return (
     <div
@@ -137,8 +210,22 @@ export default function NotificationPopup(props: NotificationPopupProps) {
         handleItem={handleItem}
         handleDelNotification={handleDelNotification}
         handleIsNotRead={handleIsNotRead}
-      // handleItemCanNotClick={handleItemCanNotClick} 
+        handleItemCanNotClick={handleItemCanNotClick}
       />
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Thông báo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p >Bài viết của bạn không được duyệt vì: "{log}"</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='primary' onClick={handleClose}>
+            Đã hiểu!
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
-} 
+}
+

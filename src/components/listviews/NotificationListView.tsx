@@ -10,7 +10,7 @@ export interface NotificationListViewProps {
     handleItem: (id: number) => void;
     handleIsNotRead: (id: number) => void;
     handleDelNotification: (id: number) => void;
-    // handleItemCanNotClick: (id: number) => void;
+    handleItemCanNotClick: (id: number) => void;
 }
 export default function NotificationListView(props: NotificationListViewProps) {
 
@@ -29,7 +29,7 @@ export default function NotificationListView(props: NotificationListViewProps) {
                     handleItem={props.handleItem}
                     handleIsNotRead={props.handleIsNotRead}
                     handleDelNotification={props.handleDelNotification}
-                    // handleItemCanNotClick={props.handleItemCanNotClick}
+                    handleItemCanNotClick={props.handleItemCanNotClick}
                 />
             </>
             )}
