@@ -69,14 +69,8 @@
 
 .image-file-container {
   display: flex;
-  overflow-x: hidden;
 }
 
-.image-wrapper {
-  min-width: 125px;
-  height: 200px;
-  position: relative;
-}
 
 .image-file {
   width: 100%;
@@ -110,7 +104,6 @@
 .text-header-name-wrapper {
   width: 83%;
 }
-
 
 .button-menu-header-wrapper {
   width: 10%;

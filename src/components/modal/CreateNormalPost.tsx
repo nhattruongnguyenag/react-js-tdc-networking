@@ -15,6 +15,7 @@ import { t, useTranslation } from 'react-multi-lang'
 import { UpdateNormalPost } from '../../types/UpdateNormalPost'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { setImagesUpload } from '../../redux/Slice'
+import '../../assets/css/createNormalPost.css'
 
 export interface CreateNormalPostType {
   t: ReturnType<typeof useTranslation>,
@@ -219,15 +220,22 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
             </button>
           </div>
         )}
-        <div className='image-file-container' id='imageContainer'>
+        <div
+          className='wrapperImageCreateNormalPost'
+          id='imageContainer'
+        >
           {
             props.updateNormalPost?.postId !== undefined ? (
               images.map((item: any, index: any) => (
-                <li
+                <div
                   key={item + ''}
+                  style={{
+                    minWidth: '150px',
+                    height: '200px',
+                    marginRight: '10px',
+                  }}
                   className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
                 >
-                  <h1>Update</h1>
                   {
                     (typeof (item.url) === 'string' && item.url.includes("http")) ? <>
                       <img className='image-file' src={item.url} alt={`Image ${index}`} />
@@ -238,24 +246,27 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
                   <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
                     <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
                   </button>
-                </li>
+                </div>
               ))
             ) : (
               images.map((item: any, index: any) => (
-                <li
+                <div
+                  style={{
+                    minWidth: '150px',
+                    height: '200px',
+                    marginRight: '10px',
+                  }}
                   key={item + ''}
                   className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
                 >
-                  <h1>Create</h1>
                   <img className='image-file' src={item.url} alt={`Image ${index}`} />
                   <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
                     <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
                   </button>
-                </li>
+                </div>
               ))
             )
           }
-
         </div>
       </div>
       <div className='card-body d-flex mt-0 p-0'>

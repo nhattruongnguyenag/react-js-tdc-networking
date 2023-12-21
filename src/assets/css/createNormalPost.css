@@ -1,0 +1,8 @@
+.wrapperImageCreateNormalPost {
+  display: flex;
+  overflow-x: auto;
+  white-space: 'nowrap';
+}
+.wrapperImageCreateNormalPost::-webkit-scrollbar {
+  display: none;
+}

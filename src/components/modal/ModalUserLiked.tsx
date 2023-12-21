@@ -24,14 +24,6 @@ export function ModalUserLiked(props: Readonly<ModalType>) {
             <Modal.Header>
                 <div className='header-modal'>
                     <Modal.Title className='font-xss'>{props.t("ModalUserLiked.modalUserLikedTitle")}</Modal.Title>
-                    <button
-                        style={{ position: 'absolute', top: 0, right: 10 }}
-                        type='button'
-                        className='btn-close-modal-header close font-xl'
-                        onClick={props.onHide}
-                    >
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
                 </div>
             </Modal.Header>
             <Modal.Body>
