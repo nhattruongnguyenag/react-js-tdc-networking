@@ -87,8 +87,8 @@ export default function SettingPage() {
                 <div className='card-body p-lg-5 w-100 border-0 p-4'>
                   <div className='row'>
                     <div className='col-lg-12'>
-                      <h4 className='font-xxl fw-700 mont-font mb-lg-5 font-md-xs mb-4 text-black'>Settings</h4>
-                      <div className='nav-caption fw-600 font-xssss text-grey-500 mb-2'>Genaral</div>
+                      <h4 className='font-xxl fw-700 mont-font mb-lg-5 font-md-xs mb-4 text-black'>Cài đặt</h4>
+                      <div className='nav-caption fw-600 font-xssss text-grey-500 mb-2'>Chung</div>
                       <ul className='list-inline mb-4'>
                         <li className='list-inline-item d-block border-bottom me-0'>
                           <a href="#" onClick={(e) => { e.preventDefault(); handleClickToAvatarAndName(); }} className='d-flex align-items-center pb-2 pt-2'>
@@ -140,7 +140,7 @@ export default function SettingPage() {
                           </li>
                         }
                       </ul>
-                      <div className='nav-caption fw-600 font-xsss text-grey-500 mb-2'>Other</div>
+                      <div className='nav-caption fw-600 font-xsss text-grey-500 mb-2'>Khác</div>
                       <ul className='list-inline'>
                         <li className='list-inline-item d-block border-bottom me-0'>
                           <a className='d-flex align-items-center pb-2 pt-2' onClick={handleShow}>
@@ -154,7 +154,7 @@ export default function SettingPage() {
                         <li className='list-inline-item d-block border-bottom me-0'>
                           <a href='/helpbox' className='d-flex align-items-center pb-2 pt-2'>
                             <i className='btn-round-md bg-primary-gradiant feather-help-circle font-md me-3 text-white' />{' '}
-                            <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Help</h4>
+                            <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Trợ giúp</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                           </a>
                         </li>

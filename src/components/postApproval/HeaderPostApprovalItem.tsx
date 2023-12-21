@@ -81,7 +81,7 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
       },
       {
         type: REJECT_POST_DETAIL,
-        name: t('ModalPostRejectReason.rejectDetail'),
+        name: t('ModalPostRejectReason.rejectDetails'),
         visible: props.type === POST_REJECT
       },
       {
