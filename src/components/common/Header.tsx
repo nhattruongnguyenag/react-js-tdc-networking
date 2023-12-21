@@ -21,7 +21,11 @@ function Header() {
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
-
+  const getFacultyByFacultyGroupCode = (group: string): string => {
+    let faculty = group.substring(group.indexOf('_') + 1)
+    faculty = "khoa_" + faculty;
+    return faculty;
+  }
   return (
     <Fragment>
       <div className='nav-header shadow-xs border-0 bg-white'>
@@ -51,14 +55,14 @@ function Header() {
           </NavItem>
 
           <NavItem to={STUDENT_DASHBOARD_PAGE} active={Boolean(STUDENT_DASHBOARD_PAGE == location.pathname)}>
-            <i className='feather-rss font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+            <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500' />
           </NavItem>
 
           <NavItem
-            to={FACULTY_DASHBOARD_PAGE + '/cong-nghe-thong-tin'}
+            to={FACULTY_DASHBOARD_PAGE + `/${userLogin?.facultyGroupCode ? getFacultyByFacultyGroupCode(userLogin?.facultyGroupCode):'danh-sach-khoa'}`}
             active={location.pathname.includes(FACULTY_DASHBOARD_PAGE)}
           >
-            <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+            <i className='feather-book font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500' />
           </NavItem>
 
           <NavItem to={SEARCH_PAGE} active={SEARCH_PAGE == location.pathname}>

@@ -3,16 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { Textarea } from 'flowbite-react'
-import { TEXT_CREATE_COMMENTS, TEXT_PLACEHOLDER_INPUT_COMMENT } from '../../constants/StringVietnamese'
 import { COLOR_WHITE } from '../../constants/Color'
 import DefaultAvatar from '../common/DefaultAvatar'
 import '../../assets/css/comments.css'
+import { isBlank, isLengthInRange } from '../../utils/ValidateUtils'
+import { NUMBER_MAX_CHARACTER, NUMBER_MIN_CHARACTER } from '../../constants/Variables'
+import { toast } from 'react-toastify'
+import { useTranslation } from 'react-multi-lang'
 
 interface CreateCommentsToolbarType {
+    t:ReturnType<typeof useTranslation>,
+    textCreateCommentOfButton: string,
+    textCreateCommentPlaceholderInput: string,
     image: string,
     name: string,
     tagName: string,
-    handleClickCreateCommentBtnEvent: (content: string) => void
+    handleClickCreateCommentBtnEvent: (content: string, flag:boolean) => void
 }
 export default function CustomizeCreateCommentsToolbar(props: Readonly<CreateCommentsToolbarType>) {
     const [content, setContent] = useState('');
@@ -25,8 +31,16 @@ export default function CustomizeCreateCommentsToolbar(props: Readonly<CreateCom
     }, [props.tagName])
 
     const handleClickCreate = () => {
-        setContent('');
-        props.handleClickCreateCommentBtnEvent(content);
+        if (isBlank(content.trim()) || !isLengthInRange(content.trim(), NUMBER_MIN_CHARACTER, NUMBER_MAX_CHARACTER)) {
+            if (isBlank(content.trim())){
+                toast.error(props.t("Toast.toastNotifyCommentNull")); 
+            }else{
+                toast.error(props.t("Toast.toastNotifyNumberCharacterHadCrossLimitedNumberCharacterNull") + ' ' + NUMBER_MAX_CHARACTER + ' ' +  props.t("Toast.toastNotifyNumberCharacter"));
+            }
+          } else {
+            props.handleClickCreateCommentBtnEvent(content,true);
+            setContent('');
+          }
     }
 
     return (
@@ -43,13 +57,13 @@ export default function CustomizeCreateCommentsToolbar(props: Readonly<CreateCom
                     ref={textAreaRef}
                     value={content}
                     onChange={(event) => setContent(event.target.value)}
-                    placeholder={TEXT_PLACEHOLDER_INPUT_COMMENT}
+                    placeholder={props.textCreateCommentPlaceholderInput}
                     className='textAreaCreateCommentToolbar bg-greylight'
                 />
             </div>
             <button
                 onClick={() => handleClickCreate()}
-                className='btnSubmitComment bg-primary-gradiant'><span className='txtSubmitComments'>{TEXT_CREATE_COMMENTS}</span><FontAwesomeIcon icon={faPaperPlane} size='1x' color={COLOR_WHITE} /></button>
+                className='btnSubmitComment bg-primary-gradiant'><span className='txtSubmitComments'>{props.textCreateCommentOfButton}</span><FontAwesomeIcon icon={faPaperPlane} size='1x' color={COLOR_WHITE} /></button>
         </div>
     )
 }

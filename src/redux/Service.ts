@@ -102,19 +102,25 @@ export const TDCSocialNetworkAPI = createApi({
     }),
     getFacultyPosts: builder.query<Data<Post[]>, { faculty: string; id: number }>({
       query: (data) => ({
-        url: `api/posts/group?code=${data.faculty}&userLogin=${data.id}`,
+        url: `api/posts/search?faculty=${data.faculty}&userLogin=${data.id}&group=none`,
+        method: 'GET'
+      })
+    }),
+    getFacultyAndStudentPosts: builder.query<Data<Post[]>, { faculty: string; id: number }>({
+      query: (data) => ({
+        url: `api/posts/search?group=${data.faculty}&userLogin=${data.id}`,
         method: 'GET'
       })
     }),
     getBusinessPosts: builder.query<Data<Post[]>, { id: number }>({
       query: (data) => ({
-        url: `api/posts/group?code=group_connect_business&userLogin=${data.id}`,
+        url: `api/posts/search?group=group_connect_business&userLogin=${data.id}`,
         method: 'GET'
       })
     }),
     getStudentPosts: builder.query<Data<Post[]>, { id: number }>({
       query: (data) => ({
-        url: `api/posts/group?code=group_tdc&userLogin=${data.id}`,
+        url: `api/posts/search?group=group_tdc&userLogin=${data.id}`,
         method: 'GET'
       })
     }),
@@ -293,5 +299,6 @@ export const {
   useGetRecruitmentPostUpdateQuery,
   useGetSurveyPostUpdateQuery,
   useUpdateRecruitmentPostMutation,
-  useUpdateSurveyPostMutation
+  useUpdateSurveyPostMutation,
+  useGetFacultyAndStudentPostsQuery
 } = TDCSocialNetworkAPI

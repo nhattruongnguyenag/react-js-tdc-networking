@@ -63,7 +63,9 @@ export default function SearchListView({ data, type, handleFollow }: SearchListV
                   isConduct={item.isConduct ?? null}
                   isSave={item.isSave}
                   group={''} 
-                  handleUnSave={handleUnSave}                />
+                  handleUnSave={handleUnSave}                
+                  active={item.active}
+                  />
               ))}
           </>
         )

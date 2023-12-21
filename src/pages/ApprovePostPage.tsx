@@ -63,7 +63,8 @@ export default function ApprovePostPage() {
                                 data?.data.map((item, index) => <PostApprovalItem
                                     type={POST_APPROVAL}
                                     key={index.toString()}
-                                    post={item} />)
+                                    post={item}
+                                />)
                             }
                         </div>
                     </div>
