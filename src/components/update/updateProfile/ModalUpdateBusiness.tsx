@@ -767,6 +767,10 @@ export default function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
             </Modal.Body>
             <Modal.Footer>
                 <Button
+                    onClick={props.onHide} className='btn btn-outline-secondary bg-primary'>
+                    {props.t("Modal.modalShowImageCloseButton")}
+                </Button>
+                <Button
                     disabled={!(backgroundHadSave === false && avatarHadSave === false)}
                     onClick={() => handleSubmitEvent()} className='btn btn-outline-secondary bg-primary'>
                     {props.t("ModalUpdate.modalUpdateButtonText")}

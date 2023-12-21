@@ -500,7 +500,10 @@
         "modalUpdatePlaceholderEmail": "メール",
         "modalUpdateBackground": "背景",
         "modalUpdateAvatar": "アバター",
-        "modalUpdateButtonText": "更新"
+        "modalUpdateButtonText": "更新",
+        "modalUpdateImageNotifyNotUpload": "画像がアップロード中です",
+        "modalUpdateImageNotifyUploadSuccess": "画像が正常にアップロードされました"
+        
     },
     "Validate": {
         "validatePhoneNull": "電話番号は空にできません",
