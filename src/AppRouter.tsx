@@ -30,7 +30,11 @@ import {
   SURVEY_RESULT_PAGE,
   UPDATE_SURVEY_POST_PAGE,
   USER_DETAILS_PAGE,
+<<<<<<< HEAD
   POST_DETAIL
+=======
+  FACULTY_STUDENT_PAGE
+>>>>>>> develop
 } from './constants/Page'
 import AcceptSendEmailPage from './pages/AcceptEmailPage'
 import AddQuestionPage from './pages/AddQuestionPage'
@@ -73,7 +77,11 @@ import vi from './translates/vi.json'
 import ApprovePostPage from './pages/ApprovePostPage'
 import PendingPostPage from './pages/PendingPostPage'
 import RejectPostsPage from './pages/RejectPostsPage'
+<<<<<<< HEAD
 import PostDetail from './pages/PostDetail'
+=======
+import FacultyAndStudentPage from './pages/FacultyAndStudentPage'
+>>>>>>> develop
 
 setTranslations({ vi, en, ja })
 setDefaultLanguage('vi')
@@ -123,7 +131,11 @@ export default function AppRouter() {
             <Route path={APPROVAL_POST_PAGE} element={<ApprovePostPage />} />
             <Route path={PENDING_POST_PAGE} element={<PendingPostPage />} />
             <Route path={REJECT_POST_PAGE} element={<RejectPostsPage />} />
+<<<<<<< HEAD
             <Route path={POST_DETAIL + '/:slug'} element={<PostDetail />} />
+=======
+            <Route path={FACULTY_STUDENT_PAGE} element={<FacultyAndStudentPage />} />
+>>>>>>> develop
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>

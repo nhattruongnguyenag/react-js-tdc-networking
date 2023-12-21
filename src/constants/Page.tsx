@@ -30,5 +30,9 @@ export const MANAGEMENT_JOB_APPLY_PAGE = '/quan-ly-ho-so-ung-tuyen'
 export const APPROVAL_POST_PAGE = '/duyet-bai-viet'
 export const PENDING_POST_PAGE = '/bai-viet-dang-cho'
 export const REJECT_POST_PAGE = '/bai-viet-khong-duoc-duyet'
+<<<<<<< HEAD
 export const POST_DETAIL = '/chi-tiet-bai-viet'
 
+=======
+export const FACULTY_STUDENT_PAGE = '/nhom-sinh-vien-va-khoa'
+>>>>>>> develop

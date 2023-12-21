@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Modal } from 'react-bootstrap'
-import CreateNormalPost from '../post/CreateNormalPost'
-import { TEXT_CREATE_NEW_POST, TEXT_CREATE_POST } from '../../constants/StringVietnamese'
+import CreateNormalPost from './CreateNormalPost'
+import { t, useTranslation } from 'react-multi-lang'
+import { UpdateNormalPost } from '../../types/UpdateNormalPost'
 export interface CreatePostModalType {
-  show: boolean
+  t: ReturnType<typeof useTranslation>,
+  show: boolean,
   onHide: () => void,
-  group: number | null
+  group: number | null,
+  updateNormalPost: UpdateNormalPost | null
 }
 
 export function CreatePostModal(props: Readonly<CreatePostModalType>) {
@@ -13,7 +16,7 @@ export function CreatePostModal(props: Readonly<CreatePostModalType>) {
     <Modal {...props} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
       <Modal.Header>
         <div className='header-modal'>
-          <Modal.Title className='font-xss'>{TEXT_CREATE_POST}</Modal.Title>
+          <Modal.Title className='font-xss'>{props.updateNormalPost ?t("ModalCreateNormalPost.modalUpdateNormalPostTitle") :t("ModalCreateNormalPost.modalCreateNormalPostTitle")}</Modal.Title>
           <button
             style={{ position: 'absolute', top: 0, right: 10 }}
             type='button'
@@ -24,29 +27,12 @@ export function CreatePostModal(props: Readonly<CreatePostModalType>) {
           </button>
         </div>
       </Modal.Header>
-      <CreateNormalPost onHide={props.onHide} group={props.group} />
+      <CreateNormalPost
+        t={props.t}
+        onHide={props.onHide}
+        group={props.group}
+        updateNormalPost={props.updateNormalPost}
+      />
     </Modal>
   )
 }
-
-const CreateNormalPostModal = (props: CreatePostModalType) => {
-  const [modalShow, setModalShow] = useState(false)
-  return (
-    <>
-      <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 pb-3 pe-4 ps-4 pt-4'>
-        <div className='card-body p-0'>
-          <button
-            onClick={() => setModalShow(true)}
-            className='font-xssss fw-600 text-grey-500 card-body d-flex align-items-center p-0'
-          >
-            <i className='btn-round-sm font-xs text-primary feather-edit-3 bg-greylight me-2' />
-            {TEXT_CREATE_NEW_POST}
-          </button>
-        </div>
-      </div>
-      <CreatePostModal show={modalShow} onHide={() => setModalShow(false)} group={props.group} />
-    </>
-  )
-}
-
-export default CreateNormalPostModal

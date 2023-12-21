@@ -6,10 +6,8 @@ import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-multi-lang'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
-import { POST_UPDATE_ID } from '../../constants/KeyValue'
 import {
   CREATE_RECRUITMENT_POST_PAGE,
-  CREATE_SURVEY_POST_PAGE,
   UPDATE_SURVEY_POST_PAGE,
   USER_DETAILS_PAGE
 } from '../../constants/Page'
@@ -26,6 +24,9 @@ import { isRecruitmentPost, isSurveyPost } from '../../utils/PostHelper'
 import DefaultAvatar from '../common/DefaultAvatar'
 import PostOptionsMenu from '../menu/PostOptionsMenu'
 import { POST_APPROVAL, POST_PENDING, POST_REJECT } from './PostApprovalItem'
+import { CreatePostModal } from '../modal/CustomizeNormalPostModal'
+import { UpdateNormalPost } from '../../types/UpdateNormalPost'
+import { TYPE_NORMAL_POST } from '../../constants/Variables'
 
 const RECRUITMENT_BADGE_COLOR = 'bg-gray-200'
 const SURVEY_BADGE_COLOR = 'bg-blue-200'
@@ -39,7 +40,7 @@ const REJECT_POST_DETAIL = 4
 
 interface HeaderPostApprovalItemProps {
   post: PostResponseModel
-  type: number
+  type: number,
 }
 
 export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProps) {
@@ -47,6 +48,7 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
   const dispatch = useAppDispatch()
   const [acceptPost, acceptPostResponse] = useAcceptPostMutation()
   const [deletePost, deletePostResponse] = useDeletePostMutation()
+  const [createNormalPostModalShow, setCreateNormalPostModalShow] = useState(false);
   const t = useTranslation()
   const location = useLocation()
 
@@ -57,6 +59,7 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
     }
     navigate(`${USER_DETAILS_PAGE}/${slugify(props.post.user.name)}-${props.post.user.id}`, { state })
   }
+
 
   const [badge, setBadge] = useState<{ color: string; content: string }>({
     color: TEXT_IMAGE_BADGE_COLOR,
@@ -96,6 +99,15 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
 
     return options
   }, [])
+
+  const handleUpdateNormalPostEvent = useMemo((): UpdateNormalPost => {
+    const updateNormalPost: UpdateNormalPost = {
+      postId: props.post.id,
+      content: (props.post.type.includes(TYPE_NORMAL_POST)) ? props.post.content : "",
+      images: (props.post.type.includes(TYPE_NORMAL_POST)) ? props.post.images : []
+    };
+    return updateNormalPost;
+  }, [props])
 
   useEffect(() => {
     if (isSurveyPost(props.post)) {
@@ -146,6 +158,8 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
         navigate(CREATE_RECRUITMENT_POST_PAGE, { state: props.post })
       } else if (isSurveyPost(props.post)) {
         navigate(`${UPDATE_SURVEY_POST_PAGE}/${slugify(props.post.title)}-${props.post.id}`, { state: props.post })
+      } else {
+        setCreateNormalPostModalShow(true);
       }
     }
   }
@@ -217,6 +231,13 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
         </div>
         <PostOptionsMenu menuOptions={menuOptions} handleClickMenuOption={handleClickMenuOption} />
       </div>
+      <CreatePostModal
+        show={createNormalPostModalShow}
+        onHide={() => setCreateNormalPostModalShow(false)}
+        group={0}
+        t={t}
+        updateNormalPost={handleUpdateNormalPostEvent}
+      />
     </>
   )
 }

@@ -80,6 +80,7 @@ const PostSavedListView = () => {
                 group={''}
                 isConduct={null}
                 handleUnSave={handleUnSave}
+                active={item.active}
               />
             )
             :
@@ -110,6 +111,7 @@ const PostSavedListView = () => {
                 group={''}
                 isConduct={null}
                 handleUnSave={handleUnSave}
+                active={item.active}
               />
             )
         }
