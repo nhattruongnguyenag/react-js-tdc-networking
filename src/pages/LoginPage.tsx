@@ -237,7 +237,7 @@ export default function LoginPage() {
                   >
                     <div className='div' style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                       <Checkbox checked={isChecked} onClick={() => handleCheckBoxToggle()} />
-                      <p className='mb-0'>{isChecked ? 'Ẩn' : 'Hiện'}</p>
+                      <p className='mb-0'>{isChecked ? t('LoginComponent.hidePass') : t('LoginComponent.showPass')}</p>
                     </div>
 
                     <button

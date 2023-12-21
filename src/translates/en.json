@@ -11,6 +11,8 @@
         "titleLogin": "Log in",
         "emailId": "Email ID",
         "password": "Password",
+        "showPass": "Show",
+        "hidePass": "Hide",
         "errorEmail": "Incorrect or empty email format",
         "errorPass": "Incorrect or empty password format",
         "errorEmailNotFormat": "Incorrect email format",

@@ -11,6 +11,8 @@
         "titleLogin": "Đăng nhập",
         "emailId": "Email ID",
         "password": "Mật khẩu",
+        "showPass": "Hiện",
+        "hidePass": "Ẩn",
         "errorEmail": "Email không được để trống",
         "errorPass": "Mật khẩu không được để trống",
         "errorEmailNotFormat": "Email sai định dạng",
