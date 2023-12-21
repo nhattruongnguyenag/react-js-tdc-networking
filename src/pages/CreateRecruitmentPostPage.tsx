@@ -40,6 +40,7 @@ import { RecruitmentPostRequest } from '../types/request/RecruitmentPostRequest'
 import { isRecruitmentPost } from '../utils/PostHelper'
 import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
 import { ErrorMessage, isExistFieldInvalid, validateField } from '../utils/ValidateHelper'
+import { useTranslation } from 'react-multi-lang'
 
 const BUSINESS_CONNECT_GROUP = 2
 
@@ -111,18 +112,19 @@ export default function CreateRecruitmentPostPage() {
   const navigate = useNavigate()
   const { state } = useLocation()
   const { userLogin, previousPage } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const t = useTranslation()
 
   const defaultrecruitmentPostRequest: RecruitmentPostRequest = {
-    id: state.id ?? undefined,
+    id: state?.id ?? undefined,
     userId: userLogin?.id ?? -1,
     type: 'tuyen-dung',
-    title: state.title ?? '',
-    salary: state.salary ?? '',
-    benefit: state.benefit ?? '',
-    description: state.description ?? '',
-    employmentType: state.employmentType ?? '',
-    location: state.location ?? '',
-    requirement: state.requirement ?? '',
+    title: state?.title ?? '',
+    salary: state?.salary ?? '',
+    benefit: state?.benefit ?? '',
+    description: state?.description ?? '',
+    employmentType: state?.employmentType ?? '',
+    location: state?.location ?? '',
+    requirement: state?.requirement ?? '',
     groupId: BUSINESS_CONNECT_GROUP,
     expiration: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
   }
@@ -154,7 +156,7 @@ export default function CreateRecruitmentPostPage() {
       },
       expiration: {
         textError: 'RecruitmentScreen.recruitmentExpirationValidate',
-        isError: moment().isAfter(moment(state.expiration)),
+        isError: moment().isAfter(moment(state?.expiration)),
         isVisible: false
       },
       employmentType: {
@@ -198,11 +200,12 @@ export default function CreateRecruitmentPostPage() {
 
   const onExpirationChangeText = useCallback(
     (value: string) => {
+      console.log(validate.expiration.textError)
       if (moment().isAfter(moment(value.replace('T', ' ')))) {
         setValidate({
           ...validate,
           expiration: {
-            ...validate.expiration,
+            textError: 'RecruitmentScreen.recruitmentExpirationValidate',
             isError: true,
             isVisible: true
           }
@@ -289,7 +292,7 @@ export default function CreateRecruitmentPostPage() {
     if (createRecruitmentPostResponse.data) {
       console.log(previousPage)
       navigate(previousPage)
-      toast.success('RecruitmentScreen.recruitmentSaveSuccessContent')
+      toast.success(t('RecruitmentScreen.recruitmentSaveSuccessContent'))
     }
   }, [createRecruitmentPostResponse])
 
@@ -297,7 +300,7 @@ export default function CreateRecruitmentPostPage() {
     if (updateRecruitmentPostResponse.data) {
       console.log(previousPage)
       navigate(previousPage)
-      toast.success('RecruitmentScreen.recruitmentUpdateSuccessContent')
+      toast.success(t('RecruitmentScreen.recruitmentUpdateSuccessContent'))
     }
   }, [updateRecruitmentPostResponse])
 
@@ -324,7 +327,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.title.textError}
+                  textError={t(validate.title.textError)}
                   isError={validate.title.isError}
                   isVisible={validate.title.isVisible}
                 />
@@ -338,7 +341,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.employmentType.textError}
+                  textError={t(validate.employmentType.textError)}
                   isError={validate.employmentType.isError}
                   isVisible={validate.employmentType.isVisible}
                 />
@@ -352,7 +355,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.expiration.textError}
+                  textError={t(validate.expiration.textError)}
                   isError={validate.expiration.isError}
                   isVisible={validate.expiration.isVisible}
                 />
@@ -367,7 +370,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.location.textError}
+                  textError={t(validate.location.textError)}
                   isError={validate.location.isError}
                   isVisible={validate.location.isVisible}
                 />
@@ -382,7 +385,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.description.textError}
+                  textError={t(validate.description.textError)}
                   isError={validate.description.isError}
                   isVisible={validate.description.isVisible}
                 />
@@ -396,7 +399,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.salary.textError}
+                  textError={t(validate.salary.textError)}
                   isError={validate.salary.isError}
                   isVisible={validate.salary.isVisible}
                 />
@@ -411,7 +414,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.requirement.textError}
+                  textError={t(validate.requirement.textError)}
                   isError={validate.requirement.isError}
                   isVisible={validate.requirement.isVisible}
                 />
@@ -426,7 +429,7 @@ export default function CreateRecruitmentPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.benefit.textError}
+                  textError={t(validate.benefit.textError)}
                   isError={validate.benefit.isError}
                   isVisible={validate.benefit.isVisible}
                 />

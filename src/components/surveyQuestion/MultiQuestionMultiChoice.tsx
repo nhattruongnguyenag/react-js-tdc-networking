@@ -48,10 +48,10 @@ export default function MultiQuestionMultiChoice(props: MultiQuestionMultiChoice
     return questionConducts[props.index ?? -1].choices.map((item, index) => (
       <ConductChoice
         onSelected={() => {
-          if (selectedChoiceIds.indexOf(item.voteQuestionId) != -1) {
-            setSelectedChoiceIds(selectedChoiceIds.filter((value) => value != item.voteQuestionId))
+          if (selectedChoiceIds.indexOf(item.id) != -1) {
+            setSelectedChoiceIds(selectedChoiceIds.filter((value) => value != item.id))
           } else {
-            setSelectedChoiceIds([...selectedChoiceIds, item.voteQuestionId])
+            setSelectedChoiceIds([...selectedChoiceIds, item.id])
           }
         }}
         type={MULTI_CHOICE_QUESTION}

@@ -20,7 +20,7 @@ export default function ApprovePostPage() {
             return "group_connect_business"
         }
 
-        return ""
+        return ''
     }, [userLogin])
 
     const faculty = useMemo(() => {
@@ -38,7 +38,7 @@ export default function ApprovePostPage() {
     }, { refetchOnFocus: true, refetchOnMountOrArgChange: true })
 
     return (
-        <>
+    <>
             <Header />
             <div className='main-content'>
                 <div className='middle-wrap'>

@@ -24,6 +24,7 @@ import { getIdFromSlug } from '../utils/CommonUtls'
 import { isSurveyPost } from '../utils/PostHelper'
 import { ErrorMessage, isExistFieldInvalid, validateField } from '../utils/ValidateHelper'
 import { InputTextValidate, isBlank } from '../utils/ValidateUtils'
+import { useTranslation } from 'react-multi-lang'
 
 export const SHORT_ANSWER = 'tra-loi-ngan'
 export const ONE_CHOICE_QUESTION = 'chon-mot-dap-an'
@@ -53,6 +54,7 @@ export default function CreateSurveyPostPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { state } = useLocation()
+  const t = useTranslation()
 
   const { slug } = useParams()
   const surveyPostId = getIdFromSlug(slug ?? '') ?? -1
@@ -167,7 +169,7 @@ export default function CreateSurveyPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.title.textError}
+                  textError={t(validate.title.textError)}
                   isError={validate.title.isError}
                   isVisible={validate.title.isVisible}
                 />
@@ -181,7 +183,7 @@ export default function CreateSurveyPostPage() {
                 />
 
                 <ValidateTextView
-                  textError={validate.description.textError}
+                  textError={t(validate.description.textError)}
                   isError={validate.description.isError}
                   isVisible={validate.description.isVisible}
                 />
