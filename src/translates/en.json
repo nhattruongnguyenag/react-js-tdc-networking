@@ -750,6 +750,10 @@
     },
     "Setting": {
         "userInformation": "User Information"
-    }
-     
+    },
+    "Modal": {
+        "modalShowImageCloseButton": "Close",
+        "modalShowImageUpdateRejectUpdateButton": "Cancel Update",
+        "modalShowImageUpdateAcceptUpdateButton": "Update"
+      }
 }

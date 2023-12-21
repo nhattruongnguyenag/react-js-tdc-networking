@@ -208,7 +208,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
         />
       </div>
       <div style={{ position: 'relative' }}>
-        {images.length >= 6 && (
+        {images.length >= 5 && (
           <div className='container-button-to-left-right'>
             <button onClick={scrollLeft}>
               {' '}

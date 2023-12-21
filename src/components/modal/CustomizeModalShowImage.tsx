@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import { SERVER_ADDRESS } from '../../constants/SystemConstant';
 import { useState } from 'react';
 import { bigLoading } from '../../constants/Variables';
+import { useTranslation } from 'react-multi-lang';
 
 interface ModalType {
     typeImage: boolean
@@ -12,6 +13,7 @@ interface ModalType {
     onHide: () => void
 }
 export function CustomizeModalShowImage(props: Readonly<ModalType>) {
+    const t = useTranslation();
     const [isImageLoaded, setIsImageLoaded] = useState(false);
     const handleImageLoad = () => {
         setIsImageLoaded(true);
@@ -53,7 +55,7 @@ export function CustomizeModalShowImage(props: Readonly<ModalType>) {
                 <Button onClick={() => {
                     props.onHide();
                     setIsImageLoaded(false);
-                }} className='btn btn-outline-secondary bg-primary'>Close</Button>
+                }} className='btn btn-outline-secondary bg-primary'>{t("Modal.modalShowImageCloseButton")}</Button>
             </Modal.Footer>
         </Modal>
 

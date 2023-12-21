@@ -746,6 +746,11 @@
     },
     "Setting": {
         "userInformation": "ユーザー情報"
-    }
+    },
+    "Modal": {
+        "modalShowImageCloseButton": "閉じる",
+        "modalShowImageUpdateRejectUpdateButton": "更新をキャンセル",
+        "modalShowImageUpdateAcceptUpdateButton": "更新"
+      }
     
 }
