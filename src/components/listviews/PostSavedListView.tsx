@@ -80,8 +80,7 @@ const PostSavedListView = () => {
                 group={''}
                 isConduct={null}
                 handleUnSave={handleUnSave}
-                active={item.active}
-              />
+                active={item.active} iCustomizeLikeAction={false}              />
             )
             :
             filter?.map((item: any) =>
@@ -111,8 +110,7 @@ const PostSavedListView = () => {
                 group={''}
                 isConduct={null}
                 handleUnSave={handleUnSave}
-                active={item.active}
-              />
+                active={item.active} iCustomizeLikeAction={false}              />
             )
         }
       </div>

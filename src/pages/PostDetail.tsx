@@ -82,9 +82,8 @@ export default function PostDetail() {
                   isConduct={data1.isConduct ?? null}
                   isSave={data1.isSave}
                   group={''}
-                  handleUnSave={handleUnSave} 
-                  active={1}
-                /> : <></>
+                  handleUnSave={handleUnSave}
+                  active={1} iCustomizeLikeAction={false}                /> : <></>
               }
             </div>
           </div>

@@ -291,8 +291,6 @@ export default function NotificationItem(props: NotificationItemProps) {
     }
 
     const handleConductNow = (surveyPostId: number, notificationId: number) => {
-        console.log('1233123321');
-        
         navigate(`${SURVEY_DETAILS_PAGE}/${slugify(props.dataValue.title)}-${surveyPostId}`)
         try {
             axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus`, {
@@ -312,11 +310,11 @@ export default function NotificationItem(props: NotificationItemProps) {
             key={item.id}
             className='card bg-transparent-card w-100 itemNotification mb-0 border-0 ps-0'
             style={{ background: item.status == '0' ? '#e6e6e6' : '#fff', flexDirection: 'row', padding: 10 }}
-            onClick={() => value.canClick == true ? item.handleItem(item.id) : item.handleItemCanNotClick(item.id)}
+            
         >
             <div className='image_item'>
                 {value.image ? (
-                    
+
                     <img
                         src={SERVER_ADDRESS + 'api/images/' + value.image}
                         alt='user'
@@ -324,16 +322,18 @@ export default function NotificationItem(props: NotificationItemProps) {
                     />
                 ) : (
                     value.defaultImage == 'admin' ?
-                    <img className='image_noNull' src={'/assets/images/logo.png'} 
-                    /> :
-                            
-                    <DefaultAvatar name={value.defaultImage} size={60} styleBootstrap={undefined} />
+                        <img className='image_noNull' src={'/assets/images/logo.png'}
+                        /> :
+
+                        <DefaultAvatar name={value.defaultImage} size={60} styleBootstrap={undefined} />
                     // value.defaultImage == 'admin' ?
 
 
                 )}
             </div>
-            <div className='content_item' >
+            <div className='content_item' 
+            onClick={() => value.canClick == true ? item.handleItem(item.id) : item.handleItemCanNotClick(item.id)}
+            >
                 <h5 className='text-grey-900 fw-500 font-xsss lh-4 txt_content' >
                     <p className='txt_cnt' style={{ color: item.status == '0' ? '#000' : '#949393' }}>
                         <p className='txt_content_notification_hasUser'>{value.header}</p>
@@ -358,10 +358,13 @@ export default function NotificationItem(props: NotificationItemProps) {
                     {moment(item.createdAt).fromNow()}
                 </h6>
             </div>
-            <Menu
+            <div>
+                <Menu
                 menuButton={
                     <MenuButton className='menu_btn '>
-                        <FaEllipsisV />
+                        <div style={{paddingLeft: 10, zIndex: 99}}>
+                            <FaEllipsisV />
+                        </div>
                     </MenuButton>
                 }
                 transition
@@ -375,6 +378,8 @@ export default function NotificationItem(props: NotificationItemProps) {
                     {t('NotificationsComponent.deleteNotification')}
                 </MenuItem>
             </Menu>
+            </div>
+            
         </div>
     )
 }

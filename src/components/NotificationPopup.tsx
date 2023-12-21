@@ -17,7 +17,7 @@ import NotificationListView from './listviews/NotificationListView'
 import { ACCEPT_POST, CHANGE_PASSWORD_SUCCESS, CREATE_SURVEY, POST_LOG, REGISTER_SUCCESS, SAVE_POST, UPDATE_POST, USER_APPLY_JOB, USER_CHANGE_LANGUAGE, USER_COMMENT_POST, USER_CONDUCT_SURVEY, USER_CREATE_WATCH_JOB, USER_FOLLOW, USER_LIKE_POST, USER_REPLY_COMMENT, USER_UPDATE, USER_UPDATE_AVATAR } from '../constants/TypeNotification';
 import Modal from 'react-bootstrap/Modal'
 import { useNavigate } from 'react-router-dom'
-import { LIST_JOB_APPLY_PAGE, POST_DETAIL } from '../constants/Page'
+import { DETAILS_JOB_APPLY, LIST_JOB_APPLY_PAGE, POST_DETAIL, SURVEY_RESULT_PAGE } from '../constants/Page'
 import { slugify } from '../utils/CommonUtls'
 import Button from 'react-bootstrap/Button'
 interface NotificationPopupProps {
@@ -63,7 +63,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
     if (notification) {
       switch (notification.type) {
         case CREATE_SURVEY:
-          // navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
           break
         case SAVE_POST:
           navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
@@ -89,10 +89,9 @@ export default function NotificationPopup(props: NotificationPopupProps) {
         case POST_LOG:
           setShow(true)
           setLog(notification?.dataValue.content)
-          // navigate(`${POST_DETAIL}/${slugify('thong-bao')}-bai-viet`, { state })
           break
         case USER_APPLY_JOB:
-          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          navigate(`${DETAILS_JOB_APPLY}/${slugify('chi-tiet')}-${notification.dataValue.id}`)
           break
         default:
           break

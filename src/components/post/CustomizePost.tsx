@@ -32,6 +32,7 @@ import { formatVietNamCurrency } from '../../utils/FormatCurrency'
 import { CreatePostModal } from '../modal/CustomizeNormalPostModal'
 import { UpdateNormalPost } from '../../types/UpdateNormalPost'
 import { ModalUserLiked } from '../modal/ModalUserLiked'
+import { LikeAction } from '../../types/LikeActions'
 setTranslations({ vi, en, jp })
 
 const CustomizePost = (props: Post) => {
@@ -69,6 +70,7 @@ const CustomizePost = (props: Post) => {
   const handleClickBottomBtnEvent = async (flag: number | null) => {
     if (flag === LIKE_ACTION) {
       handleClickIntoBtnIconLikeEvent()
+      
     } else if (flag === COMMENT_ACTION) {
       handleClickIntoBtnIconComments()
     } else if (flag === SHOW_LIST_USER_REACTED) {
@@ -81,7 +83,11 @@ const CustomizePost = (props: Post) => {
       "postId": props.id,
       "userId": userLogin?.id
     }
-    callLikeAPI(data)
+    
+    props.iCustomizeLikeAction ? props.likeAction({
+      ...data, 
+      code: ''
+    } as LikeAction) : callLikeAPI(data)
   }
 
   const callLikeAPI = async (data: any) => {
@@ -169,11 +175,10 @@ const CustomizePost = (props: Post) => {
   const handleClickMenuOption = (flag: number) => {
     switch (flag) {
       case CLICK_SAVE_POST_EVENT:
-        handleSavePost();
+        props.iCustomizeLikeAction ? props.handleUnSave(props.id) : handleSavePost();
         break;
       case CLICK_UN_SAVE_POST_EVENT:
-        props.handleUnSave(props.id);
-        handleSavePost();
+        props.iCustomizeLikeAction ? props.handleUnSave(props.id) : handleSavePost();
         break;
       case CLICK_DELETE_POST_EVENT:
         handleDeletePostEvent();
