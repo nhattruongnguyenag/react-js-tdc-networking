@@ -10,6 +10,8 @@ import CustomizePost from '../components/post/CustomizePost';
 import CreatePostSelector from '../components/CreatePostSelector';
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { useAppSelector } from '../redux/Hook';
+import { getPostActive } from '../utils/GetPostActive';
+import { TDC_GROUP } from '../constants/Variables';
 
 export default function StudentDashboardPage() {
   const code = 'group_tdc'
@@ -35,39 +37,46 @@ export default function StudentDashboardPage() {
   }, [data]);
 
   const likeAction = (obj: LikeAction) => {
+    // TODO
   }
   const handleUnSave = () => {
+    // TODO
   }
 
   const renderItem = (item: any) => {
-    return <CustomizePost
-      key={item.id}
-      id={item.id}
-      userId={item.user['id']}
-      name={item.user['name']}
-      avatar={item.user['image']}
-      typeAuthor={''}
-      available={null}
-      timeCreatePost={numberDayPassed(item.createdAt)}
-      content={item.content}
-      type={item.type}
-      likes={item.likes}
-      comments={item.comment}
-      commentQty={item.commentQuantity}
-      images={item.images}
-      role={item.user['roleCodes']}
-      likeAction={likeAction}
-      location={item.location ?? null}
-      title={item.title ?? null}
-      expiration={item.expiration ?? null}
-      salary={item.salary ?? null}
-      employmentType={item.employmentType ?? null}
-      description={item.description ?? null}
-      isConduct={null}
-      isSave={item.isSave}
-      group={code}
-      handleUnSave={handleUnSave}
-    />
+    // if (getPostActive(item.active)) {
+      return <CustomizePost
+        key={item.id}
+        id={item.id}
+        userId={item.user['id']}
+        name={item.user['name']}
+        avatar={item.user['image']}
+        typeAuthor={TYPE_POST_STUDENT}
+        available={null}
+        timeCreatePost={numberDayPassed(item.createdAt)}
+        content={item.content}
+        type={item.type}
+        likes={item.likes}
+        comments={item.comment}
+        commentQty={item.commentQuantity}
+        images={item.images}
+        role={item.user['roleCodes']}
+        likeAction={likeAction}
+        location={item.location ?? null}
+        title={item.title ?? null}
+        expiration={item.expiration ?? null}
+        salary={item.salary ?? null}
+        employmentType={item.employmentType ?? null}
+        description={item.description ?? null}
+        isConduct={null}
+        isSave={item.isSave}
+        group={code}
+        handleUnSave={handleUnSave}
+        active={item.active}
+      />
+    // } else {
+    //   return null;
+    // }
   }
 
   return (
@@ -93,14 +102,14 @@ export default function StudentDashboardPage() {
               {
                 userLogin?.roleCodes == TYPE_POST_STUDENT && <CreatePostSelector
                   id={userLogin?.id}
-                  group={1}
+                  group={TDC_GROUP}
                   avatar={userLogin?.image}
                   name={userLogin?.name}
                   groupName={code}
                 />
               }
               {/* Render post */}
-              {data?.data.map((item) => renderItem(item))}
+              {data?.data.map((item:any) => renderItem(item))}
             </div>
           </div>
         </div>

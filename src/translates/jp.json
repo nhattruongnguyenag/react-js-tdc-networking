@@ -391,16 +391,6 @@
     "BarItemComponentNumberVote": {
         "barItemComponentNumberOfVote": " 投票"
     },
-    "Post": {
-        "normalPostIdentifyAuthorCompany": "企業",
-        "normalPostIdentifyAuthorFaculty": "学部",
-        "normalPostIdentifyAuthorStudent": "",
-        "typePostRecruitment": "求人",
-        "typePostSurvey": "アンケート",
-        "normalPostLikeBy": "いいね！",
-        "normalPostSeeMoreContent": "いいね！",
-        "normalPostHiddentContent": "非表示"
-    },
     "Comment": {
         "commentReplyComment": "返信",
         "commentDeleteComment": "削除",
@@ -445,11 +435,12 @@
     },
     "MenuOption": {
         "menuOptionSaveArticle": "記事を保存",
-        "menuOptionUnSaveArticle": "保存を解除",
+        "menuOptionUnSaveArticle": "記事の保存を解除",
         "menuOptionDeleteArticle": "記事を削除",
-        "menuOptionViewResumeList": "履歴書のリストを見る",
-        "menuOptionViewSurveyResults": "アンケート結果を見る",
-        "menuOptionViewSurveyUpdateNormalPost": "記事を編集"
+        "menuOptionUpdateArticle": "記事を更新",
+        "menuOptionViewResumeList": "履歴書リストを表示",
+        "menuOptionViewSurveyResults": "調査結果を表示",
+        "menuOptionViewSurveyUpdateNormalPost": "通常の投稿を編集"
     },
     "CreatePostToolbar": {
         "createPostToolbarTitle": "新しい投稿を作成",
@@ -484,7 +475,9 @@
         "unFollow": "フォロー解除",
         "follow": "フォロー",
         "updateProfile": "プロフィールを更新",
-        "unUpdate": "未更新"
+        "unUpdate": "未更新",
+        "uploadAvatarTitle": "プロフィール写真を更新",
+        "uploadBackgroundTitle": "カバー写真を更新"
     },
     "Group": {
         "groupTdc": "TDC グループ - Thu Duc Technology College",
@@ -674,6 +667,17 @@
         "unFollow": "フォロー解除",
         "profile": "プロフィール"
     },
+    "Toast": {
+            "toastUpdateProfileSuccess": "プロフィールが正常に更新されました",
+            "toastUpdateProfileUnSuccess": "プロフィールの更新に失敗しました",
+            "toastNotifyHaveError": "システムエラーが発生しました。後で再試行してください",
+            "toastNotifyCommentNull": "コメントの内容は空白にできません",
+            "toastNotifyContentNull": "投稿の内容は空白にできません",
+            "toastNotifyNumberCharacterHadCrossLimitedNumberCharacterNull": "文字数は制限を超えてはいけません",
+            "toastNotifyNumberCharacter": "文字",
+            "toastNotifyCreatePostSuccess": "投稿が正常に作成されました",
+            "toastNotifyCreatePostUnSuccess": "投稿の作成に失敗しました"
+        },
     "ApplicationOptionComponent": {
         "language": "言語",
         "info": "個人情報",
@@ -761,5 +765,18 @@
         "success": "アカウントが正常にアクティベートされました!!",
         "link_expirated": "申し訳ありませんが、リンクの有効期限が切れています!!!",
         "back": "ホームページにあります!!"
+    },
+    "Post": {
+        "normalPostIdentifyAuthorCompany": "企業",
+        "normalPostIdentifyAuthorFaculty": "学部",
+        "normalPostIdentifyAuthorStudent": "",
+        "typePostRecruitment": "採用",
+        "typePostSurvey": "調査",
+        "normalPostLike": "いいね",
+        "normalPostComment": "コメント"
+    },
+    "Setting": {
+        "userInformation": "ユーザー情報"
     }
+    
 }

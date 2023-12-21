@@ -389,146 +389,6 @@
     "BarItemComponentNumberVote": {
         "barItemComponentNumberOfVote": " votes"
     },
-    "Post": {
-        "normalPostIdentifyAuthorCompany": "Company",
-        "normalPostIdentifyAuthorFaculty": "Faculty",
-        "normalPostIdentifyAuthorStudent": "",
-        "typePostRecruitment": "Recruitment",
-        "typePostSurvey": "Survey",
-        "normalPostLikeBy": "Liked by",
-        "normalPostSeeMoreContent": "Liked by",
-        "normalPostHiddentContent": "Hidden"
-    },
-    "Comment": {
-        "commentReplyComment": "Reply",
-        "commentDeleteComment": "Delete",
-        "commentAuthor": "Author",
-        "modalListCommentTitle": "Comments"
-    },
-    "CommentContainer": {
-        "commentContainerComponentSeeMore": "See more",
-        "commentContainerComponentHidden": "Show less"
-    },
-    "CreateCommentToolbar": {
-        "commentCreateComment": "Post comment",
-        "commentPlaceholderInput": "Enter comment..."
-    },
-    "RecruitmentPost": {
-        "recruitmentPostType": "Recruitment",
-        "recruitmentPostButtonSeeDetail": "See details",
-        "recruitmentPostCurrency": "vnd/Month"
-    },
-    "SurveyPost": {
-        "surveyPostType": "Survey",
-        "surveyPostButton": "Conduct Survey",
-        "surveyPostButtonSetting": "Edit Answers",
-        "surveyPostButtonJoinSurvey": "Join Survey",
-        "surveyPostButtonDetailQuestion": "Details"
-    },
-    "Faculty": {
-        "facultyOfElectricalEngineering": "Faculty of Electrical Engineering",
-        "facultyOfInformationTechnology": "Faculty of Information Technology",
-        "facultyOfAutomationTechnology": "Faculty of Automation Technology",
-        "facultyOfMechanicalEngineeringAndManufacturing": "Faculty of Mechanical Engineering and Manufacturing",
-        "automobileEngineeringDepartment": "Automobile Engineering Department",
-        "facultyOfFinanceAndAccounting": "Faculty of Finance and Accounting",
-        "facultyOfBusinessAdministration": "Faculty of Business Administration",
-        "facultyOfTourism": "Faculty of Tourism",
-        "departmentOfEnglish": "Department of English",
-        "departmentOfKoreanLanguage": "Department of Korean Language",
-        "japaneseLanguageDepartment": "Japanese Language Department"
-    },
-    "ModalUserLiked": {
-        "modalUserLikedTitle": "List of users who liked"
-    },
-    "MenuOption": {
-        "menuOptionSaveArticle": "Save post",
-        "menuOptionUnSaveArticle": "Unsave post",
-        "menuOptionDeleteArticle": "Delete post",
-        "menuOptionViewResumeList": "View CV list",
-        "menuOptionViewSurveyResults": "View survey results",
-        "menuOptionViewSurveyUpdateNormalPost": "Edit post"
-    },
-    "CreatePostToolbar": {
-        "createPostToolbarTitle": "Create New Post",
-        "createPostToolbarNormalPost": "Text/Image",
-        "createPostToolbarSurveyPost": "Create Survey Post",
-        "createPostToolbarRecruitmentPost": "Recruitment Post"
-    },
-    "ModalCreateNormalPost": {
-        "modalCreateNormalPostTitle": "Create post",
-        "modalCreateNormalPostPlaceholder": "Please enter post content",
-        "modalCreateNormalPostEntryImages": "Images",
-        "modalCreateNormalPostButton": "Post"
-    },
-    "BusinessSelectFacultyToolbar": {
-        "businessSelectFacultyToolbarTitle": "Select the faculty to display posts"
-    },
-    "NotifyFacultyDontHaveAnyPost": {
-        "textNotifyFacultyDontHaveAnyPost": "No posts yet in this faculty"
-    },
-    "Profile": {
-        "profileOperatingHours": "Operating Hours",
-        "profileTaxID": "Tax ID",
-        "profileRepresentative": "Representative",
-        "profileAddress": "Address",
-        "profilePhone": "Phone",
-        "profileEmail": "Email",
-        "profileArticles": "Posts",
-        "profilePosition": "Position",
-        "profileRole": "Student",
-        "chat": "Chat",
-        "call": "Call",
-        "unFollow": "Unfollow",
-        "follow": "Follow",
-        "updateProfile": "Update personal information",
-        "unUpdate": "Not updated yet"
-    },
-    "Group": {
-        "groupTdc": "TDC Group - Thu Duc College of Technology",
-        "groupConnectBusiness": "Business Connection Group",
-        "electricalElectronicsGroup": "Electrical - Electronics Group",
-        "informationTechnologyGroup": "Information Technology Group",
-        "automationTechnologyGroup": "Automation Technology Group",
-        "mechanicalEngineeringAndManufacturingGroup": "Mechanical Engineering and Manufacturing Group",
-        "automotiveMechanicalGroup": "Automotive Mechanical Group",
-        "financeAccountingGroup": "Finance - Accounting Group",
-        "businessAdministrationGroup": "Business Administration Group",
-        "tourismGroup": "Tourism Group",
-        "englishGroup": "English Group",
-        "koreanGroup": "Korean Group",
-        "japaneseLanguageDepartmentGroup": "Japanese Language Department Group"
-    },
-    "ModalUpdate": {
-        "modalUpdateTitle": "Update Account Information",
-        "modalUpdatePlaceholderPhoneNumber": "Phone Number",
-        "modalUpdatePlaceholderEmail": "Email",
-        "modalUpdateBackground": "Background",
-        "modalUpdateAvatar": "Avatar",
-        "modalUpdateButtonText": "Update"
-    },
-    "Validate": {
-        "validatePhoneNull": "Phone number cannot be empty",
-        "validatePhoneUnCorrectFormat": "Incorrect phone number format",
-        "validateEmailNull": "Email cannot be empty",
-        "validateEmailUnCorrectFormat": "Incorrect email format",
-        "validateEmailHadUsed": "Email has already been registered, please enter another email",
-        "validateEmailHasMaxLength": "Email cannot exceed 255 characters",
-        "validateNameHasMaxLength": "Name cannot exceed 255 characters",
-        "validateNameHasSpecialCharacter": "Name cannot contain special characters",
-        "validateAddressNull": "Address cannot be empty",
-        "validatePresentorNull": "Representative name cannot be empty",
-        "validateRepresentorSpecialCharacter": "Name cannot contain special characters",
-        "validateRepresentorMaxLength": "Name cannot exceed 255 characters",
-        "validateTaxCodeNull": "Tax code cannot be empty",
-        "validateNameNull": "Name cannot be empty",
-        "validateNameSpecialCharacter": "Name cannot contain special characters",
-        "validateNameMaxLength": "Name cannot exceed 255 characters",
-        "validateNameTimeActiveUnCorrect": "Incorrect operating time",
-        "validateTaxCodeFormat": "Incorrect tax code format",
-        "validateTaxCodeMaxLength": "Tax code cannot exceed 255 characters",
-        "validateAddressMaxLength": "Address cannot exceed 255 characters"
-    },
     "ModalListUserLiked": {
         "modalListUserLikedTitle": "List of liked users"
     },
@@ -672,6 +532,165 @@
         "unFollow": "Unfollow",
         "profile": "Profile"
     },
+    "Profile": {
+        "profileOperatingHours": "Operating Hours",
+        "profileTaxID": "Tax ID",
+        "profileRepresentative": "Representative",
+        "profileAddress": "Address",
+        "profilePhone": "Phone",
+        "profileEmail": "Email",
+        "profileArticles": "Articles",
+        "profilePosition": "Position",
+        "profileRole": "Student",
+        "chat": "Chat",
+        "call": "Call",
+        "unFollow": "Unfollow",
+        "follow": "Follow",
+        "updateProfile": "Update Profile",
+        "unUpdate": "Not updated",
+        "profileActiveTimeTo":"To",
+        "uploadAvatarTitle": "Update Profile Picture",
+        "uploadBackgroundTitle": "Update Cover Photo"
+    },
+    "Post": {
+        "normalPostIdentifyAuthorCompany": "Company",
+        "normalPostIdentifyAuthorFaculty": "Faculty",
+        "normalPostIdentifyAuthorStudent": "",
+        "typePostRecruitment": "Recruitment",
+        "normalPostLike": "Liked by",
+        "typePostSurvey": "Survey",
+        "normalPostComment":  "Comment"
+    },
+    "Comment": {
+        "commentReplyComment": "Reply",
+        "commentDeleteComment": "Delete",
+        "commentAuthor": "Author",
+        "modalListCommentTitle": "Comments"
+    },
+    "CommentContainer": {
+        "commentContainerComponentSeeMore": "See more",
+        "commentContainerComponentHidden": "Hide"
+    },
+    "CreateCommentToolbar": {
+        "commentCreateComment": "Post comment",
+        "commentPlaceholderInput": "Enter your comment here"
+    },
+    "RecruitmentPost": {
+        "recruitmentPostType": "Recruitment",
+        "recruitmentPostButtonSeeDetail": "See details",
+        "recruitmentPostCurrency": "VND/Month"
+    },
+    "SurveyPost": {
+        "surveyPostType": "Survey",
+        "surveyPostButton": "Take survey",
+        "surveyPostButtonSetting": "Edit answers"
+    },
+    "Faculty": {
+        "facultyOfElectricalEngineering": "Faculty of Electrical Engineering",
+        "facultyOfInformationTechnology": "Faculty of Information Technology",
+        "facultyOfAutomationTechnology": "Faculty of Automation Technology",
+        "facultyOfMechanicalEngineeringAndManufacturing": "Faculty of Mechanical Engineering and Manufacturing",
+        "automobileEngineeringDepartment": "Automobile Engineering Department",
+        "facultyOfFinanceAndAccounting": "Faculty of Finance and Accounting",
+        "facultyOfBusinessAdministration": "Faculty of Business Administration",
+        "facultyOfTourism": "Faculty of Tourism",
+        "departmentOfEnglish": "Department of English",
+        "departmentOfKoreanLanguage": "Department of Korean Language",
+        "japaneseLanguageDepartment": "Japanese Language Department"
+    },
+    "ModalUserLiked": {
+        "modalUserLikedTitle": "List of users who liked"
+    },
+    "MenuOption": {
+        "menuOptionSaveArticle": "Save article",
+        "menuOptionUnSaveArticle": "Unsave article",
+        "menuOptionDeleteArticle": "Delete article",
+        "menuOptionUpdateArticle": "Edit Article",
+        "menuOptionViewResumeList": "View CV list",
+        "menuOptionViewSurveyResults": "View survey results",
+        "menuOptionViewSurveyUpdateNormalPost": "Edit post"
+    },
+    "CreatePostToolbar": {
+        "createPostToolbarTitle": "Create New Post",
+        "createPostToolbarNormalPost": "Text/Image",
+        "createPostToolbarSurveyPost": "Create Survey Post",
+        "createPostToolbarRecruitmentPost": "Job Recruitment Post"
+    },    
+    "ModalUpdate": {
+        "modalUpdateTitle": "Update Account Information",
+        "modalUpdatePlaceholderPhoneNumber": "Phone Number",
+        "modalUpdatePlaceholderEmail": "Email",
+        "modalUpdateBackground": "Background Image",
+        "modalUpdateAvatar": "Profile Picture",
+        "modalUpdateButtonText": "Update",
+        "modalUpdateImageNotifyNotUpload": "Image is currently uploading",
+        "modalUpdateImageNotifyUploadSuccess": "Image has been successfully uploaded",
+        "modalUpdateCompanyName": "Company Name",
+        "modalUpdateCompanyAddress": "Address",
+        "modalUpdateCompanyPresentor": "Company Representative",
+        "modalUpdateCompanyTaxCode": "Tax ID"
+    },    
+    "Group":{
+        "groupTdc": "Group by TDC - Thu Duc College of Technology",
+        "groupConnectBusiness": "Connect Business Community",
+        "electricalElectronicsGroup": "Electrical - Electronics Group",
+        "informationTechnologyGroup": "Information Technology Faculty",
+        "automationTechnologyGroup": "Automation Technology Group",
+        "mechanicalEngineeringAndManufacturingGroup": "Mechanical Engineering and Manufacturing Group",
+        "automotiveMechanicalGroup": "Automotive Mechanical Group",
+        "financeAccountingGroup": "Finance - Accounting Group",
+        "businessAdministrationGroup": "Business Administration Group",
+        "tourismGroup": "Tourism Group",
+        "englishGroup": "English Group",
+        "koreanGroup": "Korean Group",
+        "japaneseLanguageDepartmentGroup": "Japanese Language Department Group"
+    },
+    "ModalCreateNormalPost": {
+        "modalCreateNormalPostTitle": "Create Post",
+        "modalUpdateNormalPostTitle": "Update Post",
+        "modalCreateNormalPostPlaceholder": "Please enter the content of the post",
+        "modalCreateNormalPostEntryImages": "Images",
+        "modalCreateNormalPostButton": "Post"
+    },
+    "Validate": {
+        "validatePhoneNull": "Phone number cannot be empty",
+        "validatePhoneUnCorrectFormat": "Incorrect phone number format",
+        "validateEmailNull": "Email cannot be empty",
+        "validateEmailUnCorrectFormat": "Incorrect email format",
+        "validateEmailHadUsed": "Email has already been registered, please enter a different email",
+        "validateEmailHasMaxLength": "Email cannot exceed 255 characters",
+        "validateNameHasMaxLength": "Name cannot exceed 255 characters",
+        "validateNameHasSpecialCharacter": "Name cannot contain special characters",
+        "validateAddressNull": "Address cannot be empty",
+        "validatePresentorNull": "Representative name cannot be empty",
+        "validateRepresentorSpecialCharacter": "Name cannot contain special characters",
+        "validateRepresentorMaxLength": "Name cannot exceed 255 characters",
+        "validateTaxCodeNull": "Tax code cannot be empty",
+        "validateNameNull": "Name cannot be empty",
+        "validateNameSpecialCharacter": "Name cannot contain special characters",
+        "validateNameMaxLength": "Name cannot exceed 255 characters",
+        "validateNameTimeActiveUnCorrect": "Incorrect operating hours",
+        "validateTaxCodeFormat": "Incorrect tax code format",
+        "validateTaxCodeMaxLength": "Tax code cannot exceed 255 characters",
+        "validateAddressMaxLength": "Address cannot exceed 255 characters",
+        "validateTimeActiveErrorFormat":"Time active error format is incorrect"               
+    },
+    "BusinessSelectFacultyToolbar": {
+        "businessSelectFacultyToolbarTitle": "Please select the faculty you want to display posts for"
+    },
+      "NotifyFacultyDontHaveAnyPost": {
+        "textNotifyFacultyDontHaveAnyPost": "No posts available in this faculty"
+    },
+    "Toast": {
+        "toastUpdateProfileSuccess": "Profile updated successfully",
+        "toastUpdateProfileUnSuccess": "Failed to update profile",
+        "toastNotifyHaveError": "System error, please try again later",
+        "toastNotifyCommentNull": "Comment content cannot be empty",
+        "toastNotifyContentNull": "Post content cannot be empty",
+        "toastNotifyNumberCharacterHadCrossLimitedNumberCharacterNull": "Character count cannot exceed the limit",
+        "toastNotifyNumberCharacter": "characters",
+        "toastNotifyCreatePostSuccess": "Post created successfully",
+        "toastNotifyCreatePostUnSuccess": "Failed to create post"},
     "ApplicationOptionComponent": {
         "language": "Language",
         "info": "Personal information",
@@ -759,5 +778,9 @@
         "success": "Account activated successfully!!",
         "link_expirated": "Sorry, your link has expired!!!",
         "back": "Back the homepage !!"
+    },
+    "Setting": {
+        "userInformation": "User Information"
     }
+     
 }

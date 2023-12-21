@@ -30,7 +30,8 @@ import {
   SURVEY_RESULT_PAGE,
   UPDATE_SURVEY_POST_PAGE,
   USER_DETAILS_PAGE,
-  CHANGE_PASSWORD_PAGE
+  CHANGE_PASSWORD_PAGE,
+  FACULTY_STUDENT_PAGE
 } from './constants/Page'
 import AcceptSendEmailPage from './pages/AcceptEmailPage'
 import AddQuestionPage from './pages/AddQuestionPage'
@@ -74,6 +75,7 @@ import ApprovePostPage from './pages/ApprovePostPage'
 import PendingPostPage from './pages/PendingPostPage'
 import RejectPostsPage from './pages/RejectPostsPage'
 import ChangePasswordPage from './pages/ChangePasswordPage'
+import FacultyAndStudentPage from './pages/FacultyAndStudentPage'
 
 setTranslations({ vi, en, ja })
 setDefaultLanguage('vi')
@@ -124,6 +126,7 @@ export default function AppRouter() {
             <Route path={CHANGE_PASSWORD_PAGE} element={<ChangePasswordPage />} />
             <Route path={PENDING_POST_PAGE} element={<PendingPostPage />} />
             <Route path={REJECT_POST_PAGE} element={<RejectPostsPage />} />
+            <Route path={FACULTY_STUDENT_PAGE} element={<FacultyAndStudentPage />} />
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>

@@ -4,10 +4,16 @@ import CustomizeItemComments from './CustomizeItemComments';
 import { useAppSelector } from '../../redux/Hook';
 import { numberDayPassed } from '../../utils/FormatTime';
 import { COLOR_GREY } from '../../constants/Color';
-import { TEXT_HIDDEN_COMMENTS, TEXT_SEE_MORE_COMMENTS } from '../../constants/StringVietnamese';
-
+import { useTranslation } from 'react-multi-lang';
+import { getFacultyTranslated } from '../../utils/TranslateFaculty';
 interface CommentPostType {
-    comments: Comment[]
+    userCreatedPostId: number,
+    t: ReturnType<typeof useTranslation>,
+    textReplyComment: string,
+    textDeleteComment: string,
+    comments: Comment[],
+    textSeeMore: string,
+    textHidden: string,
     handleClickToCommentReplyEvent: (id: number, name: string) => void,
     handleClickToDeleteCommentsEvent: (idComment: number) => void,
     handleClickToAvatarAndName: (userId: number) => void,
@@ -24,6 +30,12 @@ export default function CustomizeCommentPost(props: Readonly<CommentPostType>) {
                     handleClickToCommentReplyEvent={props.handleClickToCommentReplyEvent}
                     handleClickToDeleteCommentsEvent={props.handleClickToDeleteCommentsEvent}
                     handleClickToAvatarAndName={props.handleClickToAvatarAndName}
+                    textReplyComment={props.textReplyComment}
+                    textDeleteComment={props.textDeleteComment}
+                    textSeeMore={props.textSeeMore}
+                    textHidden={props.textHidden}
+                    t={props.t}
+                    userCreatedPostId={props.userCreatedPostId}
                 /> : null
             ))}
         </div>
@@ -31,14 +43,20 @@ export default function CustomizeCommentPost(props: Readonly<CommentPostType>) {
 }
 
 export interface CommentChildrenType {
+    userCreatedPostId: number,
+    t: ReturnType<typeof useTranslation>,
+    textSeeMore: string,
+    textHidden: string,
+    textReplyComment: string,
+    textDeleteComment: string,
     commentItem: Comment,
     userLoginId: number | undefined,
     handleClickToCommentReplyEvent: (id: number, name: string) => void,
     handleClickToDeleteCommentsEvent: (idComment: number) => void,
     handleClickToAvatarAndName: (userId: number) => void,
+
 }
 export function ExportComments(item: Readonly<CommentChildrenType>) {
-
     const hasChildren = item.commentItem.childrens && item.commentItem.childrens.length > 0;
     const [seeMore, setSeeMore] = useState(false);
     const handleSeeMoreClick = () => {
@@ -47,26 +65,30 @@ export function ExportComments(item: Readonly<CommentChildrenType>) {
     return (
         <>
             <CustomizeItemComments
-                tagName={item.commentItem.parent?.name ?? ''}
+                userCreatedPostId={item.userCreatedPostId}
+                tagName={item.commentItem.parent?.name ? getFacultyTranslated(item.commentItem.parent?.name, item.t) : ''}
                 userId={item.userLoginId}
                 authorCommentId={item.commentItem.user['id']}
                 type={item.commentItem.parent === null ? 0 : 1}
                 key={item.commentItem.id}
                 id={item.commentItem.id}
-                name={item.commentItem.user.name}
+                name={getFacultyTranslated(item.commentItem.user.name, item.t)}
                 content={item.commentItem.content}
                 avatar={item.commentItem.user.image}
                 timeCreated={numberDayPassed(item.commentItem.createdAt)}
                 handleClickToCommentReplyEvent={item.handleClickToCommentReplyEvent}
                 handleClickToDeleteCommentsEvent={item.handleClickToDeleteCommentsEvent}
                 handleClickToAvatarAndName={item.handleClickToAvatarAndName}
+                textReply={item.textReplyComment}
+                textDelete={item.textDeleteComment}
+                textCommentOfAuthor={item.t("Comment.commentAuthor")}
             />
             {
                 hasChildren && (<>
                     <button
                         onClick={() => { setSeeMore(!seeMore) }}
                     >
-                        <div style={{ color: COLOR_GREY, fontSize: 12 }}>{seeMore ? TEXT_HIDDEN_COMMENTS : TEXT_SEE_MORE_COMMENTS}</div>
+                        <div style={{ color: COLOR_GREY, fontSize: 12 }}>{seeMore ? item.textHidden : item.textSeeMore}</div>
                     </button>
                     {
                         seeMore && (
@@ -78,6 +100,12 @@ export function ExportComments(item: Readonly<CommentChildrenType>) {
                                     handleClickToDeleteCommentsEvent={item.handleClickToDeleteCommentsEvent}
                                     userLoginId={item.userLoginId}
                                     handleClickToAvatarAndName={item.handleClickToAvatarAndName}
+                                    textReplyComment={item.textReplyComment}
+                                    textDeleteComment={item.textDeleteComment}
+                                    textSeeMore={item.textSeeMore}
+                                    textHidden={item.textHidden}
+                                    t={item.t}
+                                    userCreatedPostId={item.userCreatedPostId}
                                 />
                             ))
                         )

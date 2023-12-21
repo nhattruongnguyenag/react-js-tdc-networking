@@ -39,6 +39,7 @@
     "react-cookie": "^6.1.1",
     "react-dom": "^18.2.0",
     "react-dropdown": "^1.11.0",
+    "react-fb-image-grid": "^0.1.5",
     "react-grid-gallery": "^1.0.1-alpha.0",
     "react-headless-tabs": "^6.0.4",
     "react-icons": "^4.11.0",

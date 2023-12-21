@@ -4,40 +4,61 @@
 
 .containerImagesProfileHeader {
   position: relative;
+  background: grey;
+  border-radius: 15px;
+  cursor: pointer;
 }
 
 .containerBodyProfile {
-  padding-left: 50px;
   padding-right: 50px;
 }
 
 .backgroundHeaderProfile {
-  
+  width: 1280px;
+  height: 450px;
+  object-fit: cover;
+  border: 5px solid #ffff;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  background-color: grey;
+  border-radius: 15px;
 }
 
 .avatarHeaderProfile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  border-radius: 150px;
+}
+
+.avatarHeaderProfileDefault {
+  border-radius: 150px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+}
+
+.wrapperAvatarImage {
   width: 150px;
   height: 150px;
-  border-radius: 150px;
   object-fit: cover;
   bottom: -30px;
   left: 10px;
   border: 5px solid #ffff;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   position: absolute;
-}
-
-.avatarHeaderProfileDefault{
-  width: 150px;
-  height: 150px;
+  background-color: grey;
   border-radius: 150px;
-  object-fit: cover;
-  bottom: -30px;
-  left: 10px;
-  position: absolute;
+  cursor: pointer;
 }
 
 .containerUserProfileInfo {
-  padding-top: 50px;
+  padding-top: 40px;
 }
 
 .txtNameProfile {
@@ -80,17 +101,104 @@
   font-weight: bold;
 }
 
-.txtTitleInUserProfile{
+.txtTitleInUserProfile {
   color: black;
   font-weight: bold;
 }
 
-.wrapperTitleUserProfile{
+.wrapperTitleUserProfile {
   display: flex;
   align-items: center;
 }
 
-.iconArrowToRightUserProfile{
+.iconArrowToRightUserProfile {
   padding-left: 2px;
   padding-right: 2px;
+}
+
+.spinnerLoading {
+  position: absolute;
+  top: 10px;
+}
+
+.imageUpdate {
+  object-fit: cover;
+  margin-top: 50px;
+}
+
+.imageUpdating {
+  object-fit: cover;
+  margin-top: 50px;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+.imageUpdateHadSave {
+  border-width: 10px;
+  border-color: green;
+}
+
+.imageUpdateUnSave {
+  border-width: 10px;
+  border-color: red;
+}
+
+.buttonHeaderGoBack {
+  position: absolute;
+  z-index: 1;
+  left: -70px;
+  top: 0px;
+}
+
+.buttonHeaderGoBack:hover {
+  position: absolute;
+  z-index: 1;
+  left: -70px;
+  top: 0px;
+  scale: 1.2;
+  transition: all 0.5s;
+}
+
+.wrapperLoadingOfModalImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.imageModalShow {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapperImageModal {
+  position: relative;
+  height: 450px;
+}
+
+.buttonWrapperIconCamera {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  background: rgb(228 230 235);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border: none;
+  cursor: pointer;
+  line-height: 40px;
+  padding: 0px;
+  margin: 0px;
 }

@@ -5,6 +5,7 @@ import { RecruitmentPostResponseModel } from '../../types/response/RecruitmentPo
 import { slugify } from '../../utils/CommonUtls'
 import CustomizeRecruitmentPost from '../recruitmentPost/CustomizeRecruitmentPost'
 import { PostApprovalItemProps } from './PostApprovalItem'
+import { useTranslation } from 'react-multi-lang'
 
 interface RecruitmentPostApprovalItemProps {
     post: RecruitmentPostResponseModel
@@ -12,6 +13,7 @@ interface RecruitmentPostApprovalItemProps {
 
 export default function RecruitmentPostApprovalItem(props: RecruitmentPostApprovalItemProps) {
     const navigate = useNavigate()
+    const t = useTranslation();
     const handleClickBtnRecruitmentDetailEvent = (idPost: number, title: string) => {
         navigate(`${RECRUITMENT_DETAILS_PAGE}/${slugify(title)}-${idPost}`)
     }
@@ -31,6 +33,7 @@ export default function RecruitmentPostApprovalItem(props: RecruitmentPostApprov
             createdAt={props.post.createdAt}
             role={props.post.user.roleCodes}
             typeAuthor={props.post.user.roleCodes}
+            textButtonSeeDetail={t("RecruitmentPost.recruitmentPostButtonSeeDetail")}
         />
     )
 }
