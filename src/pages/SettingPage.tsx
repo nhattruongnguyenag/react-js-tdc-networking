@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { setDefaultLanguage, setUserLogin } from '../redux/Slice'
 import { toast } from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom'
-import { APPROVAL_POST_PAGE, FACULTY_STUDENT_PAGE, LOGIN_PAGE, MANAGEMENT_JOB_APPLY_PAGE, PENDING_POST_PAGE, USER_DETAILS_PAGE } from '../constants/Page'
+import { APPROVAL_POST_PAGE, CHANGE_PASSWORD_PAGE, FACULTY_STUDENT_PAGE, LOGIN_PAGE, MANAGEMENT_JOB_APPLY_PAGE, PENDING_POST_PAGE, USER_DETAILS_PAGE } from '../constants/Page'
 import { isAdmin, isBusiness, isFaculty, isStudent } from '../utils/UserHelper'
 import { TOKEN_KEY, USER_LOGIN_KEY } from '../constants/KeyValue'
 import { slugify } from '../utils/CommonUtls'
@@ -71,6 +71,10 @@ export default function SettingPage() {
       };
       navigate(`${USER_DETAILS_PAGE}/${slugify(userLogin.name)}-${state.userId}`, { state });
     }
+  }
+
+  const handleClickToChangePasswordPage = () => {
+      navigate(CHANGE_PASSWORD_PAGE)
   }
 
   const isUserFacultyOrStudent = (isFaculty(userLogin) || isStudent(userLogin));
@@ -159,7 +163,7 @@ export default function SettingPage() {
                           </a>
                         </li>
                         <li className='list-inline-item d-block border-bottom me-0'>
-                          <a href='/thay-doi-mat-khau' className='d-flex align-items-center pb-2 pt-2'>
+                          <a href='#' onClick={(e) => { e.preventDefault(); handleClickToChangePasswordPage(); }} className='d-flex align-items-center pb-2 pt-2'>
                             <i className='btn-round-md bg-gold-gradiant feather-repeat font-md me-3 text-white' />{' '}
                             <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{t('ChangePassword.setting')}</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
