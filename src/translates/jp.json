@@ -685,28 +685,6 @@
         "cancel": "キャンセル",
         "change": "変更"
     },
-    "ForgettenPassword": {
-        "textForgetPassword": "パスワードを忘れた",
-        "textNotification": "正しくないまたは空のメールアドレス形式",
-        "textSubjectResetPassword": "パスワードの更新",
-        "titleSubjectResetPassword": " パスワードの変更",
-        "textAccept": "確認",
-        "textBack": "戻る"
-    },
-    "AcceptScreen": {
-        "checkEmail": "メールを確認",
-        "description1": "メールにリンクを送信しました",
-        "description2": "、メールを確認してください",
-        "titleNotify": "通知",
-        "descriptionNotify": "再送リンク先 ",
-        "back": "戻る",
-        "notSend": "まだメールを受け取っていませんか？",
-        "sendAgain": "再送信"
-    },
-    "AuthenticateRegistraion": {
-        "textSubjectAuthenRegistration": "アカウントの確認",
-        "titleSubjectAuthenRegistration": " アカウントの確認"
-    },
     "NoMorePost": {
         "noMorePost": "新しい投稿はありません"
     },
@@ -734,6 +712,59 @@
         "user_create_watch_job": " が次の求人に応募しました:",
         "in_group": " に",
         "survey_txt": "すぐに調査 >>"
+    },
+    "ChangePassword": {
+        "setting":"パスワードを変更する",
+        "password_no_null": "古いパスワードを空白にすることはできません",
+        "new_password_no_null": "新しいパスワードを空白にすることはできません",
+        "re_new_password_no_null": "このボックスを空白のままにすることはできません",
+        "new_password_not_valid": "新しいパスワードの形式が正しくありません",
+        "new_password_not_same_old_password":"新しいパスワードは古いパスワードと同じであってはなりません",
+        "re_new_password_not_same": "再入力したパスワードが間違っています",
+        "change_success": "パスワードは正常に変更されました",
+        "change_error": "古いパスワードが一致しません",
+        "title": "パスワードを変更する",
+        "place_holder_password": "パスワード",
+        "place_holder_new_password": "新しいパスワード",
+        "place_holder_re_new_password": "再入力",
+        "accept": "確認する"
+    },
+    "ForgotPassword": {
+        "email_no_valid": "電子メールの無効化",
+        "password_reset": "パスワードを更新する",
+        "send_success": "正常に送信されました",
+        "this_email_has_not_registered": "このメールは登録されていません",
+        "email_no_blank": "メールアドレスを空白にすることはできません",
+        "email_no_more_length": "電子メールは 255 文字を超えてはなりません",
+        "title": "パスワードを変更するにはメールアドレスを入力してください",
+        "confirm": "Eメール確認"
+    },
+    "ResetPassword": {
+        "password_no_blank" : "パスワードを空白にすることはできません" ,
+        "re_password_no_blank" : "2 番目のパスワードを空白にすることはできません",
+        "update_success": "パスワードが正常に更新されました",
+        "password_length_no_more": "パスワードは8文字を超えてはなりません",
+        "password_no_valid": "パスワードの形式が間違っています",
+        "re_password_no_valid": "再入力したパスワードが一致しません",
+        "title": "パスワードを更新する",
+        "plhd_password": "パスワード",
+        "plhd_re_password": "パスワードを入力してください",
+        "confirm": "確認する",
+        "link_expirated": "申し訳ありませんが、リンクの有効期限が切れています!!!"
+    },
+    "AcceptScreen":{
+        "send_success": "正常に送信されました",
+        "description1":"あなたのメールアドレスにリンクを送信しましたので、メールをご確認ください。",
+        "titleNotify":"通知",
+        "descriptionNotify":"リンクを再送信しました ",
+        "back": "ホームページにあります!!",
+        "notSend": "+ メールが届かない??、",
+        "sendAgain": "ここをクリック！！"
+    },
+    "AuthenticateRegistration":{
+        "success": "アカウントが正常にアクティベートされました!!",
+        "link_expirated": "申し訳ありませんが、リンクの有効期限が切れています!!!",
+        "back": "ホームページにあります!!"
     },
     "Post": {
         "normalPostIdentifyAuthorCompany": "企業",

@@ -4,8 +4,10 @@ import { getTokenFromSlug } from '../utils/CommonUtls'
 import { useEffect, useState } from 'react'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-multi-lang'
 
 export default function AuthenticateRegistrationPage() {
+  const t = useTranslation()
   const { slug } = useParams()
   const token = getTokenFromSlug(slug ?? '')
   const [tokenValid, setTokenValid] = useState(true)
@@ -31,13 +33,13 @@ export default function AuthenticateRegistrationPage() {
             {tokenValid == true ? (
               <>
                 <div className='formbold-form-title'>
-                  <h3>Tài khoản kích hoạt thành công !!</h3>
+                  <h3>{t('AuthenticateRegistration.success')}</h3>
                 </div>
               </>
             ) : (
               <>
                 <div className='formbold-form-title'>
-                  <h3>Xin lỗi , liên kết của bạn đã hết hạn !!!</h3>
+                  <h3>{t('AuthenticateRegistration.link_expirated')}</h3>
                 </div>
               </>
             )}
@@ -45,7 +47,7 @@ export default function AuthenticateRegistrationPage() {
           <div className='fw-600 btn_resend border-0 text-black'>
             +
             <a onClick={() => navigate('/')} className='clickHere'>
-              Về trang chủ !!
+              {t('AuthenticateRegistration.back')}
             </a>
           </div>
         </div>
