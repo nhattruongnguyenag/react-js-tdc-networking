@@ -299,6 +299,7 @@ export default function StudentRegistationPage() {
         console.log(error)
       })
   }, [student.email])
+  
   const handleEmailChange = useCallback(
     (event: any) => {
       if (isBlank(event.target.value)) {

@@ -1,52 +1,72 @@
-import React from 'react'
-import { TEXT_UN_UPDATE, TYPE_POST_BUSINESS, TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
+import React, { memo } from 'react'
 import CustomizeBodyStudentProfile from './CustomizeBodyStudentProfile'
 import CustomizeHeaderProfile from './CustomizeHeaderProfile'
 import CustomizeBodyBusinessProfile from './CustomizeBodyBusinessProfile'
 import CustomizeBodyFacultyProfile from './CustomizeBodyFacultyProfile'
+import { useTranslation } from 'react-multi-lang'
+import { getFacultyTranslated } from '../../utils/TranslateFaculty'
+import { TYPE_POST_BUSINESS, TYPE_POST_FACULTY, TYPE_POST_STUDENT } from '../../constants/StringVietnamese'
+import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { COLOR_GREY_FEEBLE } from '../../constants/Color'
+import { useNavigate } from 'react-router-dom'
 
 export interface CustomizeProfileType {
+    t: ReturnType<typeof useTranslation>
     data: Object[]
     role: string
     userData: any
+    isFollow: boolean,
+    isSameUser: boolean,
     handleClickButtonEvent: (a: number) => void
-    handleClickIntoHeaderComponentEvent: (a: number) => void
+    handleClickIntoHeaderComponentEvent: (a: number) => void,
 }
 
-export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) {
+const CustomizeProfile = (props: Readonly<CustomizeProfileType>) => {
+    const navigate = useNavigate();
     const getBody = () => {
         let body;
         switch (props.role) {
             case TYPE_POST_STUDENT:
                 body = <CustomizeBodyStudentProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    position={props.userData.position ?? 'Sinh viên'}
-                    phone={props.userData.phone ?? TEXT_UN_UPDATE}
-                    email={props.userData.email ?? TEXT_UN_UPDATE}
+                    position={props.userData.position ?? props.t("Profile.profileRole")}
+                    phone={props.userData.phone ?? props.t("Profile.unUpdate")}
+                    email={props.userData.email ?? props.t("Profile.unUpdate")}
                     numberPost={props.data.length ?? 0}
-                    name={props.userData.name ?? TEXT_UN_UPDATE} />
+                    name={props.userData.name ?? props.t("Profile.unUpdate")}
+                    isFollow={props.isFollow}
+                    isSameUser={props.isSameUser}
+                    t={props.t}
+                />
                 break;
             case TYPE_POST_BUSINESS:
                 body = <CustomizeBodyBusinessProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    timeWork={props.userData.timeWork ?? TEXT_UN_UPDATE}
-                    TaxIdentificationNumber={props.userData.TaxIdentificationNumber ?? TEXT_UN_UPDATE}
-                    representative={props.userData.representative ?? TEXT_UN_UPDATE}
-                    address={props.userData.address ?? TEXT_UN_UPDATE}
-                    phone={props.userData.phone ?? TEXT_UN_UPDATE}
-                    email={props.userData.email ?? TEXT_UN_UPDATE}
+                    timeWork={props.userData.activeTime ?? props.t("Profile.unUpdate")}
+                    TaxIdentificationNumber={props.userData.taxCode ?? props.t("Profile.unUpdate")}
+                    representative={props.userData.representor ?? props.t("Profile.unUpdate")}
+                    address={props.userData.address ?? props.t("Profile.unUpdate")}
+                    phone={props.userData.phone ?? props.t("Profile.unUpdate")}
+                    email={props.userData.email ?? props.t("Profile.unUpdate")}
                     name={props.userData.name}
-                    numberPost={props.data.length ?? 0} />
+                    numberPost={props.data.length ?? 0}
+                    isFollow={props.isFollow}
+                    isSameUser={props.isSameUser}
+                    t={props.t}
+                />
                 break;
             case TYPE_POST_FACULTY:
                 body = <CustomizeBodyFacultyProfile
                     handleClickButtonEvent={props.handleClickButtonEvent}
-                    timeWork={props.userData.timeWork ?? TEXT_UN_UPDATE}
-                    address={props.userData.address ?? TEXT_UN_UPDATE}
-                    phone={props.userData.phone ?? TEXT_UN_UPDATE}
-                    email={props.userData.email ?? TEXT_UN_UPDATE}
-                    name={props.userData.name ?? TEXT_UN_UPDATE}
-                    numberPost={props.data.length ?? 0} />
+                    phone={props.userData.phone ?? props.t("Profile.unUpdate")}
+                    email={props.userData.email ?? props.t("Profile.unUpdate")}
+                    name={props.userData.name ?? props.t("Profile.unUpdate")}
+                    numberPost={props.data.length ?? 0}
+                    isFollow={props.isFollow}
+                    isSameUser={props.isSameUser}
+                    t={props.t}
+                />
                 break;
             default:
                 break;
@@ -56,16 +76,28 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
 
 
     return (
-        <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4 text-center'>
-            <div className='snippet me-auto ms-auto mt-2' data-title='.dot-typing'>
+        <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4'>
+            <button
+                onClick={() => { navigate(-1) }}
+                className='buttonHeaderGoBack'
+            >
+                <FontAwesomeIcon
+                    icon={faCircleArrowLeft}
+                    size='2x'
+                    color={COLOR_GREY_FEEBLE}
+                />
+            </button>
+            <div className='snippet me-auto ms-auto mt-2 pb-1' data-title='.dot-typing'>
                 {
                     props.userData && <CustomizeHeaderProfile
-                        background={props.userData.image}
+                        isSameUser={props.isSameUser}
+                        background={props.userData.background}
                         avatar={props.userData.image}
-                        name={props.userData.name}
+                        name={getFacultyTranslated(props.userData.name, props.t)}
                         handleClickIntoHeaderComponentEvent={
                             props.handleClickIntoHeaderComponentEvent
                         }
+                        handleClickButtonEvent={props.handleClickButtonEvent}
                     />
                 }
             </div>
@@ -77,3 +109,5 @@ export default function CustomizeProfile(props: Readonly<CustomizeProfileType>) 
         </div>
     )
 }
+
+export default memo(CustomizeProfile) 

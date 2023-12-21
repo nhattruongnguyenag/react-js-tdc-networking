@@ -64,7 +64,8 @@ export default function RejectPostsPage() {
                 data?.data.map((item, index) => <PostApprovalItem
                   type={POST_REJECT}
                   key={index.toString()}
-                  post={item} />)
+                  post={item}
+                />)
               }
             </div>
           </div>
