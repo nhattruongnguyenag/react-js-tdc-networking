@@ -17,6 +17,7 @@ import { useGetJobProfileQuery } from '../redux/Service'
 import { CVURL, PROFILE_ID } from '../constants/KeyValue'
 import { t } from 'react-multi-lang'
 import Select from 'react-select'
+import { toast } from 'react-toastify'
 
 export default function ManagementJobApplyPage() {
   const dataType = [
@@ -48,7 +49,7 @@ export default function ManagementJobApplyPage() {
     axios
       .delete(SERVER_ADDRESS + `api/job/profile/${profileId}`)
       .then((response) => {
-        alert(t('ManageJobApply.textDeleteSucces'))
+        toast(t('ManageJobApply.textDeleteSucces'))
       })
       .catch((error) => {
         console.log(error)

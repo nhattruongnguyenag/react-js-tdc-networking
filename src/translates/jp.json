@@ -19,6 +19,7 @@
         "showPass": "表示",
         "hidePass": "非表示",
         "loginFail": "ログインに失敗しました",
+        "loginSucess": "ログインに成功しました",
         "alertLoginFail": "不正確なメールアドレスまたはパスワード",
         "forgotPass": "パスワードを忘れましたか？",
         "titleRegister": "登録",
@@ -40,7 +41,7 @@
         "titleJob": "職位",
         "employeType": "雇用形態",
         "salary": "給与",
-        "salaryUnitMonth": "VND/月",
+        "salaryUnitMonth": "ドン/月",
         "expiration": "応募締切",
         "location": "勤務地",
         "benefit": "福利厚生",
@@ -309,7 +310,8 @@
         "jobApplyScreenSaveSuccessTextContent": "応募が成功しました",
         "jobApplyScreenChangeSuccessTextContent": "変更が成功しました",
         "jobApplyScreenSaveSuccessTextTitle": "通知",
-        "jobApplyScreenUploadErrorFormat": "PDF形式ではありません"
+        "jobApplyScreenUploadErrorFormat": "PDF形式ではありません",
+        "jobApplyScreenFalse": "申請書の提出に失敗しました"
     },
     "MessageScreen": {
         "messageScreenLoaderTitle": "メッセージを読み込んでいます...",
@@ -745,7 +747,9 @@
         "normalPostComment": "コメント"
     },
     "Setting": {
-        "userInformation": "ユーザー情報"
+        "userInformation": "ユーザー情報",
+        "userJobApplyProfile": "求人応募プロフィール",
+        "peddingPost": "保留中の投稿",
+        "changeLanguage":"言語"
     }
-    
 }

@@ -157,7 +157,7 @@ export default function LoginPage() {
                 sessionStorage.setItem(USER_LOGIN_KEY, JSON.stringify(response.data.data))
                 dispatch(setUserLogin(response.data.data))
                 navigate(BUSINESS_DASHBOARD_PAGE)
-                toast.success('Đăng nhập thành công')
+                toast.success(t('LoginComponent.loginSucess'))
               }
             })
         })

@@ -123,7 +123,7 @@ export default function SettingPage() {
                           <li className='list-inline-item d-block border-bottom me-0'>
                             <Link className='d-flex align-items-center pb-2 pt-2' to={PENDING_POST_PAGE}>
                               <i className='btn-round-md bg-gold-gradiant feather-clock font-md me-3 text-white' />{' '}
-                              <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Bài viết đang chờ</h4>
+                              <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{t("Setting.peddingPost")}</h4>
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>
                           </li>
@@ -134,7 +134,7 @@ export default function SettingPage() {
                           <li className='list-inline-item d-block me-0'>
                             <Link className='d-flex align-items-center pb-2 pt-2' to={`${MANAGEMENT_JOB_APPLY_PAGE}/${slugify(userLogin.name)}-${userLogin.id}`}>
                               <i className='btn-round-md bg-red-gradiant feather-list font-md me-3 text-white' />{' '}
-                              <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Hồ sơ ứng tuyển</h4>
+                              <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{t("Setting.userJobApplyProfile")}</h4>
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>
                           </li>
@@ -146,7 +146,7 @@ export default function SettingPage() {
                           <a className='d-flex align-items-center pb-2 pt-2' onClick={handleShow}>
                             <i className='btn-round-md bg-gold-gradiant feather-globe font-md me-3 text-white' />{' '}
                             <h4 className='fw-600 font-xsss mb-0 mt-0 text-black' style={{ color: 'black' }}>
-                              Ngôn ngữ
+                            {t("Setting.changeLanguage")}
                             </h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                           </a>

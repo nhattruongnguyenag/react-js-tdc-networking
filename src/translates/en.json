@@ -19,6 +19,7 @@
         "errorPassNotLengthMax": "Password cannot exceed 8 characters",
         "errorPassNotFormat": "Incorrect password format",
         "loginFail": "Login failed",
+        "loginSucess": "Login successfully",
         "alertLoginFail": "Incorrect email or password",
         "forgotPass": "Forgot password?",
         "titleRegister": "Register",
@@ -309,7 +310,8 @@
         "jobApplyScreenSaveSuccessTextContent": "Application submitted successfully",
         "jobApplyScreenChangeSuccessTextContent": "Application updated successfully",
         "jobApplyScreenSaveSuccessTextTitle": "Notification",
-        "jobApplyScreenUploadErrorFormat": "Incorrect PDF format"
+        "jobApplyScreenUploadErrorFormat": "Incorrect PDF format",
+        "jobApplyScreenFalse": "Application submitted failed"
     },
     "MessageScreen": {
         "messageScreenLoaderTitle": "Loading messages...",
@@ -751,7 +753,10 @@
         "survey_txt": "Survey now >>"
     },
     "Setting": {
-        "userInformation": "User Information"
+        "userInformation": "User Information",
+        "userJobApplyProfile": "Job Application Profile",
+        "peddingPost": "Pending posts",
+        "changeLanguage":"Language"
     }
      
 }

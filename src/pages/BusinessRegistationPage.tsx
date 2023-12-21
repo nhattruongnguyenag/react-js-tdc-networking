@@ -553,7 +553,7 @@ export default function BusinessRegistationPage() {
           setCookie('email', business.email, { path: '/', expires })
           setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
           setCookie('subject', t('RegisterBusinessComponent.textAccountAuthen'), { path: '/', expires })
-          toast.success(t('RegisterBusinessComponent.registerSusccess'))
+          // toast.success(t('RegisterBusinessComponent.registerSusccess'))
           navigate(ACCEPT_SEND_EMAIL_PAGE)
         })
         .catch((error) => {

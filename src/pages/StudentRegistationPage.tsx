@@ -527,7 +527,7 @@ export default function StudentRegistationPage() {
           setCookie('email', student.email, { path: '/', expires })
           setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
           setCookie('subject', t('RegisterStudentComponent.textAccountAuthen'), { path: '/', expires })
-          toast.success(t('RegisterStudentComponent.registerSusccess'))
+          // toast.success(t('RegisterStudentComponent.registerSusccess'))
           navigate(ACCEPT_SEND_EMAIL_PAGE)
         })
         .catch((error) => {

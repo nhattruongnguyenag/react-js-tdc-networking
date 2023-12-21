@@ -63,12 +63,6 @@ export default function ListJobApplyPage() {
     })
   }
 
-  useEffect(() => {
-    if (data?.data.length == 0) {
-      toast(t('ListJobApplyComponent.listEmpty'))
-    }
-  },[data?.data])
-
   const handleBtnJobApply = (username: string, cvID: number) => {
     navigate(`${DETAILS_JOB_APPLY}/${slugify(username)}-${cvID}`)
   }
@@ -85,7 +79,7 @@ export default function ListJobApplyPage() {
   }
   useEffect(() => {
     if (jobApplyUpdateResponse.isSuccess || jobApplyUpdateResponse.data) {
-      alert(t('ListJobApplyComponent.textChangeSucces'))
+      toast.success(t('ListJobApplyComponent.textChangeSucces'))
     }
   }, [jobApplyUpdateResponse])
 
@@ -116,6 +110,10 @@ export default function ListJobApplyPage() {
               <div className='ml-[-320px] mt-[-100px] flex h-screen items-center justify-center'>
                 <Loading />
               </div>
+            ) : data?.data.length == 0 ? (
+              <div className='mt-3 text-center'>
+                <p className='fw-600 text-black'>{t('ListJobApplyComponent.listEmpty')}</p>
+              </div>
             ) : (
               <div className='card-body p-lg-5 w-100 border-0 p-2'>
                 {data?.data.map(
@@ -140,27 +138,29 @@ export default function ListJobApplyPage() {
                               )}
                             </div>
                             <div className='content-job-apply'>
-                              <h1 className='fw-900 title text-black text-p'>
+                              <h1 className='fw-900 title text-p text-black'>
                                 {data.studentName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
                               </h1>
-                              <h1 className='fw-900 title text-black text-p'>{data.jobTitle}</h1>
+                              <h1 className='fw-900 title text-p text-black'>{data.jobTitle}</h1>
                               <div className='item-job'>
                                 <FontAwesomeIcon icon={faPhoneVolume} />
                                 {data.phone == null ? (
-                                  <p className='fw-500 mb-0 ms-2 text-black text-p'>{t('ListJobApplyComponent.updateNull')}</p>
+                                  <p className='fw-500 text-p mb-0 ms-2 text-black'>
+                                    {t('ListJobApplyComponent.updateNull')}
+                                  </p>
                                 ) : (
-                                  <p className='fw-500 mb-0 ms-2 text-black text-p'>{data.phone}</p>
+                                  <p className='fw-500 text-p mb-0 ms-2 text-black'>{data.phone}</p>
                                 )}
                               </div>
                               <div className='item-job'>
                                 <FontAwesomeIcon icon={faEnvelope} />
-                                <p className='fw-500 txt mb-0 ms-2 text-black text-p'>{data.email}</p>
+                                <p className='fw-500 txt text-p mb-0 ms-2 text-black'>{data.email}</p>
                               </div>
                             </div>
                           </div>
 
                           <div className='date'>
-                            <p className='fw-600 mb-0 text-p'>{formatDateTime(data.createdAt)}</p>
+                            <p className='fw-600 text-p mb-0'>{formatDateTime(data.createdAt)}</p>
                           </div>
                         </div>
                         <div className='btnBottom'>
@@ -169,10 +169,11 @@ export default function ListJobApplyPage() {
                             className='txt text-green download ms-2'
                             onClick={() => handleBtnJobApply(data.studentName, data.id)}
                           >
-                            <FontAwesomeIcon icon={faFilePdf} color={COLOR_SUCCESS} />{t('ListJobApplyComponent.seeDetailCV')}
+                            <FontAwesomeIcon icon={faFilePdf} color={COLOR_SUCCESS} />
+                            {t('ListJobApplyComponent.seeDetailCV')}
                           </button>
                           <button className='txt text-green download ms-4' onClick={() => openModal(data.status)}>
-                          {t('ListJobApplyComponent.textChangeStatus')}
+                            {t('ListJobApplyComponent.textChangeStatus')}
                           </button>
                           <Modal
                             show={modalVisible.isOpen}
@@ -214,10 +215,10 @@ export default function ListJobApplyPage() {
                             </Modal.Body>
                             <Modal.Footer>
                               <Button variant='secondary' onClick={closeModal}>
-                              {t('ListJobApplyComponent.textCancel')}
+                                {t('ListJobApplyComponent.textCancel')}
                               </Button>
                               <Button variant='primary' onClick={() => handleChangeStatusJob(data.id)}>
-                              {t('ListJobApplyComponent.textChange')}
+                                {t('ListJobApplyComponent.textChange')}
                               </Button>
                             </Modal.Footer>
                           </Modal>
