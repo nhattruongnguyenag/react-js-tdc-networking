@@ -27,27 +27,38 @@ export default function MultiQuestionOneChoice(props: MultiQuestionMultiChoicePr
 
   const renderChoices = () => {
     if (props.editMode) {
-      return surveyPostRequest.questions[props.index ?? -1].choices.map((item, index) =>
+      return surveyPostRequest.questions[props.index ?? -1].choices.map((item, index) => (
         <Fragment>
-          <EditChoice type={ONE_CHOICE_QUESTION} key={index.toString()} questionIndex={props.index} choiceIndex={index} />
+          <EditChoice
+            type={ONE_CHOICE_QUESTION}
+            key={index.toString()}
+            questionIndex={props.index}
+            choiceIndex={index}
+          />
         </Fragment>
-      )
+      ))
     } else if (props.reviewMode) {
-      return surveyPostRequest.questions[props.index ?? -1].choices.map((item, index) =>
-        <ReviewChoice type={ONE_CHOICE_QUESTION} key={index.toString()} questionIndex={props.index} choiceIndex={index} />
-      )
+      return surveyPostRequest.questions[props.index ?? -1].choices.map((item, index) => (
+        <ReviewChoice
+          type={ONE_CHOICE_QUESTION}
+          key={index.toString()}
+          questionIndex={props.index}
+          choiceIndex={index}
+        />
+      ))
     }
 
-    return questionConducts[props.index ?? -1].choices.map((item, index) =>
+    return questionConducts[props.index ?? -1].choices.map((item, index) => (
       <ConductChoice
         onSelected={() => {
-          setSelectedChoiceIds([item.voteQuestionId])
+          setSelectedChoiceIds([item.id])
         }}
         type={ONE_CHOICE_QUESTION}
         key={index.toString()}
-         questionIndex={props.index}
-        choiceIndex={index} />
-    )
+        questionIndex={props.index}
+        choiceIndex={index}
+      />
+    ))
   }
 
   return (
@@ -56,15 +67,11 @@ export default function MultiQuestionOneChoice(props: MultiQuestionMultiChoicePr
         editMode={props.editMode}
         conductMode={props.conductMode}
         reviewMode={props.reviewMode}
-        index={props.index} />
+        index={props.index}
+      />
       <div className='ms-2'>
-        {
-          renderChoices()
-        }
-        {
-          Boolean(props.editMode) &&
-          <AddChoiceButton type={ONE_CHOICE_QUESTION} questionIndex={props.index} />
-        }
+        {renderChoices()}
+        {Boolean(props.editMode) && <AddChoiceButton type={ONE_CHOICE_QUESTION} questionIndex={props.index} />}
       </div>
       {Boolean(props.editMode) && <QuestionOptions index={props.index} />}
     </div>
