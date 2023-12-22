@@ -78,10 +78,14 @@ import PostDetail from './pages/PostDetail'
 import FacultyAndStudentPage from './pages/FacultyAndStudentPage'
 import axios from 'axios'
 import { SERVER_ADDRESS } from './constants/SystemConstant'
+import moment from 'moment'
 
 setTranslations({ vi, en, ja })
 setDefaultLanguage('vi')
-
+const locale = new Map<string, any>()
+locale.set('vi', require('moment/locale/vi'))
+locale.set('en', require('moment/locale/es'))
+locale.set('ja', require('moment/locale/ja'))
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -89,6 +93,7 @@ export default function AppRouter() {
   const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
   useEffect(() => {
     setDefaultLanguage(defaultLanguage)
+    moment.locale(defaultLanguage, locale.get(defaultLanguage))
   }, [defaultLanguage])
   return (
     <div className={classNames('color-theme-blue mont-font loaded', darkMode ? 'theme-dark' : ' theme-light')}>
