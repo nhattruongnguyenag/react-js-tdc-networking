@@ -672,7 +672,8 @@
         "isLoading": "Từ chối bài viết",
         "rejectDetails": "Chi tiết",
         "pendingPostUpdate": "Chỉnh sửa",
-        "pendingPostDelete": "Xóa bài viết"
+        "pendingPostDelete": "Xóa bài viết",
+        "buttonCompleteRejectPostTitle": "Hoàn tất"
     },
     "PenddingPostScreen": {
         "peddingPostTab": "Đang chờ",

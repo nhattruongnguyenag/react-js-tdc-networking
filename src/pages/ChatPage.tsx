@@ -13,6 +13,10 @@ import { handleUploadImage } from '../utils/UploadUtils'
 
 let stompClient: Client
 
+const RECEIVED = 0
+const SEEN = 1
+const SENDING = 2
+
 export default function ChatPage() {
   const { selectConversation, conversationMessages } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const dispatch = useAppDispatch()
@@ -32,7 +36,7 @@ export default function ChatPage() {
   }, [selectConversation])
 
   const onBtnSendClick = () => {
-    if (textInputMessageRef.current) {
+    if (textInputMessageRef.current && selectConversation) {
       const message = {
         senderId: senderId,
         receiverId: receiverId,
@@ -40,6 +44,22 @@ export default function ChatPage() {
         content: textInputMessageRef.current.value,
         status: 0
       }
+
+      dispatch(
+        setConversationMessages([
+          ...conversationMessages,
+          {
+            content: textInputMessageRef.current.value,
+            id: -1,
+            createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+            updatedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+            sender: selectConversation.sender,
+            receiver: selectConversation.receiver,
+            type: 'plain/text',
+            status: 2
+          }
+        ])
+      )
 
       stompClient.send(`/app/messages/${senderId}/${receiverId}`, {}, JSON.stringify(message))
       textInputMessageRef.current.value = ''
@@ -91,18 +111,16 @@ export default function ChatPage() {
         urls.push(URL.createObjectURL(event.target.files[i]))
       }
 
-      console.log(urls)
-
       if (selectConversation) {
         let message: MessageModel = {
           content: urls.join(','),
           id: -1,
-          createdAt: 'Sending',
+          createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
           updatedAt: '',
           sender: selectConversation.sender,
           receiver: selectConversation.receiver,
-          type: 'images',
-          status: -1
+          type: moment().format('YYYY-MM-DD HH:mm:ss'),
+          status: 2
         }
 
         dispatch(setConversationMessages([...conversationMessages, message]))

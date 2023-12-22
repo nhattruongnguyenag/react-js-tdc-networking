@@ -91,19 +91,25 @@ export default function SettingPage() {
                 <div className='card-body p-lg-5 w-100 border-0 p-4'>
                   <div className='row'>
                     <div className='col-lg-12'>
-                      <h4 className='font-xxl fw-700 mont-font mb-lg-5 font-md-xs mb-4 text-black'>Cài đặt</h4>
+                      <h4 className='font-xxl fw-700 mont-font font-md-xs mb-3 text-black'>Cài đặt</h4>
+                      <div className='mb-4 mt-0'>Xin chào, {userLogin?.name}</div>
                       <div className='nav-caption fw-600 font-xssss text-grey-500 mb-2'>Chung</div>
                       <ul className='list-inline mb-4'>
                         <li className='list-inline-item d-block border-bottom me-0'>
-                          <a href="#" onClick={(e) => { e.preventDefault(); handleClickToAvatarAndName(); }} className='d-flex align-items-center pb-2 pt-2'>
-                            <i className='btn-round-md bg-primary-gradiant feather-user  font-md me-3 text-white' />
-                            {' '}
-                            <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{t("Setting.userInformation")}</h4>
+                          <a
+                            href='#'
+                            onClick={(e) => {
+                              e.preventDefault()
+                              handleClickToAvatarAndName()
+                            }}
+                            className='d-flex align-items-center pb-2 pt-2'
+                          >
+                            <i className='btn-round-md bg-primary-gradiant feather-user  font-md me-3 text-white' />{' '}
+                            <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{t('Setting.userInformation')}</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                           </a>
                         </li>
-                        {
-                          (isAdmin(userLogin) || isFaculty(userLogin)) &&
+                        {(isAdmin(userLogin) || isFaculty(userLogin)) && (
                           <li className='list-inline-item d-block border-bottom me-0'>
                             <Link className='d-flex align-items-center pb-2 pt-2' to={APPROVAL_POST_PAGE}>
                               <i className='btn-round-md bg-gold-gradiant feather-list font-md me-3 text-white' />{' '}
@@ -111,19 +117,19 @@ export default function SettingPage() {
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>
                           </li>
-                        }
-                        {
-                          (isStudent(userLogin) || isFaculty(userLogin)) &&
+                        )}
+                        {(isStudent(userLogin) || isFaculty(userLogin)) && (
                           <li className='list-inline-item d-block border-bottom me-0'>
                             <Link className='d-flex align-items-center pb-2 pt-2' to={FACULTY_STUDENT_PAGE}>
                               <i className='btn-round-md bg-red-gradiant feather-users font-md me-3 text-white' />
-                              <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{getGroupForPost(groupCode ?? "", t)}</h4>
+                              <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>
+                                {getGroupForPost(groupCode ?? '', t)}
+                              </h4>
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>
                           </li>
-                        }
-                        {
-                          (isStudent(userLogin) || isBusiness(userLogin)) &&
+                        )}
+                        {(isStudent(userLogin) || isBusiness(userLogin)) && (
                           <li className='list-inline-item d-block border-bottom me-0'>
                             <Link className='d-flex align-items-center pb-2 pt-2' to={PENDING_POST_PAGE}>
                               <i className='btn-round-md bg-gold-gradiant feather-clock font-md me-3 text-white' />{' '}
@@ -131,22 +137,24 @@ export default function SettingPage() {
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>
                           </li>
-                        }
+                        )}
 
-                        {
-                          isStudent(userLogin) &&
+                        {isStudent(userLogin) && (
                           <li className='list-inline-item d-block me-0'>
-                            <Link className='d-flex align-items-center pb-2 pt-2' to={`${MANAGEMENT_JOB_APPLY_PAGE}/${slugify(userLogin.name)}-${userLogin.id}`}>
+                            <Link
+                              className='d-flex align-items-center pb-2 pt-2'
+                              to={`${MANAGEMENT_JOB_APPLY_PAGE}/${slugify(userLogin.name)}-${userLogin.id}`}
+                            >
                               <i className='btn-round-md bg-red-gradiant feather-list font-md me-3 text-white' />{' '}
                               <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Hồ sơ ứng tuyển</h4>
                               <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
                             </Link>
                           </li>
-                        }
+                        )}
                       </ul>
                       <div className='nav-caption fw-600 font-xsss text-grey-500 mb-2'>Khác</div>
                       <ul className='list-inline'>
-                        <li className='list-inline-item d-block border-bottom me-0'>
+                        <li className='list-inline-item d-block border-bottom me-0 cursor-pointer'>
                           <a className='d-flex align-items-center pb-2 pt-2' onClick={handleShow}>
                             <i className='btn-round-md bg-gold-gradiant feather-globe font-md me-3 text-white' />{' '}
                             <h4 className='fw-600 font-xsss mb-0 mt-0 text-black' style={{ color: 'black' }}>
@@ -163,7 +171,14 @@ export default function SettingPage() {
                           </a>
                         </li>
                         <li className='list-inline-item d-block border-bottom me-0'>
-                          <a href='#' onClick={(e) => { e.preventDefault(); handleClickToChangePasswordPage(); }} className='d-flex align-items-center pb-2 pt-2'>
+                          <a
+                            href='#'
+                            onClick={(e) => {
+                              e.preventDefault()
+                              handleClickToChangePasswordPage()
+                            }}
+                            className='d-flex align-items-center pb-2 pt-2'
+                          >
                             <i className='btn-round-md bg-gold-gradiant feather-repeat font-md me-3 text-white' />{' '}
                             <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>{t('ChangePassword.setting')}</h4>
                             <i className='ti-angle-right font-xsss text-grey-500 ms-auto mt-3' />
@@ -172,7 +187,7 @@ export default function SettingPage() {
                         <li className='list-inline-item d-block me-0'>
                           <button className='d-flex align-items-center pb-2 pt-2' onClick={() => logout()}>
                             <i className='btn-round-md bg-red-gradiant feather-lock font-md me-3 text-white' />{' '}
-                            <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Logout</h4>
+                            <h4 className='fw-600 font-xsss mb-0 mt-0 text-black'>Đăng xuất</h4>
                           </button>
                         </li>
                       </ul>
@@ -213,27 +228,27 @@ export default function SettingPage() {
             <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 500 }}>
               {search == ''
                 ? data.map((data: any, index) => (
-                  <div key={index.toString()}>
-                    <div className='item-language' style={{ background: data.value == language ? '#dadde1' : '' }}>
-                      <div>
-                        <p className='name-language' onClick={() => setLanguage(data.value)}>
-                          {data.label}
-                        </p>
+                    <div key={index.toString()}>
+                      <div className='item-language' style={{ background: data.value == language ? '#dadde1' : '' }}>
+                        <div>
+                          <p className='name-language' onClick={() => setLanguage(data.value)}>
+                            {data.label}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))
+                  ))
                 : filter.map((data: any, index) => (
-                  <div key={index.toString()}>
-                    <div className='item-language' style={{ background: data.value == language ? '#dadde1' : '' }}>
-                      <div>
-                        <p className='name-language' onClick={() => setLanguage(data.value)}>
-                          {data.label}
-                        </p>
+                    <div key={index.toString()}>
+                      <div className='item-language' style={{ background: data.value == language ? '#dadde1' : '' }}>
+                        <div>
+                          <p className='name-language' onClick={() => setLanguage(data.value)}>
+                            {data.label}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
             </div>
           </Modal.Body>
           <Modal.Footer>
