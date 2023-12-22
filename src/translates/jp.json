@@ -737,7 +737,8 @@
         "user_apply_job": "次の求人に応募しました:",
         "user_create_watch_job": " が次の求人に応募しました:",
         "in_group": " に",
-        "survey_txt": "すぐに調査 >>"
+        "survey_txt": "すぐに調査 >>",
+        "user_update_avatar": "背景画像の更新が成功しました！"
     },
     "Post": {
         "normalPostIdentifyAuthorCompany": "企業",
@@ -749,12 +750,24 @@
         "normalPostComment": "コメント"
     },
     "Setting": {
-        "userInformation": "ユーザー情報"
+        "userInformation": "ユーザー情報",
+        "setting": "設定",
+        "waitPost": "保留中の投稿",
+        "applyPost": "求人応募",
+        "language": "言語",
+        "help": "ヘルプ",
+        "logout": "ログアウト",
+        "back": "戻る"
     },
     "Modal": {
         "modalShowImageCloseButton": "閉じる",
         "modalShowImageUpdateRejectUpdateButton": "更新をキャンセル",
         "modalShowImageUpdateAcceptUpdateButton": "更新"
-      }
-    
+      },
+    "Options": {
+        "following": "フォロー中",
+        "follower": "あなたをフォローしている人",
+        "postSaved": "保存された投稿",
+        "placeholderSearch": "検索..."
+    }
 }

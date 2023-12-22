@@ -32,4 +32,5 @@ export interface Post {
   group: string
   active: number
   handleUnSave: (post_id: number) => void | undefined
+  iCustomizeLikeAction: boolean
 }

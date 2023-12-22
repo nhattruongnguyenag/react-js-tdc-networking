@@ -74,6 +74,7 @@ export default function StudentDashboardPage() {
         group={code}
         handleUnSave={handleUnSave}
         active={item.active}
+        iCustomizeLikeAction={false}
       />
     } else {
       return null;

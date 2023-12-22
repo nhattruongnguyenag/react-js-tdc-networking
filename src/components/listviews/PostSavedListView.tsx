@@ -10,16 +10,16 @@ import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import CustomizePost from '../post/CustomizePost'
 import { useGetListPostSavedQuery } from '../../redux/Service'
 import '../../assets/css/saved.css'
+import { useTranslation } from 'react-multi-lang'
 
 
 let stompClient: Client
 const PostSavedListView = () => {
-  // const [data, setData] = useState<Post[]>([])
-  // const [dataSearch, setDataType] = useState<Post[]>([])
+
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [search, setSearch] = useState('')
   const [value, setValue] = useState(null)
-  // const [dataFilter, setDataFilter] = useState<Post[]>([])
+  const t = useTranslation();
 
   const { data, isFetching } = useGetListPostSavedQuery(userLogin ? userLogin.id : -1, {
     pollingInterval: 1000
@@ -28,10 +28,10 @@ const PostSavedListView = () => {
 
   const likeAction = () => {
     console.log('123');
-    
+
   }
 
-  const handleUnSave = () => {}
+  const handleUnSave = () => { }
 
 
 
@@ -42,7 +42,7 @@ const PostSavedListView = () => {
       <div style={{ position: 'relative' }}>
         <input
           type='search'
-          placeholder='Tìm kiếm ...'
+          placeholder={t('Options.placeholderSearch')}
           style={{ width: '100%', marginBottom: 20, marginTop: 20, paddingLeft: 60, paddingRight: 30, borderWidth: '1px', height: '50px', borderRadius: 50 }}
           onChange={(txt) => {
             setSearch(txt.target.value)
@@ -80,8 +80,7 @@ const PostSavedListView = () => {
                 group={''}
                 isConduct={null}
                 handleUnSave={handleUnSave}
-                active={item.active}
-              />
+                active={item.active} iCustomizeLikeAction={false} />
             )
             :
             filter?.map((item: any) =>
@@ -111,13 +110,12 @@ const PostSavedListView = () => {
                 group={''}
                 isConduct={null}
                 handleUnSave={handleUnSave}
-                active={item.active}
-              />
+                active={item.active} iCustomizeLikeAction={false} />
             )
         }
       </div>
     </div>
-   
+
   )
 }
 

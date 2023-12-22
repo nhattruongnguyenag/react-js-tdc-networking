@@ -8,6 +8,7 @@ import { TabSelector } from "../example/TabSelector";
 import FollowListView from "../listviews/FollowListView";
 import PostSavedListView from "../listviews/PostSavedListView";
 import FollowerListView from "../listviews/FollowerListView";
+import { useTranslation } from 'react-multi-lang'
 
 interface ModalType {
   show: boolean
@@ -16,6 +17,7 @@ interface ModalType {
 export function CustomizeModalOption(props: Readonly<ModalType>) {
   const { slug } = useParams()
   const userId = getIdFromSlug(slug ?? '')
+  const t = useTranslation()
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer);
   const [selectedTab, setSelectedTab] = useTabs([
     "following",
@@ -45,26 +47,26 @@ export function CustomizeModalOption(props: Readonly<ModalType>) {
                     isActive={selectedTab === "following"}
                     onClick={() => setSelectedTab("following")}
                   >
-                    Đang theo dõi
+                    {t('Options.following')}
                   </TabSelector>
                   <TabSelector
                     isActive={selectedTab === "follower"}
                     onClick={() => setSelectedTab("follower")}
                   >
-                    Đang theo dõi bạn
+                    {t('Options.follower')}
                   </TabSelector>
                   <TabSelector
                     isActive={selectedTab === "saved"}
                     onClick={() => setSelectedTab("saved")}
                   >
-                    Bài viết đã lưu
+                    {t('Options.postSaved')}
                   </TabSelector>
                 </> :
                   <TabSelector
                     isActive={selectedTab === "following"}
                     onClick={() => setSelectedTab("following")}
                   >
-                    Đang theo dõi
+                    {t('Options.following')}
                   </TabSelector>
               }
 
@@ -79,7 +81,7 @@ export function CustomizeModalOption(props: Readonly<ModalType>) {
         </span>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide} className='btn btn-outline-secondary bg-primary'>Close</Button>
+        <Button onClick={props.onHide} className='btn' style={{}}>Close</Button>
       </Modal.Footer>
     </Modal>
 

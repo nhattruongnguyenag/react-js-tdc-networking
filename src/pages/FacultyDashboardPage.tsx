@@ -3,6 +3,7 @@ import { numberDayPassed } from '../utils/FormatTime';
 import Header from '../components/common/Header';
 import { useGetFacultyPostsQuery } from '../redux/Service';
 import { LikeAction } from '../types/LikeActions';
+import '../assets/css/faculty.css'
 import {
   TYPE_POST_BUSINESS,
   TYPE_POST_FACULTY,
@@ -12,7 +13,7 @@ import CreatePostSelector from '../components/CreatePostSelector';
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { useAppSelector } from '../redux/Hook';
 import ReactLoading from 'react-loading';
-import { COLOR_BLUE_BANNER } from '../constants/Color';
+import { COLOR_BLUE_BANNER, COLOR_WHITE } from '../constants/Color';
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../constants/SystemConstant';
 import { useTranslation } from 'react-multi-lang';
@@ -132,6 +133,7 @@ export default function FacultyDashboardPage() {
           group={code}
           handleUnSave={handleUnSave}
           active={item.active}
+          iCustomizeLikeAction={false}
         />
       )
     } else {
@@ -172,7 +174,7 @@ export default function FacultyDashboardPage() {
           </div>
         </div>
       ) : (
-        <div className='main-content bg-light'>
+        <div className='main-content'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
               <div className='middle-wrap'>
