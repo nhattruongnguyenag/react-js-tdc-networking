@@ -178,7 +178,10 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   const scrollLeft = () => {
     const container = document.getElementById('imageContainer')
     if (container) {
-      container.scrollLeft -= 200
+      container.scrollTo({
+        left: container.scrollLeft - 200,
+        behavior: 'smooth'
+      });
       setScrollPosition(container.scrollLeft)
     }
   }
@@ -186,7 +189,10 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   const scrollRight = () => {
     const container = document.getElementById('imageContainer')
     if (container) {
-      container.scrollLeft += 200
+      container.scrollTo({
+        left: container.scrollLeft + 200,
+        behavior: 'smooth'
+      })
       setScrollPosition(container.scrollLeft)
     }
   }
