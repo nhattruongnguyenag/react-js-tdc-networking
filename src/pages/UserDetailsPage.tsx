@@ -212,8 +212,7 @@ export default function UserDetailsPage() {
           isSave={item.isSave}
           group={group}
           handleUnSave={handleUnSave}
-          active={item.active}
-        />
+          active={item.active} iCustomizeLikeAction={false}        />
       )
     } else {
       return null

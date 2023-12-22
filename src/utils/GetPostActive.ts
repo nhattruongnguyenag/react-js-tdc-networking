@@ -6,5 +6,5 @@ export const getPostActive = (active: number): boolean => {
   if (active === NUMBER_POST_ACTIVE) {
     flag = true
   }
-  return true
+  return flag
 }

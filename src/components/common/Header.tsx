@@ -1,10 +1,11 @@
-import { Fragment, memo, useState } from 'react'
+import { Fragment, memo, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { toggleDarkMode } from '../../redux/Slice'
 import NotificationPopup from '../NotificationPopup'
 import MobileNavigation from './MobileNavigation'
 import Navigaion from './Navigation'
+// import '../../assets/css/iconCount.css'
 import {
   BUSINESS_DASHBOARD_PAGE,
   FACULTY_DASHBOARD_PAGE,
@@ -14,6 +15,7 @@ import {
 import NavItem from './NavItem'
 import classNames from 'classnames'
 import { IMAGE_URL } from '../../constants/Path'
+import { useGetQualityNotificationQuery } from '../../redux/Service'
 
 function Header() {
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -21,6 +23,20 @@ function Header() {
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
+  const [qty, setQty] = useState<any>()
+  const { data, isFetching } = useGetQualityNotificationQuery(
+    {
+      id: userLogin?.id ?? -1
+    },
+    {
+      pollingInterval: 2000
+    }
+  )
+
+  useEffect(() => {
+    setQty(data?.data)
+  }, [data, isFetching])
+
   const getFacultyByFacultyGroupCode = (group: string): string => {
     let faculty = group.substring(group.indexOf('_') + 1)
     faculty = 'khoa_' + faculty
@@ -84,7 +100,8 @@ function Header() {
           data-bs-toggle='dropdown'
           aria-expanded='false'
         >
-          <span className='dot-count bg-warning' />
+          <span className='dot-count'>{qty}</span>
+          {/* <div className='icon_count bg-warning'></div> */}
           <i className='feather-bell font-xl text-current' />
         </span>
         <NotificationPopup show={showNotificationPopup} />

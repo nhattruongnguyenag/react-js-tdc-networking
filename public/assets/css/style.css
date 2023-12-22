@@ -14861,15 +14861,20 @@ body:not(.theme-full) .main-content .middle-sidebar-bottom.header-padding {
 
 .menu-icon .dot-count {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  border-radius: 5px;
-  width: 7px;
-  height: 7px;
+  justify-content: center;
+  align-items: center;
+  top: -9px;
+  right: -5px;
+  border-radius: 50%;
+  width: 25px;
+  height: 23px;
   line-height: 15px;
   text-align: center;
   display: inline-block;
-  font-size: 10px;
+  font-size: 13px;
+  color: #ffffff;
+  background-color: red !important;
+  padding-top: 4px;
 }
 
 .footer-wrapper {

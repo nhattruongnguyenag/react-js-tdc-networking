@@ -4,6 +4,9 @@ export interface NotificationModel {
   id: number
   createdAt: string
   content: string
+  type: string
+  data: string
   status: string
-  user: User
+  dataValue: any | null
+  userInteracted: any | null
 }
