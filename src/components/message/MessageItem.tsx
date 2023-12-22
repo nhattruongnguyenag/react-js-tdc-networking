@@ -69,7 +69,7 @@ const MessageContent = (props: MessageContentProps) => {
           }}
         >
           {images.map((item, index) => (
-            <Item original={item.original} thumbnail={item.thumbnail} width={item.width} height={item.height}>
+            <Item key={index.toString()} original={item.original} thumbnail={item.thumbnail} width={item.width} height={item.height}>
               {({ ref, open }) => (
                 <img
                   style={smallItemStyles}
@@ -106,7 +106,7 @@ export default function MessageItem(props: MessageItemProps) {
       )}
 
       <div className={classNames('message-item', props.data.sender.id === userLogin?.id ? 'outgoing-message' : '')}>
-        <div className='flex flex-row justify-end'>
+        <div className={classNames('flex flex-row', props.data.sender.id === userLogin?.id ? 'justify-end': 'justify-start')}>
           <figure className=''>
             {props.data.receiver.image ? (
               <img
@@ -133,9 +133,9 @@ export default function MessageItem(props: MessageItemProps) {
           </div>
         </div>
         {<MessageContent data={props.data} />}
-        <div className={classNames('ms-1 mt-2', props.data.sender.id !== userLogin?.id ? 'hidden' : '')}>
+        <h6 className={classNames('ms-1 mt-2 text-sm text-gray-600', props.data.sender.id !== userLogin?.id ? 'hidden' : '')}>
           {messageStatus}
-        </div>
+        </h6>
       </div>
     </Fragment>
   )

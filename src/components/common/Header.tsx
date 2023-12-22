@@ -104,8 +104,10 @@ function Header() {
           {/* <div className='icon_count bg-warning'></div> */}
           <i className='feather-bell font-xl text-current' />
         </span>
+        
         <NotificationPopup show={showNotificationPopup} />
         <Link to='/hoi-thoai' className='menu-icon chat-active-btn ms-3 p-2 text-center'>
+          <span className='dot-count'>{qty}</span>
           <i className='feather-message-square font-xl text-current' />
         </Link>
         <span
