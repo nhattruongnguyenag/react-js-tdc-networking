@@ -71,7 +71,8 @@ export default function HeaderPostApprovalItem(props: HeaderPostApprovalItemProp
       {
         type: ACCEPT_POST,
         name: t('ModalPostRejectReason.acceptPostMenuItem'),
-        visible: props.type === POST_APPROVAL
+        visible: props.type === POST_APPROVAL,
+        color: '#009252'
       },
       {
         type: REJECT_POST,

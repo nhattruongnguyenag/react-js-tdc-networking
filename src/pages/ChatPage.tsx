@@ -2,21 +2,26 @@ import classNames from 'classnames'
 import moment from 'moment'
 import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { Client, Frame, Message } from 'stompjs'
+import EmptyMessageList from '../components/common/EmptyMessageList'
 import Header from '../components/common/Header'
-import MessageItem from '../components/message/MessageItem'
-import { USER_LOGIN_KEY } from '../constants/KeyValue'
+import Loading from '../components/common/Loading'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { setConversationMessages } from '../redux/Slice'
 import { getStompClient } from '../sockets/SocketClient'
 import { Message as MessageModel } from '../types/Message'
 import { handleUploadImage } from '../utils/UploadUtils'
+import MessageItem from '../components/message/MessageItem'
 
 let stompClient: Client
+
+const RECEIVED = 0
+const SEEN = 1
+const SENDING = 2
 
 export default function ChatPage() {
   const { selectConversation, conversationMessages } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const dispatch = useAppDispatch()
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(true)
   const [hiddenBtnScrollEnd, setHiddenBtnScrollEnd] = useState<boolean>(true)
   const [btnSendDisable, setBtnSendDisable] = useState<boolean>(true)
   const textInputMessageRef = useRef<HTMLInputElement | null>(null)
@@ -32,14 +37,30 @@ export default function ChatPage() {
   }, [selectConversation])
 
   const onBtnSendClick = () => {
-    if (textInputMessageRef.current) {
+    if (textInputMessageRef.current && selectConversation) {
       const message = {
         senderId: senderId,
         receiverId: receiverId,
         type: 'plain/text',
         content: textInputMessageRef.current.value,
-        status: 0
+        status: RECEIVED
       }
+
+      dispatch(
+        setConversationMessages([
+          ...conversationMessages,
+          {
+            content: textInputMessageRef.current.value,
+            id: -1,
+            createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+            updatedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+            sender: selectConversation.sender,
+            receiver: selectConversation.receiver,
+            type: 'plain/text',
+            status: SENDING
+          }
+        ])
+      )
 
       stompClient.send(`/app/messages/${senderId}/${receiverId}`, {}, JSON.stringify(message))
       textInputMessageRef.current.value = ''
@@ -56,10 +77,10 @@ export default function ChatPage() {
     stompClient = getStompClient()
 
     const onConnected = () => {
-      setLoading(true)
       if (stompClient.connected) {
         stompClient.subscribe(`/topic/messages/${senderId}/${receiverId}`, onMessageReceived)
         stompClient.send(`/app/messages/${senderId}/${receiverId}/listen`)
+        setLoading(true)
       }
     }
 
@@ -91,18 +112,16 @@ export default function ChatPage() {
         urls.push(URL.createObjectURL(event.target.files[i]))
       }
 
-      console.log(urls)
-
       if (selectConversation) {
         let message: MessageModel = {
           content: urls.join(','),
           id: -1,
-          createdAt: 'Sending',
+          createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
           updatedAt: '',
           sender: selectConversation.sender,
           receiver: selectConversation.receiver,
-          type: 'images',
-          status: -1
+          type: moment().format('YYYY-MM-DD HH:mm:ss'),
+          status: SENDING
         }
 
         dispatch(setConversationMessages([...conversationMessages, message]))
@@ -115,7 +134,7 @@ export default function ChatPage() {
               receiverId: receiverId,
               type: 'images',
               content: response.data.join(','),
-              status: 0
+              status: RECEIVED
             })
           )
         })
@@ -135,87 +154,97 @@ export default function ChatPage() {
     <Fragment>
       <Header />
 
-      <div className='main-content '>
-        <button
-          style={{ cursor: 'pointer' }}
-          className={classNames(
-            'fixed right-10 top-2/3 z-50 h-12 w-12 bg-blue-400',
-            hiddenBtnScrollEnd ? 'hidden' : ''
-          )}
-          type='button'
-          onClick={() => scrollRef.current?.scrollIntoView()}
-        >
-          <i className='ti-arrow-down text-[18px] font-bold text-white' />
-        </button>
-        <div className='middle-sidebar-bottom'>
-          <div className='middle-sidebar-left pe-0' style={{ maxWidth: '100%' }}>
-            <div className='row'>
-              <div className='col-lg-12 position-relative'>
-                <div
-                  onScroll={(e) => {
-                    const isAtBottom =
-                      e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight
-                    setHiddenBtnScrollEnd(isAtBottom)
-                  }}
-                  className='chat-wrapper w-100 position-relative scroll-bar theme-dark-bg flex-col-reverse bg-white pt-0'
-                >
-                  <div className='chat-body p-3 '>
-                    <div className='messages-content pb-5'>
-                      {conversationMessages.map((item, index) => {
-                        const previousMessage = conversationMessages[index - 1]
-                        let dayHeaderVisible = false
-                        if (
-                          index === 0 ||
-                          (moment(item.createdAt).format('l') === moment(previousMessage.createdAt).format('l') &&
-                            Math.abs(moment(item.createdAt).hours() - moment(previousMessage.createdAt).hours()) > 3)
-                        ) {
-                          dayHeaderVisible = true
-                        }
+      {isLoading ? (
+        <Loading showTitle />
+      ) : (
+        <div className='main-content '>
+          <button
+            style={{ cursor: 'pointer' }}
+            className={classNames(
+              'fixed right-10 top-2/3 z-50 h-12 w-12 bg-blue-400',
+              hiddenBtnScrollEnd ? 'hidden' : ''
+            )}
+            type='button'
+            onClick={() => scrollRef.current?.scrollIntoView()}
+          >
+            <i className='ti-arrow-down text-[18px] font-bold text-white' />
+          </button>
+          <div className='middle-sidebar-bottom'>
+            <div className='middle-sidebar-left pe-0' style={{ maxWidth: '100%' }}>
+              <div className='row'>
+                <div className='col-lg-12 position-relative'>
+                  <div
+                    onScroll={(e) => {
+                      const isAtBottom =
+                        e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight
+                      setHiddenBtnScrollEnd(isAtBottom)
+                    }}
+                    className='chat-wrapper w-100 position-relative scroll-bar theme-dark-bg flex-col-reverse bg-white pt-0'
+                  >
+                    <div className='chat-body p-3 '>
+                      <div className='messages-content pb-5'>
+                        {conversationMessages.length > 0 ? (
+                          conversationMessages.map((item, index) => {
+                            const previousMessage = conversationMessages[index - 1]
+                            let dayHeaderVisible = false
+                            if (
+                              index === 0 ||
+                              (moment(item.createdAt).format('l') === moment(previousMessage.createdAt).format('l') &&
+                                Math.abs(moment(item.createdAt).hours() - moment(previousMessage.createdAt).hours()) >
+                                  3)
+                            ) {
+                              dayHeaderVisible = true
+                            }
 
-                        return <MessageItem headerVisible={dayHeaderVisible} key={index.toString()} data={item} />
-                      })}
-                      <div className='message-item' ref={scrollRef}></div>
-                      <div className='clearfix h-9 bg-slate-500' />
+                            return <MessageItem headerVisible={dayHeaderVisible} key={index.toString()} data={item} />
+                          })
+                        ) : (
+                          <EmptyMessageList />
+                        )}
+                        <div className='message-item' ref={scrollRef}></div>
+                        <div className='clearfix h-9 bg-slate-500' />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className='chat-bottom dark-bg theme-dark-bg p-3 shadow-none' style={{ width: '97%' }}>
-                  <form className='chat-form'>
-                    <button className='bg-grey float-left' type='button' onClick={() => onBtnUploadImageClick()}>
-                      <i className='ti-image text-grey-600' />
-                    </button>
-                    <input
-                      type={'file'}
-                      multiple
-                      ref={textInputImagesRef}
-                      className='hidden'
-                      onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)}
-                    />
-                    <div className='form-group cursor-pointer'>
+
+                  <div className='chat-bottom dark-bg theme-dark-bg p-3 shadow-none' style={{ width: '97%' }}>
+                    <form className='chat-form'>
+                      <button className='bg-grey float-left' type='button' onClick={() => onBtnUploadImageClick()}>
+                        <i className='ti-image text-grey-600' />
+                      </button>
                       <input
-                        type='text'
-                        ref={textInputMessageRef}
-                        className='text-black'
-                        placeholder='@ Tin nhắn...'
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onMessageContentInputChange(e)}
+                        type={'file'}
+                        multiple
+                        ref={textInputImagesRef}
+                        className='hidden'
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => onFilePickerChange(event)}
                       />
-                    </div>
-                    <button
-                      style={{ cursor: 'pointer' }}
-                      disabled={btnSendDisable}
-                      className='bg-current disabled:opacity-50'
-                      type='button'
-                      onClick={() => onBtnSendClick()}
-                    >
-                      <i className='ti-arrow-right text-white' />
-                    </button>
-                  </form>
+                      <div className='form-group cursor-pointer'>
+                        <input
+                          type='text'
+                          ref={textInputMessageRef}
+                          className='text-black'
+                          placeholder='@ Tin nhắn...'
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onMessageContentInputChange(e)}
+                        />
+                      </div>
+                      <button
+                        style={{ cursor: 'pointer' }}
+                        disabled={btnSendDisable}
+                        className='bg-current disabled:opacity-50'
+                        type='button'
+                        onClick={() => onBtnSendClick()}
+                      >
+                        <i className='ti-arrow-right text-white' />
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </Fragment>
   )
 }

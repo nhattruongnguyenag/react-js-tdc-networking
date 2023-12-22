@@ -126,7 +126,8 @@ export default function CreateRecruitmentPostPage() {
     location: state?.location ?? '',
     requirement: state?.requirement ?? '',
     groupId: BUSINESS_CONNECT_GROUP,
-    expiration: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
+    expiration:
+      moment(state?.expiration).format('YYYY-MM-DD HH:mm:ss') ?? moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
   }
 
   const [recruitmentPostRequest, setRecruitmentPostRequest] =
