@@ -12,6 +12,7 @@ import CreatePostSelector from '../components/CreatePostSelector'
 import { useAppSelector } from '../redux/Hook'
 import { getPostActive } from '../utils/GetPostActive'
 import { BUSINESS_GROUP } from '../constants/Variables'
+import ButtonBackToTop from '../components/common/ButtonBackToTop'
 
 export default function BusinessDashboardPage() {
   const code = 'group_connect_business'
@@ -111,7 +112,7 @@ export default function BusinessDashboardPage() {
                 />
               }
               {/* Render post */}
-              {data?.data.map((item:any) => renderItem(item))}
+              {data?.data.map((item: any) => renderItem(item))}
               <div className='card w-100 shadow-xss rounded-xxl mb-3 mt-3 border-0 p-4 text-center'>
                 <div className='snippet me-auto ms-auto mt-2' data-title='.dot-typing'>
                   <div className='stage'>
@@ -140,6 +141,8 @@ export default function BusinessDashboardPage() {
           <img src='/assets/images/female-profile.png' alt='user' className='w30 shadow-xss' />
         </a>
       </div>
+      {/*  */}
+      <ButtonBackToTop />
     </>
   )
 }

@@ -52,6 +52,7 @@ import { getPostActive } from '../utils/GetPostActive'
 import { Conversation } from '../types/Conversation'
 import moment from 'moment'
 import { MESSAGE_PAGE } from '../constants/Page'
+import ButtonBackToTop from '../components/common/ButtonBackToTop'
 
 interface UserInformation {
   userId: number
@@ -485,6 +486,8 @@ export default function UserDetailsPage() {
         className='hidden'
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => onSelectUploadImageBackground(event)}
       />
+      {/*  */}
+      <ButtonBackToTop />
     </>
   )
 }

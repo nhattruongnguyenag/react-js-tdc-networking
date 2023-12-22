@@ -98,3 +98,12 @@ export const updateImageUserProfile = async (urlUpdate: string, data: any) => {
     } catch (error) {
     }
 }
+
+
+export const getFacultyForSelect = async (urlUpdate: string) => {
+    try {
+        const response = await axios.get(urlUpdate);
+        return response.data;
+    } catch (error) {
+    }
+}
