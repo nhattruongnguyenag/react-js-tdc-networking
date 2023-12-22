@@ -43,7 +43,7 @@ export default function CustomizeRecruitmentPost(props: RecruitmentPostType) {
           <div className='list-infor-about-recruitment text-grey-900 text-dark'>
             <div className='icon-item-infor-job-recruitment'>
               <FontAwesomeIcon icon={faClock} size='1x' color={COLOR_GREY} className='icon-location-recruitment' />
-              <div className='txt-item-recruitment textLocationRecruitment'>{props.createdAt}</div>
+              <div className='txt-item-recruitment textLocationRecruitment'>{props.expiration}</div>
             </div>
             <div className='icon-item-infor-job-recruitment'>
               <FontAwesomeIcon icon={faMoneyCheckDollar} size='1x' color={COLOR_GREY} className='icon-location-recruitment' />

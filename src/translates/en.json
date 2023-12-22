@@ -655,7 +655,8 @@
         "modalUpdateNormalPostTitle": "Update Post",
         "modalCreateNormalPostPlaceholder": "Please enter the content of the post",
         "modalCreateNormalPostEntryImages": "Images",
-        "modalCreateNormalPostButton": "Post"
+        "modalCreateNormalPostButton": "Post",
+        "modalCreateNormalUpdatePostButton": "Update"
     },
     "Validate": {
         "validatePhoneNull": "Phone number cannot be empty",
@@ -786,14 +787,19 @@
         "back": "Back the homepage !!"
     },
     "Setting": {
-        "setting": "Setting",
         "userInformation": "User Information",
+        "setting": "Setting",
         "waitPost": "Pending Posts",
         "applyPost": "Job Applications",
         "language": "Language",
         "help": "Help",
         "logout": "Logout",
         "back": "Back"
+    },
+    "Modal": {
+        "modalShowImageCloseButton": "Close",
+        "modalShowImageUpdateRejectUpdateButton": "Cancel Update",
+        "modalShowImageUpdateAcceptUpdateButton": "Update"
     },
     "Options": {
         "following": "Following",

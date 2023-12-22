@@ -454,7 +454,8 @@
         "modalCreateNormalPostTitle": "新しい投稿を作成",
         "modalCreateNormalPostPlaceholder": "投稿内容を入力してください",
         "modalCreateNormalPostEntryImages": "画像",
-        "modalCreateNormalPostButton": "投稿"
+        "modalCreateNormalPostButton": "投稿",
+        "modalCreateNormalUpdatePostButton": "更新"
     },
     "BusinessSelectFacultyToolbar": {
         "businessSelectFacultyToolbarTitle": "表示する学部を選択してください"
@@ -502,7 +503,10 @@
         "modalUpdatePlaceholderEmail": "メール",
         "modalUpdateBackground": "背景",
         "modalUpdateAvatar": "アバター",
-        "modalUpdateButtonText": "更新"
+        "modalUpdateButtonText": "更新",
+        "modalUpdateImageNotifyNotUpload": "画像がアップロード中です",
+        "modalUpdateImageNotifyUploadSuccess": "画像が正常にアップロードされました"
+        
     },
     "Validate": {
         "validatePhoneNull": "電話番号は空にできません",
@@ -748,8 +752,8 @@
         "normalPostComment": "コメント"
     },
     "Setting": {
-        "setting": "設定",
         "userInformation": "ユーザー情報",
+        "setting": "設定",
         "waitPost": "保留中の投稿",
         "applyPost": "求人応募",
         "language": "言語",
@@ -757,6 +761,11 @@
         "logout": "ログアウト",
         "back": "戻る"
     },
+    "Modal": {
+        "modalShowImageCloseButton": "閉じる",
+        "modalShowImageUpdateRejectUpdateButton": "更新をキャンセル",
+        "modalShowImageUpdateAcceptUpdateButton": "更新"
+      },
     "Options": {
         "following": "フォロー中",
         "follower": "あなたをフォローしている人",

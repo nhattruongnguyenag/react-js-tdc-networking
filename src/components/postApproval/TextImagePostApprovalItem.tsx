@@ -18,7 +18,7 @@ export default function TextImagePostApprovalItem(props: TextImagePostApprovalIt
             thumbnail: SERVER_ADDRESS + 'api/images/' + element.uri
         }))
         return newImagesGallerys
-    }, [])
+    }, [props.post.images])
 
     return (
         <>

@@ -16,11 +16,11 @@ export function CreatePostModal(props: Readonly<CreatePostModalType>) {
     <Modal {...props} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
       <Modal.Header>
         <div className='header-modal'>
-          <Modal.Title className='font-xss'>{props.updateNormalPost ?t("ModalCreateNormalPost.modalUpdateNormalPostTitle") :t("ModalCreateNormalPost.modalCreateNormalPostTitle")}</Modal.Title>
+          <Modal.Title className='font-xss'>{props.updateNormalPost ? t("ModalCreateNormalPost.modalUpdateNormalPostTitle") : t("ModalCreateNormalPost.modalCreateNormalPostTitle")}</Modal.Title>
           <button
-            style={{ position: 'absolute', top: 0, right: 10 }}
+            style={{ position: 'absolute', top: 0, right: 20 }}
             type='button'
-            className='btn-close-modal-header close font-xl'
+            className='btn-close-modal-header close font-xl buttonModalCustomizeHeaderToClose'
             onClick={props.onHide}
           >
             <span aria-hidden='true'>&times;</span>

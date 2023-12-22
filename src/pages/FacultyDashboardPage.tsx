@@ -3,6 +3,7 @@ import { numberDayPassed } from '../utils/FormatTime';
 import Header from '../components/common/Header';
 import { useGetFacultyPostsQuery } from '../redux/Service';
 import { LikeAction } from '../types/LikeActions';
+import '../assets/css/faculty.css'
 import {
   TYPE_POST_BUSINESS,
   TYPE_POST_FACULTY,
@@ -12,15 +13,17 @@ import CreatePostSelector from '../components/CreatePostSelector';
 import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { useAppSelector } from '../redux/Hook';
 import ReactLoading from 'react-loading';
-import { COLOR_BLUE_BANNER } from '../constants/Color';
+import { COLOR_BLUE_BANNER, COLOR_WHITE } from '../constants/Color';
 import axios from 'axios';
 import { SERVER_ADDRESS } from '../constants/SystemConstant';
 import { useTranslation } from 'react-multi-lang';
 import { getFacultyTranslated } from '../utils/TranslateFaculty';
 import CustomizePost from '../components/post/CustomizePost'
 import { getPostActive } from '../utils/GetPostActive'
-import { isFaculty, isStudent } from '../utils/UserHelper';
+import { isBusiness, isFaculty, isStudent } from '../utils/UserHelper';
 import { Post } from '../types/Post';
+import ButtonBackToTop from '../components/common/ButtonBackToTop';
+import { getFacultyForSelect } from '../api/CallAPI';
 
 export default function FacultyDashboardPage() {
   const t = useTranslation();
@@ -77,50 +80,50 @@ export default function FacultyDashboardPage() {
     // TODO
   }
 
-
   useEffect(() => {
-    axios
-      .get(SERVER_ADDRESS + 'api/faculty')
-      .then((response) => {
-        setDataRequest(response.data.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    if (isBusiness(userLogin)) {
+      const fetchData = async () => {
+        const data = await getFacultyForSelect(SERVER_ADDRESS + 'api/faculty');
+        setDataRequest(data.data);
+      }
+      fetchData();
+    }
   }, [])
 
   const renderItem = (item: any) => {
     if (getPostActive(item.active)) {
-    return (
-      <CustomizePost
-        key={item.id}
-        id={item.id}
-        userId={item.user?.id}
-        name={item.user?.name}
-        avatar={item.user?.image}
-        typeAuthor={TYPE_POST_FACULTY}
-        available={null}
-        timeCreatePost={numberDayPassed(item.createdAt)}
-        content={item.content}
-        type={item.type}
-        likes={item.likes}
-        comments={item.comment}
-        commentQty={item.commentQuantity}
-        images={item.images}
-        role={item.user?.roleCodes}
-        likeAction={likeAction}
-        location={item.location ?? null}
-        title={item.title ?? null}
-        expiration={item.expiration ?? null}
-        salary={item.salary ?? null}
-        employmentType={item.employmentType ?? null}
-        description={item.description ?? null}
-        isConduct={null}
-        isSave={item.isSave}
-        group={code}
-        handleUnSave={handleUnSave}
-        active={item.active} iCustomizeLikeAction={false}      />
-    )
+      return (
+        <CustomizePost
+          key={item.id}
+          id={item.id}
+          userId={item.user?.id}
+          name={item.user?.name}
+          avatar={item.user?.image}
+          typeAuthor={TYPE_POST_FACULTY}
+          available={null}
+          timeCreatePost={numberDayPassed(item.createdAt)}
+          content={item.content}
+          type={item.type}
+          likes={item.likes}
+          comments={item.comment}
+          commentQty={item.commentQuantity}
+          images={item.images}
+          role={item.user?.roleCodes}
+          likeAction={likeAction}
+          location={item.location ?? null}
+          title={item.title ?? null}
+          expiration={item.expiration ?? null}
+          salary={item.salary ?? null}
+          employmentType={item.employmentType ?? null}
+          description={item.description ?? null}
+          isConduct={null}
+          isSave={item.isSave}
+          group={code}
+          handleUnSave={handleUnSave}
+          active={item.active}
+          iCustomizeLikeAction={false}
+        />
+      )
     } else {
       return null;
     }
@@ -130,7 +133,7 @@ export default function FacultyDashboardPage() {
     <>
       <Header />
       {userLogin?.roleCodes !== TYPE_POST_BUSINESS ? (
-        <div className='main-content bg-light theme-dark-bg'>
+        <div className='main-content bg-light'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
               <div className='middle-wrap'>
@@ -159,7 +162,7 @@ export default function FacultyDashboardPage() {
           </div>
         </div>
       ) : (
-        <div className='main-content bg-lightblue theme-dark-bg'>
+        <div className='main-content bg-lightblue theme-dark-bg w-100'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
               <div className='middle-wrap'>
@@ -176,7 +179,7 @@ export default function FacultyDashboardPage() {
                       </option>
                     ))}
                   </select>
-                  {!Boolean(dataRequest) && (
+                  {!(dataRequest.length !== 0) && (
                     <ReactLoading className='spinnerLoading' type={'spin'} color={COLOR_BLUE_BANNER} height={30} width={30} />
                   )}
                 </div>
@@ -193,10 +196,12 @@ export default function FacultyDashboardPage() {
                 {(Boolean(code) && Boolean(facultyPost.length)) ? (
                   facultyPost.map((item: any) => renderItem(item))
                 ) : (
-                  (Boolean(code)) ? <div className='text-grey-900 text-dark card w-100 shadow-xss rounded-xxl mb-3 border-0 p-3 text-center mt-5'>
+                  (Boolean(code)) ? <div className='mt-100 text-grey-900 text-dark card w-100 shadow-xss rounded-xxl mb-3 border-0 p-3 text-center mt-5'>
                     {t("NotifyFacultyDontHaveAnyPost.textNotifyFacultyDontHaveAnyPost")}
                   </div> : <div className='text-grey-900 text-dark card w-100 shadow-xss rounded-xxl mb-3 border-0 p-3 text-center mt-5'>
-                    Vui lòng chọn khoa!
+                    {
+                      t("FacultyDashboard.facultyDashboarNotYetSelectFaculty")
+                    }
                   </div>
                 )}
               </div>
@@ -204,6 +209,8 @@ export default function FacultyDashboardPage() {
           </div>
         </div>
       )}
+      {/*  */}
+      <ButtonBackToTop />
     </>
   )
 }

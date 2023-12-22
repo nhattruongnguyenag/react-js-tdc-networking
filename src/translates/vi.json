@@ -612,7 +612,8 @@
         "modalUpdateNormalPostTitle": "Cập nhật bài viết",
         "modalCreateNormalPostPlaceholder": "Vui lòng nhập nội dung bài viết",
         "modalCreateNormalPostEntryImages": "Ảnh",
-        "modalCreateNormalPostButton": "Đăng bài viết"
+        "modalCreateNormalPostButton": "Đăng bài viết",
+        "modalCreateNormalUpdatePostButton": "Cập nhật"
       },
       "Validate":{
         "validatePhoneNull":"Số điện thoại không được để trống",
@@ -787,14 +788,19 @@
         "back": "Về trang chủ !!"
     },
     "Setting":{
-        "setting": "Cài đặt",
         "userInformation":"Thông tin cá nhân",
+        "setting": "Cài đặt",
         "waitPost":"Bài viết đang chờ",
         "applyPost": "Hồ sơ ứng tuyển",
         "language":"Ngôn ngữ",
         "help": "Trợ giúp",
         "logout":"Đăng xuất",
         "back": "Quay về"
+    },
+    "Modal":{
+        "modalShowImageCloseButton":"Đóng",
+        "modalShowImageUpdateRejectUpdateButton":"Hủy cập nhật",
+        "modalShowImageUpdateAcceptUpdateButton":"Cập nhật"
     },
     "Options":{
         "following":"Đang theo dõi",

@@ -12,6 +12,7 @@ import CustomizeSkeleton from '../components/skeleton/CustomizeSkeleton';
 import { useAppSelector } from '../redux/Hook';
 import { getPostActive } from '../utils/GetPostActive';
 import { TDC_GROUP } from '../constants/Variables';
+import ButtonBackToTop from '../components/common/ButtonBackToTop';
 
 export default function StudentDashboardPage() {
   const code = 'group_tdc'
@@ -72,7 +73,9 @@ export default function StudentDashboardPage() {
         isSave={item.isSave}
         group={code}
         handleUnSave={handleUnSave}
-        active={item.active} iCustomizeLikeAction={false}      />
+        active={item.active}
+        iCustomizeLikeAction={false}
+      />
     } else {
       return null;
     }
@@ -96,7 +99,6 @@ export default function StudentDashboardPage() {
                   </div>
                 </div>
               }
-
               {/* Modal */}
               {
                 userLogin?.roleCodes == TYPE_POST_STUDENT && <CreatePostSelector
@@ -108,11 +110,13 @@ export default function StudentDashboardPage() {
                 />
               }
               {/* Render post */}
-              {data?.data.map((item:any) => renderItem(item))}
+              {data?.data.map((item: any) => renderItem(item))}
             </div>
           </div>
         </div>
       </div>
+      {/*  */}
+      <ButtonBackToTop />
     </>
   )
 }
