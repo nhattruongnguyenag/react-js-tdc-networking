@@ -29,7 +29,7 @@ function Header() {
       id: userLogin?.id ?? -1
     },
     {
-      pollingInterval: 2000
+      pollingInterval: 3000
     }
   )
 

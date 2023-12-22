@@ -35,7 +35,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
       id: userLogin?.id ?? -1
     },
     {
-      pollingInterval: 1000
+      pollingInterval: 1500
     }
   )
   const [arr, setArr] = useState<NotificationModel[]>()

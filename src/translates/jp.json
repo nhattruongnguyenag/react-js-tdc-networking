@@ -212,7 +212,8 @@
         "normal": "通常",
         "survey": "アンケート",
         "recruitment": "求人",
-        "search": "検索内容を入力..."
+        "search": "検索内容を入力...",
+        "txt": "適合する結果が見つかりませんでした！"
     },
     "ToolbarTitle": {
         "recruitmentDetailScreen": "求人詳細",
