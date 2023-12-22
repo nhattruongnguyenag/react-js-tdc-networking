@@ -51,7 +51,7 @@ export function ModalUserLiked(props: Readonly<ModalType>) {
                 }
             </Modal.Body>
             <Modal.Footer>
-                <Button className='btn btn-outline-secondary bg-primary' onClick={props.onHide}>Close</Button>
+                <Button className='btn bg-primary' onClick={props.onHide}>Close</Button>
             </Modal.Footer>
         </Modal>
     );

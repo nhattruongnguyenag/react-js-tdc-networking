@@ -202,3 +202,13 @@
   padding: 0px;
   margin: 0px;
 }
+
+.buttonWrapperIconCameraBackground {
+  right: 10px;
+  bottom: 10px;
+}
+
+.buttonWrapperIconCameraAvatar {
+  right: 0px;
+  bottom: 0px;
+}

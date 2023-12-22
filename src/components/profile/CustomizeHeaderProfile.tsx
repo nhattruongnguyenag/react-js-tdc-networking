@@ -5,6 +5,7 @@ import { AVATAR_CLICK, AVATAR_CLICK_UPLOAD, BACKGROUND_CLICK, BACKGROUND_CLICK_U
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCameraRetro } from '@fortawesome/free-solid-svg-icons'
 import { COLOR_BLACK } from '../../constants/Color'
+import { IMAGE_URL } from '../../constants/Path'
 interface HeaderProfileType {
     isSameUser: boolean
     background: string
@@ -15,6 +16,7 @@ interface HeaderProfileType {
 }
 
 export default function CustomizeHeaderProfile(props: Readonly<HeaderProfileType>) {
+    const URL_IMAGE_BACKGROUND_DEFAULT = '/assets/images/background-default.jpg';
     const [isImageBackgroundLoaded, setImageBackgroundLoaded] = useState<boolean>(false);
     const [isImageAvatarLoaded, setImageAvatarLoaded] = useState<boolean>(false);
 
@@ -44,9 +46,9 @@ export default function CustomizeHeaderProfile(props: Readonly<HeaderProfileType
                             style={{
                                 opacity: isImageBackgroundLoaded ? 1 : 0,
                             }}
-                            src={SERVER_ADDRESS + 'api/images/' + props.background} />
+                            src={IMAGE_URL + props.background} />
                     ) : (
-                        <img className='backgroundHeaderProfile' src={'/assets/images/background-default.jpg'} />
+                        <img className='backgroundHeaderProfile' src={URL_IMAGE_BACKGROUND_DEFAULT} />
                     )}
                 </div>
 
@@ -65,7 +67,7 @@ export default function CustomizeHeaderProfile(props: Readonly<HeaderProfileType
                     {props.avatar ? (
                         <img
                             className='avatarHeaderProfile'
-                            src={SERVER_ADDRESS + 'api/images/' + props.avatar}
+                            src={IMAGE_URL + props.avatar}
                             onLoad={() => setImageAvatarLoaded(true)}
                             style={{
                                 opacity: isImageAvatarLoaded ? 1 : 0,
@@ -78,7 +80,7 @@ export default function CustomizeHeaderProfile(props: Readonly<HeaderProfileType
                     )}
                     {
                         props.isSameUser && <button
-                            className='buttonWrapperIconCamera'
+                            className='buttonWrapperIconCamera buttonWrapperIconCameraAvatar'
                             onClick={(e) => {
                                 e.stopPropagation();
                                 props.handleClickButtonEvent(AVATAR_CLICK_UPLOAD);
@@ -94,7 +96,7 @@ export default function CustomizeHeaderProfile(props: Readonly<HeaderProfileType
                 </div>
                 {
                     props.isSameUser && <button
-                        className='buttonWrapperIconCamera'
+                        className='buttonWrapperIconCamera buttonWrapperIconCameraBackground'
                         onClick={(e) => {
                             e.stopPropagation();
                             props.handleClickButtonEvent(BACKGROUND_CLICK_UPLOAD);

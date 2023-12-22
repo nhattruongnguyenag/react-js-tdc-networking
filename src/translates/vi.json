@@ -608,7 +608,8 @@
         "modalUpdateNormalPostTitle": "Cập nhật bài viết",
         "modalCreateNormalPostPlaceholder": "Vui lòng nhập nội dung bài viết",
         "modalCreateNormalPostEntryImages": "Ảnh",
-        "modalCreateNormalPostButton": "Đăng bài viết"
+        "modalCreateNormalPostButton": "Đăng bài viết",
+        "modalCreateNormalUpdatePostButton": "Cập nhật"
       },
       "Validate":{
         "validatePhoneNull":"Số điện thoại không được để trống",

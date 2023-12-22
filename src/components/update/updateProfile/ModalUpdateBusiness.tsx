@@ -767,12 +767,12 @@ export default function ModalUpdateBusiness(props: Readonly<ModalTypeUpdate>) {
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    onClick={props.onHide} className='btn btn-outline-secondary bg-primary'>
+                    onClick={props.onHide} className='btn bg-grey text-dark outline-none border-0'>
                     {props.t("Modal.modalShowImageCloseButton")}
                 </Button>
                 <Button
                     disabled={!(backgroundHadSave === false && avatarHadSave === false)}
-                    onClick={() => handleSubmitEvent()} className='btn btn-outline-secondary bg-primary'>
+                    onClick={() => handleSubmitEvent()} className='btn  bg-primary outline-none border-0'>
                     {props.t("ModalUpdate.modalUpdateButtonText")}
                 </Button>
             </Modal.Footer>

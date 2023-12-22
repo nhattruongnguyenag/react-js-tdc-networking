@@ -19,6 +19,7 @@ import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { COLOR_GREY_FEEBLE } from '../constants/Color';
 import '../assets/css/studentAndFaculty.css'
+import ButtonBackToTop from '../components/common/ButtonBackToTop';
 
 export default function FacultyAndStudentPage() {
     const t = useTranslation();
@@ -146,6 +147,8 @@ export default function FacultyAndStudentPage() {
                     </div>
                 </div>
             </div>
+            {/*  */}
+            <ButtonBackToTop />
         </>
     )
 }

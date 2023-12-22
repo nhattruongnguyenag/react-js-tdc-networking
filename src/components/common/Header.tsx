@@ -92,7 +92,8 @@ function Header() {
         </span>
         <Link className='menu-icon ms-3 p-0' to='/cai-dat'>
           {userLogin?.image ? (
-            <img src={IMAGE_URL + userLogin.image} alt='user' className='rounded-full w-10 h-10' />
+            <img src={IMAGE_URL + userLogin.image}
+            alt='user' className='avatarSetting rounded-full w-10 h-10' />
           ) : (
             <div
               className={classNames(

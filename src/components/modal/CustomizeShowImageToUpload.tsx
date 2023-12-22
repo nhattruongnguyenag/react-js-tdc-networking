@@ -55,12 +55,12 @@ export function CustomizeShowImageToUpload(props: Readonly<ModalType>) {
                     props.onHide();
                     setIsImageLoaded(false);
                     props.onSelectImage(props.isBackground, false);
-                }} className='btn btn-outline-secondary bg-primary'>{t("Modal.modalShowImageUpdateRejectUpdateButton")}</Button>
+                }} className='btn bg-grey text-dark outline-none border-0'>{t("Modal.modalShowImageUpdateRejectUpdateButton")}</Button>
                 <Button onClick={() => {
                     props.onHide();
                     setIsImageLoaded(false);
                     props.onSelectImage(props.isBackground, true);
-                }} className='btn btn-outline-secondary bg-primary'>{t("Modal.modalShowImageUpdateAcceptUpdateButton")}</Button>
+                }} className='btn bg-primary outline-none border-0'>{t("Modal.modalShowImageUpdateAcceptUpdateButton")}</Button>
             </Modal.Footer>
         </Modal>
 

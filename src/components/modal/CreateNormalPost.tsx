@@ -286,9 +286,14 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
           <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalPostEntryImages")}</span>
         </button>
         <div className='pointer ms-auto ' id='dropdownMenu4' data-bs-toggle='dropdown' aria-expanded='false'>
-          <button ref={buttonRef} onClick={handleSubmitEvent} className='btn btn-primary'>
-            <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalPostButton")}</span>
-          </button>
+          {
+            props.updateNormalPost === null ? <button ref={buttonRef} onClick={handleSubmitEvent} className='btn btn-primary'>
+              <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalPostButton")}</span>
+            </button> :
+              <button ref={buttonRef} onClick={handleSubmitEvent} className='btn btn-primary'>
+                <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalUpdatePostButton")}</span>
+              </button>
+          }
         </div>
       </div>
     </div>

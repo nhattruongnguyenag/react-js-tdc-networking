@@ -452,7 +452,8 @@
         "modalCreateNormalPostTitle": "新しい投稿を作成",
         "modalCreateNormalPostPlaceholder": "投稿内容を入力してください",
         "modalCreateNormalPostEntryImages": "画像",
-        "modalCreateNormalPostButton": "投稿"
+        "modalCreateNormalPostButton": "投稿",
+        "modalCreateNormalUpdatePostButton": "更新"
     },
     "BusinessSelectFacultyToolbar": {
         "businessSelectFacultyToolbarTitle": "表示する学部を選択してください"

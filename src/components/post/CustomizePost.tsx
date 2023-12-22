@@ -32,6 +32,7 @@ import { formatVietNamCurrency } from '../../utils/FormatCurrency'
 import { CreatePostModal } from '../modal/CustomizeNormalPostModal'
 import { UpdateNormalPost } from '../../types/UpdateNormalPost'
 import { ModalUserLiked } from '../modal/ModalUserLiked'
+import { IMAGE_URL } from '../../constants/Path'
 setTranslations({ vi, en, jp })
 
 const CustomizePost = (props: Post) => {
@@ -149,8 +150,8 @@ const CustomizePost = (props: Post) => {
 
   const changeDataToImagGallerys = useCallback(() => {
     const newImagesGallerys: ImageGalleryDisplay[] = props.images.map((element) => ({
-      original: SERVER_ADDRESS + 'api/images/' + element.uri,
-      thumbnail: SERVER_ADDRESS + 'api/images/' + element.uri
+      original: IMAGE_URL + element.uri,
+      thumbnail: IMAGE_URL + element.uri
     }))
     return newImagesGallerys
   }, [props.images])

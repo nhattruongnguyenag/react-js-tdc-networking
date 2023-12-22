@@ -49,7 +49,7 @@ export default function CustomizeCreateCommentsToolbar(props: Readonly<CreateCom
                 {/* Avatar */}
                 {
                     props.image ? <img
-                        className='avatarCreateCommentToolbar' src={SERVER_ADDRESS + 'api/images/' + props.image} /> :
+                        className='avatarCreateCommentToolbar avatarSetting' src={SERVER_ADDRESS + 'api/images/' + props.image} /> :
                         <div className='avatarCreateCommentToolbar'><DefaultAvatar name={props.name[0]} size={35} styleBootstrap={undefined} /></div>
                 }
                 {/* Text area */}

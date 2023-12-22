@@ -650,7 +650,8 @@
         "modalUpdateNormalPostTitle": "Update Post",
         "modalCreateNormalPostPlaceholder": "Please enter the content of the post",
         "modalCreateNormalPostEntryImages": "Images",
-        "modalCreateNormalPostButton": "Post"
+        "modalCreateNormalPostButton": "Post",
+        "modalCreateNormalUpdatePostButton": "Update"
     },
     "Validate": {
         "validatePhoneNull": "Phone number cannot be empty",

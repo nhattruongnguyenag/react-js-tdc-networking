@@ -55,7 +55,7 @@ export function CustomizeModalShowImage(props: Readonly<ModalType>) {
                 <Button onClick={() => {
                     props.onHide();
                     setIsImageLoaded(false);
-                }} className='btn btn-outline-secondary bg-primary'>{t("Modal.modalShowImageCloseButton")}</Button>
+                }} className='btn bg-primary'>{t("Modal.modalShowImageCloseButton")}</Button>
             </Modal.Footer>
         </Modal>
 

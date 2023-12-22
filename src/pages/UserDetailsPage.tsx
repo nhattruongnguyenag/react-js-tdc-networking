@@ -35,6 +35,7 @@ import { Business } from '../types/Business';
 import { Student } from '../types/Student';
 import { toast } from 'react-toastify';
 import { getPostActive } from '../utils/GetPostActive';
+import ButtonBackToTop from '../components/common/ButtonBackToTop';
 
 interface UserInformation {
   userId: number;
@@ -434,6 +435,8 @@ export default function UserDetailsPage() {
         className='hidden'
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => onSelectUploadImageBackground(event)}
       />
+      {/*  */}
+      <ButtonBackToTop />
     </>
   )
 }
