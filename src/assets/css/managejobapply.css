@@ -25,12 +25,14 @@
     align-items: center;
   }
   
-  .avatar {
-    width: 80px;
+  .avata {
     height: 80px;
     border-radius: 50%;
   }
-
+  
+  img{
+    max-width: fit-content;
+  }
   .datetime{
     display: flex;
     align-items: center;
@@ -39,7 +41,6 @@
   .btnBottom {
     display: flex;
     flex-direction: row;
-    width: 80%;
     justify-content: flex-start;
     
   }

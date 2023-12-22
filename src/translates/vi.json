@@ -11,12 +11,15 @@
         "titleLogin": "Đăng nhập",
         "emailId": "Email ID",
         "password": "Mật khẩu",
+        "showPass": "Hiện",
+        "hidePass": "Ẩn",
         "errorEmail": "Email không được để trống",
         "errorPass": "Mật khẩu không được để trống",
         "errorEmailNotFormat": "Email sai định dạng",
         "errorPassNotLengthMax": "Mật khẩu không vượt quá 8 ký tự",
         "errorPassNotFormat": "Mật khẩu sai định dạng",
         "loginFail": "Đăng nhập thất bại",
+        "loginSucess": "Đăng nhập thành công",
         "alertLoginFail": "Sai thông tin email hoặc mật khẩu",
         "forgotPass": "Quên mật khẩu?",
         "titleRegister": "Đăng ký",
@@ -300,7 +303,8 @@
         "jobApplyScreenSaveSuccessTextContent": "Nộp đơn thành công",
         "jobApplyScreenChangeSuccessTextContent": "Sửa đơn thành công",
         "jobApplyScreenSaveSuccessTextTitle": "Thông báo",
-        "jobApplyScreenUploadErrorFormat": "Không đúng định dạng pdf"
+        "jobApplyScreenUploadErrorFormat": "Không đúng định dạng pdf",
+        "jobApplyScreenFalse": "Nộp đơn thất bại"
     },
     "MessageScreen": {
         "messageScreenLoaderTitle": "Đang tải tin nhắn...",
