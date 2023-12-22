@@ -260,7 +260,7 @@ export default function LoginPage() {
                       >
                         {t('LoginComponent.textLogin')}
                       </button>
-                      <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
+                      <div className='loadingg' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#fff' height={50} width={50} />
                       </div>
                     </div>
