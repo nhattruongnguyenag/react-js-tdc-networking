@@ -143,7 +143,7 @@ export default function FacultyDashboardPage() {
     <>
       <Header />
       {userLogin?.roleCodes !== TYPE_POST_BUSINESS ? (
-        <div className='main-content bg-light theme-dark-bg'>
+        <div className='main-content bg-light'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
               <div className='middle-wrap'>
@@ -172,7 +172,7 @@ export default function FacultyDashboardPage() {
           </div>
         </div>
       ) : (
-        <div className='main-content bg-lightblue theme-dark-bg'>
+        <div className='main-content bg-light'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
               <div className='middle-wrap'>
@@ -206,7 +206,7 @@ export default function FacultyDashboardPage() {
                 {(Boolean(code) && Boolean(facultyPost.length)) ? (
                   facultyPost.map((item: any) => renderItem(item))
                 ) : (
-                  (Boolean(code)) ? <div className='text-grey-900 text-dark card w-100 shadow-xss rounded-xxl mb-3 border-0 p-3 text-center mt-5'>
+                  (Boolean(code)) ? <div className='mt-100 text-grey-900 text-dark card w-100 shadow-xss rounded-xxl mb-3 border-0 p-3 text-center mt-5'>
                     {t("NotifyFacultyDontHaveAnyPost.textNotifyFacultyDontHaveAnyPost")}
                   </div> : <div className='text-grey-900 text-dark card w-100 shadow-xss rounded-xxl mb-3 border-0 p-3 text-center mt-5'>
                     {
