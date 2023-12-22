@@ -12,7 +12,8 @@ import { ADD_QUESTION_PAGE } from '../constants/Page'
 import {
   REVIEW_SURVEY_SCREEN_BUTTON_COMPLETE,
   REVIEW_SURVEY_SCREEN_BUTTON_GO_BACK,
-  REVIEW_SURVEY_SCREEN_QUESTION_LIST_TITLE, REVIEW_SURVEY_SCREEN_TITLE
+  REVIEW_SURVEY_SCREEN_QUESTION_LIST_TITLE,
+  REVIEW_SURVEY_SCREEN_TITLE
 } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { useAddSurveyPostMutation, useUpdateSurveyPostMutation } from '../redux/Service'
@@ -34,6 +35,8 @@ export default function ReviewSurveyPostPage() {
     if (addSurveyResult.data) {
       if (addSurveyResult.data.status === 201 || 200) {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenSaveSuccessContent'))
+        navigate(previousPage)
+        dispatch(setSurveyPostRequest(defaultSurveyPostRequest))
       } else {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenSaveFailContent'))
       }
@@ -44,12 +47,12 @@ export default function ReviewSurveyPostPage() {
     if (updateSurveyResult.data) {
       if (updateSurveyResult.data.status === 201 || 200) {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenUpdateSuccessContent'))
+        navigate(previousPage)
+        dispatch(setSurveyPostRequest(defaultSurveyPostRequest))
       } else {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenSaveFailContent'))
       }
       console.log(previousPage)
-      navigate(previousPage)
-      dispatch(setSurveyPostRequest(defaultSurveyPostRequest))
     }
   }, [updateSurveyResult])
 
