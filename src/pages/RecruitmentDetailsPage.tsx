@@ -38,7 +38,8 @@ export default function RecruitmentDetailsPage() {
     description: '',
     requirement: '',
     title: '',
-    isApplyJob: 0
+    isApplyJob: 0,
+    active: 0
   })
   const [result, setResult] = useState([data.benefit])
   const [description, setDescription] = useState([data.description])
@@ -56,10 +57,12 @@ export default function RecruitmentDetailsPage() {
     if (postId) {
       setIsLoading(true)
       axios
-        .get(SERVER_ADDRESS + `api/posts/recruitment?postId=${postId}&&userLogin=${userLogin?.id}`)
+        .get(SERVER_ADDRESS + `api/posts/search?postId=${postId}&&userLogin=${userLogin?.id}`)
         .then((recruitment) => {
           setIsLoading(false)
-          setData(recruitment.data.data)
+          if (recruitment.data.data && recruitment.data.data.length !== 0) {
+            setData(recruitment.data.data[0])
+          }
         })
         .catch((error) => {
           setIsLoading(false)
@@ -184,17 +187,20 @@ export default function RecruitmentDetailsPage() {
                       ))}
                   </div>
                 </div>
-                <div className='btn-recuitment mb-0'>
-                  <button
-                    disabled={check}
-                    type='button'
-                    style={{ opacity: check ? 0.5 : 1 }}
-                    className='font-xsss fw-600 bg-recruitment mt-3 p-3  text-center text-white'
-                    onClick={() => handleBtnJobApply(data.title, postId)}
-                  >
-                    {t('RecuitmentPostDetailComponent.btnApplyJob')}
-                  </button>
-                </div>
+                {
+                  (data.active !== 0 && data.active !== 2) && 
+                  <div className='btn-recuitment mb-0'>
+                    <button
+                      disabled={check}
+                      type='button'
+                      style={{ opacity: check ? 0.5 : 1 }}
+                      className='font-xsss fw-600 bg-recruitment mt-3 p-3  text-center text-white'
+                      onClick={() => handleBtnJobApply(data.title, postId)}
+                    >
+                      {t('RecuitmentPostDetailComponent.btnApplyJob')}
+                    </button>
+                  </div>
+                }
               </div>
             )}
           </div>
