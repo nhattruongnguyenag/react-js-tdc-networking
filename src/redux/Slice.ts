@@ -78,7 +78,7 @@ const initialState: TDCSocialNetworkState = {
   updatePost: false,
   questionConducts: [],
   userIdOfProfileNow: 0,
-  currentScreenNowIsProfileScreen: false,
+  currentScreenNowIsProfileScreen: false
 }
 
 export const TDCSocialNetworkSlice = createSlice({
@@ -165,8 +165,10 @@ export const TDCSocialNetworkSlice = createSlice({
       state.surveyPostRequest.questions[questionIndex].choices[choiceIndex].content = choice
     },
     deleteChoice: (state, action: PayloadAction<{ questionIndex: number; choiceIndex: number }>) => {
-      const { choiceIndex, questionIndex } = action.payload
-      state.surveyPostRequest.questions[questionIndex].choices.splice(choiceIndex, 1)
+      const data = action.payload
+      if (state.surveyPostRequest) {
+        state.surveyPostRequest.questions[data.questionIndex].choices.splice(data.choiceIndex, 1)
+      }
     },
     resetChoices: (state, action: PayloadAction<void>) => {
       state.choices = ['', '', '']

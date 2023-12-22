@@ -4,6 +4,7 @@ import { ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER } from '../../cons
 import { ONE_CHOICE_QUESTION } from '../../pages/CreateSurveyPostPage'
 import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { deleteChoice, updateChoice } from '../../redux/Slice'
+import { useRef } from 'react'
 
 export interface ChoiceProps {
   choiceIndex?: number
@@ -16,6 +17,7 @@ export default function EditChoice(props: ChoiceProps) {
   const dispatch = useAppDispatch()
   const choiceIndex = props.choiceIndex ?? -1
   const questionIndex = props.questionIndex ?? -1
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const onDeleteChoice = () => {
     dispatch(deleteChoice({ questionIndex: questionIndex, choiceIndex: choiceIndex }))
@@ -41,13 +43,15 @@ export default function EditChoice(props: ChoiceProps) {
         />
       )}
       <input
+        autoFocus
+        ref={inputRef}
         placeholder={ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER + ' ' + (choiceIndex + 1)}
-        onChange={(event) => {
+        onBlur={() => {
           dispatch(
             updateChoice({
               questionIndex: questionIndex,
               choiceIndex: choiceIndex,
-              choice: event.target.value
+              choice: inputRef.current?.value ?? ''
             })
           )
         }}

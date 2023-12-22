@@ -15,7 +15,7 @@ export interface Choice {
 
 
 export interface QuestionProps {
-  index?: number
+  questionIndex?: number
   dataResponse?: QuestionResponse
   editMode?: boolean
   reviewMode?: boolean
