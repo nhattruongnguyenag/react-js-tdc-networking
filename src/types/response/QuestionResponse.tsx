@@ -2,6 +2,7 @@ import { Base } from '../Base'
 
 export interface SurveyResponse extends Base {
   isConduct: number
+  active: number
   questions: QuestionResponse[]
 }
 
