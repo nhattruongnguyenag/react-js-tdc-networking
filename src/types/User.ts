@@ -11,6 +11,7 @@ export interface User {
   roleCodes: string
   phone: string
   code: string
+  lastActive?: string
   facultyGroupCode: string | undefined
   facultyGroupId: number | undefined
 }

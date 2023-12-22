@@ -11,6 +11,9 @@ import { getStompClient } from '../sockets/SocketClient'
 import { Message as MessageModel } from '../types/Message'
 import { handleUploadImage } from '../utils/UploadUtils'
 import MessageItem from '../components/message/MessageItem'
+import { IMAGE_URL } from '../constants/Path'
+import { useTranslation } from 'react-multi-lang'
+import { User } from '../types/User'
 
 let stompClient: Client
 
@@ -27,6 +30,19 @@ export default function ChatPage() {
   const textInputMessageRef = useRef<HTMLInputElement | null>(null)
   const textInputImagesRef = useRef<HTMLInputElement | null>(null)
   const scrollRef = useRef<HTMLDivElement | null>(null)
+  const t = useTranslation()
+
+  const getUserStatus = (user?: User): string => {
+    let status = ''
+
+    if (user?.status === 1) {
+      status = t('MessengerToolbar.userStatusActive')
+    } else {
+      status = `${t('MessengerToolbar.userStatusInactive')} ` + moment(user?.lastActive).fromNow()
+    }
+
+    return status
+  }
 
   const senderId = useMemo(() => {
     return selectConversation?.sender?.id
@@ -36,7 +52,7 @@ export default function ChatPage() {
     return selectConversation?.receiver?.id
   }, [selectConversation])
 
-  const onBtnSendClick = () => {
+  const handleSendMessage = () => {
     if (textInputMessageRef.current && selectConversation) {
       const message = {
         senderId: senderId,
@@ -67,6 +83,10 @@ export default function ChatPage() {
       textInputMessageRef.current.focus()
       setBtnSendDisable(true)
     }
+  }
+
+  const onBtnSendClick = () => {
+    handleSendMessage()
   }
 
   useEffect(() => {
@@ -150,9 +170,52 @@ export default function ChatPage() {
     }
   }
 
+  //Thuc hien Enter tim kiem
+  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key == 'Enter') {
+      event.preventDefault()
+      handleSendMessage()
+    }
+  }
+
   return (
     <Fragment>
       <Header />
+
+      <div className='nav-header bg-lightblue theme-dark-bg mt-[95px] px-2'>
+        <div className='ms-2 rounded-full'>
+          {selectConversation?.receiver.image ? (
+            <img
+              src={IMAGE_URL + selectConversation?.receiver.image}
+              alt='user'
+              className='me-4 h-14 w-14 rounded-full object-cover'
+            />
+          ) : (
+            <div className='me-4 h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-green-400 to-blue-400'>
+              <span>{selectConversation?.receiver.name[0]}</span>
+            </div>
+          )}
+        </div>
+
+        <div className='flex flex-col'>
+          <h6 className='overflow-hidden text-ellipsis whitespace-nowrap font-bold'>
+            {selectConversation?.receiver.name}
+          </h6>
+
+          <div className='align-items-center flex flex-row justify-start'>
+            {selectConversation?.receiver.status === 1 && (
+              <div
+                className={classNames(
+                  'me-2 h-2 w-2 rounded-full',
+                  selectConversation?.receiver.status ? 'bg-success' : ''
+                )}
+              />
+            )}
+
+            <h5 className='mb-0 text-sm'>{getUserStatus(selectConversation?.receiver)}</h5>
+          </div>
+        </div>
+      </div>
 
       {isLoading ? (
         <Loading showTitle />
@@ -226,6 +289,7 @@ export default function ChatPage() {
                           className='text-black'
                           placeholder='@ Tin nhắn...'
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) => onMessageContentInputChange(e)}
+                          onKeyDown={(event) => handleEnter(event)}
                         />
                       </div>
                       <button
