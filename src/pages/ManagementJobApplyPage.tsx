@@ -63,11 +63,11 @@ export default function ManagementJobApplyPage() {
   return (
     <>
       <Header />
-      <div className='main-content bg-lightblue theme-dark-bg' style={{ height: '100vh' }}>
+      <div className='main-content vh-100 overflow-hidden'>
         <div className='middle-sidebar-bottom'>
           <div className='middle-sidebar-left'>
             <div className='middle-wrap'>
-              <div className='card w-100 shadow-xs mb-4 border-0 bg-white p-0'>
+              <div className='w-100 shadow-xs mb-4 border-0 bg-white p-0'>
                 <div className='card-body w-100 d-flex rounded-3 bg-recruitment border-0 p-4'>
                   <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                     <i className='ti-arrow-left font-sm text-white' />
@@ -90,11 +90,11 @@ export default function ManagementJobApplyPage() {
                     <Loading />
                   </div>
                 ) : data?.data.length == 0 ? (
-                  <div className='text-center mt-3'>
-                    <p className='text-black fw-600'>{t('ManageJobApply.textListJobNull')}</p>
+                  <div className='mt-3 text-center'>
+                    <p className='fw-600 text-black'>{t('ManageJobApply.textListJobNull')}</p>
                   </div>
                 ) : (
-                  <div className='card-body p-lg-5 w-100 border-0 p-2'>
+                  <div className='card-body p-lg-5 manage border-0 p-2'>
                     {data?.data.map(
                       (item, index) =>
                         item.status === value && (
@@ -116,9 +116,9 @@ export default function ManagementJobApplyPage() {
                               </div>
                               <div className='content-job-apply'>
                                 <h1 className='fw-900 title text-p text-black'>{item.jobTitle}</h1>
-                                <h1 className='fw-900 title text-p text-black'>
+                                <h2 className='fw-900 title text-p text-black'>
                                   {item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
-                                </h1>
+                                </h2>
                                 <div className='datetime'>
                                   <FontAwesomeIcon icon={faClock} color={COLOR_GREY} />
                                   <p className='fw-600 text-p mb-0 ms-2'>{formatDateTime(item.createdAt)}</p>

@@ -80,6 +80,16 @@ h4 {
   -ms-overflow-style: none;
 }
 
+.manage{
+  height: 72vh;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.manage::-webkit-scrollbar {
+  display: none;
+}
 .register::-webkit-scrollbar {
   display: none;
 }
@@ -174,12 +184,13 @@ h4 {
 /* css list job apply */
 .item-job-apply {
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 .group-job-apply {
   background-color: #fff;
   box-shadow: 2px 2px 5px 3px #E0F4FF;
   border-radius: 10px;
-  justify-content: space-between;
   padding: 10px 40px;
   width: 82%;
   margin-bottom: 20px;
@@ -195,6 +206,7 @@ h4 {
 .date {
   text-align: right;
   margin-top: 0;
+  width: auto;
 }
 
 .tam {
