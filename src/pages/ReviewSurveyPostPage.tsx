@@ -32,6 +32,10 @@ export default function ReviewSurveyPostPage() {
   const [updateSurvey, updateSurveyResult] = useUpdateSurveyPostMutation()
 
   useEffect(() => {
+    console.log('22222222', surveyPostRequest.questions)
+  }, [surveyPostRequest])
+
+  useEffect(() => {
     if (addSurveyResult.data) {
       if (addSurveyResult.data.status === 201 || 200) {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenSaveSuccessContent'))
@@ -52,7 +56,6 @@ export default function ReviewSurveyPostPage() {
       } else {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenSaveFailContent'))
       }
-      console.log(previousPage)
     }
   }, [updateSurveyResult])
 
@@ -86,12 +89,12 @@ export default function ReviewSurveyPostPage() {
 
               {surveyPostRequest.questions.map((item, index) => {
                 if (item.type === MULTI_CHOICE_QUESTION) {
-                  return <MultiQuestionMultiChoice reviewMode key={index} index={index} />
+                  return <MultiQuestionMultiChoice reviewMode key={index} questionIndex={index} />
                 } else if (item.type === ONE_CHOICE_QUESTION) {
-                  return <MultiQuestionOneChoice reviewMode key={index} index={index} />
+                  return <MultiQuestionOneChoice reviewMode key={index} questionIndex={index} />
                 }
 
-                return <ShortAnswerQuestion reviewMode key={index} index={index} />
+                return <ShortAnswerQuestion reviewMode key={index} questionIndex={index} />
               })}
 
               <div className='mt-5 flex flex-row items-center justify-evenly'>

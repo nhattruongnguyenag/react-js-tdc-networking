@@ -11,7 +11,7 @@ import { isBlank } from '../../utils/ValidateUtils'
 import ValidateTextView from '../common/ValidateTextView'
 
 interface QuestionTitleProps {
-  index?: number
+  questionIndex?: number
   editMode?: boolean
   reviewMode?: boolean
   conductMode?: boolean
@@ -22,14 +22,9 @@ export default function QuestionTitle(props: QuestionTitleProps) {
     (state) => state.TDCSocialNetworkReducer
   )
   const dispatch = useAppDispatch()
-  const questionIndex = props.index ?? -1
+  const questionIndex = props.questionIndex ?? -1
   const validate = questionTitleValidates[questionIndex]
-  let questionTitle = ''
-  if (props.editMode || props.reviewMode) {
-    questionTitle = surveyPostRequest.questions[questionIndex].title
-  } else if (props.conductMode) {
-    questionTitle = questionConducts[questionIndex].title
-  }
+  let questionTitle: string = surveyPostRequest.questions[questionIndex].title
 
   const setTitleError = useCallback(
     (error: string) => {
@@ -94,18 +89,21 @@ export default function QuestionTitle(props: QuestionTitleProps) {
           htmlFor='floating_standard'
           className='absolute top-3 -z-10 origin-[0] -translate-y-6 transform text-blue-600 duration-300 peer-focus:left-0 peer-focus:dark:text-blue-500'
         >
-          {QUESTION_COMPONENT_ADD_TEXT_TITLE} {(props.index ?? 0) + 1}
-          {props.conductMode && questionConducts[questionIndex].required === 1 && (
+          {QUESTION_COMPONENT_ADD_TEXT_TITLE} {(props.questionIndex ?? 0) + 1}
+          {surveyPostRequest.questions[questionIndex].required === 1 && (
             <span className='text-red-500'>&nbsp;&nbsp;*</span>
           )}
         </label>
 
-        {
-          Boolean(props.editMode) && validate
-          && <div className='mb-1'>
-            <ValidateTextView textError={validate?.textError} isError={validate?.isError} isVisible={validate?.isVisible} />
+        {Boolean(props.editMode) && validate && (
+          <div className='mb-1'>
+            <ValidateTextView
+              textError={validate?.textError}
+              isError={validate?.isError}
+              isVisible={validate?.isVisible}
+            />
           </div>
-        }
+        )}
       </div>
     </div>
   )

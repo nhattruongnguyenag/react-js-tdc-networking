@@ -14,15 +14,17 @@ export default function ShortAnswerQuestion(props: ShortAnswerQuestionProps) {
         editMode={props.editMode}
         conductMode={props.conductMode}
         reviewMode={props.reviewMode}
-        index={props.index} />
-      <div className='ms-2 mb-2 mt-1 me-2 border-b-2 border-dotted'>
+        questionIndex={props.questionIndex}
+      />
+      <div className='mb-2 me-2 ms-2 mt-1 border-b-2 border-dotted'>
         <input
           onChange={(event) => props.onAnswerChangeText && props.onAnswerChangeText(event.target.value)}
           disabled={!Boolean(props.conductMode)}
           placeholder={SHORT_ANSWER_QUESTION_COMPONENT_TITLE_PLACEHOLDER}
-          className='pr-3 w-full bg-gray-100 bg-inherit py-2' />
+          className='w-full bg-gray-100 bg-inherit py-2 pr-3'
+        />
       </div>
-      {Boolean(props.editMode) && <QuestionOptions index={props.index} />}
+      {Boolean(props.editMode) && <QuestionOptions questionIndex={props.questionIndex} editMode={props.editMode} />}
     </div>
   )
 }

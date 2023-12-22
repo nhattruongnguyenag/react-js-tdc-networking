@@ -18,13 +18,19 @@ import {
   SURVEY_CONDUCT_SCREEN_TITLE
 } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
-import { useAddSurveyConductAnswerMutation, useGetPostsQuery, useGetQuestionsFromSurveyPostQuery } from '../redux/Service'
-import { setQuestionConducts } from '../redux/Slice'
+import {
+  useAddSurveyConductAnswerMutation,
+  useGetPostsQuery,
+  useGetQuestionsFromSurveyPostQuery
+} from '../redux/Service'
+import { setQuestionConducts, setSurveyPostRequest } from '../redux/Slice'
 import { AnswerRequest, SurveyConductRequest } from '../types/request/SurveyConductRequest'
 import { QuestionResponse } from '../types/response/QuestionResponse'
 import { getIdFromSlug } from '../utils/CommonUtls'
 import { InputTextValidate, isNotBlank } from '../utils/ValidateUtils'
 import { MULTI_CHOICE_QUESTION, ONE_CHOICE_QUESTION, SHORT_ANSWER } from './CreateSurveyPostPage'
+import { Question } from '../types/Question'
+import { isSurveyPost } from '../utils/PostHelper'
 
 const isAllFieldValid = (validates: InputTextValidate[]) => {
   for (let validate of validates) {
@@ -39,18 +45,21 @@ const isAllFieldValid = (validates: InputTextValidate[]) => {
 export default function SurveyConductPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { userLogin, questionConducts } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { userLogin, surveyPostRequest } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [validates, setValidates] = useState<InputTextValidate[]>([])
   const [surveyConductRequestAPI, surveyConductRequestResult] = useAddSurveyConductAnswerMutation()
+  const [questions, setQuestions] = useState<Question[]>()
 
   const { slug } = useParams()
   const surveyPostId = getIdFromSlug(slug ?? '') ?? -1
 
-  const [surveyConductRequest, setSurveyConductRequest] = useState<SurveyConductRequest>({
+  const defaultSurveyConduct = {
     user_id: userLogin?.id ?? -1,
     post_id: surveyPostId,
     answers: []
-  })
+  }
+
+  const [surveyConductRequest, setSurveyConductRequest] = useState<SurveyConductRequest>(defaultSurveyConduct)
 
   const { data, isFetching, isSuccess } = useGetPostsQuery({
     postId: surveyPostId,
@@ -59,28 +68,38 @@ export default function SurveyConductPage() {
 
   useEffect(() => {
     if (data && data.data.length > 0 && isSuccess) {
-      dispatch(setQuestionConducts(data.data[0].questions))
+      if (isSurveyPost(data.data[0])) {
+        dispatch(
+          setSurveyPostRequest({
+            ...surveyPostRequest,
+            questions: data.data[0].questions
+          })
+        )
+      }
     }
   }, [data])
 
   const onBtnPublishPostPress = () => {
-    if (isAllFieldValid(validates)) {
-      console.log(surveyConductRequest)
-      surveyConductRequestAPI(surveyConductRequest)
-    } else {
-      const tempValidate = [...validates]
-      for (let index = 0; index < tempValidate.length; index++) {
-        if (tempValidate[index].isError && questionConducts[index].required === 1) {
-          tempValidate[index].isVisible = true
+    console.log('abc', surveyPostRequest.questions)
+    if (surveyPostRequest.questions) {
+      if (isAllFieldValid(validates)) {
+        surveyConductRequestAPI(surveyConductRequest)
+      } else {
+        const tempValidate = [...validates]
+        for (let index = 0; index < tempValidate.length; index++) {
+          if (tempValidate[index].isError && surveyPostRequest.questions[index].required === 1) {
+            tempValidate[index].isVisible = true
+          }
         }
+        setValidates(tempValidate)
       }
-      setValidates(tempValidate)
     }
   }
 
   useEffect(() => {
     if (surveyConductRequestResult.isSuccess) {
       toast.success(SURVEY_CONDUCT_SCREEN_SAVE_SUCCESS_CONTENT)
+      setSurveyConductRequest(defaultSurveyConduct)
       navigate(-1)
     }
   }, [surveyConductRequestResult])
@@ -123,10 +142,10 @@ export default function SurveyConductPage() {
   }, [data])
 
   const renderMultiChoiceQuestionItem = useCallback(
-    (item: QuestionResponse, index: number) => (
+    (item: Question, index: number) => (
       <MultiQuestionMultiChoice
         conductMode
-        index={index}
+        questionIndex={index}
         onChangeValue={(choices) => onChoicesValueChange(item, index, choices)}
       />
     ),
@@ -134,11 +153,11 @@ export default function SurveyConductPage() {
   )
 
   const renderOneChoiceQuestionItem = useCallback(
-    (item: QuestionResponse, index: number) => (
+    (item: Question, index: number) => (
       <MultiQuestionOneChoice
         conductMode
         key={index}
-        index={index}
+        questionIndex={index}
         onChangeValue={(choices) => onChoicesValueChange(item, index, choices)}
       />
     ),
@@ -146,7 +165,7 @@ export default function SurveyConductPage() {
   )
 
   const onChoicesValueChange = useCallback(
-    (item: QuestionResponse, index: number, choices: number[]) => {
+    (item: Question, index: number, choices: number[]) => {
       const error = {
         index: index,
         isError: false,
@@ -179,10 +198,10 @@ export default function SurveyConductPage() {
   )
 
   const renderShortAnswerQuestionItem = useCallback(
-    (item: QuestionResponse, index: number) => (
+    (item: Question, index: number) => (
       <ShortAnswerQuestion
         conductMode
-        index={index}
+        questionIndex={index}
         onAnswerChangeText={(value) => {
           const error = {
             index: index,
@@ -206,7 +225,7 @@ export default function SurveyConductPage() {
   )
 
   const renderQuestionItems = useCallback(
-    (item: QuestionResponse, index: number) => (
+    (item: Question, index: number) => (
       <Fragment key={index.toString()}>
         {item.type === MULTI_CHOICE_QUESTION && renderMultiChoiceQuestionItem(item, index)}
         {item.type === ONE_CHOICE_QUESTION && renderOneChoiceQuestionItem(item, index)}
@@ -236,9 +255,8 @@ export default function SurveyConductPage() {
               <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{SURVEY_CONDUCT_SCREEN_TITLE}</h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
-              {questionConducts.map((item, index) => renderQuestionItems(item, index))}
-              {
-                (data?.data[0].active !== 0 && data?.data[0].active !== 2) &&
+              {surveyPostRequest.questions?.map((item, index) => renderQuestionItems(item, index))}
+              {data?.data[0].active !== 0 && data?.data[0].active !== 2 && (
                 <div className='mt-5 flex flex-row items-center justify-evenly'>
                   <button
                     onClick={() => navigate(-1)}
@@ -262,7 +280,7 @@ export default function SurveyConductPage() {
                     </div>
                   </button>
                 </div>
-              }
+              )}
             </div>
           </div>
         </div>
