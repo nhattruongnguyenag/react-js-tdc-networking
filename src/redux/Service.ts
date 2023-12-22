@@ -25,6 +25,7 @@ import { buildPostSearchRequest } from '../utils/PostHelper'
 import { PostRejectedLog } from '../types/PostRejectLog'
 import { RecruitmentPost } from '../types/RecruitmentPost'
 import { QualityNotificationModel } from '../types/response/QualityNotificationModel'
+import { NormalPostUpdateRequest } from '../types/request/NormalPostUpdateRequest'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
@@ -268,6 +269,17 @@ export const TDCSocialNetworkAPI = createApi({
         url: `api/posts/survey/${data.postId}/update`
       })
     }),
+    updateNormalPost: builder.mutation<MessageResponseData, NormalPostUpdateRequest>({
+      query: (data) => ({
+        url: 'api/posts/normal',
+        method: 'PUT',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }),
+      invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: data.postId }])
+    }),
     updateSurveyPost: builder.mutation<MessageResponseData, SurveyPostRequest>({
       query: (data) => ({
         url: 'api/posts/survey',
@@ -317,5 +329,6 @@ export const {
   useGetSurveyPostUpdateQuery,
   useUpdateRecruitmentPostMutation,
   useUpdateSurveyPostMutation,
-  useGetFacultyAndStudentPostsQuery
+  useGetFacultyAndStudentPostsQuery,
+  useUpdateNormalPostMutation
 } = TDCSocialNetworkAPI

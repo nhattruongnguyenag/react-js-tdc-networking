@@ -16,6 +16,7 @@ import { UpdateNormalPost } from '../../types/UpdateNormalPost'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { setImagesUpload } from '../../redux/Slice'
 import '../../assets/css/createNormalPost.css'
+import { useUpdateNormalPostMutation } from '../../redux/Service'
 
 export interface CreateNormalPostType {
   t: ReturnType<typeof useTranslation>,
@@ -24,6 +25,7 @@ export interface CreateNormalPostType {
   updateNormalPost: UpdateNormalPost | null
 }
 const CreateNormalPost = (props: CreateNormalPostType) => {
+  const [updatePost, updatePostResponse] = useUpdateNormalPostMutation()
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const buttonRef = useRef<HTMLButtonElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
@@ -105,16 +107,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
       content: content,
       images: imageUpload
     }
-    const status = await updateNormalPostAPI(API_URL_NORMAL_POST, data);
-    if (status === 201) {
-      toast.success(props.t("Toast.toastUpdateProfileSuccess"))
-      setImagesUpload([])
-      resetData()
-      disable()
-      props.onHide()
-    } else {
-      toast.error(props.t("Toast.toastUpdateProfileUnSuccess"))
-    }
+    updatePost(data);
   }
   const createNormalPost = async (fakeImages: string[]) => {
     normalPost.images = fakeImages
@@ -136,6 +129,20 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
       toast.success(props.t("Toast.toastNotifyCreatePostUnSuccess"))
     }
   }
+
+  useEffect(() => {
+    if (updatePostResponse.data) {
+      if (updatePostResponse.data.status == 201) {
+        toast.success(props.t("Toast.toastUpdateProfileSuccess"))
+        setImagesUpload([])
+        resetData()
+        disable()
+        props.onHide()
+      } else {
+        toast.error(props.t("Toast.toastUpdateProfileUnSuccess"))
+      }
+    }
+  }, [updatePostResponse.data])
 
   const disable = () => {
     buttonRef.current?.setAttribute('disabled', '')
