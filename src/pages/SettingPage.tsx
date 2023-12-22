@@ -23,6 +23,7 @@ const data = [
   { label: 'English', value: 'en' },
   { label: 'Japanese', value: 'ja' }
 ]
+
 export default function SettingPage() {
   const t = useTranslation()
   const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
@@ -92,7 +93,7 @@ export default function SettingPage() {
                   <div className='row'>
                     <div className='col-lg-12'>
                       <h4 className='font-xxl fw-700 mont-font font-md-xs mb-3 text-black'>Cài đặt</h4>
-                      <div className='mb-4 mt-0'>Xin chào, {userLogin?.name}</div>
+                      <h6 className='mb-4 mt-0'>Xin chào, {userLogin?.name}</h6>
                       <div className='nav-caption fw-600 font-xssss text-grey-500 mb-2'>Chung</div>
                       <ul className='list-inline mb-4'>
                         <li className='list-inline-item d-block border-bottom me-0'>
