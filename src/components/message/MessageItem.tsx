@@ -58,6 +58,7 @@ const MessageContent = (props: MessageContentProps) => {
     <div>
       <Gallery>
         <div
+          className='border'
           style={{
             display: 'grid',
             gridAutoRows: '',
@@ -99,15 +100,20 @@ export default function MessageItem(props: MessageItemProps) {
   return (
     <Fragment>
       {Boolean(props.headerVisible) && (
-        <div className='mb-16 me-auto ms-auto mt-16 w-2/3 rounded-full border-2 border-gray-400 pb-1 pt-1 text-center'>
+        <h6 className='mb-16 me-auto ms-auto mt-16 w-2/3 rounded-full border-2 border-gray-400 pb-1 pt-1 text-center'>
           {getMessageSectionTitle(props.data.createdAt)}
-        </div>
+        </h6>
       )}
+
       <div className={classNames('message-item', props.data.sender.id === userLogin?.id ? 'outgoing-message' : '')}>
-        <div className='message-user'>
-          <figure className='avatar mb-2 mt-2'>
+        <div className='flex flex-row justify-end'>
+          <figure className=''>
             {props.data.receiver.image ? (
-              <img src={IMAGE_URL + props.data.receiver.image} alt='user' className='me-2 w-12' />
+              <img
+                src={IMAGE_URL + props.data.receiver.image}
+                alt='user'
+                className='me-2 h-12 w-12 rounded-full object-cover'
+              />
             ) : (
               <div
                 className={classNames(
@@ -120,8 +126,10 @@ export default function MessageItem(props: MessageItemProps) {
             )}
           </figure>
           <div>
-            <h5>{props.data.sender.name}</h5>
-            <div className='time'>{moment(props.data.createdAt).format('hh:mm a')}</div>
+            <h5 className='text-sm'>{props.data.sender.name}</h5>
+            <div>
+              <h6 className='text-sm'>{moment(props.data.createdAt).format('hh:mm a')}</h6>
+            </div>
           </div>
         </div>
         {<MessageContent data={props.data} />}

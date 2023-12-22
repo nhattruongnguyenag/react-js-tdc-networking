@@ -509,21 +509,22 @@
         "isLoading": "Loading..."
     },
     "ModalPostRejectReason": {
-        "default": "Default",
-        "survey": "Survey",
-        "recruitment": "Recruitment",
-        "successDeleteMessage": "Success!",
-        "successAcceptMessage": "Success!",
-        "successDeleteMessageContent": "Successfully deleted post",
-        "rejectSuccessMessage": "Successfully rejected post",
-        "acceptSuccessageMessage": "Successfully approved post",
-        "notePlaceholder": "Note...",
-        "acceptPostMenuItem": "Approve post",
-        "rejectPostMenuItem": "Reject post",
-        "isLoading": "Rejecting post",
-        "rejectDetails": "Details",
-        "pendingPostUpdate": "Edit",
-        "pendingPostDelete": "Delete post"
+      "default": "Default",
+      "survey": "Survey",
+      "recruitment": "Recruitment",
+      "successDeleteMessage": "Success!",
+      "successAcceptMessage": "Success!",
+      "successDeleteMessageContent": "Successfully deleted post",
+      "rejectSuccessMessage": "Successfully rejected post",
+      "acceptSuccessageMessage": "Successfully approved post",
+      "notePlaceholder": "Note...",
+      "acceptPostMenuItem": "Approve post",
+      "rejectPostMenuItem": "Reject post",
+      "isLoading": "Rejecting post",
+      "rejectDetails": "Details",
+      "pendingPostUpdate": "Edit",
+      "pendingPostDelete": "Delete post",
+      "buttonCompleteRejectPostTitle": "Complete"
     },
     "PenddingPostScreen": {
         "peddingPostTab": "Pending",
@@ -728,7 +729,8 @@
         "user_apply_job": "You have applied for the job posting:",
         "user_create_watch_job": " has applied for the job posting:",
         "in_group": " in",
-        "survey_txt": "Survey now >>"
+        "survey_txt": "Survey now >>",
+        "user_update_avatar": "You have successfully updated your background image!"
     },
     "ChangePassword": {
         "setting":"Change password",
@@ -784,10 +786,21 @@
         "back": "Back the homepage !!"
     },
     "Setting": {
+        "setting": "Setting",
         "userInformation": "User Information",
-        "userJobApplyProfile": "Job Application Profile",
-        "peddingPost": "Pending posts",
-        "changeLanguage":"Language"
+        "waitPost": "Pending Posts",
+        "applyPost": "Job Applications",
+        "language": "Language",
+        "help": "Help",
+        "logout": "Logout",
+        "back": "Back"
+    },
+    "Options": {
+        "following": "Following",
+        "follower": "Followers",
+        "postSaved": "Saved Posts",
+        "placeholderSearch": "Search..."
     }
+
      
 }

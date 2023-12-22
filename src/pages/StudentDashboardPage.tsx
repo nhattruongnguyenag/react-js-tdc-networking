@@ -44,7 +44,7 @@ export default function StudentDashboardPage() {
   }
 
   const renderItem = (item: any) => {
-    // if (getPostActive(item.active)) {
+    if (getPostActive(item.active)) {
       return <CustomizePost
         key={item.id}
         id={item.id}
@@ -72,11 +72,10 @@ export default function StudentDashboardPage() {
         isSave={item.isSave}
         group={code}
         handleUnSave={handleUnSave}
-        active={item.active}
-      />
-    // } else {
-    //   return null;
-    // }
+        active={item.active} iCustomizeLikeAction={false}      />
+    } else {
+      return null;
+    }
   }
 
   return (

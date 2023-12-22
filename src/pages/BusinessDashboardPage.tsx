@@ -74,8 +74,7 @@ export default function BusinessDashboardPage() {
           isSave={item.isSave}
           group={code}
           handleUnSave={handleUnSave}
-          active={item.active}
-        />
+          active={item.active} iCustomizeLikeAction={false}        />
       )
     } else {
       return null;

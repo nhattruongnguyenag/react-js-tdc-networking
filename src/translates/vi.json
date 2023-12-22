@@ -676,7 +676,8 @@
         "isLoading": "Từ chối bài viết",
         "rejectDetails": "Chi tiết",
         "pendingPostUpdate": "Chỉnh sửa",
-        "pendingPostDelete": "Xóa bài viết"
+        "pendingPostDelete": "Xóa bài viết",
+        "buttonCompleteRejectPostTitle": "Hoàn tất"
     },
     "PenddingPostScreen": {
         "peddingPostTab": "Đang chờ",
@@ -716,7 +717,7 @@
         "change_password_success": "Bạn đã thay đổi mật khẩu thành công!",
         "update_post": "Bạn đã cập nhật bài viết!",
         "create_survey": " vừa đăng khảo sát",
-        "save_post": "Bạn vừa lưu bài viết!",
+        "save_post": "Bạn vừa lưu bài viết",
         "user_like_post": " đã thích bài viết của bạn",
         "user_comment_post": " đã bình luận bài viết của bạn",
         "user_reply_comment": " đã trả lời bình luận của bạn",
@@ -729,7 +730,8 @@
         "user_apply_job": "Bạn vừa ứng tuyển cho bài đăng:",
         "user_create_watch_job": " vừa ứng tuyển bài đăng:",
         "in_group": " trong",
-        "survey_txt": "Khảo sát ngay >>"
+        "survey_txt": "Khảo sát ngay >>",
+        "user_update_avatar": "Bạn vừa cập nhật ảnh nền thành công!"
     },
     "ChangePassword": {
         "setting":"Thay đổi mật khẩu",
@@ -785,9 +787,19 @@
         "back": "Về trang chủ !!"
     },
     "Setting":{
+        "setting": "Cài đặt",
         "userInformation":"Thông tin cá nhân",
-        "userJobApplyProfile": "Hồ sơ ứng tuyển",
-        "peddingPost": "Bài viết đang chờ",
-        "changeLanguage":"Ngôn ngữ"
+        "waitPost":"Bài viết đang chờ",
+        "applyPost": "Hồ sơ ứng tuyển",
+        "language":"Ngôn ngữ",
+        "help": "Trợ giúp",
+        "logout":"Đăng xuất",
+        "back": "Quay về"
+    },
+    "Options":{
+        "following":"Đang theo dõi",
+        "follower": "Đang theo dõi bạn",
+        "postSaved": "Bài viết đã lưu",
+        "placeholderSearch": "Tìm kiếm..."
     }
 }

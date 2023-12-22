@@ -30,6 +30,7 @@ import {
   SURVEY_RESULT_PAGE,
   UPDATE_SURVEY_POST_PAGE,
   USER_DETAILS_PAGE,
+  POST_DETAIL,
   CHANGE_PASSWORD_PAGE,
   FACULTY_STUDENT_PAGE
 } from './constants/Page'
@@ -74,18 +75,27 @@ import vi from './translates/vi.json'
 import ApprovePostPage from './pages/ApprovePostPage'
 import PendingPostPage from './pages/PendingPostPage'
 import RejectPostsPage from './pages/RejectPostsPage'
+import PostDetail from './pages/PostDetail'
 import ChangePasswordPage from './pages/ChangePasswordPage'
 import FacultyAndStudentPage from './pages/FacultyAndStudentPage'
+import axios from 'axios'
+import { SERVER_ADDRESS } from './constants/SystemConstant'
+import moment from 'moment'
 
 setTranslations({ vi, en, ja })
 setDefaultLanguage('vi')
-
+const locale = new Map<string, any>()
+locale.set('vi', require('moment/locale/vi'))
+locale.set('en', require('moment/locale/es'))
+locale.set('ja', require('moment/locale/ja'))
 
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const { defaultLanguage } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
   useEffect(() => {
     setDefaultLanguage(defaultLanguage)
+    moment.locale(defaultLanguage, locale.get(defaultLanguage))
   }, [defaultLanguage])
   return (
     <div className={classNames('color-theme-blue mont-font loaded', darkMode ? 'theme-dark' : ' theme-light')}>
@@ -126,6 +136,7 @@ export default function AppRouter() {
             <Route path={CHANGE_PASSWORD_PAGE} element={<ChangePasswordPage />} />
             <Route path={PENDING_POST_PAGE} element={<PendingPostPage />} />
             <Route path={REJECT_POST_PAGE} element={<RejectPostsPage />} />
+            <Route path={POST_DETAIL + '/:slug'} element={<PostDetail />} />
             <Route path={FACULTY_STUDENT_PAGE} element={<FacultyAndStudentPage />} />
             <Route path='*' element={<NoPage />} />
           </Route>
