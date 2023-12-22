@@ -10,7 +10,7 @@ import { NormalPost } from '../../types/NormalPost'
 import { COLOR_BTN_BLUE, COLOR_WHITE } from '../../constants/Color'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { createNorMalPostAPI, updateNormalPostAPI } from '../../api/CallAPI'
+import { createNorMalPostAPI } from '../../api/CallAPI'
 import { t, useTranslation } from 'react-multi-lang'
 import { UpdateNormalPost } from '../../types/UpdateNormalPost'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
@@ -157,6 +157,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
 
   const handleGetFiles = () => {
     if (fileInputRef.current) {
+      fileInputRef.current.value = ''
       fileInputRef.current.click()
     }
   }
@@ -170,7 +171,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
           file: event.target.files[i]
         })
       }
-      images.length != 0 ? setImages([...images, ...urls]) : setImages(urls)
+      images.length != 0 ? setImages([...images, ...urls]) : setImages(urls);
     }
   }
 

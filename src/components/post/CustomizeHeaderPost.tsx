@@ -108,9 +108,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
           {props.role !== TYPE_POST_STUDENT && (
             <span className='typeAuthorShow bg-greylight'>{props.typeAuthor}</span>
           )}
-          {props.type !== TYPE_RECRUITMENT_POST && (
-            <span className='d-block font-xssss fw-500 lh-3 text-grey-500 mt-1'>{props.timeCreatePost}</span>
-          )}
+          <span className='d-block font-xssss fw-500 lh-3 text-grey-500 mt-1'>{props.timeCreatePost}</span>
         </h4>
       </div>
       <PostOptionsMenu key="postOptionsMenu" menuOptions={menuOptions} handleClickMenuOption={props.handleClickMenuOption} />
