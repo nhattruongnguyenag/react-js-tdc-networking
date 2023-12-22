@@ -82,16 +82,16 @@ export default function ListJobApplyPage() {
       toast.success(t('ListJobApplyComponent.textChangeSucces'))
     }
   }, [jobApplyUpdateResponse])
-
+  
   return (
     <Fragment>
       <Header />
-      <div className='main-content vh-100'>
+      <div className='main-content vh-100 bg-lightblue theme-dark-bg'>
         <div className='middle-sidebar-bottom'>
           <div className='middle-sidebar-left'>
             <div className='middle-wrap'>
-              <div className='w-100 shadow-xs mb-4 border-0 bg-white p-0'>
-                <div className='card-body w-100 d-flex rounded-3 bg-recruitment overflow-hidden border-0 p-4'>
+              <div className='card w-100 shadow-xs mb-4 border-0 bg-white p-0'>
+                <div className='card-body w-100 d-flex rounded-3 bg-recruitment theme-dark-bg overflow-hidden border-0 p-4'>
                   <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                     <i className='ti-arrow-left font-sm text-white' />
                   </button>
@@ -123,8 +123,8 @@ export default function ListJobApplyPage() {
                     {data?.data.map(
                       (data, index) =>
                         data.status === value && (
-                          <div className='group-job-apply' key={index}>
-                            <div className='item-job-apply'>
+                          <div className='group-job-apply theme-dark-bg' key={index}>
+                            <div className='item-job-apply theme-dark-bg'>
                               <div className='tam'>
                                 <div className='img-job-apply'>
                                   {data.studentAvatar == null ? (
@@ -135,11 +135,8 @@ export default function ListJobApplyPage() {
                                     />
                                   ) : (
                                     <img
-                                      src={
-                                        data.studentAvatar ? SERVER_ADDRESS + 'api/images/' + data.studentAvatar : ''
-                                      }
-                                      className='avatar p-0'
-                                      alt='avatar'
+                                      src={SERVER_ADDRESS + 'api/images/' + data.studentAvatar}
+                                      className='h-14 w-14 rounded-full'
                                     />
                                   )}
                                 </div>
@@ -149,7 +146,7 @@ export default function ListJobApplyPage() {
                                   </h1>
                                   <h1 className='fw-900 title text-p text-black'>{data.jobTitle}</h1>
                                   <div className='item-job'>
-                                    <FontAwesomeIcon icon={faPhoneVolume} />
+                                    <FontAwesomeIcon icon={faPhoneVolume} color='gray' />
                                     {data.phone == null ? (
                                       <p className='fw-500 text-p mb-0 ms-2 text-black'>
                                         {t('ListJobApplyComponent.updateNull')}
@@ -159,7 +156,7 @@ export default function ListJobApplyPage() {
                                     )}
                                   </div>
                                   <div className='item-job'>
-                                    <FontAwesomeIcon icon={faEnvelope} />
+                                    <FontAwesomeIcon icon={faEnvelope} color='gray' />
                                     <p className='fw-500 txt mb-0 ms-2 text-black'>{data.email}</p>
                                   </div>
                                 </div>

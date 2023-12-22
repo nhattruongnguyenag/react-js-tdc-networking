@@ -25,12 +25,14 @@
     align-items: center;
   }
   
-  .avatar {
-    width: 100px;
+  .avata {
     height: 80px;
     border-radius: 50%;
   }
-
+  
+  img{
+    max-width: fit-content;
+  }
   .datetime{
     display: flex;
     align-items: center;

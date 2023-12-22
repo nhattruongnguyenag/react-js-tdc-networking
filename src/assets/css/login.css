@@ -185,7 +185,7 @@ h4 {
 .item-job-apply {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .group-job-apply {
   background-color: #fff;
@@ -204,7 +204,7 @@ h4 {
 }
 
 .date {
-  text-align: right;
+  align-items: flex-end;
   margin-top: 0;
   width: auto;
 }

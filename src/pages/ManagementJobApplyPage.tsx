@@ -9,7 +9,7 @@ import DefaultAvatar from '../components/common/DefaultAvatar'
 import { formatDateTime } from '../utils/FormatTime'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock } from '@fortawesome/free-solid-svg-icons'
-import { COLOR_GREY } from '../constants/Color'
+import { COLOR_GREY, COLOR_SUCCESS } from '../constants/Color'
 import { DETAILS_JOB_APPLY, JOB_APPLY_PAGE } from '../constants/Page'
 import { slugify } from '../utils/CommonUtls'
 import Loading from '../components/common/Loading'
@@ -63,18 +63,19 @@ export default function ManagementJobApplyPage() {
   return (
     <>
       <Header />
-      <div className='main-content vh-100 overflow-hidden'>
+      <div className='main-content vh-100 overflow-hidden bg-lightblue theme-dark-bg'>
         <div className='middle-sidebar-bottom'>
           <div className='middle-sidebar-left'>
             <div className='middle-wrap'>
-              <div className='w-100 shadow-xs mb-4 border-0 bg-white p-0'>
-                <div className='card-body w-100 d-flex rounded-3 bg-recruitment border-0 p-4'>
+              <div className='card w-100 shadow-xs mb-4 border-0 bg-white p-0'>
+                <div className='card-body w-100 d-flex rounded-3 bg-recruitment border-0 p-4 theme-dark-bg'>
                   <button className='d-inline-block mt-2' onClick={() => navigate(-1)}>
                     <i className='ti-arrow-left font-sm text-white' />
                   </button>
                   <h4 className='font-xs fw-600 mb-0 ms-4 mt-2 text-white'>{t('ManageJobApply.manageJobApply')}</h4>
                 </div>
                 <Select
+                  className='theme-dark-bg'
                   defaultValue={dataType[0]}
                   options={dataType}
                   getOptionValue={(option) => option.value}
@@ -98,7 +99,7 @@ export default function ManagementJobApplyPage() {
                     {data?.data.map(
                       (item, index) =>
                         item.status === value && (
-                          <div className='manage-item-job-apply' key={index}>
+                          <div className='manage-item-job-apply theme-dark-bg' key={index}>
                             <div className='tam'>
                               <div className='img-job-apply'>
                                 {item.companyAvatar == null ? (
@@ -110,13 +111,14 @@ export default function ManagementJobApplyPage() {
                                 ) : (
                                   <img
                                     src={item.companyAvatar ? SERVER_ADDRESS + 'api/images/' + item.companyAvatar : ''}
-                                    className='avatar p-0'
+                                    className='rounded-full w-14 h-14'
+                                    alt='companyAvatar'
                                   />
                                 )}
                               </div>
                               <div className='content-job-apply'>
                                 <h1 className='fw-900 title text-p text-black'>{item.jobTitle}</h1>
-                                <h2 className='fw-900 title text-p text-black'>
+                                <h2 className='fw-900 title text-black'>
                                   {item.companyName.replace(/(^|\s)\S/g, (l) => l.toUpperCase())}
                                 </h2>
                                 <div className='datetime'>
@@ -126,20 +128,21 @@ export default function ManagementJobApplyPage() {
                               </div>
                             </div>
                             <div className='btnBottom'>
-                              <button type='button' onClick={() => handleGetDetailJobApply(item.jobTitle, item.id)}>
-                                <p className='txtBtnBottom'>{t('ManageJobApply.textSeeCv')}</p>
+                              <button type='button' onClick={() => handleGetDetailJobApply(item.jobTitle, item.id)} className='txt text-green download ms-4'>
+                               {t('ManageJobApply.textSeeCv')}
                               </button>
                               {item.status === 'received' && (
                                 <button
                                   type='button'
                                   onClick={() => handleUpdateCv(item.jobTitle, item.id, item.cvUrl)}
+                                  className='txt text-green download ms-4'
                                 >
-                                  <p className='txtBtnBottom ms-4'> {t('ManageJobApply.textChangeProfile')}</p>
+                                  {t('ManageJobApply.textChangeProfile')}
                                 </button>
                               )}
                               {item.status !== 'accept' && (
-                                <button type='button' onClick={() => handleDeleteCv(item.id)}>
-                                  <p className='txtBtnBottom ms-4'> {t('ManageJobApply.textDelete')}</p>
+                                <button type='button' onClick={() => handleDeleteCv(item.id)} className='txt text-green download ms-4'>
+                                  {t('ManageJobApply.textDelete')}
                                 </button>
                               )}
                             </div>
