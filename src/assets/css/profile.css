@@ -4,7 +4,6 @@
 
 .containerImagesProfileHeader {
   position: relative;
-  background: grey;
   border-radius: 15px;
   cursor: pointer;
 }
@@ -14,13 +13,12 @@
 }
 
 .backgroundHeaderProfile {
-  width: 1280px;
+  background: rgb(228 230 235);
+  width: 800px;
   height: 450px;
-  object-fit: cover;
+  border-radius: 15px;
   border: 5px solid #ffff;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  background-color: grey;
-  border-radius: 15px;
 }
 
 .avatarHeaderProfile {
@@ -52,7 +50,7 @@
   border: 5px solid #ffff;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   position: absolute;
-  background-color: grey;
+  background-color: rgb(228 230 235);
   border-radius: 150px;
   cursor: pointer;
 }
@@ -173,18 +171,6 @@
   z-index: 1;
 }
 
-.imageModalShow {
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-  height: 100%;
-}
-
-.wrapperImageModal {
-  position: relative;
-  height: 450px;
-}
-
 .buttonWrapperIconCamera {
   position: absolute;
   right: 0px;
@@ -201,6 +187,7 @@
   line-height: 40px;
   padding: 0px;
   margin: 0px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .buttonWrapperIconCameraBackground {
@@ -211,4 +198,6 @@
 .buttonWrapperIconCameraAvatar {
   right: 0px;
   bottom: 0px;
+  object-fit: cover;
+  object-position: center;
 }
