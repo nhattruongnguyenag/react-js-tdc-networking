@@ -25,13 +25,14 @@ import { buildPostSearchRequest } from '../utils/PostHelper'
 import { PostRejectedLog } from '../types/PostRejectLog'
 import { RecruitmentPost } from '../types/RecruitmentPost'
 import { QualityNotificationModel } from '../types/response/QualityNotificationModel'
+import { CountNewUpdateConversation } from '../types/response/CountNewUpdateConversation'
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
   baseQuery: fetchBaseQuery({ baseUrl: SERVER_ADDRESS }),
   tagTypes: ['Posts'],
   endpoints: (builder) => ({
-    getDetailPost: builder.query<Data<Post[]>, { userId: number |undefined, postId: number|undefined }>({
+    getDetailPost: builder.query<Data<Post[]>, { userId: number | undefined, postId: number | undefined }>({
       query: (data) => ({
         url: 'api/posts/get',
         method: 'POST',
@@ -278,6 +279,11 @@ export const TDCSocialNetworkAPI = createApi({
         }
       }),
       invalidatesTags: (result, error, data) => (error ? [] : [{ type: 'Posts' as const, id: -1 }])
+    }),
+    countNewUpdateConversations: builder.query<CountNewUpdateConversation, { userId: number }>({
+      query: (data) => ({
+        url: `api/conversation/count/user/${data.userId}`
+      })
     })
   })
 })
@@ -285,6 +291,7 @@ export const TDCSocialNetworkAPI = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useCountNewUpdateConversationsQuery,
   useGetDetailPostQuery,
   useGetQualityNotificationQuery,
   useJobApplyUpdateMutation,
