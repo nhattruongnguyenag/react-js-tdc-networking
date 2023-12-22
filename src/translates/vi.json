@@ -715,6 +715,9 @@
         "change_password_success": "Bạn đã thay đổi mật khẩu thành công!",
         "update_post": "Bạn đã cập nhật bài viết!",
         "create_survey": " vừa đăng khảo sát",
+        "create_recruitment": " vừa đăng tuyển dụng",
+        "faculty_create_survey": " vừa đăng khảo sát",
+        "faculty_create_normal": " vừa đăng bài viết",
         "save_post": "Bạn vừa lưu bài viết",
         "user_like_post": " đã thích bài viết của bạn",
         "user_comment_post": " đã bình luận bài viết của bạn",
@@ -729,6 +732,7 @@
         "user_create_watch_job": " vừa ứng tuyển bài đăng:",
         "in_group": " trong",
         "survey_txt": "Khảo sát ngay >>",
+        "recruitment_txt": "Ứng tuyển ngay >>",
         "user_update_avatar": "Bạn vừa cập nhật ảnh nền thành công!"
     },
     "ChangePassword": {

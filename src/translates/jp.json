@@ -721,6 +721,9 @@
         "change_password_success": "パスワードの変更が成功しました！",
         "update_post": "投稿を更新しました",
         "create_survey": " が調査を作成しました",
+        "create_recruitment": " 募集を作成しました",
+        "faculty_create_survey": " が調査を作成しました",
+        "faculty_create_normal": " 記事を投稿しました",
         "save_post": "投稿を保存しました",
         "user_like_post": " があなたの投稿をいいねしました",
         "user_comment_post": " があなたの投稿にコメントしました",
@@ -735,6 +738,7 @@
         "user_create_watch_job": " が次の求人に応募しました:",
         "in_group": " に",
         "survey_txt": "すぐに調査 >>",
+        "recruitment_txt": "今すぐ応募する >>",
         "user_update_avatar": "背景画像の更新が成功しました！"
     },
     "Post": {
