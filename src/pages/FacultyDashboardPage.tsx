@@ -80,18 +80,6 @@ export default function FacultyDashboardPage() {
     // TODO
   }
 
-  // useEffect(() => {
-  //   axios
-  //     .get(SERVER_ADDRESS + 'api/faculty')
-  //     .then((response) => {
-  //       setDataRequest(response.data.data)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error)
-  //     })
-  // }, [])
-
-
   useEffect(() => {
     if (isBusiness(userLogin)) {
       const fetchData = async () => {
@@ -174,7 +162,7 @@ export default function FacultyDashboardPage() {
           </div>
         </div>
       ) : (
-        <div className='main-content'>
+        <div className='main-content bg-lightblue theme-dark-bg w-100'>
           <div className='middle-sidebar-bottom'>
             <div className='middle-sidebar-left'>
               <div className='middle-wrap'>

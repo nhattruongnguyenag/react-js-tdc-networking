@@ -11,7 +11,6 @@ function App() {
   return (
     <Provider store={store}>
       <AppRouter />
-
       <ToastContainer />
     </Provider>
   )
