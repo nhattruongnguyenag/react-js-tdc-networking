@@ -1,7 +1,7 @@
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Dropdown } from 'flowbite-react'
-import { useEffect } from 'react'
+import { Fragment, useCallback, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Header from '../components/common/Header'
@@ -58,6 +58,8 @@ export default function AddQuestionPage() {
     )
   }
 
+  console.log('aa', surveyPostRequest)
+
   const onBtnReviewClick = () => {
     if (surveyPostRequest.questions.length === 0) {
       toast.error(TEXT_EMPTY_QUESTION_ERROR_CONTENT)
@@ -83,6 +85,16 @@ export default function AddQuestionPage() {
     }
   }
 
+  const renderQuestionItem = useCallback((item: Question, index: number) => {
+    if (item.type === MULTI_CHOICE_QUESTION) {
+      return <MultiQuestionMultiChoice editMode questionIndex={index} />
+    } else if (item.type === ONE_CHOICE_QUESTION) {
+      return <MultiQuestionOneChoice editMode questionIndex={index} />
+    }
+
+    return <ShortAnswerQuestion editMode questionIndex={index} />
+  }, [surveyPostRequest.questions])
+
   return (
     <>
       <Header />
@@ -98,15 +110,9 @@ export default function AddQuestionPage() {
               </h4>
             </div>
             <div className='card-body p-lg-5 w-100 border-0 p-2'>
-              {surveyPostRequest.questions.map((item, index) => {
-                if (item.type === MULTI_CHOICE_QUESTION) {
-                  return <MultiQuestionMultiChoice editMode key={index.toString()} index={index} />
-                } else if (item.type === ONE_CHOICE_QUESTION) {
-                  return <MultiQuestionOneChoice editMode key={index.toString()} index={index} />
-                }
-
-                return <ShortAnswerQuestion editMode key={index.toString()} index={index} />
-              })}
+              {surveyPostRequest.questions.map((item, index) => (
+                <Fragment key={index}>{renderQuestionItem(item, index)}</Fragment>
+              ))}
 
               <div className='mt-5 flex flex-row items-center justify-evenly'>
                 <button
@@ -137,8 +143,7 @@ export default function AddQuestionPage() {
                     </button>
                   )}
                 >
-                  <Dropdown.Item
-                   onClick={() => onBtnAddQuestionClick(SHORT_ANSWER)}>
+                  <Dropdown.Item onClick={() => onBtnAddQuestionClick(SHORT_ANSWER)}>
                     {ADD_QUESTION_VIEW_COMPONENT_SHORT_ANSWER}
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => onBtnAddQuestionClick(ONE_CHOICE_QUESTION)}>
