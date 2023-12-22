@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { setSelectConversation } from '../redux/Slice'
 import { Conversation } from '../types/Conversation'
 import { getConversationLastUpdate } from '../utils/DateTimeUtils'
+import { IMAGE_URL } from '../constants/Path'
 
 interface ConversationItemProps {
   data: Conversation
@@ -33,32 +34,39 @@ export default function ConversationItem(props: ConversationItemProps) {
     <li onClick={() => onItemClick()}>
       <Link
         className={classNames(
-          'rounded-3 border-b pb-4 pt-4',
+          'rounded-3 flex flex-row border-b pb-4 pt-4',
           props.data.countNewMessage > 0 ? 'bg-lightblue theme-light-bg' : ''
         )}
         to={'/nhan-tin'}
       >
-        <div className='email-user'>
-          <span className={classNames('btn-round-xss me-2 ms-0', props.data?.receiver.status ? 'bg-success' : '')} />
-          <div className='ms-2'>
-            {props.data.receiver.image ? (
-              <img src='assets/images/user-12.png' alt='user' className='me-4 w-12' />
-            ) : (
-              <div className='me-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-green-400 to-blue-400'>
-                <span>{props.data.receiver.name[0]}</span>
-              </div>
-            )}
-          </div>
-          <h6 className='font-xssss text-grey-900 text-grey-900 fw-700 mb-0 mt-0 '>{props.data?.receiver.name}</h6>
+        <span className={classNames('btn-round-xss me-2 ms-0', props.data?.receiver.status ? 'bg-success' : '')} />
+
+        <div className='ms-2 rounded-full'>
+          {props.data.receiver.image ? (
+            <img
+              src={IMAGE_URL + props.data.receiver.image}
+              alt='user'
+              className='rounded-ful me-4 h-12  w-12  rounded-lg object-cover'
+            />
+          ) : (
+            <div className='me-4 h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-green-400 to-blue-400'>
+              <span>{props.data.receiver.name[0]}</span>
+            </div>
+          )}
         </div>
 
-        <div className='email-text text-grey-500 fw-600 font-xssss'>{lastMessageContent}</div>
+        <h6 className='font-xssss text-grey-900 text-grey-900 fw-700 mb-0 mt-0 w-60  overflow-hidden text-ellipsis whitespace-nowrap'>
+          {props.data?.receiver.name}
+        </h6>
+
+        <div className='email-text text-grey-500 fw-600 font-xssss me-2 ms-2'>{lastMessageContent}</div>
+
         {props.data.countNewMessage > 0 && (
           <span className='flex h-7 w-7 items-center justify-center rounded-full bg-red-500'>
             <span className='font-bold text-white'>{props.data.countNewMessage}</span>
           </span>
         )}
-        <div className='font-xssss text-grey-500 fw-600 w-52 text-right'>
+        <div className='font-xssss text-grey-500 fw-600 ms-auto'>
           {getConversationLastUpdate(props.data?.lastMessageSentAt ?? '')}
         </div>
       </Link>

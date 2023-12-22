@@ -23,15 +23,15 @@ function Header() {
   const dispatch = useAppDispatch()
   const getFacultyByFacultyGroupCode = (group: string): string => {
     let faculty = group.substring(group.indexOf('_') + 1)
-    faculty = "khoa_" + faculty;
-    return faculty;
+    faculty = 'khoa_' + faculty
+    return faculty
   }
   return (
     <Fragment>
       <div className='nav-header shadow-xs border-0 bg-white'>
         <div className='nav-top bg-inherit'>
           <Link to={BUSINESS_DASHBOARD_PAGE}>
-            <img src='/assets/images/app-logo.jpg' width={'200px'} />
+            <img src='/assets/images/app-logo.png' width={'200px'} />
           </Link>
           <a className='mob-menu chat-active-btn me-2 ms-auto' href='/defaultmessage'>
             <i className='feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight' />
@@ -59,7 +59,14 @@ function Header() {
           </NavItem>
 
           <NavItem
-            to={FACULTY_DASHBOARD_PAGE + `/${userLogin?.facultyGroupCode ? getFacultyByFacultyGroupCode(userLogin?.facultyGroupCode):'danh-sach-khoa'}`}
+            to={
+              FACULTY_DASHBOARD_PAGE +
+              `/${
+                userLogin?.facultyGroupCode
+                  ? getFacultyByFacultyGroupCode(userLogin?.facultyGroupCode)
+                  : 'danh-sach-khoa'
+              }`
+            }
             active={location.pathname.includes(FACULTY_DASHBOARD_PAGE)}
           >
             <i className='feather-book font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500' />
@@ -92,11 +99,12 @@ function Header() {
         </span>
         <Link className='menu-icon ms-3 p-0' to='/cai-dat'>
           {userLogin?.image ? (
-            <img src={IMAGE_URL + userLogin.image} alt='user' className='rounded-full w-10 h-10' />
+            <img src={IMAGE_URL + userLogin.image} alt='user' className='h-10 w-10 rounded-full' />
           ) : (
             <div
               className={classNames(
-                'me-2 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r', 'from-purple-400 to-blue-400'
+                'me-2 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r',
+                'from-purple-400 to-blue-400'
               )}
             >
               <span>{userLogin?.name[0]}</span>
