@@ -126,10 +126,10 @@ export default function JobApplyPage() {
                       </Document>
                     )
                   )}
-                  <div style={{ position: 'fixed', bottom: 25, right: '35%', width: 130 }}>
+                  <div style={{ position: 'fixed', bottom: 25, right: '33%', width: 130 }}>
                     <button
                       className='btn btn-info button_nop'
-                      style={{ position: 'fixed', bottom: 27, right: '48%', width: 130 }}
+                      style={{ position: 'fixed', bottom: 27, right: '55%', width: 150, height: 40 }}
                       onClick={() => navigate(-1)}
                     >
                       <p>
@@ -140,17 +140,18 @@ export default function JobApplyPage() {
                     <button
                       className='btn btn-info'
                       disabled={isAnonymous ? true : false}
-                      style={{ position: 'fixed', bottom: 27, right: '38%', width: 130 }}
+                      style={{ position: 'fixed', bottom: 27, right: '45%', width: 150, height: 60 }}
                     >
                       <label htmlFor='fileInput' className='lbButton'>
                         {isUploadCV ? (
-                          <p>
-                            {t('JobApplyScreen.jobApplyScreenButtonUpdateCvTitle')}{' '}
+                          <p style={{whiteSpace: 'normal', display: 'inline'}}>
+                            <p style={{fontSize: 17, marginBottom: 0}}>{t('JobApplyScreen.jobApplyScreenButtonUpdateCvTitle')}{' '}</p>
                             <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} />
+
                           </p>
                         ) : (
-                          <p>
-                            {t('JobApplyScreen.jobApplyScreenButtonAddCvTitle')}{' '}
+                          <p style={{whiteSpace: 'normal', display: 'inline'}}>
+                            <p style={{fontSize: 17, marginBottom: 0}}>{t('JobApplyScreen.jobApplyScreenButtonAddCvTitle')}{' '}</p>
                             <FontAwesomeIcon icon={faPlus} size='1x' color={COLOR_WHITE} />
                           </p>
                         )}
@@ -166,7 +167,7 @@ export default function JobApplyPage() {
                     <button
                       disabled={isAnonymous ? true : false}
                       className='btn btn-info button_nop'
-                      style={{ position: 'fixed', bottom: 27, right: '28%', width: 130 }}
+                      style={{ position: 'fixed', bottom: 27, right: '35%', width: 150, height: 40 }}
                       onClick={onSuccess}
                     >
                       <p>

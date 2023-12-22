@@ -746,10 +746,18 @@
         "user_apply_job": "You have applied for the job posting:",
         "user_create_watch_job": " has applied for the job posting:",
         "in_group": " in",
-        "survey_txt": "Survey now >>"
+        "survey_txt": "Survey now >>",
+        "user_update_avatar": "You have successfully updated your background image!"
     },
     "Setting": {
-        "userInformation": "User Information"
+        "setting": "Setting",
+        "userInformation": "User Information",
+        "waitPost": "Pending Posts",
+        "applyPost": "Job Applications",
+        "language": "Language",
+        "help": "Help",
+        "logout": "Logout",
+        "back": "Back"
     }
      
 }

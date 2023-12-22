@@ -7,6 +7,7 @@ import { faArrowUp, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getIdFromSlug } from '../utils/CommonUtls'
 import Header from '../components/common/Header'
+import { useTranslation } from 'react-multi-lang'
 
 export default function DetailJobApply() {
     const [sourcePDF, setSource] = useState('')
@@ -16,6 +17,7 @@ export default function DetailJobApply() {
     const navigate = useNavigate()
     const { slug } = useParams()
     const cvId = getIdFromSlug(slug ?? '')
+    const t = useTranslation()
 
     console.log('cvId: ', cvId)
     useEffect(() => {
@@ -86,7 +88,7 @@ export default function DetailJobApply() {
                             }}
                             onClick={() => navigate(-1)}
                         >
-                            <p style={{ fontSize: 20 }}>Quay lại</p>
+                            <p style={{ fontSize: 20 }}>{t("Setting.back")}</p>
                         </button>
                         <button
                             style={{

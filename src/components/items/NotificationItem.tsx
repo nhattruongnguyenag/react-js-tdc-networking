@@ -258,7 +258,7 @@ export default function NotificationItem(props: NotificationItemProps) {
                 setValue({
                     ...value, defaultImage: 'admin',
                     header: '',
-                    body: 'Bạn vừa cập nhật ảnh nền',
+                    body: t('Notifications.user_update_avatar'),
                     image: '',
                     group: '',
                     time: props.createdAt,

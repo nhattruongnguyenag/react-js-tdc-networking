@@ -76,6 +76,8 @@ import PendingPostPage from './pages/PendingPostPage'
 import RejectPostsPage from './pages/RejectPostsPage'
 import PostDetail from './pages/PostDetail'
 import FacultyAndStudentPage from './pages/FacultyAndStudentPage'
+import axios from 'axios'
+import { SERVER_ADDRESS } from './constants/SystemConstant'
 
 setTranslations({ vi, en, ja })
 setDefaultLanguage('vi')
@@ -84,6 +86,7 @@ setDefaultLanguage('vi')
 export default function AppRouter() {
   const { darkMode } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const { defaultLanguage } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer)
   useEffect(() => {
     setDefaultLanguage(defaultLanguage)
   }, [defaultLanguage])

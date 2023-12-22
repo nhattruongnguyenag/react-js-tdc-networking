@@ -747,9 +747,17 @@
         "user_apply_job": "Bạn vừa ứng tuyển cho bài đăng:",
         "user_create_watch_job": " vừa ứng tuyển bài đăng:",
         "in_group": " trong",
-        "survey_txt": "Khảo sát ngay >>"
+        "survey_txt": "Khảo sát ngay >>",
+        "user_update_avatar": "Bạn vừa cập nhật ảnh nền thành công!"
     },
     "Setting":{
-        "userInformation":"Thông tin cá nhân"
+        "setting": "Cài đặt",
+        "userInformation":"Thông tin cá nhân",
+        "waitPost":"Bài viết đang chờ",
+        "applyPost": "Hồ sơ ứng tuyển",
+        "language":"Ngôn ngữ",
+        "help": "Trợ giúp",
+        "logout":"Đăng xuất",
+        "back": "Quay về"
     }
 }
