@@ -759,5 +759,11 @@
         "help": "Trợ giúp",
         "logout":"Đăng xuất",
         "back": "Quay về"
+    },
+    "Options":{
+        "following":"Đang theo dõi",
+        "follower": "Đang theo dõi bạn",
+        "postSaved": "Bài viết đã lưu",
+        "placeholderSearch": "Tìm kiếm..."
     }
 }

@@ -758,6 +758,13 @@
         "help": "Help",
         "logout": "Logout",
         "back": "Back"
+    },
+    "Options": {
+        "following": "Following",
+        "follower": "Followers",
+        "postSaved": "Saved Posts",
+        "placeholderSearch": "Search..."
     }
+
      
 }

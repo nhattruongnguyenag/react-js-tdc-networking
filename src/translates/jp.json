@@ -754,5 +754,11 @@
         "help": "ヘルプ",
         "logout": "ログアウト",
         "back": "戻る"
+    },
+    "Options": {
+        "following": "フォロー中",
+        "follower": "あなたをフォローしている人",
+        "postSaved": "保存された投稿",
+        "placeholderSearch": "検索..."
     }
 }

@@ -9,6 +9,7 @@ import ItemUserFollower from '../items/ItemUserFollower'
 import { FollowUserModel } from '../../types/response/FollowUserModel'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { useTranslation } from 'react-multi-lang'
 
 export interface FollowingType {
     id: any
@@ -16,6 +17,7 @@ export interface FollowingType {
 export default function FollowListView(props: FollowingType) {
     var item = props
     const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+    const t = useTranslation();
     const { data, isFetching } = useGetFollowingUserQuery(
         {
             id: item.id,
@@ -41,10 +43,10 @@ export default function FollowListView(props: FollowingType) {
         <div>
             <div>
                 {
-                    item.id == userLogin?.id ? <div style={{position: 'relative'}}>
+                    item.id == userLogin?.id ? <div style={{ position: 'relative' }}>
                         <input
                             type='search'
-                            placeholder='Tìm kiếm ...'
+                            placeholder={t('Options.placeholderSearch')}
                             style={{ width: '100%', marginBottom: 20, marginTop: 20, paddingLeft: 60, paddingRight: 30, borderWidth: '1px', height: '50px', borderRadius: 50 }}
                             onChange={(txt) => {
                                 setSearch(txt.target.value)

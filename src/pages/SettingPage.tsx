@@ -198,7 +198,7 @@ export default function SettingPage() {
           <Modal.Body>
             <input
               type='search'
-              placeholder='Tìm kiếm ...'
+              placeholder={t('Options.placeholderSearch')}
               style={{
                 width: '100%',
                 marginBottom: 20,
