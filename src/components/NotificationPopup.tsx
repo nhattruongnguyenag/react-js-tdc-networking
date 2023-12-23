@@ -225,7 +225,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p >Bài viết của bạn không được duyệt vì: "{log}"</p>
+          <h4 className='text-sm' >Bài viết của bạn không được duyệt vì: "{log}"</h4>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='primary' onClick={handleClose}>
