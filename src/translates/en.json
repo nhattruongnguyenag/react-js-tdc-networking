@@ -213,7 +213,8 @@
     "normal": "Post",
     "survey": "Survey",
     "recruitment": "Recruitment",
-    "search": "Enter search content..."
+    "search": "Enter search content...",
+    "txt": "No matching search results found!"
   },
   "ToolbarTitle": {
     "recruitmentDetailScreen": "Recruitment details",

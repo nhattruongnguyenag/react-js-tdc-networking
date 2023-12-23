@@ -283,7 +283,6 @@ export default function CustomizeSearch() {
                       <p className='txt_no_result text-dark'>{t('SearchComponent.txt')}</p>
                     </div>
                   )
-
               }
             </div>
           </div>

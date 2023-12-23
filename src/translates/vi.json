@@ -213,7 +213,8 @@
     "normal": "Bài viết",
     "survey": "Khảo sát",
     "recruitment": "Tin tuyển dụng",
-    "search": "Nhập nội dung tìm kiếm..."
+    "search": "Nhập nội dung tìm kiếm...",
+    "txt": "Không tìm thấy kết quả tìm kiếm phù hợp!"
   },
   "ToolbarTitle": {
     "recruitmentDetailScreen": "Chi tiết tuyển dụng",
