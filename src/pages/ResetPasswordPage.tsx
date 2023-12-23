@@ -8,12 +8,14 @@ import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { toast } from 'react-toastify'
 import { LOGIN_PAGE } from '../constants/Page'
+import { useTranslation } from 'react-multi-lang'
 interface ResetPassword {
   password: InputTextValidate
   repassword: InputTextValidate
 }
 export default function ResetPasswordPage() {
   const { slug } = useParams()
+  const t = useTranslation()
   const token = getTokenFromSlug(slug ?? '')
   const [password, setPassword] = useState('')
   const [repassword, setRePassword] = useState('')
@@ -23,12 +25,12 @@ export default function ResetPasswordPage() {
   const [disabled, setDisabled] = useState(true)
   const [validate, setValidate] = useState<ResetPassword>({
     password: {
-      textError: 'Mật khẩu không được để trống',
+      textError: t('ResetPassword.password_no_blank'),
       isVisible: false,
       isError: true
     },
     repassword: {
-      textError: 'Mật khẩu lần hai không được để trống',
+      textError: t('ResetPassword.re_password_no_blank'),
       isVisible: false,
       isError: true
     }
@@ -63,14 +65,11 @@ export default function ResetPasswordPage() {
     })
       .then((res) => {
         console.log(res)
-        toast.success('Cập nhật mật khẩu thành công')
+        toast.success(t('ResetPassword.update_success'))
         navigate(LOGIN_PAGE)
       })
       .catch((err) => {
         console.log(err.response.status)
-        if(err.response.status == 400){
-          alert(err.response.data.code)
-        }
       })
   }
 
@@ -83,7 +82,7 @@ export default function ResetPasswordPage() {
           ...validate.password,
           isVisible: true,
           isError: true,
-          textError: 'Mật khẩu không được để trống'
+          textError: t('ResetPassword.password_no_blank')
         }
       })
     } else if (!isLengthInRange(e.target.value, 1, 8)) {
@@ -94,7 +93,7 @@ export default function ResetPasswordPage() {
           ...validate.password,
           isVisible: true,
           isError: true,
-          textError: 'Mật khẩu không vượt quá 8 ký tự'
+          textError: t('ResetPassword.password_length_no_more')
         }
       })
     } else if (!isPassword(e.target.value)) {
@@ -105,7 +104,7 @@ export default function ResetPasswordPage() {
           ...validate.password,
           isVisible: true,
           isError: true,
-          textError: 'Mật khẩu sai định dạng'
+          textError: t('ResetPassword.password_no_valid')
         }
       })
     } else {
@@ -131,7 +130,7 @@ export default function ResetPasswordPage() {
           ...validate.repassword,
           isVisible: true,
           isError: true,
-          textError: 'Mật khẩu nhập lại không được để trống'
+          textError: t('ResetPassword.re_password_no_blank')
         }
       })
     } else if (e.target.value != password) {
@@ -142,7 +141,7 @@ export default function ResetPasswordPage() {
           ...validate.repassword,
           isVisible: true,
           isError: true,
-          textError: 'Mật khẩu nhập lại không trùng khớp'
+          textError: t('ResetPassword.re_password_no_valid')
         }
       })
     } else {
@@ -168,15 +167,15 @@ export default function ResetPasswordPage() {
             {tokenValid == true ? (
               <>
                 <div className='formbold-form-title'>
-                  <h3>Thay đổi mật khẩu</h3>
+                  <h3>{t('ResetPassword.title')}</h3>
                 </div>
                 <form>
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-key text-grey-500 pe-0'></i>
                     <input
-                      type='text'
+                      type='Password'
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Password'
+                      placeholder={t('ResetPassword.plhd_password')}
                       name='password'
                       onChange={(e) => checkPasswordChange(e)}
                       style={{ borderColor: border }}
@@ -191,9 +190,9 @@ export default function ResetPasswordPage() {
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-reload text-grey-500 pe-0'></i>
                     <input
-                      type='text'
+                      type='Password'
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder='Re-Password'
+                      placeholder={t('ResetPassword.plhd_re_password')}
                       name='repassword'
                       onChange={(e) => checkRePasswordChange(e)}
                       style={{ borderColor: borderRe }}
@@ -213,7 +212,7 @@ export default function ResetPasswordPage() {
                         onClick={(e) => resetPassword(e)}
                         className='form-control style2-input fw-600 border-0 p-0 text-center text-white '
                       >
-                        Xác nhận
+                        {t('ResetPassword.confirm')}
                       </button>
                       <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#ffffff' height={50} width={50} />
@@ -225,7 +224,7 @@ export default function ResetPasswordPage() {
             ) : (
               <>
                 <div className='formbold-form-title'>
-                  <h3>Xin lỗi , liên kết của bạn đã hết hạn !!!</h3>
+                  <h3>{t('ResetPassword.link_expirated')}</h3>
                 </div>
               </>
             )}

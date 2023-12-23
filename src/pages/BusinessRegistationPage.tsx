@@ -19,50 +19,12 @@ import TextValidate from '../components/TextValidate'
 import { useNavigate } from 'react-router-dom'
 import { handleUploadImage } from '../utils/UploadUtils'
 import ReactLoading from 'react-loading'
-import { LOGIN_PAGE } from '../constants/Page'
-import {
-  TEXT_ACTIVETIME,
-  TEXT_ALERT_REGISTER_FAILT,
-  TEXT_ALERT_REGISTER_SUCCESS,
-  TEXT_ERROR_ACTIVE_NOTFORMAT,
-  TEXT_ERROR_ADDRESS_NOTEMPTY,
-  TEXT_ERROR_ADDRESS_NOTMAXLENGTH,
-  TEXT_ERROR_BUSINESSNAME_NOTEMPTY,
-  TEXT_ERROR_BUSINESSNAME_NOTMAXLENGTH,
-  TEXT_ERROR_BUSINESSNAME_NOTSPECIALCHARACTER,
-  TEXT_ERROR_CHECKSAMEEMAIL,
-  TEXT_ERROR_CONFIMPASSWORD,
-  TEXT_ERROR_CONFIMPASS_MATCHPASS,
-  TEXT_ERROR_EMAIL_NOTFORMAT,
-  TEXT_ERROR_EMAIL_NOTIMPTY,
-  TEXT_ERROR_EMAIL_NOTLENGTH,
-  TEXT_ERROR_PASSWORD_NOTFORMAT,
-  TEXT_ERROR_PASSWORD_NOTIMPTY,
-  TEXT_ERROR_PASSWORD_NOTLENGTH,
-  TEXT_ERROR_PHONE_NOTEMPTY,
-  TEXT_ERROR_PHONE_NOTFORMAT,
-  TEXT_ERROR_REPRESENTER_NOTEMPTY,
-  TEXT_ERROR_REPRESENTNAME_NOTMAXLENGTH,
-  TEXT_ERROR_REPRESENTNAME_NOTSPECIALCHARACTER,
-  TEXT_ERROR_TAXCODE_NOTEMPTY,
-  TEXT_ERROR_TAXCODE_NOTFORMAT,
-  TEXT_ERROR_TAXCODE_NOTMAXLENGTH,
-  TEXT_IMAGE_PICKER,
-  TEXT_LOGIN,
-  TEXT_PLACEHOLDER_ADDRESS,
-  TEXT_PLACEHOLDER_BUSINESSNAME,
-  TEXT_PLACEHOLDER_CONFIMPASS,
-  TEXT_PLACEHOLDER_EMAIL,
-  TEXT_PLACEHOLDER_PASSWORD,
-  TEXT_PLACEHOLDER_PHONE,
-  TEXT_PLACEHOLDER_REPRESENTER,
-  TEXT_PLACEHOLDER_TAXCODE,
-  TEXT_REGISTER,
-  TEXT_REQUEST_LOGIN,
-  TEXT_TITLE_REGISTER_BUSINESS,
-  TEXT_TO_ACTIVETIME
-} from '../constants/StringVietnamese'
+import { ACCEPT_SEND_EMAIL_PAGE, LOGIN_PAGE } from '../constants/Page'
 import { toast } from 'react-toastify'
+import { useCookies } from 'react-cookie'
+import { useTranslation } from 'react-multi-lang'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 interface RegisterBusiness {
   name: InputTextValidate
@@ -88,11 +50,13 @@ const isAllFieldsValid = (validate: RegisterBusiness): boolean => {
   return true
 }
 export default function BusinessRegistationPage() {
+  const t = useTranslation()
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [image, setImage] = useState('')
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
+  const [cookies, setCookie] = useCookies(['email', 'url', 'subject'])
   const [business, setBusiness] = useState<
     Omit<Business, 'id' | 'status' | 'createdAt' | 'updatedAt' | 'roleCodes' | 'isTyping' | 'isMessageConnect'>
   >({
@@ -108,53 +72,71 @@ export default function BusinessRegistationPage() {
     image: '',
     confimPassword: '',
     facultyGroupCode: '',
-    facultyGroupId: 0
+    facultyGroupId: 0,
+    subject: '',
+    content: ''
   })
+  const [isCheck, setCheck] = useState(true)
+  const [isCheck1, setCheck1] = useState(true)
+  const onCheck = () => {
+    if (isCheck) {
+      setCheck(false)
+    } else {
+      setCheck(true)
+    }
+  }
+  const onCheck1 = () => {
+    if (isCheck1) {
+      setCheck1(false)
+    } else {
+      setCheck1(true)
+    }
+  }
   const [timeStart, setTimeStart] = useState('07:00')
   const [timeEnd, setTimeEnd] = useState('17:00')
   const [validate, setValidate] = useState<RegisterBusiness>({
     name: {
-      textError: TEXT_ERROR_BUSINESSNAME_NOTEMPTY,
+      textError: t('RegisterBusinessComponent.errorNameEmpty'),
       isVisible: false,
       isError: true
     },
     representor: {
-      textError: TEXT_ERROR_REPRESENTER_NOTEMPTY,
+      textError: t('RegisterBusinessComponent.errorRepresentEmpty'),
       isVisible: false,
       isError: true
     },
     email: {
-      textError: TEXT_ERROR_EMAIL_NOTIMPTY,
+      textError: t('RegisterBusinessComponent.errorEmailEmpty'),
       isVisible: false,
       isError: true
     },
     taxCode: {
-      textError: TEXT_ERROR_TAXCODE_NOTEMPTY,
+      textError: t('RegisterBusinessComponent.errorTaxCodeEmpty'),
       isVisible: false,
       isError: true
     },
     address: {
-      textError: TEXT_ERROR_ADDRESS_NOTEMPTY,
+      textError: t('RegisterBusinessComponent.errorAddressEmpty'),
       isVisible: false,
       isError: true
     },
     phone: {
-      textError: TEXT_ERROR_PHONE_NOTEMPTY,
+      textError: t('RegisterBusinessComponent.errorPhoneEmpty'),
       isVisible: false,
       isError: true
     },
     activeTime: {
-      textError: TEXT_ERROR_ACTIVE_NOTFORMAT,
+      textError: t('RegisterBusinessComponent.activeTimeNotFormat'),
       isVisible: false,
       isError: true
     },
     password: {
-      textError: TEXT_ERROR_PASSWORD_NOTIMPTY,
+      textError: t('RegisterBusinessComponent.errorPasswordEmpty'),
       isVisible: false,
       isError: true
     },
     confimPassword: {
-      textError: TEXT_ERROR_CONFIMPASSWORD,
+      textError: t('RegisterBusinessComponent.errorConfimPasswordEmpty'),
       isVisible: false,
       isError: true
     }
@@ -168,7 +150,7 @@ export default function BusinessRegistationPage() {
             ...validate.name,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_BUSINESSNAME_NOTEMPTY
+            textError: t('RegisterBusinessComponent.errorNameEmpty')
           }
         })
       } else if (isContainSpecialCharacter(event.target.value)) {
@@ -178,7 +160,7 @@ export default function BusinessRegistationPage() {
             ...validate.name,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_BUSINESSNAME_NOTSPECIALCHARACTER
+            textError: t('RegisterBusinessComponent.errorNameNotSpecial')
           }
         })
       } else if (!isLengthInRange(event.target.value, 1, 255)) {
@@ -188,7 +170,7 @@ export default function BusinessRegistationPage() {
             ...validate.name,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_BUSINESSNAME_NOTMAXLENGTH
+            textError: t('RegisterBusinessComponent.errorNameNotLengthMax')
           }
         })
       } else {
@@ -214,7 +196,7 @@ export default function BusinessRegistationPage() {
             ...validate.representor,
             isError: true,
             isVisible: true,
-            textError: TEXT_ERROR_REPRESENTER_NOTEMPTY
+            textError: t('RegisterBusinessComponent.errorRepresentEmpty')
           }
         })
       } else if (isContainSpecialCharacter(event.target.value)) {
@@ -223,7 +205,7 @@ export default function BusinessRegistationPage() {
           representor: {
             ...validate.representor,
             isError: true,
-            textError: TEXT_ERROR_REPRESENTNAME_NOTSPECIALCHARACTER,
+            textError: t('RegisterBusinessComponent.errorRepresentNotSpecial'),
             isVisible: true
           }
         })
@@ -233,7 +215,7 @@ export default function BusinessRegistationPage() {
           representor: {
             ...validate.representor,
             isError: true,
-            textError: TEXT_ERROR_REPRESENTNAME_NOTMAXLENGTH,
+            textError: t('RegisterBusinessComponent.errorRepresentNotLengthMax'),
             isVisible: true
           }
         })
@@ -261,7 +243,7 @@ export default function BusinessRegistationPage() {
             email: {
               ...validate.email,
               isError: true,
-              textError: TEXT_ERROR_CHECKSAMEEMAIL,
+              textError: t('RegisterBusinessComponent.errorSameEmail'),
               isVisible: true
             }
           })
@@ -279,7 +261,7 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError: TEXT_ERROR_EMAIL_NOTIMPTY,
+            textError: t('RegisterBusinessComponent.errorEmailEmpty'),
             isVisible: true
           }
         })
@@ -289,7 +271,7 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError: TEXT_ERROR_EMAIL_NOTLENGTH,
+            textError: t('RegisterBusinessComponent.errorEmailNotLengthMax'),
             isVisible: true
           }
         })
@@ -299,7 +281,7 @@ export default function BusinessRegistationPage() {
           email: {
             ...validate.email,
             isError: true,
-            textError: TEXT_ERROR_EMAIL_NOTFORMAT,
+            textError: t('RegisterBusinessComponent.errorEmailNotFormat'),
             isVisible: true
           }
         })
@@ -325,7 +307,7 @@ export default function BusinessRegistationPage() {
           password: {
             ...validate.password,
             isError: true,
-            textError: TEXT_ERROR_PASSWORD_NOTIMPTY,
+            textError: t('RegisterBusinessComponent.errorPasswordEmpty'),
             isVisible: true
           }
         })
@@ -335,7 +317,7 @@ export default function BusinessRegistationPage() {
           password: {
             ...validate.password,
             isError: true,
-            textError: TEXT_ERROR_PASSWORD_NOTLENGTH,
+            textError: t('RegisterBusinessComponent.errorPassNotLengthMax'),
             isVisible: true
           }
         })
@@ -345,7 +327,7 @@ export default function BusinessRegistationPage() {
           password: {
             ...validate.password,
             isError: true,
-            textError: TEXT_ERROR_PASSWORD_NOTFORMAT,
+            textError: t('RegisterBusinessComponent.errorPassNotFormat'),
             isVisible: true
           }
         })
@@ -371,7 +353,7 @@ export default function BusinessRegistationPage() {
           confimPassword: {
             ...validate.confimPassword,
             isError: true,
-            textError: TEXT_ERROR_CONFIMPASSWORD,
+            textError: t('RegisterBusinessComponent.errorConfimPasswordEmpty'),
             isVisible: true
           }
         })
@@ -381,7 +363,7 @@ export default function BusinessRegistationPage() {
           confimPassword: {
             ...validate.confimPassword,
             isError: true,
-            textError: TEXT_ERROR_CONFIMPASS_MATCHPASS,
+            textError: t('RegisterBusinessComponent.errorConfimPassNotMatch'),
             isVisible: true
           }
         })
@@ -407,7 +389,7 @@ export default function BusinessRegistationPage() {
           taxCode: {
             ...validate.taxCode,
             isError: true,
-            textError: TEXT_ERROR_TAXCODE_NOTEMPTY,
+            textError: t('RegisterBusinessComponent.errorTaxCodeEmpty'),
             isVisible: true
           }
         })
@@ -417,7 +399,7 @@ export default function BusinessRegistationPage() {
           taxCode: {
             ...validate.taxCode,
             isError: true,
-            textError: TEXT_ERROR_TAXCODE_NOTMAXLENGTH,
+            textError: t('RegisterBusinessComponent.errorTaxCodeNotLengthMax'),
             isVisible: true
           }
         })
@@ -427,7 +409,7 @@ export default function BusinessRegistationPage() {
           taxCode: {
             ...validate.taxCode,
             isError: true,
-            textError: TEXT_ERROR_TAXCODE_NOTFORMAT,
+            textError: t('RegisterBusinessComponent.errorTaxCodeNotFormat'),
             isVisible: true
           }
         })
@@ -453,7 +435,7 @@ export default function BusinessRegistationPage() {
           address: {
             ...validate.address,
             isError: true,
-            textError: TEXT_ERROR_ADDRESS_NOTEMPTY,
+            textError: t('RegisterBusinessComponent.errorAddressEmpty'),
             isVisible: true
           }
         })
@@ -463,7 +445,7 @@ export default function BusinessRegistationPage() {
           address: {
             ...validate.address,
             isError: true,
-            textError: TEXT_ERROR_ADDRESS_NOTMAXLENGTH,
+            textError: t('RegisterBusinessComponent.errorAddressNotLengthMax'),
             isVisible: true
           }
         })
@@ -489,7 +471,7 @@ export default function BusinessRegistationPage() {
           phone: {
             ...validate.phone,
             isError: true,
-            textError: TEXT_ERROR_PHONE_NOTEMPTY,
+            textError: t('RegisterBusinessComponent.errorPhoneEmpty'),
             isVisible: true
           }
         })
@@ -499,7 +481,7 @@ export default function BusinessRegistationPage() {
           phone: {
             ...validate.phone,
             isError: true,
-            textError: TEXT_ERROR_PHONE_NOTFORMAT,
+            textError: t('RegisterBusinessComponent.errorPhoneNotFormat'),
             isVisible: true
           }
         })
@@ -541,7 +523,7 @@ export default function BusinessRegistationPage() {
         activeTime: {
           ...validate.activeTime,
           isError: true,
-          textError: TEXT_ERROR_ACTIVE_NOTFORMAT,
+          textError: t('RegisterBusinessComponent.activeTimeNotFormat'),
           isVisible: true
         }
       })
@@ -560,17 +542,23 @@ export default function BusinessRegistationPage() {
 
   const onSubmit = useCallback(() => {
     if (isAllFieldsValid(validate)) {
+      setBusiness({ ...business, subject: t('RegisterBusinessComponent.textAccountAuthen') })
       setIsLoading(true)
       axios
         .post<Business, AxiosResponse<Data<Token>>>(SERVER_ADDRESS + 'api/business/register', business)
         .then((response) => {
           setIsLoading(false)
-          toast.success(TEXT_ALERT_REGISTER_SUCCESS)
-          navigate(LOGIN_PAGE)
+          let expires = new Date()
+          expires.setTime(expires.getTime() + 600 * 1000)
+          setCookie('email', business.email, { path: '/', expires })
+          setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
+          setCookie('subject', t('RegisterBusinessComponent.textAccountAuthen'), { path: '/', expires })
+          // toast.success(t('RegisterBusinessComponent.registerSusccess'))
+          navigate(ACCEPT_SEND_EMAIL_PAGE)
         })
         .catch((error) => {
           setIsLoading(false)
-          toast.error(TEXT_ALERT_REGISTER_FAILT)
+          toast.error(t('RegisterBusinessComponent.registerFail'))
         })
     } else {
       let key: keyof RegisterBusiness
@@ -611,7 +599,9 @@ export default function BusinessRegistationPage() {
           <div className='col-xl-7 vh-100 align-items-center d-flex rounded-3 overflow-hidden bg-white'>
             <div className='login-card me-auto ms-auto border-0 shadow-none'>
               <div className='card-body rounded-0 text-left'>
-                <h5 className='fw-700 display1-size display2-md-size mb-4'>{TEXT_TITLE_REGISTER_BUSINESS}</h5>
+                <h5 className='fw-700 display1-size display2-md-size mb-4'>
+                  {t('RegisterBusinessComponent.titleRegisterBusiness')}
+                </h5>
                 <form className='register'>
                   <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-direction-alt text-grey-500 pe-0'> </i>
@@ -619,7 +609,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handleNameChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_BUSINESSNAME}
+                      placeholder={t('RegisterBusinessComponent.titleBusinessName')}
                       style={{ borderColor: !validate.name?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -635,7 +625,7 @@ export default function BusinessRegistationPage() {
                       onChange={(e) => handleEmailChange(e)}
                       onBlur={() => handleCheckEmail()}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_EMAIL}
+                      placeholder={t('RegisterBusinessComponent.titleEmail')}
                       style={{ borderColor: !validate.email?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -650,7 +640,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handleRepresentoreChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_REPRESENTER}
+                      placeholder={t('RegisterBusinessComponent.titleRepresent')}
                       style={{ borderColor: !validate.representor?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -665,7 +655,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handleTaxCodeChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_TAXCODE}
+                      placeholder={t('RegisterBusinessComponent.titleTaxCode')}
                       style={{ borderColor: !validate.taxCode?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -680,7 +670,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handleAddressChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_ADDRESS}
+                      placeholder={t('RegisterBusinessComponent.titleAddress')}
                       style={{ borderColor: !validate.address?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -695,7 +685,7 @@ export default function BusinessRegistationPage() {
                       type='text'
                       onChange={(e) => handlePhoneChange(e)}
                       className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_PHONE}
+                      placeholder={t('RegisterBusinessComponent.titlePhone')}
                       style={{ borderColor: !validate.phone?.isError ? '#228b22' : '#eee' }}
                     />
                     <TextValidate
@@ -704,7 +694,9 @@ export default function BusinessRegistationPage() {
                       isVisible={validate.phone?.isVisible}
                     />
                   </div>
-                  <label className='form-group text-grey-600 fw-600'>{TEXT_ACTIVETIME}</label>
+                  <label className='form-group text-grey-600 fw-600'>
+                    {t('RegisterBusinessComponent.titleTimeStart')}
+                  </label>
                   <div className='form-group icon-input mb-3'>
                     <div className='clock'>
                       <input
@@ -714,7 +706,7 @@ export default function BusinessRegistationPage() {
                         style={{ borderColor: !validate.activeTime?.isError ? '#228b22' : '#eee' }}
                         className='style2-input form-control text-grey-900 font-xsss fw-600 ps-4'
                       />
-                      <label className='me-1 ms-1'>{TEXT_TO_ACTIVETIME}</label>
+                      <label className='me-1 ms-1'>{t('RegisterBusinessComponent.titleTo')}</label>
                       <input
                         type='time'
                         value={timeEnd}
@@ -729,36 +721,48 @@ export default function BusinessRegistationPage() {
                       isVisible={validate.activeTime?.isVisible}
                     />
                   </div>
-                  <div className='form-group icon-input mb-3'>
+                  <div className='form-group icon-input gr mb-3'>
                     <input
-                      type='Password'
+                      type={!isCheck ? 'text' : 'password'}
                       onChange={(e) => handlePasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_PASSWORD}
+                      placeholder={t('RegisterStudentComponent.titlePass')}
                       style={{ borderColor: !validate.password?.isError ? '#228b22' : '#eee' }}
                     />
-                    <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
-                    <TextValidate
-                      textError={validate.password?.textError}
-                      isError={validate.password?.isError}
-                      isVisible={validate.password?.isVisible}
-                    />
+                    <i className='font-sm ti-lock text-grey-500 pe-0'> </i>
+                    <button type='button' onClick={() => onCheck()}>
+                      <FontAwesomeIcon
+                        style={{ position: 'absolute', right: 15, bottom: 20, color: 'grey' }}
+                        icon={!isCheck ? faEye : faEyeSlash}
+                      />
+                    </button>
                   </div>
-                  <div className='form-group icon-input mb-1'>
+                  <TextValidate
+                    textError={validate.password?.textError}
+                    isError={validate.password?.isError}
+                    isVisible={validate.password?.isVisible}
+                  />
+                  <div className='form-group icon-input gr mb-3'>
                     <input
-                      type='Password'
+                      type={!isCheck1 ? 'text' : 'password'}
                       onChange={(e) => handleConfirmPasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
-                      placeholder={TEXT_PLACEHOLDER_CONFIMPASS}
+                      placeholder={t('RegisterStudentComponent.titleConfimPass')}
                       style={{ borderColor: !validate.confimPassword?.isError ? '#228b22' : '#eee' }}
                     />
                     <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
-                    <TextValidate
-                      textError={validate.confimPassword?.textError}
-                      isError={validate.confimPassword?.isError}
-                      isVisible={validate.confimPassword?.isVisible}
-                    />
+                    <button type='button' onClick={() => onCheck1()}>
+                      <FontAwesomeIcon
+                        style={{ position: 'absolute', right: 15, bottom: 20, color: 'grey' }}
+                        icon={!isCheck1 ? faEye : faEyeSlash}
+                      />
+                    </button>
                   </div>
+                  <TextValidate
+                    textError={validate.confimPassword?.textError}
+                    isError={validate.confimPassword?.isError}
+                    isVisible={validate.confimPassword?.isVisible}
+                  />
                   <div className='card-body d-flex mt-3 p-0'>
                     <input
                       type={'file'}
@@ -774,7 +778,7 @@ export default function BusinessRegistationPage() {
                       ref={buttonCallPickerImgRef}
                     >
                       <i className='font-md text-success feather-image me-2'></i>
-                      <span className='d-none-xs'>{TEXT_IMAGE_PICKER}</span>
+                      <span className='d-none-xs'>{t('RegisterBusinessComponent.avata')}</span>
                     </button>
                   </div>
                   <div className='img'>{image ? <img src={image} className='avatar' /> : ''}</div>
@@ -787,7 +791,7 @@ export default function BusinessRegistationPage() {
                         className='form-control style2-input fw-600 bg-blue border-0 p-0 text-center text-white'
                         onClick={() => onSubmit()}
                       >
-                        {TEXT_REGISTER}
+                        {t('RegisterBusinessComponent.titleRegister')}
                       </button>
                       <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#ffff' height={50} width={50} />
@@ -795,9 +799,9 @@ export default function BusinessRegistationPage() {
                     </div>
                   </div>
                   <h6 className='text-grey-500 font-xsss fw-500 lh-32 mb-0 mt-0'>
-                    {TEXT_REQUEST_LOGIN}
+                    {t('RegisterBusinessComponent.requestLogin')}
                     <button className='fw-700 txt-blue ms-1' onClick={() => navigate(LOGIN_PAGE)}>
-                      {TEXT_LOGIN}
+                      {t('RegisterBusinessComponent.titleLogin')}
                     </button>
                   </h6>
                 </div>

@@ -1,0 +1,8 @@
+.buttonGoBackFacultyAndStudent{
+    position: absolute;
+}
+
+.buttonGoBackFacultyAndStudent:hover{
+    scale: 1.3;
+    transition: all ease 0.5s;
+}

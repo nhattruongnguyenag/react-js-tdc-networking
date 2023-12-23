@@ -74,3 +74,36 @@ export const createNorMalPostAPI = async (urlCreateNormalPost: string, _data: an
     } catch (error) {
     }
 }
+
+export const followAPI = async (urlFollow: string, followData: any) => {
+    try {
+        const response = await axios.post(urlFollow, followData);
+        return response.data.status;
+    } catch (error) {
+    }
+}
+
+export const updateNormalPostAPI = async (urlUpdate: string, data: any) => {
+    try {
+        const response = await axios.put(urlUpdate, data);
+        return response.data.status;
+    } catch (error) {
+    }
+}
+
+export const updateImageUserProfile = async (urlUpdate: string, data: any) => {
+    try {
+        const response = await axios.post(urlUpdate, data);
+        return response.data.status;
+    } catch (error) {
+    }
+}
+
+
+export const getFacultyForSelect = async (urlUpdate: string) => {
+    try {
+        const response = await axios.get(urlUpdate);
+        return response.data;
+    } catch (error) {
+    }
+}

@@ -1,7 +1,7 @@
 export interface RecruitmentPostRequest {
+  id?: number
   userId: number
   type: string
-  images: string[]
   title: string
   salary: number
   benefit: string

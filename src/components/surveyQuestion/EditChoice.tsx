@@ -4,6 +4,7 @@ import { ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER } from '../../cons
 import { ONE_CHOICE_QUESTION } from '../../pages/CreateSurveyPostPage'
 import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { deleteChoice, updateChoice } from '../../redux/Slice'
+import { useRef } from 'react'
 
 export interface ChoiceProps {
   choiceIndex?: number
@@ -16,6 +17,7 @@ export default function EditChoice(props: ChoiceProps) {
   const dispatch = useAppDispatch()
   const choiceIndex = props.choiceIndex ?? -1
   const questionIndex = props.questionIndex ?? -1
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const onDeleteChoice = () => {
     dispatch(deleteChoice({ questionIndex: questionIndex, choiceIndex: choiceIndex }))
@@ -41,17 +43,19 @@ export default function EditChoice(props: ChoiceProps) {
         />
       )}
       <input
-        placeholder={ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER + (choiceIndex + 1)}
-        onChange={(event) => {
+        autoFocus
+        ref={inputRef}
+        placeholder={ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER + ' ' + (choiceIndex + 1)}
+        onBlur={() => {
           dispatch(
             updateChoice({
               questionIndex: questionIndex,
               choiceIndex: choiceIndex,
-              choice: event.target.value
+              choice: inputRef.current?.value ?? ''
             })
           )
         }}
-        value={surveyPostRequest.questions[questionIndex].choices[choiceIndex]}
+        defaultValue={surveyPostRequest.questions[questionIndex].choices[choiceIndex].content}
         className='ms-2 mt-1 w-full text-ellipsis border-dotted border-indigo-600 bg-gray-100 bg-inherit py-1 hover:border-b-2 focus:border-b-2'
       />
       <button

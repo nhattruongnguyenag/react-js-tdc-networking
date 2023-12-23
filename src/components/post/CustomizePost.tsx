@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import CustomizeHeaderPost from './CustomizeHeaderPost'
 import CustomizeBodyPost from './CustomizeBodyPost'
 import CustomizeBottomPost from './CustomizeBottomPost'
 import CustomizeImage from './CustomizeImage'
 import { Post } from '../../types/Post'
-import { CLICK_SAVE_POST_EVENT, CLICK_SEE_RESULT_POST_EVENT, CLICK_SEE_LIST_CV_POST_EVENT, CLICK_DELETE_POST_EVENT, COMMENT_ACTION, GO_TO_PROFILE_ACTIONS, LIKE_ACTION, SHOW_LIST_USER_REACTED, TYPE_NORMAL_POST, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST, CLICK_UN_SAVE_POST_EVENT, STATUS_CREATED, STATUS_DELETED } from '../../constants/Variables'
-import { useAppDispatch, useAppSelector } from '../../redux/Hook'
+import { CLICK_SAVE_POST_EVENT, CLICK_SEE_RESULT_POST_EVENT, CLICK_SEE_LIST_CV_POST_EVENT, CLICK_DELETE_POST_EVENT, COMMENT_ACTION, GO_TO_PROFILE_ACTIONS, LIKE_ACTION, SHOW_LIST_USER_REACTED, TYPE_NORMAL_POST, TYPE_RECRUITMENT_POST, TYPE_SURVEY_POST, CLICK_UN_SAVE_POST_EVENT, STATUS_CREATED, STATUS_DELETED, CLICK_UPDATE_POST_EVENT } from '../../constants/Variables'
+import { useAppSelector } from '../../redux/Hook'
 import { Like } from '../../types/Like'
 import { ImageGalleryDisplay } from '../../types/ImageGalleryDispaly'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
@@ -17,24 +17,33 @@ import CustomizeCreateCommentsToolbar from '../commentToolbar/CustomizeCreateCom
 import { useNavigate } from 'react-router-dom'
 import { RECRUITMENT_DETAILS_PAGE, SURVEY_DETAILS_PAGE, SURVEY_RESULT_PAGE, USER_DETAILS_PAGE, LIST_JOB_APPLY_PAGE } from '../../constants/Page'
 import { slugify } from '../../utils/CommonUtls'
-import { isBlank } from '../../utils/ValidateUtils'
 import { deleteCommentAPI, deletePostAPI, getAllCommentAPI, likeAPI, savePostAPI } from '../../api/CallAPI'
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import DefaultAvatar from '../common/DefaultAvatar'
-import { TEXT_LIST_PERSON_HAD_LIKE, TEXT_WARNING_CONTENT_COMMENT_NULL, TEXT_WARNING_SYSTEM_ERROR } from '../../constants/StringVietnamese'
+import { TYPE_POST_BUSINESS, TYPE_POST_FACULTY } from '../../constants/StringVietnamese'
 import '../../assets/css/comments.css'
 import '../../assets/css/createCommentsToolbar.css'
 import '../../assets/css/modal.css'
 import '../../assets/css/post.css'
-
-
+import { setTranslations, useTranslation } from 'react-multi-lang'
+import vi from '../../translates/vi.json';
+import en from '../../translates/en.json';
+import jp from '../../translates/jp.json';
+import { getFacultyTranslated } from '../../utils/TranslateFaculty'
+import { formatVietNamCurrency } from '../../utils/FormatCurrency'
+import { CreatePostModal } from '../modal/CustomizeNormalPostModal'
+import { UpdateNormalPost } from '../../types/UpdateNormalPost'
+import { ModalUserLiked } from '../modal/ModalUserLiked'
+import { IMAGE_URL } from '../../constants/Path'
+import { LikeAction } from '../../types/LikeActions'
+setTranslations({ vi, en, jp })
 
 const CustomizePost = (props: Post) => {
+  const t = useTranslation();
   const navigate = useNavigate()
+  const [flag, setFlag] = useState(false);
   const [modalShow, setModalShow] = React.useState(false);
-  const { userLogin, isOpenModalComments } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { userLogin, userIdOfProfileNow } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [isOpenComment, setIsOpenComments] = useState(false);
+  const [createNormalPostModalShow, setCreateNormalPostModalShow] = useState(false);
   const [commentAuthorName, setCommentAuthorName] = useState<string>('');
   const [dataComments, setDataComments] = useState({
     postId: props.id,
@@ -42,7 +51,6 @@ const CustomizePost = (props: Post) => {
     content: "",
     parentCommentId: 0
   })
-  const dispatch = useAppDispatch()
 
   const handleClickIntoAvatarAndNameAndMenuEvent = (flag: number | null) => {
     if (flag === GO_TO_PROFILE_ACTIONS) {
@@ -63,6 +71,7 @@ const CustomizePost = (props: Post) => {
   const handleClickBottomBtnEvent = async (flag: number | null) => {
     if (flag === LIKE_ACTION) {
       handleClickIntoBtnIconLikeEvent()
+      
     } else if (flag === COMMENT_ACTION) {
       handleClickIntoBtnIconComments()
     } else if (flag === SHOW_LIST_USER_REACTED) {
@@ -75,13 +84,17 @@ const CustomizePost = (props: Post) => {
       "postId": props.id,
       "userId": userLogin?.id
     }
-    callLikeAPI(data)
+    
+    props.iCustomizeLikeAction ? props.likeAction({
+      ...data, 
+      code: ''
+    } as LikeAction) : callLikeAPI(data)
   }
 
   const callLikeAPI = async (data: any) => {
     const status = await likeAPI(SERVER_ADDRESS + 'api/posts/like', data)
     if (status !== STATUS_CREATED) {
-      toast.error(TEXT_WARNING_SYSTEM_ERROR);
+      toast.error(t("Toast.toastNotifyHaveError"));
     }
   }
 
@@ -93,11 +106,9 @@ const CustomizePost = (props: Post) => {
     setModalShow(true)
   }
 
-  const handleClickCreateCommentBtnEvent = (content: string) => {
-    dataComments.content = content;
-    if (isBlank(dataComments.content.trim())) {
-      toast.error(TEXT_WARNING_CONTENT_COMMENT_NULL)
-    } else {
+  const handleClickCreateCommentBtnEvent = (content: string, flag: boolean) => {
+    if (flag) {
+      dataComments.content = content;
       callCommentsAPI();
     }
   }
@@ -115,18 +126,20 @@ const CustomizePost = (props: Post) => {
     }
     const status = await deleteCommentAPI(SERVER_ADDRESS + 'api/posts/comment/delete', _data)
     if (status !== STATUS_DELETED) {
-      toast.error(TEXT_WARNING_SYSTEM_ERROR)
+      toast.error(t("Toast.toastNotifyHaveError"));
     }
   }
 
   const handleClickToAvatarAndName = (_userId: number) => {
-    const state = {
-      userId: _userId,
-      group: props.group,
-    };
-    setModalShow(false);
-    setIsOpenComments(false);
-    navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${state.userId}`, { state });
+    if (userIdOfProfileNow !== _userId) {
+      const state = {
+        userId: _userId,
+        group: props.group,
+      };
+      setModalShow(false);
+      setIsOpenComments(false);
+      navigate(`${USER_DETAILS_PAGE}/${slugify(props.name)}-${state.userId}`, { state });
+    }
   }
 
   const handleClickBtnRecruitmentDetailEvent = (idPost: number, title: string) => {
@@ -143,11 +156,11 @@ const CustomizePost = (props: Post) => {
 
   const changeDataToImagGallerys = useCallback(() => {
     const newImagesGallerys: ImageGalleryDisplay[] = props.images.map((element) => ({
-      original: SERVER_ADDRESS + 'api/images/' + element.uri,
-      thumbnail: SERVER_ADDRESS + 'api/images/' + element.uri
+      original: IMAGE_URL + element.uri,
+      thumbnail: IMAGE_URL + element.uri
     }))
     return newImagesGallerys
-  }, [])
+  }, [props.images])
 
   const callCommentsAPI = () => {
     const _data = {
@@ -163,10 +176,10 @@ const CustomizePost = (props: Post) => {
   const handleClickMenuOption = (flag: number) => {
     switch (flag) {
       case CLICK_SAVE_POST_EVENT:
-        handleSavePost();
+        props.iCustomizeLikeAction ? props.handleUnSave(props.id) : handleSavePost();
         break;
       case CLICK_UN_SAVE_POST_EVENT:
-        handleSavePost();
+        props.iCustomizeLikeAction ? props.handleUnSave(props.id) : handleSavePost();
         break;
       case CLICK_DELETE_POST_EVENT:
         handleDeletePostEvent();
@@ -174,9 +187,14 @@ const CustomizePost = (props: Post) => {
       case CLICK_SEE_LIST_CV_POST_EVENT:
         handleSeeListCvPost(props.id, props.title || '');
         break
-        case CLICK_SEE_RESULT_POST_EVENT:
-          navigate(`${SURVEY_RESULT_PAGE}/${slugify(props.title ?? '')}-${props.id}`)
+      case CLICK_SEE_RESULT_POST_EVENT:
+        navigate(`${SURVEY_RESULT_PAGE}/${slugify(props.title ?? '')}-${props.id}`)
         break
+      case CLICK_UPDATE_POST_EVENT:
+        if (props.type.includes(TYPE_NORMAL_POST)) {
+          setCreateNormalPostModalShow(true)
+        }
+        break;
       default:
         return '';
     }
@@ -189,106 +207,225 @@ const CustomizePost = (props: Post) => {
     }
     const status = await savePostAPI(SERVER_ADDRESS + 'api/posts/user/save', data);
     if (status !== STATUS_CREATED) {
-      toast.error(TEXT_WARNING_SYSTEM_ERROR);
+      toast.error(t("Toast.toastNotifyHaveError"));
     }
   }
 
   const handleDeletePostEvent = async () => {
     const status = await deletePostAPI(SERVER_ADDRESS + 'api/posts/', props.id);
     if (status !== STATUS_DELETED) {
-      toast.error(TEXT_WARNING_SYSTEM_ERROR);
+      toast.error(t("Toast.toastNotifyHaveError"));
     }
   }
 
-  switch (props.type) {
-    case TYPE_NORMAL_POST:
-      return (
-        <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
-          {/* Header */}
-          <CustomizeHeaderPost
-            userId={props.userId}
-            name={props.name}
-            avatar={props.avatar}
-            available={props.available}
-            timeCreatePost={props.timeCreatePost}
-            typeAuthor={props.typeAuthor}
-            type={props.type}
-            role={props.role}
-            handleClickMenuOption={handleClickMenuOption}
-            handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
-            isSave={props.isSave}
-          />
-          {/* Body */}
-          <CustomizeBodyPost content={props.content} />
-          {/* Image */}
-          {props.images && props.images.length > 0 && <CustomizeImage images={changeDataToImagGallerys()} />}
-          {/* Bottom */}
-          <CustomizeBottomPost
-            id={props.id}
-            userLoginId={userLogin?.id}
-            role={props.role}
-            isLike={checkLiked(props.likes, userLogin?.id)}
-            likes={props.likes}
-            comments={props.comments}
-            handleClickBottomBtnEvent={handleClickBottomBtnEvent}
-            commentQty={props.commentQty}
-          />
-          <ModalUserLiked
-            likes={props.likes}
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            handleClickToAvatarAndName={handleClickToAvatarAndName}
-          />
-          {
-            isOpenComment && <>
-              <div className='createCommentWrapper'>
-                <CustomizeCommentPost
-                  comments={props.comments}
-                  handleClickToCommentReplyEvent={handleClickToCommentReplyEvent}
-                  handleClickToDeleteCommentsEvent={handleClickToDeleteCommentsEvent}
-                  handleClickToAvatarAndName={handleClickToAvatarAndName}
+  const handleIdentifyTypeAuthor = (type: string) => {
+    if (type == TYPE_POST_FACULTY) {
+      return t("Post.normalPostIdentifyAuthorFaculty")
+    } else if (type == TYPE_POST_BUSINESS) {
+      return t("Post.normalPostIdentifyAuthorCompany")
+    } else {
+      return null;
+    }
+  }
+
+  const handleUpdateNormalPostEvent = useMemo((): UpdateNormalPost => {
+    const updateNormalPost: UpdateNormalPost = {
+      postId: props.id,
+      content: props.content,
+      images: props.images
+    };
+    return updateNormalPost;
+  }, [props])
+
+
+  const getInterfaceClassification = () => {
+    switch (props.type) {
+      case TYPE_NORMAL_POST:
+        return (
+          <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+            {/* Header */}
+            <CustomizeHeaderPost
+              t={t}
+              userId={props.userId}
+              name={getFacultyTranslated(props.name, t)}
+              avatar={props.avatar}
+              available={props.available}
+              timeCreatePost={props.timeCreatePost}
+              typeAuthor={handleIdentifyTypeAuthor(props.typeAuthor ?? '')}
+              type={props.type}
+              role={props.role}
+              handleClickMenuOption={handleClickMenuOption}
+              handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
+              isSave={props.isSave}
+              active={props.active}
+            />
+            {/* Body */}
+            <CustomizeBodyPost t={t} content={props.content} />
+            {/* Image */}
+            {props.images && props.images.length > 0 && <CustomizeImage images={changeDataToImagGallerys()} />}
+            {/* Bottom */}
+            <CustomizeBottomPost
+              id={props.id}
+              userLoginId={userLogin?.id}
+              role={props.role}
+              isLike={checkLiked(props.likes, userLogin?.id)}
+              likes={props.likes}
+              comments={props.comments}
+              handleClickBottomBtnEvent={handleClickBottomBtnEvent}
+              commentQty={props.commentQty}
+              textLike={t("Post.normalPostLike")}
+              textComments={t("Post.normalPostComment")}
+            />
+            <ModalUserLiked
+              t={t}
+              likes={props.likes}
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+              handleClickToAvatarAndName={handleClickToAvatarAndName}
+            />
+            {
+              isOpenComment && <>
+                <div className='createCommentWrapper'>
+                  <CustomizeCommentPost
+                    userCreatedPostId={props.userId}
+                    comments={props.comments}
+                    handleClickToCommentReplyEvent={handleClickToCommentReplyEvent}
+                    handleClickToDeleteCommentsEvent={handleClickToDeleteCommentsEvent}
+                    handleClickToAvatarAndName={handleClickToAvatarAndName}
+                    textReplyComment={t("Comment.commentReplyComment")}
+                    textDeleteComment={t("Comment.commentDeleteComment")}
+                    textSeeMore={t("CommentContainer.commentContainerComponentSeeMore")}
+                    textHidden={t("CommentContainer.commentContainerComponentHidden")}
+                    t={t}
+                  />
+                </div>
+                <CustomizeCreateCommentsToolbar
+                  t={t}
+                  image={userLogin?.image ?? ''}
+                  name={userLogin?.name ?? ''}
+                  tagName={commentAuthorName}
+                  handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
+                  textCreateCommentOfButton={t("CreateCommentToolbar.commentCreateComment")}
+                  textCreateCommentPlaceholderInput={t("CreateCommentToolbar.commentPlaceholderInput")}
                 />
-              </div>
-              <CustomizeCreateCommentsToolbar
-                image={userLogin?.image ?? ''}
-                name={userLogin?.name ?? ''}
-                tagName={commentAuthorName}
-                handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
-              />
-            </>
-          }
-        </div>
-      )
-    case TYPE_RECRUITMENT_POST:
-      return (
-        <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+              </>
+            }
+          </div>
+        )
+      case TYPE_RECRUITMENT_POST:
+        return (
+          <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
+            <CustomizeHeaderPost
+              t={t}
+              userId={props.userId}
+              name={getFacultyTranslated(props.name, t)}
+              avatar={props.avatar}
+              available={props.available}
+              timeCreatePost={props.timeCreatePost}
+              typeAuthor={t("RecruitmentPost.recruitmentPostType")}
+              type={props.type}
+              role={props.role}
+              handleClickMenuOption={handleClickMenuOption}
+              handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
+              isSave={props.isSave}
+              active={props.active}
+            />
+            <CustomizeRecruitmentPost
+              id={props.id}
+              image={props.avatar}
+              name={getFacultyTranslated(props.name, t)}
+              type={props.type}
+              location={props.location ?? ''}
+              title={props.title ?? ''}
+              expiration={props.expiration ?? ''}
+              salary={formatVietNamCurrency(props.salary ?? '')}
+              employmentType={props.employmentType ?? ''}
+              handleClickBtnSeeDetailEvent={handleClickBtnRecruitmentDetailEvent}
+              createdAt={props.timeCreatePost}
+              role={props.role}
+              typeAuthor={props.typeAuthor}
+              textButtonSeeDetail={t("RecruitmentPost.recruitmentPostButtonSeeDetail")}
+            />
+            {/* Bottom */}
+            <CustomizeBottomPost
+              id={props.id}
+              userLoginId={userLogin?.id}
+              role={props.role}
+              isLike={checkLiked(props.likes, userLogin?.id)}
+              likes={props.likes}
+              comments={props.comments}
+              handleClickBottomBtnEvent={handleClickBottomBtnEvent}
+              commentQty={props.commentQty}
+              textLike={t("Post.normalPostLike")}
+              textComments={t("Post.normalPostComment")}
+            />
+            <ModalUserLiked
+              t={t}
+              likes={props.likes}
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+              handleClickToAvatarAndName={handleClickToAvatarAndName}
+            />
+            {
+              isOpenComment && <>
+                <div className='createCommentWrapper'>
+                  <CustomizeCommentPost
+                    userCreatedPostId={props.userId}
+                    comments={props.comments}
+                    handleClickToCommentReplyEvent={handleClickToCommentReplyEvent}
+                    handleClickToDeleteCommentsEvent={handleClickToDeleteCommentsEvent}
+                    handleClickToAvatarAndName={handleClickToAvatarAndName}
+                    textReplyComment={t("Comment.commentReplyComment")}
+                    textDeleteComment={t("Comment.commentDeleteComment")}
+                    textSeeMore={t("CommentContainer.commentContainerComponentSeeMore")}
+                    textHidden={t("CommentContainer.commentContainerComponentHidden")}
+                    t={t}
+                  />
+                </div>
+                <CustomizeCreateCommentsToolbar
+                  t={t}
+                  image={userLogin?.image ?? ''}
+                  name={userLogin?.name ?? ''}
+                  tagName={commentAuthorName}
+                  handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
+                  textCreateCommentOfButton={t("CreateCommentToolbar.commentCreateComment")}
+                  textCreateCommentPlaceholderInput={t("CreateCommentToolbar.commentPlaceholderInput")}
+                />
+              </>
+            }
+          </div>
+        )
+      case TYPE_SURVEY_POST:
+        return <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
           <CustomizeHeaderPost
+            t={t}
             userId={props.userId}
-            name={props.name}
+            name={getFacultyTranslated(props.name, t)}
             avatar={props.avatar}
             available={props.available}
             timeCreatePost={props.timeCreatePost}
-            typeAuthor={props.typeAuthor}
+            typeAuthor={t("SurveyPost.surveyPostType")}
             type={props.type}
             role={props.role}
             handleClickMenuOption={handleClickMenuOption}
             handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
             isSave={props.isSave}
+            active={props.active}
           />
-          <CustomizeRecruitmentPost
+          <CustomizeSurveyPost
             id={props.id}
             image={props.avatar}
-            name={props.name}
+            name={getFacultyTranslated(props.name, t)}
             type={props.type}
-            location={props.location ?? ''}
             title={props.title ?? ''}
-            expiration={props.expiration ?? ''}
-            salary={props.salary ?? ''}
-            employmentType={props.employmentType ?? ''}
-            handleClickBtnSeeDetailEvent={handleClickBtnRecruitmentDetailEvent}
+            handleClickBtnSeeDetailEvent={handleClickBtnSurveyDetailEvent}
             createdAt={props.timeCreatePost}
-            role={props.role}
-            typeAuthor={props.typeAuthor}
+            description={props.description ?? ''}
+            typeAuthor={props.typeAuthor ?? ''}
+            role={props.role ?? ''}
+            isConduct={0}
+            textSurveyPostButton={t("SurveyPost.surveyPostButton")}
+            textSurveyPostButtonSetting={t("SurveyPost.surveyPostButtonSetting")}
           />
           {/* Bottom */}
           <CustomizeBottomPost
@@ -300,162 +437,63 @@ const CustomizePost = (props: Post) => {
             comments={props.comments}
             handleClickBottomBtnEvent={handleClickBottomBtnEvent}
             commentQty={props.commentQty}
+            textLike={t("Post.normalPostLike")}
+            textComments={t("Post.normalPostComment")}
           />
           <ModalUserLiked
+            t={t}
             likes={props.likes}
             show={modalShow}
             onHide={() => setModalShow(false)}
             handleClickToAvatarAndName={handleClickToAvatarAndName}
           />
           {
-            isOpenComment && <>
+            isOpenComment && <div>
               <div className='createCommentWrapper'>
                 <CustomizeCommentPost
+                  userCreatedPostId={props.userId}
                   comments={props.comments}
                   handleClickToCommentReplyEvent={handleClickToCommentReplyEvent}
                   handleClickToDeleteCommentsEvent={handleClickToDeleteCommentsEvent}
                   handleClickToAvatarAndName={handleClickToAvatarAndName}
+                  textReplyComment={t("Comment.commentReplyComment")}
+                  textDeleteComment={t("Comment.commentDeleteComment")}
+                  textSeeMore={t("CommentContainer.commentContainerComponentSeeMore")}
+                  textHidden={t("CommentContainer.commentContainerComponentHidden")}
+                  t={t}
                 />
               </div>
               <CustomizeCreateCommentsToolbar
+                t={t}
                 image={userLogin?.image ?? ''}
                 name={userLogin?.name ?? ''}
                 tagName={commentAuthorName}
                 handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
-              />
-            </>
-          }
-        </div>
-      )
-    case TYPE_SURVEY_POST:
-      return <div className='card w-100 shadow-xss rounded-xxl mb-3 border-0 p-4'>
-        <CustomizeHeaderPost
-          userId={props.userId}
-          name={props.name}
-          avatar={props.avatar}
-          available={props.available}
-          timeCreatePost={props.timeCreatePost}
-          typeAuthor={props.typeAuthor}
-          type={props.type}
-          role={props.role}
-          handleClickMenuOption={handleClickMenuOption}
-          handleClickIntoAvatarAndNameAndMenuEvent={handleClickIntoAvatarAndNameAndMenuEvent}
-          isSave={props.isSave}
-        />
-        <CustomizeSurveyPost
-          id={props.id}
-          image={props.avatar}
-          name={props.name}
-          type={props.type}
-          title={props.title ?? ''}
-          handleClickBtnSeeDetailEvent={handleClickBtnSurveyDetailEvent}
-          createdAt={props.timeCreatePost}
-          description={props.description ?? ''}
-          typeAuthor={props.typeAuthor ?? ''}
-          role={props.role ?? ''}
-          isConduct={0}
-        />
-        {/* Bottom */}
-        <CustomizeBottomPost
-          id={props.id}
-          userLoginId={userLogin?.id}
-          role={props.role}
-          isLike={checkLiked(props.likes, userLogin?.id)}
-          likes={props.likes}
-          comments={props.comments}
-          handleClickBottomBtnEvent={handleClickBottomBtnEvent}
-          commentQty={props.commentQty}
-        />
-        <ModalUserLiked
-          likes={props.likes}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          handleClickToAvatarAndName={handleClickToAvatarAndName}
-        />
-        {
-          isOpenComment && <div>
-            <div className='createCommentWrapper'>
-              <CustomizeCommentPost
-                comments={props.comments}
-                handleClickToCommentReplyEvent={handleClickToCommentReplyEvent}
-                handleClickToDeleteCommentsEvent={handleClickToDeleteCommentsEvent}
-                handleClickToAvatarAndName={handleClickToAvatarAndName}
+                textCreateCommentOfButton={t("CreateCommentToolbar.commentCreateComment")}
+                textCreateCommentPlaceholderInput={t("CreateCommentToolbar.commentPlaceholderInput")}
               />
             </div>
-            <CustomizeCreateCommentsToolbar
-              image={userLogin?.image ?? ''}
-              name={userLogin?.name ?? ''}
-              tagName={commentAuthorName}
-              handleClickCreateCommentBtnEvent={handleClickCreateCommentBtnEvent}
-            />
-          </div>
-        }
-      </div>
-    default:
-      return null
+          }
+        </div>
+      default:
+        return null
+    }
   }
-}
-
-export default CustomizePost
-
-
-
-interface ModalType {
-  show: boolean
-  onHide: () => void,
-  likes: Like[]
-  handleClickToAvatarAndName: (userId: number) => void
-}
-
-function ModalUserLiked(props: Readonly<ModalType>) {
 
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header>
-        <div className='header-modal'>
-          <Modal.Title className='font-xss'>{TEXT_LIST_PERSON_HAD_LIKE}</Modal.Title>
-          <button
-            style={{ position: 'absolute', top: 0, right: 10 }}
-            type='button'
-            className='btn-close-modal-header close font-xl'
-            onClick={props.onHide}
-          >
-            <span aria-hidden='true'>&times;</span>
-          </button>
-        </div>
-      </Modal.Header>
-      <Modal.Body>
-        {
-          props.likes.map((item, index) => {
-            return Boolean(item.image) ?
-              <button
-                onClick={() => props.handleClickToAvatarAndName(item.id)}
-                className='userLikedWrapper' key={item.id}>
-                <img alt='avatar' className='avatar-user-reacted-list me-1 shadow-sm list-user-liked'
-                  src={SERVER_ADDRESS + 'api/images/' + item.image} />
-                <span>
-                  {item.name}
-                </span>
-              </button> :
-              <button
-                onClick={() => props.handleClickToAvatarAndName(item.id)}
-                className='userLikedWrapper'>
-                <DefaultAvatar key={item.id} name={item.name} size={35} styleBootstrap={'me-1 list-user-liked'} />
-                <span>
-                  {item.name}
-                </span>
-              </button>
-          })
-        }
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className='btn btn-outline-secondary bg-primary' onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
+    <>
+      {
+        getInterfaceClassification()
+      }
+      <CreatePostModal
+        show={createNormalPostModalShow}
+        onHide={() => setCreateNormalPostModalShow(false)}
+        group={0}
+        t={t}
+        updateNormalPost={handleUpdateNormalPostEvent}
+      />
+    </>
+  )
 }
+
+export default memo(CustomizePost)

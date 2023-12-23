@@ -1,14 +1,21 @@
 import { QuestionResponse } from './response/QuestionResponse'
 
 export interface Question {
+  id?: undefined,
   type: string
   title: string
-  choices: string[]
+  choices: Choice[]
   required: number
 }
 
+export interface Choice {
+  id?: number
+  content: string
+}
+
+
 export interface QuestionProps {
-  index?: number
+  questionIndex?: number
   dataResponse?: QuestionResponse
   editMode?: boolean
   reviewMode?: boolean

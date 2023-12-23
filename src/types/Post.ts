@@ -30,4 +30,7 @@ export interface Post {
   isConduct: number | null
   isSave: number
   group: string
+  active: number
+  handleUnSave: (post_id: number) => void | undefined
+  iCustomizeLikeAction: boolean
 }

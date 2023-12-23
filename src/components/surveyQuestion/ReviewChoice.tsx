@@ -21,7 +21,7 @@ export default function ReviewChoice(props: ChoiceProps) {
         />
       )}
       <label className='ml-2 pr-3 text-justify text-sm text-gray-900 dark:text-gray-300'>
-        {surveyPostRequest.questions[props.questionIndex ?? -1].choices[props.choiceIndex ?? -1]}
+        {surveyPostRequest.questions[props.questionIndex ?? -1].choices[props.choiceIndex ?? -1].content}
       </label>
     </div>
   )

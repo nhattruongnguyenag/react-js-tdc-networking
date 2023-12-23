@@ -11,6 +11,7 @@ import EditChoice from './EditChoice'
 import QuestionOptions from './QuestionOptions'
 import QuestionTitle from './QuestionTitle'
 import ReviewChoice from './ReviewChoice'
+let md5 = require('md5')
 
 interface MultiQuestionMultiChoiceProps extends QuestionProps {
   onChangeValue?: (choiceIds: number[]) => void
@@ -27,26 +28,36 @@ export default function MultiQuestionOneChoice(props: MultiQuestionMultiChoicePr
 
   const renderChoices = () => {
     if (props.editMode) {
-      return surveyPostRequest.questions[props.index ?? -1].choices.map((item, index) =>
-        <Fragment>
-          <EditChoice type={ONE_CHOICE_QUESTION} key={index} questionIndex={props.index} choiceIndex={index} />
-        </Fragment>
-      )
+      return surveyPostRequest.questions[props.questionIndex ?? -1].choices.map((item, index) => (
+        <EditChoice
+          key={md5(index + Date.now())}
+          type={ONE_CHOICE_QUESTION}
+          questionIndex={props.questionIndex}
+          choiceIndex={index}
+        />
+      ))
     } else if (props.reviewMode) {
-      return surveyPostRequest.questions[props.index ?? -1].choices.map((item, index) =>
-        <ReviewChoice type={ONE_CHOICE_QUESTION} key={index} questionIndex={props.index} choiceIndex={index} />
-      )
+      return surveyPostRequest.questions[props.questionIndex ?? -1].choices.map((item, index) => (
+        <ReviewChoice
+          type={ONE_CHOICE_QUESTION}
+          key={index.toString()}
+          questionIndex={props.questionIndex}
+          choiceIndex={index}
+        />
+      ))
     }
 
-    return questionConducts[props.index ?? -1].choices.map((item, index) =>
+    return surveyPostRequest.questions[props.questionIndex ?? -1].choices.map((item, index) => (
       <ConductChoice
         onSelected={() => {
-          setSelectedChoiceIds([item.voteQuestionId])
+          setSelectedChoiceIds([item.id ?? -1])
         }}
         type={ONE_CHOICE_QUESTION}
-        key={index} questionIndex={props.index}
-        choiceIndex={index} />
-    )
+        key={index.toString()}
+        questionIndex={props.questionIndex}
+        choiceIndex={index}
+      />
+    ))
   }
 
   return (
@@ -55,17 +66,13 @@ export default function MultiQuestionOneChoice(props: MultiQuestionMultiChoicePr
         editMode={props.editMode}
         conductMode={props.conductMode}
         reviewMode={props.reviewMode}
-        index={props.index} />
+        questionIndex={props.questionIndex}
+      />
       <div className='ms-2'>
-        {
-          renderChoices()
-        }
-        {
-          Boolean(props.editMode) &&
-          <AddChoiceButton type={ONE_CHOICE_QUESTION} questionIndex={props.index} />
-        }
+        {renderChoices()}
+        {Boolean(props.editMode) && <AddChoiceButton type={ONE_CHOICE_QUESTION} questionIndex={props.questionIndex} />}
       </div>
-      {Boolean(props.editMode) && <QuestionOptions index={props.index} />}
+      {Boolean(props.editMode) && <QuestionOptions questionIndex={props.questionIndex} editMode={props.editMode} />}
     </div>
   )
 }

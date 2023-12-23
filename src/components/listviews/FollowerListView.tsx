@@ -8,6 +8,7 @@ import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import ItemUserFollower from '../items/ItemUserFollower'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { useTranslation } from 'react-multi-lang'
 
 export interface FollowerType {
     id: any
@@ -15,7 +16,7 @@ export interface FollowerType {
 
 export default function FollowerListView(props: FollowerType) {
     var item = props
-
+    const t = useTranslation();
     const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
     const { data, isFetching } = useGetFollowerUserQuery(
         {
@@ -26,7 +27,7 @@ export default function FollowerListView(props: FollowerType) {
         }
     )
     const [search, setSearch] = useState('')
-    const filter = (data?.data)?.filter(item => item.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))
+    const filter = (data?.data)?.filter(item => item.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(search.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/d/g, 'đ')))
 
 
     return (
@@ -36,7 +37,7 @@ export default function FollowerListView(props: FollowerType) {
                     item.id == userLogin?.id ? <div style={{ position: 'relative' }}>
                         <input
                             type='search'
-                            placeholder='Tìm kiếm ...'
+                            placeholder={t('Options.placeholderSearch')}
                             style={{ width: '100%', marginBottom: 20, marginTop: 20, paddingLeft: 60, paddingRight: 30, borderWidth: '1px', height: '50px', borderRadius: 50 }}
                             onChange={(txt) => {
                                 setSearch(txt.target.value)

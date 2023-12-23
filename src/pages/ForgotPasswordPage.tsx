@@ -5,34 +5,39 @@ import ReactLoading from 'react-loading'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import { useNavigate } from 'react-router-dom'
-import { ACCEPT_FORGOT_PASSWORD_PAGE } from '../constants/Page'
+import { ACCEPT_SEND_EMAIL_PAGE } from '../constants/Page'
 import { toast } from 'react-toastify'
 import { useCookies } from 'react-cookie'
+import '../assets/css/forgotPasswordPage.css'
+import { useTranslation } from 'react-multi-lang'
 
 export default function ForgotPasswordPage() {
+  const t = useTranslation()
   const [email, setEmail] = useState('')
   const [validate, setValidate] = useState<InputTextValidate>({
-    textError: 'Email không được để trống',
+    textError: t('ForgotPassword.email_no_blank'),
     isVisible: false,
     isError: true
   })
   const [border, setBorder] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const [cookies, setCookie] = useCookies(['email'])
+  const [cookies, setCookie] = useCookies(['email', 'url','subject'])
 
   useEffect(() => {}, [email, border])
 
   const sendEmail = (event: any) => {
     if (validate?.isError) {
-      alert('Email không đúng định dạng')
+      alert(t('ForgotPassword.email_no_valid'))
     } else {
       setIsLoading(true)
       axios({
         method: 'post',
         url: `${SERVER_ADDRESS}api/users/get/email/reset`,
         data: {
-          email: email
+          to: email,
+          subject: 'Password reset',
+          content: ''
         }
       })
         .then((res) => {
@@ -40,12 +45,14 @@ export default function ForgotPasswordPage() {
           let expires = new Date()
           expires.setTime(expires.getTime() + 600 * 1000)
           setCookie('email', email, { path: '/', expires })
-          navigate(ACCEPT_FORGOT_PASSWORD_PAGE)
-          toast.success('Gửi thành công')
+          setCookie('url', 'api/users/get/email/reset', { path: '/', expires })
+          setCookie('subject', t('ForgotPassword.password_reset'), { path: '/', expires })
+          navigate(ACCEPT_SEND_EMAIL_PAGE)
+          toast.success(t('ForgotPassword.send_success'))
         })
         .catch((err) => {
           setIsLoading(false)
-          toast.error('Email này chưa được đăng ký !!!')
+          toast.error(t('ForgotPassword.this_email_has_not_registered'))
         })
     }
   }
@@ -57,21 +64,21 @@ export default function ForgotPasswordPage() {
       setValidate({
         isError: true,
         isVisible: true,
-        textError: 'Email không được để trống'
+        textError: t('ForgotPassword.email_no_blank')
       })
     } else if (!isLengthInRange(e.target.value, 1, 255)) {
       setBorder('#ed3e18')
       setValidate({
         isError: true,
         isVisible: true,
-        textError: 'Email không vượt quá 255 ký tự'
+        textError: t('ForgotPassword.email_no_more_length')
       })
     } else if (!isEmail(e.target.value)) {
       setBorder('#ed3e18')
       setValidate({
         isError: true,
         isVisible: true,
-        textError: 'Email sai định dạng'
+        textError: t('ForgotPassword.email_no_valid')
       })
     } else {
       setBorder('#1eaf68')
@@ -89,7 +96,7 @@ export default function ForgotPasswordPage() {
         <div className='formbold-main-wrapper'>
           <div className='formbold-form-wrapper'>
             <div className='formbold-form-title'>
-              <h3>Nhập email để thay đổi mật khẩu</h3>
+              <h3>{t('ForgotPassword.title')}</h3>
             </div>
             <form>
               <div className='form-group icon-input mb-3'>
@@ -115,7 +122,7 @@ export default function ForgotPasswordPage() {
                     onClick={(e) => sendEmail(e)}
                     className='form-control style2-input fw-600 bg-blue border-0 p-0 text-center text-white '
                   >
-                    Xác nhận email
+                    {t('ForgotPassword.confirm')}
                   </button>
                   <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
                     <ReactLoading type='bubbles' color='#ffffff' height={50} width={50} />

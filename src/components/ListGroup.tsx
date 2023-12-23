@@ -3,6 +3,7 @@ import CustomizeGroupItem from './group/CustomizeGroupItem'
 import { useAppSelector } from '../redux/Hook'
 import axios from 'axios'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
+import '../assets/css/group.css'
 
 function ListGroup() {
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
