@@ -739,7 +739,11 @@
     "user_create_watch_job": " が次の求人に応募しました:",
     "in_group": " に",
     "survey_txt": "すぐに調査 >>",
-    "user_update_avatar": "背景画像の更新が成功しました！"
+    "user_update_avatar": "背景画像の更新が成功しました！",
+    "create_recruitment": "募集を投稿しました",
+    "faculty_create_survey": "アンケートを作成しました",
+    "faculty_create_normal": "記事を投稿しました",
+    "recruitment_txt": "今すぐ応募 >>"
   },
   "Post": {
     "normalPostIdentifyAuthorCompany": "企業",

@@ -732,7 +732,11 @@
     "user_create_watch_job": " vừa ứng tuyển bài đăng:",
     "in_group": " trong",
     "survey_txt": "Khảo sát ngay >>",
-    "user_update_avatar": "Bạn vừa cập nhật ảnh nền thành công!"
+    "user_update_avatar": "Bạn vừa cập nhật ảnh nền thành công!",
+    "create_recruitment": " vừa đăng tuyển dụng",
+    "faculty_create_survey": " vừa đăng khảo sát",
+    "faculty_create_normal": " vừa đăng bài viết",
+    "recruitment_txt": "Tuyển dụng ngay >>"
   },
   "ChangePassword": {
     "setting": "Thay đổi mật khẩu",
