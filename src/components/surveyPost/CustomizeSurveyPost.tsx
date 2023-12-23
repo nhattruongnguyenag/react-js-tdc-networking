@@ -4,16 +4,18 @@ import { faAnglesRight } from '@fortawesome/free-solid-svg-icons'
 import { COLOR_WHITE } from '../../constants/Color'
 
 export interface RecruitmentPostType {
-  id: number
-  role: string
-  createdAt: string
-  typeAuthor: string
-  image: string
-  name: string
-  type: string
-  title: string
-  description: string
-  isConduct: number
+  id: number,
+  role: string,
+  createdAt: string,
+  typeAuthor: string,
+  image: string,
+  name: string,
+  type: string,
+  title: string,
+  description: string,
+  isConduct: number,
+  textSurveyPostButton: string,
+  textSurveyPostButtonSetting: string,
   handleClickBtnSeeDetailEvent: (id: number, title: string) => void
 }
 
@@ -28,7 +30,7 @@ export default function CustomizeSurveyPost(props: RecruitmentPostType) {
           className='bg-primary-gradiant button-see-more-recruitment textLocationRecruitment'
         >
           {
-            props.isConduct === 0 ? 'Tiến hành khảo sát' : 'Chỉnh sửa câu trả lời'
+            props.isConduct === 0 ? props.textSurveyPostButton : props.textSurveyPostButtonSetting
           }
           <FontAwesomeIcon icon={faAnglesRight} size='1x' color={COLOR_WHITE} className='icon-arrow-left' />
         </button>

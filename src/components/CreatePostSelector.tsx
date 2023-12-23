@@ -1,16 +1,15 @@
 import { Dropdown } from 'flowbite-react'
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CREATE_RECRUITMENT_POST_PAGE, CREATE_SURVEY_POST_PAGE, USER_DETAILS_PAGE } from '../constants/Page'
-import { TEXT_CREATE_NEW_POST } from '../constants/StringVietnamese'
 import { CreatePostModal } from './modal/CustomizeNormalPostModal'
 import { SERVER_ADDRESS } from '../constants/SystemConstant'
 import DefaultAvatar from './common/DefaultAvatar'
-import CustomizePost from './post/CustomizePost'
 import { slugify } from '../utils/CommonUtls'
 import '../assets/css/createPost.css'
 import { useDispatch } from 'react-redux'
 import { setPreviousPage } from '../redux/Slice'
+import { useTranslation } from 'react-multi-lang'
 
 interface CreatePostSelectorType {
   id: number
@@ -19,10 +18,11 @@ interface CreatePostSelectorType {
   avatar: string
   name: string
 }
-export default function CreatePostSelector(props: Readonly<CreatePostSelectorType>) {
+const CreatePostSelector = (props: Readonly<CreatePostSelectorType>) => {
   const [createNormalPostModalShow, setCreateNormalPostModalShow] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const t = useTranslation();
   const location = useLocation()
 
   const handleClickAvatarEvent = () => {
@@ -35,7 +35,11 @@ export default function CreatePostSelector(props: Readonly<CreatePostSelectorTyp
 
   const startAddSurveyPost = () => {
     dispatch(setPreviousPage(location.pathname))
-    navigate(CREATE_SURVEY_POST_PAGE)
+    navigate(CREATE_SURVEY_POST_PAGE, {
+      state: {
+        group: props.group
+      }
+    })
   }
 
   const startAddRecruitmentPost = () => {
@@ -59,27 +63,31 @@ export default function CreatePostSelector(props: Readonly<CreatePostSelectorTyp
               )}
             </button>
             <Dropdown
-              className='z-50 ms-4 text-black '
+              className='createPostDropdown z-50 ms-4 text-black'
               label=''
               dismissOnClick={true}
               renderTrigger={() => (
                 <span className='ms-1 cursor-pointer rounded-md bg-gradient-to-r from-cyan-600 to-cyan-500 px-4 py-2 text-white'>
-                  {TEXT_CREATE_NEW_POST}
+                  {t("CreatePostToolbar.createPostToolbarTitle")}
                 </span>
               )}
             >
-              <Dropdown.Item onClick={() => setCreateNormalPostModalShow(true)}>Text/Hình ảnh</Dropdown.Item>
-              <Dropdown.Item onClick={() => startAddSurveyPost()}>Khảo sát</Dropdown.Item>
-              <Dropdown.Item onClick={() => startAddRecruitmentPost()}>Tin tuyển dụng</Dropdown.Item>
+              <Dropdown.Item onClick={() => setCreateNormalPostModalShow(true)}>{t("CreatePostSelector.createPostSelectorNormalText")}</Dropdown.Item>
+              <Dropdown.Item onClick={() => startAddSurveyPost()}>{t("CreatePostSelector.createPostSelectorSurveyText")}</Dropdown.Item>
+              <Dropdown.Item onClick={() => startAddRecruitmentPost()}>{t("CreatePostSelector.createPostSelectorRecruitmentText")}</Dropdown.Item>
             </Dropdown>
           </div>
           <CreatePostModal
             show={createNormalPostModalShow}
             onHide={() => setCreateNormalPostModalShow(false)}
             group={props.group}
+            t={t}
+            updateNormalPost={null}
           />
         </div>
       </div>
     </div>
   )
 }
+
+export default memo(CreatePostSelector)

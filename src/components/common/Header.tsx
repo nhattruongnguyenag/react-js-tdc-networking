@@ -1,10 +1,11 @@
-import { Fragment, memo, useState } from 'react'
+import { Fragment, memo, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useAppDispatch } from '../../redux/Hook'
+import { useAppDispatch, useAppSelector } from '../../redux/Hook'
 import { toggleDarkMode } from '../../redux/Slice'
 import NotificationPopup from '../NotificationPopup'
 import MobileNavigation from './MobileNavigation'
 import Navigaion from './Navigation'
+// import '../../assets/css/iconCount.css'
 import {
   BUSINESS_DASHBOARD_PAGE,
   FACULTY_DASHBOARD_PAGE,
@@ -12,19 +13,46 @@ import {
   STUDENT_DASHBOARD_PAGE
 } from '../../constants/Page'
 import NavItem from './NavItem'
+import classNames from 'classnames'
+import { IMAGE_URL } from '../../constants/Path'
+import { useCountNewUpdateConversationsQuery, useGetQualityNotificationQuery } from '../../redux/Service'
 
 function Header() {
+  const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const location = useLocation()
   const [showNotificationPopup, setShowNotificationPopup] = useState(false)
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
+  const [qty, setQty] = useState<any>()
 
+  const { data, isFetching } = useGetQualityNotificationQuery(
+    {
+      id: userLogin?.id ?? -1
+    },
+    {
+      pollingInterval: 3000
+    }
+  )
+
+  const countNewUpdateConversation = useCountNewUpdateConversationsQuery({
+    userId: userLogin?.id ?? -1
+  }, {pollingInterval: 2000})
+
+  useEffect(() => {
+    setQty(data?.data)
+  }, [data, isFetching])
+
+  const getFacultyByFacultyGroupCode = (group: string): string => {
+    let faculty = group.substring(group.indexOf('_') + 1)
+    faculty = 'khoa_' + faculty
+    return faculty
+  }
   return (
     <Fragment>
       <div className='nav-header shadow-xs border-0 bg-white'>
         <div className='nav-top bg-inherit'>
           <Link to={BUSINESS_DASHBOARD_PAGE}>
-            <img src='/assets/images/app-logo.jpg' width={'200px'} />
+            <img src='/assets/images/app-logo.png' width={'200px'} />
           </Link>
           <a className='mob-menu chat-active-btn me-2 ms-auto' href='/defaultmessage'>
             <i className='feather-message-circle text-grey-900 font-sm btn-round-md bg-greylight' />
@@ -48,14 +76,21 @@ function Header() {
           </NavItem>
 
           <NavItem to={STUDENT_DASHBOARD_PAGE} active={Boolean(STUDENT_DASHBOARD_PAGE == location.pathname)}>
-            <i className='feather-rss font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+            <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500' />
           </NavItem>
 
           <NavItem
-            to={FACULTY_DASHBOARD_PAGE + '/cong-nghe-thong-tin'}
+            to={
+              FACULTY_DASHBOARD_PAGE +
+              `/${
+                userLogin?.facultyGroupCode
+                  ? getFacultyByFacultyGroupCode(userLogin?.facultyGroupCode)
+                  : 'danh-sach-khoa'
+              }`
+            }
             active={location.pathname.includes(FACULTY_DASHBOARD_PAGE)}
           >
-            <i className='feather-user font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500 ' />
+            <i className='feather-book font-lg bg-greylight btn-round-lg theme-dark-bg text-grey-500' />
           </NavItem>
 
           <NavItem to={SEARCH_PAGE} active={SEARCH_PAGE == location.pathname}>
@@ -70,11 +105,17 @@ function Header() {
           data-bs-toggle='dropdown'
           aria-expanded='false'
         >
-          <span className='dot-count bg-warning' />
+          <span className='dot-count'>{qty}</span>
+          {/* <div className='icon_count bg-warning'></div> */}
           <i className='feather-bell font-xl text-current' />
         </span>
+        
         <NotificationPopup show={showNotificationPopup} />
         <Link to='/hoi-thoai' className='menu-icon chat-active-btn ms-3 p-2 text-center'>
+          {
+            countNewUpdateConversation.data && ( countNewUpdateConversation.data.count > 0) &&
+            <span className='dot-count'>{countNewUpdateConversation.data?.count}</span>
+          }
           <i className='feather-message-square font-xl text-current' />
         </Link>
         <span
@@ -84,7 +125,18 @@ function Header() {
           <i className='feather-moon font-xl text-current' />
         </span>
         <Link className='menu-icon ms-3 p-0' to='/cai-dat'>
-          <img src='/assets/images/profile-4.png' alt='user' className='w40 mt--1' />
+          {userLogin?.image ? (
+            <img src={IMAGE_URL + userLogin.image} alt='user' className='avatarSetting h-10 w-10 rounded-full object-cover' />
+          ) : (
+            <div
+              className={classNames(
+                'me-2 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r',
+                'from-purple-400 to-blue-400'
+              )}
+            >
+              <span>{userLogin?.name[0]}</span>
+            </div>
+          )}
         </Link>
         <Navigaion />
       </div>

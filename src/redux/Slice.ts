@@ -10,7 +10,7 @@ import { Choice, Question } from '../types/Question'
 import { SurveyPostRequest } from '../types/request/SurveyPostRequest'
 import { QuestionResponse } from '../types/response/QuestionResponse'
 import { Student } from '../types/Student'
-import { getSelectedConversation, getSurveyPostRequest, getUserLogin } from '../utils/CommonUtls'
+import { getSelectedConversation, getUserLogin } from '../utils/CommonUtls'
 import { InputTextValidate } from '../utils/ValidateUtils'
 import { ModalComments } from '../types/ModalComments'
 import { PostRejectedLog } from '../types/PostRejectLog'
@@ -40,6 +40,8 @@ export interface TDCSocialNetworkState {
   modalUserReactionData: ModalUserReaction | null
   updatePost: boolean
   defaultLanguage: string
+  userIdOfProfileNow: number
+  currentScreenNowIsProfileScreen: boolean
 }
 
 export const defaultSurveyPostRequest: SurveyPostRequest = {
@@ -74,7 +76,9 @@ const initialState: TDCSocialNetworkState = {
   modalCommentData: null,
   modalUserReactionData: null,
   updatePost: false,
-  questionConducts: []
+  questionConducts: [],
+  userIdOfProfileNow: 0,
+  currentScreenNowIsProfileScreen: false
 }
 
 export const TDCSocialNetworkSlice = createSlice({
@@ -84,7 +88,7 @@ export const TDCSocialNetworkSlice = createSlice({
     toggleDarkMode: (state, action: PayloadAction<void>) => {
       state.darkMode = !state.darkMode
     },
-    setUserLogin: (state, action: PayloadAction<Student | Faculty | Business>) => {
+    setUserLogin: (state, action: PayloadAction<Student | Faculty | Business | null>) => {
       state.userLogin = action.payload
     },
     setDeviceToken: (state, action: PayloadAction<string>) => {
@@ -161,8 +165,10 @@ export const TDCSocialNetworkSlice = createSlice({
       state.surveyPostRequest.questions[questionIndex].choices[choiceIndex].content = choice
     },
     deleteChoice: (state, action: PayloadAction<{ questionIndex: number; choiceIndex: number }>) => {
-      const { choiceIndex, questionIndex } = action.payload
-      state.surveyPostRequest.questions[questionIndex].choices.splice(choiceIndex, 1)
+      const data = action.payload
+      if (state.surveyPostRequest) {
+        state.surveyPostRequest.questions[data.questionIndex].choices.splice(data.choiceIndex, 1)
+      }
     },
     resetChoices: (state, action: PayloadAction<void>) => {
       state.choices = ['', '', '']
@@ -199,6 +205,12 @@ export const TDCSocialNetworkSlice = createSlice({
     },
     setDefaultLanguage: (state, action: PayloadAction<string>) => {
       state.defaultLanguage = action.payload
+    },
+    setCurrentScreenNowIsProfileScreen: (state, action: PayloadAction<boolean>) => {
+      state.currentScreenNowIsProfileScreen = action.payload
+    },
+    goToProfileScreen: (state, action: PayloadAction<number>) => {
+      state.userIdOfProfileNow = action.payload
     },
     setPostRejectId: (state, action: PayloadAction<number | null>) => {
       state.postRejectId = action.payload
@@ -244,6 +256,8 @@ export const {
   setSelectConversation,
   updatePostWhenHaveChangeComment,
   setQuestionConducts,
+  goToProfileScreen,
+  setCurrentScreenNowIsProfileScreen,
   setPostRejectId,
   setRejectLogResponse,
   setPreviousPage

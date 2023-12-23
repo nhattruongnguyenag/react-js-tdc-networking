@@ -1,25 +1,23 @@
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-multi-lang'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Header from '../components/common/Header'
 import MultiQuestionMultiChoice from '../components/surveyQuestion/MultiQuestionMultiChoice'
 import MultiQuestionOneChoice from '../components/surveyQuestion/MultiQuestionOneChoice'
 import ShortAnswerQuestion from '../components/surveyQuestion/ShortAnswerQuestion'
-import { ADD_QUESTION_PAGE, BUSINESS_DASHBOARD_PAGE } from '../constants/Page'
+import { ADD_QUESTION_PAGE } from '../constants/Page'
 import {
   REVIEW_SURVEY_SCREEN_BUTTON_COMPLETE,
   REVIEW_SURVEY_SCREEN_BUTTON_GO_BACK,
   REVIEW_SURVEY_SCREEN_QUESTION_LIST_TITLE,
-  REVIEW_SURVEY_SCREEN_SAVE_FAIL_TITLE,
-  REVIEW_SURVEY_SCREEN_SAVE_SUCCESS_CONTENT,
   REVIEW_SURVEY_SCREEN_TITLE
 } from '../constants/StringVietnamese'
 import { useAppDispatch, useAppSelector } from '../redux/Hook'
 import { useAddSurveyPostMutation, useUpdateSurveyPostMutation } from '../redux/Service'
-import { defaultSurveyPostRequest, setQuestionValidates, setSurveyPostRequest } from '../redux/Slice'
-import { useTranslation } from 'react-multi-lang'
+import { defaultSurveyPostRequest, setSurveyPostRequest } from '../redux/Slice'
 
 export const SHORT_ANSWER = 'tra-loi-ngan'
 export const ONE_CHOICE_QUESTION = 'chon-mot-dap-an'
@@ -27,16 +25,22 @@ export const MULTI_CHOICE_QUESTION = 'chon-nhieu-dap-an'
 
 export default function ReviewSurveyPostPage() {
   const t = useTranslation()
-  const { userLogin, surveyPostRequest } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { userLogin, surveyPostRequest, previousPage } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [addSurvey, addSurveyResult] = useAddSurveyPostMutation()
   const [updateSurvey, updateSurveyResult] = useUpdateSurveyPostMutation()
 
   useEffect(() => {
+    console.log('22222222', surveyPostRequest.questions)
+  }, [surveyPostRequest])
+
+  useEffect(() => {
     if (addSurveyResult.data) {
       if (addSurveyResult.data.status === 201 || 200) {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenSaveSuccessContent'))
+        navigate(previousPage)
+        dispatch(setSurveyPostRequest(defaultSurveyPostRequest))
       } else {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenSaveFailContent'))
       }
@@ -47,10 +51,11 @@ export default function ReviewSurveyPostPage() {
     if (updateSurveyResult.data) {
       if (updateSurveyResult.data.status === 201 || 200) {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenUpdateSuccessContent'))
+        navigate(previousPage)
+        dispatch(setSurveyPostRequest(defaultSurveyPostRequest))
       } else {
         toast.success(t('ReviewSurveyPostScreen.reviewSurveyScreenSaveFailContent'))
       }
-      dispatch(setSurveyPostRequest(defaultSurveyPostRequest))
     }
   }, [updateSurveyResult])
 
@@ -84,12 +89,12 @@ export default function ReviewSurveyPostPage() {
 
               {surveyPostRequest.questions.map((item, index) => {
                 if (item.type === MULTI_CHOICE_QUESTION) {
-                  return <MultiQuestionMultiChoice reviewMode key={index} index={index} />
+                  return <MultiQuestionMultiChoice reviewMode key={index} questionIndex={index} />
                 } else if (item.type === ONE_CHOICE_QUESTION) {
-                  return <MultiQuestionOneChoice reviewMode key={index} index={index} />
+                  return <MultiQuestionOneChoice reviewMode key={index} questionIndex={index} />
                 }
 
-                return <ShortAnswerQuestion reviewMode key={index} index={index} />
+                return <ShortAnswerQuestion reviewMode key={index} questionIndex={index} />
               })}
 
               <div className='mt-5 flex flex-row items-center justify-evenly'>

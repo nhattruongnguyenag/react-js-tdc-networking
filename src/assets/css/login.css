@@ -2,7 +2,7 @@
   display: flex;
 }
 
-.loading {
+.loadingg {
   position: absolute;
   right: 80px;
   bottom: 40px;
@@ -80,6 +80,16 @@ h4 {
   -ms-overflow-style: none;
 }
 
+.manage{
+  height: 72vh;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.manage::-webkit-scrollbar {
+  display: none;
+}
 .register::-webkit-scrollbar {
   display: none;
 }
@@ -95,12 +105,13 @@ h4 {
   padding: 10px !important;
   border-radius: 10px !important;
   padding-left: 20px;
+  width: 400px;
 }
 
-.bg-recruitment:active {
+/* .bg-recruitment:active {
   border-radius: 10px;
   box-shadow: 2px 2px 5px #3cb371 !important;
-}
+} */
 
 .main-content {
   margin-top: 20px;
@@ -113,7 +124,7 @@ h4 {
 }
 
 .group-recruitment {
-  background-color: #E0F4FF;
+  background-color: hwb(204 49% 5%);
   border-radius: 10px;
   padding-top: 10px;
   padding-left: 20px;
@@ -147,14 +158,13 @@ h4 {
   padding: 0px 5px;
   margin-left: 20px;
   margin-top: 5px;
-
 }
 
-.item-recruitment-description::before {
+.item-recruitment-description::after {
   content: '';
   width: 4px;
   height: 4px;
-  background-color: black;
+  background-color: #000;
   position: absolute;
   border-radius: 50%;
   left: -5px;
@@ -174,12 +184,15 @@ h4 {
 /* css list job apply */
 .item-job-apply {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.group-job-apply {
   background-color: #fff;
   box-shadow: 2px 2px 5px 3px #E0F4FF;
   border-radius: 10px;
-  justify-content: space-between;
   padding: 10px 40px;
-  width: 80%;
+  width: 82%;
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
@@ -191,7 +204,9 @@ h4 {
 }
 
 .date {
-  text-align: right;
+  align-items: flex-end;
+  margin-top: 0;
+  width: auto;
 }
 
 .tam {
@@ -221,17 +236,17 @@ h4 {
 }
 
 .download {
-  color: #fff;
-  background-color: #3cb371;
+  color: #3cb371;
   font-weight: bold;
-  padding: 5px;
-  margin-left: 20px;
-  border-radius: 10px;
+  padding: 3px;
+  border-radius: 5px;
 }
 
 .download:hover {
   color: #fff;
+  background-color: #61d897;
   box-shadow: 2px 2px 5px #3cb371 !important;
+  border-color: #fff;
 }
 
 h1,
@@ -255,5 +270,33 @@ h2 {
 
 .element.style {
   border-color: rgb(238, 238, 238);
+}
+
+.btnBottom{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.css-b62m3t-container{
+  width: 72%;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+  border-color: #000;
+}
+
+.css-1dimb5e-singleValue {
+  font-weight: bold;
+}
+
+.text-p{
+  word-break: break-all;
+}
+
+.pass{
+  display: flex;
+  flex-direction: row;
 }
 

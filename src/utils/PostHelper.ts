@@ -5,16 +5,17 @@ import { SurveyPostResponseModel } from "../types/response/SurveyPostResponseMod
 import { TextImagePostResponseModel } from "../types/response/TextImagePostResponseModel";
 
 export function buildPostSearchRequest(postSearchRequest: PostSearchRequest) {
-    let key: keyof PostSearchRequest
-    let params: String[] = []
+  let key: keyof PostSearchRequest
+  let params: String[] = []
 
-    for (key in postSearchRequest) {
-        if (Boolean(postSearchRequest[key]) !==  undefined) {
-            params.push(`${key}=${postSearchRequest[key]}`)
-        }
+  for (key in postSearchRequest) {
+    if (Boolean(postSearchRequest[key]) !== undefined && String(postSearchRequest[key]).trim().length > 0) {
+      params.push(`${key}=${postSearchRequest[key]}`)
     }
+  }
 
-    return params.join('&')
+  console.log(params.join('&'))
+  return params.join('&')
 }
 
 export function isRecruitmentPost(post?: any): post is RecruitmentPostResponseModel {

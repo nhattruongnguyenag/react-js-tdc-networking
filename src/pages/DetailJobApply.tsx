@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getIdFromSlug } from '../utils/CommonUtls'
+import Header from '../components/common/Header'
+import { useTranslation } from 'react-multi-lang'
 
 export default function DetailJobApply() {
     const [sourcePDF, setSource] = useState('')
@@ -15,6 +17,7 @@ export default function DetailJobApply() {
     const navigate = useNavigate()
     const { slug } = useParams()
     const cvId = getIdFromSlug(slug ?? '')
+    const t = useTranslation()
 
     console.log('cvId: ', cvId)
     useEffect(() => {
@@ -35,6 +38,8 @@ export default function DetailJobApply() {
     }, [])
 
     return (
+        <>
+        <Header />
         <div className='main-content theme-dark-bg' style={{backgroundColor: '#e6e6e6'}}>
             <div className='middle-sidebar-left'>
                 <div className='middle'>
@@ -72,7 +77,7 @@ export default function DetailJobApply() {
                             style={{
                                 position: 'fixed',
                                 left: 100,
-                                top: 40,
+                                top: 120,
                                 height: 40,
                                 borderRadius: 20,
                                 backgroundColor: '#fff',
@@ -83,13 +88,13 @@ export default function DetailJobApply() {
                             }}
                             onClick={() => navigate(-1)}
                         >
-                            <p style={{ fontSize: 20 }}>Quay lại</p>
+                            <p style={{ fontSize: 20 }}>{t("Setting.back")}</p>
                         </button>
                         <button
                             style={{
                                 position: 'fixed',
                                 right: 90,
-                                top: 40,
+                                top: 120,
                                 height: 70,
                                 width: 70,
                                 borderRadius: 50,
@@ -105,5 +110,7 @@ export default function DetailJobApply() {
                 </div>
             </div>
         </div>
+        </>
+        
     )
 }

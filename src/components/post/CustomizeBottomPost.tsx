@@ -2,18 +2,20 @@ import React from 'react'
 import { Like } from '../../types/Like'
 import { Comment } from '../../types/Comment'
 import { COMMENT_ACTION, LIKE_ACTION, SHOW_LIST_USER_REACTED } from '../../constants/Variables'
-import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import DefaultAvatar from '../common/DefaultAvatar'
+import { IMAGE_URL } from '../../constants/Path'
 
 export interface BottomPostType {
-  id: number
-  userLoginId: number | undefined
-  role: string
-  handleClickBottomBtnEvent: (a: number | null) => void
-  isLike: boolean
-  comments: Comment[] | null
-  likes: Like[]
-  commentQty: number
+  id: number,
+  userLoginId: number | undefined,
+  role: string,
+  handleClickBottomBtnEvent: (a: number | null) => void,
+  isLike: boolean,
+  comments: Comment[] | null,
+  likes: Like[],
+  commentQty: number,
+  textLike: string,
+  textComments: string
 }
 
 const CustomizeBottomPost = (props: BottomPostType) => {
@@ -46,7 +48,7 @@ const CustomizeBottomPost = (props: BottomPostType) => {
         Boolean(item.image) ? (
           <img
             key={item.id}
-            src={SERVER_ADDRESS + 'api/images/' + item.image}
+            src={IMAGE_URL + item.image}
             alt='avatar'
             className='avatar-user-reacted-list me-1 shadow-sm'
           />
@@ -67,7 +69,7 @@ const CustomizeBottomPost = (props: BottomPostType) => {
           ) : (
             <i className='feather-thumbs-up btn-round-xs font-xss text-dark me-1 unlike' />
           )}
-          {getLikeQty(props.likes)} Like
+          {getLikeQty(props.likes)} {props.textLike}
         </button>
       </div>
       <button
@@ -75,7 +77,7 @@ const CustomizeBottomPost = (props: BottomPostType) => {
         className='d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss'
       >
         <i className='feather-message-circle text-dark text-grey-900 btn-round-sm font-lg' />
-        <span className='d-none-xss'>{props.commentQty} Comment</span>
+        <span className='d-none-xss'>{props.commentQty} {props.textComments}</span>
       </button>
 
       <button

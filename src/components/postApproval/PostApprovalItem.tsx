@@ -6,6 +6,7 @@ import HeaderPostApprovalItem from './HeaderPostApprovalItem'
 import RecruitmentPostApprovalItem from './RecruitmentPostApprovalItem'
 import SurveyPostApprovalItem from './SurveyPostApprovalItem'
 import TextImagePostApprovalItem from './TextImagePostApprovalItem'
+import { UpdateNormalPost } from '../../types/UpdateNormalPost'
 
 export const POST_APPROVAL = 0
 export const POST_PENDING = 1
@@ -18,10 +19,11 @@ export interface PostApprovalItemProps {
 
 export default function PostApprovalItem(props: PostApprovalItemProps) {
   return (
-    <div className='bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-3 mt-4'>
+    <div className='border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-3 mt-4'>
       <HeaderPostApprovalItem
         type={props.type}
-        post={props.post} />
+        post={props.post}
+      />
 
       <div>
         {isTextImagePost(props.post) && <TextImagePostApprovalItem post={props.post} />}

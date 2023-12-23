@@ -2,6 +2,7 @@ import { Base } from '../Base'
 
 export interface SurveyResponse extends Base {
   isConduct: number
+  active: number
   questions: QuestionResponse[]
 }
 
@@ -13,6 +14,6 @@ export interface QuestionResponse extends Base {
 }
 
 interface Choice {
-  voteQuestionId: number
+  id: number
   content: string
 }
