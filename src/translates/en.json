@@ -213,7 +213,8 @@
     "normal": "Post",
     "survey": "Survey",
     "recruitment": "Recruitment",
-    "search": "Enter search content..."
+    "search": "Enter search content...",
+    "txt": "No matching search results found!"
   },
   "ToolbarTitle": {
     "recruitmentDetailScreen": "Recruitment details",
@@ -732,7 +733,11 @@
     "user_create_watch_job": " has applied for the job posting:",
     "in_group": " in",
     "survey_txt": "Survey now >>",
-    "user_update_avatar": "You have successfully updated your background image!"
+    "user_update_avatar": "You have successfully updated your background image!",
+    "create_recruitment": "just posted a job opening",
+    "faculty_create_survey": "just created a survey",
+    "faculty_create_normal": "just posted an article",
+    "recruitment_txt": "Apply now >>"
   },
  "ChangePassword": {
     "setting": "Change Password",

@@ -17,6 +17,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Select from 'react-select'
 import { t } from 'react-multi-lang'
+let md5 = require('md5')
 
 export interface JobApplyResponseData {
   status: string
@@ -123,7 +124,7 @@ export default function ListJobApplyPage() {
                     {data?.data.map(
                       (data, index) =>
                         data.status === value && (
-                          <div className='group-job-apply theme-dark-bg' key={index}>
+                          <div className='group-job-apply theme-dark-bg' key={md5(index + Date.now())}>
                             <div className='item-job-apply theme-dark-bg'>
                               <div className='tam'>
                                 <div className='img-job-apply'>
