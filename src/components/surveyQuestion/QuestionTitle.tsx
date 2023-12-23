@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 import {
   ADD_QUESTION_VIEW_COMPONENT_TITLE_CONTAINS_SPECIAL_CHARACTER_VALIDATE,
   ADD_QUESTION_VIEW_COMPONENT_TITLE_INPUT_PLACEHOLDER,
@@ -18,9 +18,10 @@ interface QuestionTitleProps {
 }
 
 export default function QuestionTitle(props: QuestionTitleProps) {
-  const { surveyPostRequest, questionTitleValidates, questionConducts } = useAppSelector(
+  const { surveyPostRequest, questionTitleValidates } = useAppSelector(
     (state) => state.TDCSocialNetworkReducer
   )
+  const inputTitleRef = useRef<HTMLInputElement | null>(null)
   const dispatch = useAppDispatch()
   const questionIndex = props.questionIndex ?? -1
   const validate = questionTitleValidates[questionIndex]
@@ -44,7 +45,8 @@ export default function QuestionTitle(props: QuestionTitleProps) {
     [questionTitleValidates]
   )
 
-  const onTitleChangeText = (value: string) => {
+  const onFocusOut = () => {
+    let value = inputTitleRef.current?.value ?? ''
     dispatch(
       updateQuestion({
         index: questionIndex,
@@ -75,15 +77,16 @@ export default function QuestionTitle(props: QuestionTitleProps) {
   return (
     <div className='border-b-[1px] border-b-gray-500'>
       <div className={classNames('relative z-0 ms-2 mt-4')}>
-        <input
-          value={questionTitle}
-          disabled={Boolean(props.reviewMode || props.conductMode)}
-          onChange={(event) => onTitleChangeText(event.target.value)}
-          type='text'
-          id='floating_standard'
-          className='peer block w-full appearance-none text-ellipsis border-0 border-b-2 border-gray-300 bg-transparent pb-2 pr-3 pt-3 text-sm font-medium text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500'
-          placeholder={ADD_QUESTION_VIEW_COMPONENT_TITLE_INPUT_PLACEHOLDER}
-        />
+      <input
+        ref={inputTitleRef}
+        onBlur={() => onFocusOut()}
+        defaultValue={questionTitle}
+        disabled={Boolean(props.reviewMode || props.conductMode)}
+        type='text'
+        id='floating_standard'
+        className='peer block w-full appearance-none text-ellipsis border-0 border-b-2 border-gray-300 bg-transparent pb-2 pr-3 pt-3 text-sm font-medium text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500'
+        placeholder={ADD_QUESTION_VIEW_COMPONENT_TITLE_INPUT_PLACEHOLDER}
+      />
 
         <label
           htmlFor='floating_standard'

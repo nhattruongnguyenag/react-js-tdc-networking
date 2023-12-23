@@ -43,7 +43,6 @@ export default function EditChoice(props: ChoiceProps) {
         />
       )}
       <input
-        autoFocus
         ref={inputRef}
         placeholder={ADD_QUESTION_VIEW_COMPONENT_CHOICE_INPUT_PLACEHOLDER + ' ' + (choiceIndex + 1)}
         onBlur={() => {
