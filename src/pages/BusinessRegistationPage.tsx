@@ -793,7 +793,7 @@ export default function BusinessRegistationPage() {
                       >
                         {t('RegisterBusinessComponent.titleRegister')}
                       </button>
-                      <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
+                      <div className='loadingg' style={{ display: isLoading ? 'flex' : 'none' }}>
                         <ReactLoading type='bubbles' color='#ffff' height={50} width={50} />
                       </div>
                     </div>
