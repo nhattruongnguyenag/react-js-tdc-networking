@@ -1,0 +1,18 @@
+.wrapperButtonToTopIcon {
+  position: absolute;
+  inset: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapperButtonToTop {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50px;
+  background-color: #fff;
+  box-shadow: 0px 0px 2px 2px #888888;
+}

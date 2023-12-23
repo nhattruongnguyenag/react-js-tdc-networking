@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { COLOR_BTN_BLUE } from '../../constants/Color'
@@ -10,6 +9,7 @@ import { useAppSelector } from '../../redux/Hook'
 import PostOptionsMenu from '../menu/PostOptionsMenu'
 import { MenuOptionItem } from '../../types/MenuOptionItem'
 import { useTranslation } from 'react-multi-lang'
+import { IMAGE_URL } from '../../constants/Path'
 
 export interface HeaderPostPropsType {
   t: ReturnType<typeof useTranslation>,
@@ -84,7 +84,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
         <button onClick={() => props.handleClickIntoAvatarAndNameAndMenuEvent(GO_TO_PROFILE_ACTIONS)}>
           {Boolean(props.avatar) ? (
             <img
-              src={SERVER_ADDRESS + 'api/images/' + props.avatar}
+              src={IMAGE_URL + props.avatar}
               alt='avatar'
               className='avatar-user-header-post shadow-sm'
             />
@@ -108,9 +108,7 @@ const CustomizeHeaderPost = (props: HeaderPostPropsType) => {
           {props.role !== TYPE_POST_STUDENT && (
             <span className='typeAuthorShow bg-greylight'>{props.typeAuthor}</span>
           )}
-          {props.type !== TYPE_RECRUITMENT_POST && (
-            <span className='d-block font-xssss fw-500 lh-3 text-grey-500 mt-1'>{props.timeCreatePost}</span>
-          )}
+          <span className='d-block font-xssss fw-500 lh-3 text-grey-500 mt-1'>{props.timeCreatePost}</span>
         </h4>
       </div>
       <PostOptionsMenu key="postOptionsMenu" menuOptions={menuOptions} handleClickMenuOption={props.handleClickMenuOption} />

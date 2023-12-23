@@ -201,7 +201,6 @@ export default function CreateRecruitmentPostPage() {
 
   const onExpirationChangeText = useCallback(
     (value: string) => {
-      console.log(validate.expiration.textError)
       if (moment().isAfter(moment(value.replace('T', ' ')))) {
         setValidate({
           ...validate,
@@ -221,6 +220,11 @@ export default function CreateRecruitmentPostPage() {
           }
         })
       }
+
+      setRecruitmentPostRequest({
+        ...recruitmentPostRequest,
+        expiration: value.replace('T', ' ')
+      })
     },
     [validate]
   )
@@ -291,7 +295,6 @@ export default function CreateRecruitmentPostPage() {
 
   useEffect(() => {
     if (createRecruitmentPostResponse.data) {
-      console.log(previousPage)
       navigate(previousPage)
       toast.success(t('RecruitmentScreen.recruitmentSaveSuccessContent'))
     }
@@ -299,7 +302,6 @@ export default function CreateRecruitmentPostPage() {
 
   useEffect(() => {
     if (updateRecruitmentPostResponse.data) {
-      console.log(previousPage)
       navigate(previousPage)
       toast.success(t('RecruitmentScreen.recruitmentUpdateSuccessContent'))
     }

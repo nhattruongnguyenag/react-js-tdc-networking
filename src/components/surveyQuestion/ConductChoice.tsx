@@ -8,7 +8,7 @@ interface ConductChoiceProps extends ChoiceProps {
 }
 
 export default function ConductChoice(props: ConductChoiceProps) {
-  const { questionConducts } = useAppSelector((state) => state.TDCSocialNetworkReducer)
+  const { surveyPostRequest } = useAppSelector((state) => state.TDCSocialNetworkReducer)
 
   return (
     <div className='mt-3 flex items-center'>
@@ -31,7 +31,7 @@ export default function ConductChoice(props: ConductChoiceProps) {
       <label
         htmlFor={(props.type && props.type === ONE_CHOICE_QUESTION ? 'radio-' : 'checkbox-') + props.choiceIndex?.toString()}
         className='ml-2 pr-3 text-justify text-sm text-gray-900 dark:text-gray-300'>
-        {questionConducts[props.questionIndex ?? -1].choices[props.choiceIndex ?? -1].content}
+        {surveyPostRequest.questions[props.questionIndex ?? -1].choices[props.choiceIndex ?? -1].content}
       </label>
     </div>
   )

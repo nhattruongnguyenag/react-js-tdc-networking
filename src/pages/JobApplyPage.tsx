@@ -80,7 +80,7 @@ export default function JobApplyPage() {
       }).catch((error)=>{
         toast.error(t('JobApplyScreen.jobApplyScreenUpdateFalse'))
       })
-    } else if (fileName) {
+    } else if (fileName && postId) {
       axios({
         method: 'post',
         url: `${SERVER_ADDRESS}api/job/apply`,
@@ -92,7 +92,7 @@ export default function JobApplyPage() {
       }).then((res) => {
         setIsAnonymous(true)
         navigate(-1)
-        toast.success(t('JobApplyScreen.jobApplyScreenSuccess'))
+        toast.success(t('JobApplyScreen.jobApplyScreenSaveSuccessTextContent'))
       })
     } else {
       toast.error(t('JobApplyScreen.jobApplyScreenFalse'))

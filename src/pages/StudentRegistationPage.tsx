@@ -14,13 +14,16 @@ import {
   isContainSpecialCharacter,
   isEmail,
   isLengthInRange,
-  isPassword
+  isPassword,
+  isPhone
 } from '../utils/ValidateUtils'
 import TextValidate from '../components/TextValidate'
 import ReactLoading from 'react-loading'
 import { handleUploadImage } from '../utils/UploadUtils'
 import { ACCEPT_SEND_EMAIL_PAGE, LOGIN_PAGE } from '../constants/Page'
 import { useTranslation } from 'react-multi-lang'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 interface RegisterStudent {
   name: InputTextValidate
@@ -30,6 +33,7 @@ interface RegisterStudent {
   facultyName: InputTextValidate
   password: InputTextValidate
   confimPassword: InputTextValidate
+  phone: InputTextValidate
 }
 
 const isAllFieldsValid = (validate: RegisterStudent): boolean => {
@@ -119,8 +123,30 @@ export default function StudentRegistationPage() {
       textError: t('RegisterStudentComponent.errorConfimPasswordEmpty'),
       isVisible: false,
       isError: true
+    },
+    phone: {
+      textError: t('RegisterBusinessComponent.errorPhoneEmpty'),
+      isVisible: false,
+      isError: true
     }
   })
+
+  const [isCheck, setCheck] = useState(true)
+  const [isCheck1, setCheck1] = useState(true)
+  const onCheck = () => {
+    if (isCheck) {
+      setCheck(false)
+    } else {
+      setCheck(true)
+    }
+  }
+  const onCheck1 = () => {
+    if (isCheck1) {
+      setCheck1(false)
+    } else {
+      setCheck1(true)
+    }
+  }
 
   const handleStudentNameChange = useCallback(
     (event: any) => {
@@ -168,6 +194,44 @@ export default function StudentRegistationPage() {
     },
     [validate]
   )
+
+  const handlePhoneChange = useCallback(
+    (event: any) => {
+      if (isBlank(event.target.value)) {
+        setValidate({
+          ...validate,
+          phone: {
+            ...validate.phone,
+            isError: true,
+            textError: t('RegisterBusinessComponent.errorPhoneEmpty'),
+            isVisible: true
+          }
+        })
+      } else if (!isPhone(event.target.value)) {
+        setValidate({
+          ...validate,
+          phone: {
+            ...validate.phone,
+            isError: true,
+            textError: t('RegisterBusinessComponent.errorPhoneNotFormat'),
+            isVisible: true
+          }
+        })
+      } else {
+        setStudent({ ...student, phone: event.target.value })
+        setValidate({
+          ...validate,
+          phone: {
+            ...validate.phone,
+            isError: false,
+            isVisible: false
+          }
+        })
+      }
+    },
+    [validate]
+  )
+
   const handleStudentCodeChange = useCallback(
     (event: any) => {
       const stCode = new RegExp(/^[0-9]{5}[a-zA-Z]{2}[0-9]{4}$/)
@@ -463,7 +527,7 @@ export default function StudentRegistationPage() {
           setCookie('email', student.email, { path: '/', expires })
           setCookie('url', 'api/users/get/email/authen/register', { path: '/', expires })
           setCookie('subject', t('RegisterStudentComponent.textAccountAuthen'), { path: '/', expires })
-          toast.success(t('RegisterStudentComponent.registerSusccess'))
+          // toast.success(t('RegisterStudentComponent.registerSusccess'))
           navigate(ACCEPT_SEND_EMAIL_PAGE)
         })
         .catch((error) => {
@@ -560,6 +624,21 @@ export default function StudentRegistationPage() {
                     />
                   </div>
                   <div className='form-group icon-input mb-3'>
+                    <i className='font-sm ti-mobile text-grey-500 pe-0'> </i>
+                    <input
+                      type='text'
+                      onChange={(e) => handlePhoneChange(e)}
+                      className='style2-input form-control text-grey-900 font-xsss fw-600 ps-5'
+                      placeholder={t('RegisterBusinessComponent.titlePhone')}
+                      style={{ borderColor: !validate.phone?.isError ? '#228b22' : '#eee' }}
+                    />
+                    <TextValidate
+                      textError={validate.phone?.textError}
+                      isError={validate.phone?.isError}
+                      isVisible={validate.phone?.isVisible}
+                    />
+                  </div>
+                  <div className='form-group icon-input mb-3'>
                     <i className='font-sm ti-bag text-grey-500 pe-0 '> </i>
                     <select
                       className='style2-input form-control font-xsss fw-600 ps-5 pt-0'
@@ -599,36 +678,49 @@ export default function StudentRegistationPage() {
                       isVisible={validate.major?.isVisible}
                     />
                   </div>
-                  <div className='form-group icon-input mb-3'>
+
+                  <div className='form-group icon-input gr mb-3'>
                     <input
-                      type='Password'
+                      type={!isCheck ? 'text' : 'password'}
                       onChange={(e) => handlePasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
                       placeholder={t('RegisterStudentComponent.titlePass')}
                       style={{ borderColor: !validate.password?.isError ? '#228b22' : '#eee' }}
                     />
-                    <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
-                    <TextValidate
-                      textError={validate.password?.textError}
-                      isError={validate.password?.isError}
-                      isVisible={validate.password?.isVisible}
-                    />
+                    <i className='font-sm ti-lock text-grey-500 pe-0'> </i>
+                    <button type='button' onClick={() => onCheck()}>
+                      <FontAwesomeIcon
+                        style={{ position: 'absolute', right: 15, bottom: 20, color: 'grey' }}
+                        icon={!isCheck ? faEye : faEyeSlash}
+                      />
+                    </button>
                   </div>
-                  <div className='form-group icon-input mb-3'>
+                  <TextValidate
+                    textError={validate.password?.textError}
+                    isError={validate.password?.isError}
+                    isVisible={validate.password?.isVisible}
+                  />
+                  <div className='form-group icon-input gr mb-3'>
                     <input
-                      type='Password'
+                      type={!isCheck1 ? 'text' : 'password'}
                       onChange={(e) => handleConfirmPasswordChange(e)}
                       className='style2-input form-control text-grey-900 font-xss ls-3 ps-5'
                       placeholder={t('RegisterStudentComponent.titleConfimPass')}
                       style={{ borderColor: !validate.confimPassword?.isError ? '#228b22' : '#eee' }}
                     />
                     <i className='font-sm ti-lock text-grey-500 pe-0'> </i>{' '}
-                    <TextValidate
-                      textError={validate.confimPassword?.textError}
-                      isError={validate.confimPassword?.isError}
-                      isVisible={validate.confimPassword?.isVisible}
-                    />
+                    <button type='button' onClick={() => onCheck1()}>
+                      <FontAwesomeIcon
+                        style={{ position: 'absolute', right: 15, bottom: 20, color: 'grey' }}
+                        icon={!isCheck1 ? faEye : faEyeSlash}
+                      />
+                    </button>
                   </div>
+                  <TextValidate
+                    textError={validate.confimPassword?.textError}
+                    isError={validate.confimPassword?.isError}
+                    isVisible={validate.confimPassword?.isVisible}
+                  />
                   <div className='d-flex mt-3 p-0'>
                     <input
                       type={'file'}

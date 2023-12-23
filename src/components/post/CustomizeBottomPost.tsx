@@ -2,8 +2,8 @@ import React from 'react'
 import { Like } from '../../types/Like'
 import { Comment } from '../../types/Comment'
 import { COMMENT_ACTION, LIKE_ACTION, SHOW_LIST_USER_REACTED } from '../../constants/Variables'
-import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import DefaultAvatar from '../common/DefaultAvatar'
+import { IMAGE_URL } from '../../constants/Path'
 
 export interface BottomPostType {
   id: number,
@@ -48,7 +48,7 @@ const CustomizeBottomPost = (props: BottomPostType) => {
         Boolean(item.image) ? (
           <img
             key={item.id}
-            src={SERVER_ADDRESS + 'api/images/' + item.image}
+            src={IMAGE_URL + item.image}
             alt='avatar'
             className='avatar-user-reacted-list me-1 shadow-sm'
           />

@@ -10,11 +10,13 @@ import { NormalPost } from '../../types/NormalPost'
 import { COLOR_BTN_BLUE, COLOR_WHITE } from '../../constants/Color'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { createNorMalPostAPI, updateNormalPostAPI } from '../../api/CallAPI'
+import { createNorMalPostAPI } from '../../api/CallAPI'
 import { t, useTranslation } from 'react-multi-lang'
 import { UpdateNormalPost } from '../../types/UpdateNormalPost'
 import { SERVER_ADDRESS } from '../../constants/SystemConstant'
 import { setImagesUpload } from '../../redux/Slice'
+import '../../assets/css/createNormalPost.css'
+import { useUpdateNormalPostMutation } from '../../redux/Service'
 
 export interface CreateNormalPostType {
   t: ReturnType<typeof useTranslation>,
@@ -23,6 +25,7 @@ export interface CreateNormalPostType {
   updateNormalPost: UpdateNormalPost | null
 }
 const CreateNormalPost = (props: CreateNormalPostType) => {
+  const [updatePost, updatePostResponse] = useUpdateNormalPostMutation()
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const buttonRef = useRef<HTMLButtonElement | null>(null)
   const buttonCallPickerImgRef = useRef<HTMLButtonElement | null>(null)
@@ -104,16 +107,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
       content: content,
       images: imageUpload
     }
-    const status = await updateNormalPostAPI(API_URL_NORMAL_POST, data);
-    if (status === 201) {
-      toast.success(props.t("Toast.toastUpdateProfileSuccess"))
-      setImagesUpload([])
-      resetData()
-      disable()
-      props.onHide()
-    } else {
-      toast.error(props.t("Toast.toastUpdateProfileUnSuccess"))
-    }
+    updatePost(data);
   }
   const createNormalPost = async (fakeImages: string[]) => {
     normalPost.images = fakeImages
@@ -136,6 +130,20 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
     }
   }
 
+  useEffect(() => {
+    if (updatePostResponse.data) {
+      if (updatePostResponse.data.status == 201) {
+        toast.success(props.t("Toast.toastUpdateProfileSuccess"))
+        setImagesUpload([])
+        resetData()
+        disable()
+        props.onHide()
+      } else {
+        toast.error(props.t("Toast.toastUpdateProfileUnSuccess"))
+      }
+    }
+  }, [updatePostResponse.data])
+
   const disable = () => {
     buttonRef.current?.setAttribute('disabled', '')
     textAreaRef.current?.setAttribute('disabled', '')
@@ -149,6 +157,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
 
   const handleGetFiles = () => {
     if (fileInputRef.current) {
+      fileInputRef.current.value = ''
       fileInputRef.current.click()
     }
   }
@@ -162,14 +171,17 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
           file: event.target.files[i]
         })
       }
-      images.length != 0 ? setImages([...images, ...urls]) : setImages(urls)
+      images.length != 0 ? setImages([...images, ...urls]) : setImages(urls);
     }
   }
 
   const scrollLeft = () => {
     const container = document.getElementById('imageContainer')
     if (container) {
-      container.scrollLeft -= 200
+      container.scrollTo({
+        left: container.scrollLeft - 200,
+        behavior: 'smooth'
+      });
       setScrollPosition(container.scrollLeft)
     }
   }
@@ -177,7 +189,10 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
   const scrollRight = () => {
     const container = document.getElementById('imageContainer')
     if (container) {
-      container.scrollLeft += 200
+      container.scrollTo({
+        left: container.scrollLeft + 200,
+        behavior: 'smooth'
+      })
       setScrollPosition(container.scrollLeft)
     }
   }
@@ -207,7 +222,7 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
         />
       </div>
       <div style={{ position: 'relative' }}>
-        {images.length >= 6 && (
+        {images.length >= 5 && (
           <div className='container-button-to-left-right'>
             <button onClick={scrollLeft}>
               {' '}
@@ -219,15 +234,22 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
             </button>
           </div>
         )}
-        <div className='image-file-container' id='imageContainer'>
+        <div
+          className='wrapperImageCreateNormalPost'
+          id='imageContainer'
+        >
           {
             props.updateNormalPost?.postId !== undefined ? (
               images.map((item: any, index: any) => (
-                <li
+                <div
                   key={item + ''}
+                  style={{
+                    minWidth: '150px',
+                    height: '200px',
+                    marginRight: '10px',
+                  }}
                   className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
                 >
-                  <h1>Update</h1>
                   {
                     (typeof (item.url) === 'string' && item.url.includes("http")) ? <>
                       <img className='image-file' src={item.url} alt={`Image ${index}`} />
@@ -238,24 +260,27 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
                   <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
                     <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
                   </button>
-                </li>
+                </div>
               ))
             ) : (
               images.map((item: any, index: any) => (
-                <li
+                <div
+                  style={{
+                    minWidth: '150px',
+                    height: '200px',
+                    marginRight: '10px',
+                  }}
                   key={item + ''}
                   className='image-wrapper card d-block shadow-xss rounded-xxxl mb-3 me-3  mt-0 overflow-hidden border-0'
                 >
-                  <h1>Create</h1>
                   <img className='image-file' src={item.url} alt={`Image ${index}`} />
                   <button className='btn-delete-image' onClick={() => handleDeleteImage(item)}>
                     <FontAwesomeIcon icon={faXmark} color={COLOR_WHITE} />
                   </button>
-                </li>
+                </div>
               ))
             )
           }
-
         </div>
       </div>
       <div className='card-body d-flex mt-0 p-0'>
@@ -275,9 +300,14 @@ const CreateNormalPost = (props: CreateNormalPostType) => {
           <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalPostEntryImages")}</span>
         </button>
         <div className='pointer ms-auto ' id='dropdownMenu4' data-bs-toggle='dropdown' aria-expanded='false'>
-          <button ref={buttonRef} onClick={handleSubmitEvent} className='btn btn-primary'>
-            <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalPostButton")}</span>
-          </button>
+          {
+            props.updateNormalPost === null ? <button ref={buttonRef} onClick={handleSubmitEvent} className='btn btn-primary'>
+              <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalPostButton")}</span>
+            </button> :
+              <button ref={buttonRef} onClick={handleSubmitEvent} className='btn btn-primary'>
+                <span className='d-none-xs'>{props.t("ModalCreateNormalPost.modalCreateNormalUpdatePostButton")}</span>
+              </button>
+          }
         </div>
       </div>
     </div>

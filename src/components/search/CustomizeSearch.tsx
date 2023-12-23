@@ -125,6 +125,7 @@ export default function CustomizeSearch() {
       }))
     }
   }
+  
   //Thuc hien Enter tim kiem
   const handleEnter = (event: any) => {
 

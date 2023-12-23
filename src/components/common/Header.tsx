@@ -15,7 +15,7 @@ import {
 import NavItem from './NavItem'
 import classNames from 'classnames'
 import { IMAGE_URL } from '../../constants/Path'
-import { useGetQualityNotificationQuery } from '../../redux/Service'
+import { useCountNewUpdateConversationsQuery, useGetQualityNotificationQuery } from '../../redux/Service'
 
 function Header() {
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
@@ -24,6 +24,7 @@ function Header() {
   const [showMobleNavigation, setShowMobileNavigation] = useState(false)
   const dispatch = useAppDispatch()
   const [qty, setQty] = useState<any>()
+
   const { data, isFetching } = useGetQualityNotificationQuery(
     {
       id: userLogin?.id ?? -1
@@ -32,6 +33,10 @@ function Header() {
       pollingInterval: 3000
     }
   )
+
+  const countNewUpdateConversation = useCountNewUpdateConversationsQuery({
+    userId: userLogin?.id ?? -1
+  }, {pollingInterval: 2000})
 
   useEffect(() => {
     setQty(data?.data)
@@ -104,8 +109,13 @@ function Header() {
           {/* <div className='icon_count bg-warning'></div> */}
           <i className='feather-bell font-xl text-current' />
         </span>
+        
         <NotificationPopup show={showNotificationPopup} />
         <Link to='/hoi-thoai' className='menu-icon chat-active-btn ms-3 p-2 text-center'>
+          {
+            countNewUpdateConversation.data && ( countNewUpdateConversation.data.count > 0) &&
+            <span className='dot-count'>{countNewUpdateConversation.data?.count}</span>
+          }
           <i className='feather-message-square font-xl text-current' />
         </Link>
         <span
@@ -116,7 +126,7 @@ function Header() {
         </span>
         <Link className='menu-icon ms-3 p-0' to='/cai-dat'>
           {userLogin?.image ? (
-            <img src={IMAGE_URL + userLogin.image} alt='user' className='h-10 w-10 rounded-full' />
+            <img src={IMAGE_URL + userLogin.image} alt='user' className='avatarSetting h-10 w-10 rounded-full object-cover' />
           ) : (
             <div
               className={classNames(

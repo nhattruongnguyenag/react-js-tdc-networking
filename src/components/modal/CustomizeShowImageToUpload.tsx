@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import { bigLoading } from '../../constants/Variables';
+import { useTranslation } from 'react-multi-lang';
 
 interface ModalType {
     isBackground: boolean
@@ -12,6 +13,7 @@ interface ModalType {
     onHide: () => void
 }
 export function CustomizeShowImageToUpload(props: Readonly<ModalType>) {
+    const t = useTranslation();
     const [isImageLoaded, setIsImageLoaded] = useState(false);
     const handleImageLoad = () => {
         setIsImageLoaded(true);
@@ -52,13 +54,13 @@ export function CustomizeShowImageToUpload(props: Readonly<ModalType>) {
                 <Button onClick={() => {
                     props.onHide();
                     setIsImageLoaded(false);
-                    props.onSelectImage(props.isBackground, true);
-                }} className='btn btn-outline-secondary bg-primary'>Cập nhật</Button>
+                    props.onSelectImage(props.isBackground, false);
+                }} className='btn bg-grey text-dark outline-none border-0'>{t("Modal.modalShowImageUpdateRejectUpdateButton")}</Button>
                 <Button onClick={() => {
                     props.onHide();
                     setIsImageLoaded(false);
-                    props.onSelectImage(props.isBackground, false);
-                }} className='btn btn-outline-secondary bg-primary'>Hủy cập nhật</Button>
+                    props.onSelectImage(props.isBackground, true);
+                }} className='btn bg-primary outline-none border-0'>{t("Modal.modalShowImageUpdateAcceptUpdateButton")}</Button>
             </Modal.Footer>
         </Modal>
 
