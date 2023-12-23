@@ -79,10 +79,8 @@ export default function SearchListView({ data, sub, handleFollow, handleUnSave, 
     }
   }
   return (
-    <div className=''>
-      <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 590 }}>
+    <>
         {checkType()}
-      </div>
-    </div>
+    </>
   )
 }
