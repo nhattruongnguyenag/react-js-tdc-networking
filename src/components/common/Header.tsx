@@ -105,7 +105,9 @@ function Header() {
           data-bs-toggle='dropdown'
           aria-expanded='false'
         >
-          <span className='dot-count'>{qty}</span>
+          {
+            qty > 0 && <span className='dot-count'>{qty}</span>
+          }
           {/* <div className='icon_count bg-warning'></div> */}
           <i className='feather-bell font-xl text-current' />
         </span>
