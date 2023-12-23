@@ -124,7 +124,7 @@ export default function ListJobApplyPage() {
                     {data?.data.map(
                       (data, index) =>
                         data.status === value && (
-                          <div className='group-job-apply theme-dark-bg' key={md5(index + Date.now())}>
+                          <div className='group-job-apply theme-dark-bg' key={md5(index + data.id)}>
                             <div className='item-job-apply theme-dark-bg'>
                               <div className='tam'>
                                 <div className='img-job-apply'>
