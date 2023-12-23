@@ -13,7 +13,9 @@ import '../../assets/css/search.css'
 import { LikeAction } from '../../types/LikeActions'
 import { LikeSearch } from '../../types/LikeSearch'
 import { Alert } from 'flowbite-react'
-
+import Loading from '../common/Loading'
+import ReactLoading from 'react-loading'
+import { bigLoading } from '../../constants/Variables'
 let stompClient: Client
 export default function CustomizeSearch() {
   const t = useTranslation()
@@ -63,24 +65,21 @@ export default function CustomizeSearch() {
   const [search, setSearch] = useState('')
   const { conversations, userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer)
   const [data, setData] = useState([])
+  const [test, setTest] = useState()
   const ref = useRef<HTMLDivElement | null>(null)
   const searchInputRef = useRef(null)
-
+  const [isLoading, setIsLoading] = useState(false)
 
   const onMessageFindUserReceived = (payload: any) => {
     //kiem tra subjects
     if (sub == 'user') {
-      // setIsLoading(false);
-      
-      
+      setIsLoading(false);
       setData(JSON.parse(payload.body))
     }
   }
-  
+
   const onMessageFindPostReceived = (payload: any) => {
-    console.log('123');
-    // setIsLoading(false);
-    // alert(JSON.stringify(payload))
+    setIsLoading(false);
     setData(JSON.parse(payload.body))
   }
 
@@ -100,12 +99,12 @@ export default function CustomizeSearch() {
     stompClient.connect({}, onConnected, onError)
   }, [])
 
-  
+
 
   //Chuc nang tim kiem
   const handleSearch = () => {
     console.log(userLogin?.id + '-' + type + '-' + search);
-
+    setIsLoading(true)
     if (sub == 'user') {
       stompClient.send(
         `/app/find/user/follow`,
@@ -129,8 +128,11 @@ export default function CustomizeSearch() {
   
   //Thuc hien Enter tim kiem
   const handleEnter = (event: any) => {
+
     if (event.key == 'Enter') {
       handleSearch()
+      console.log(data);
+
     }
   }
 
@@ -178,9 +180,9 @@ export default function CustomizeSearch() {
 
   //Xoa bai viet (bai viet cua minh)
   const handleDelete = (idPost: number) => {
-    
+
   }
-  
+
 
 
   return (
@@ -192,7 +194,7 @@ export default function CustomizeSearch() {
               <div className='card-body p-lg-5 w-100 border border-info p-0 bar_search_div' id='card_search'>
                 <div className='header-search ms-1'>
                   <div className='form-group  mb-6'>
-                    <div className='div_icon_search' style={{position: 'absolute'}}>
+                    <div className='div_icon_search' style={{ position: 'absolute' }}>
                       <i className='feather-search font-sm text-info icon_search' />
                     </div>
                     <input
@@ -212,10 +214,11 @@ export default function CustomizeSearch() {
                 <div>
                   <Dropdown>
                     <Dropdown.Toggle
-                      className='text-dark dropdown_subjects'
+                      className=' dropdown_subjects '
                       variant='success'
                       id='dropdown-basic'
-                      // style={{ width: 250, fontSize: 13 , backgroundColor: 'white' }}
+                    // style={{ width: 250, fontSize: 13 , backgroundColor: 'white' }}
+                    style={{ color: 'black' }}
                     >
                       {subLabel}
                     </Dropdown.Toggle>
@@ -243,7 +246,7 @@ export default function CustomizeSearch() {
                       <button
                         key={index}
                         className='btn type_btn'
-                        style={{backgroundColor: item.value == type ? '#16a9bd': 'white'}}
+                        style={{ backgroundColor: item.value == type ? '#16a9bd' : 'white' }}
                         onClick={() => {
                           setType(item.value)
                         }}
@@ -255,9 +258,9 @@ export default function CustomizeSearch() {
                       <button
                         key={index}
                         className='btn type_btn'
-                        style={{backgroundColor: item.value == type ? '#16a9bd': 'white', color: item.value == type ? 'white': 'black'}}
+                        style={{ backgroundColor: item.value == type ? '#16a9bd' : 'white', color: item.value == type ? 'white' : 'black' }}
                         onClick={() => {
-                          setType(item.value) 
+                          setType(item.value)
                         }}
                       >
                         {item.name}
@@ -267,7 +270,21 @@ export default function CustomizeSearch() {
               </div>
               {/*  */}
             </div>
-            <SearchListView data={data} sub={sub} handleFollow={handleFollow} handleUnSave={handleUnSave} likeAction={likeAction} handleDelete={handleDelete}/>
+            <div className='position-relative scroll-bar theme-dark-bg bg-white pt-0' style={{ height: 550 }}>
+              {
+                isLoading ?
+                  <div className='loadingSearch'>
+                    {bigLoading}
+                  </div> :
+                  (data.length != 0 ?
+                    <SearchListView data={data} sub={sub} handleFollow={handleFollow} handleUnSave={handleUnSave} likeAction={likeAction} handleDelete={handleDelete} />
+                    :
+                    <div className='loadingSearch'>
+                      <p className='txt_no_result text-dark'>{t('SearchComponent.txt')}</p>
+                    </div>
+                  )
+              }
+            </div>
           </div>
         </div>
       </div>

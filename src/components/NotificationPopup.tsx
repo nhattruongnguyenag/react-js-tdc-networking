@@ -14,7 +14,7 @@ import { useGetNotificationsUserByIdQuery } from '../redux/Service'
 import { useAppSelector } from '../redux/Hook'
 import { useTranslation } from 'react-multi-lang'
 import NotificationListView from './listviews/NotificationListView'
-import { ACCEPT_POST, CHANGE_PASSWORD_SUCCESS, CREATE_SURVEY, POST_LOG, REGISTER_SUCCESS, SAVE_POST, UPDATE_POST, USER_APPLY_JOB, USER_CHANGE_LANGUAGE, USER_COMMENT_POST, USER_CONDUCT_SURVEY, USER_CREATE_WATCH_JOB, USER_FOLLOW, USER_LIKE_POST, USER_REPLY_COMMENT, USER_UPDATE, USER_UPDATE_AVATAR } from '../constants/TypeNotification';
+import { ACCEPT_POST, CHANGE_PASSWORD_SUCCESS, CREATE_RECRUITMENT, CREATE_SURVEY, FACULTY_CREATE_NORMAL, FACULTY_CREATE_SURVEY, POST_LOG, REGISTER_SUCCESS, SAVE_POST, UPDATE_POST, USER_APPLY_JOB, USER_CHANGE_LANGUAGE, USER_COMMENT_POST, USER_CONDUCT_SURVEY, USER_CREATE_WATCH_JOB, USER_FOLLOW, USER_LIKE_POST, USER_REPLY_COMMENT, USER_UPDATE, USER_UPDATE_AVATAR } from '../constants/TypeNotification';
 import Modal from 'react-bootstrap/Modal'
 import { useNavigate } from 'react-router-dom'
 import { DETAILS_JOB_APPLY, LIST_JOB_APPLY_PAGE, POST_DETAIL, SURVEY_RESULT_PAGE } from '../constants/Page'
@@ -35,7 +35,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
       id: userLogin?.id ?? -1
     },
     {
-      pollingInterval: 1000
+      pollingInterval: 1500
     }
   )
   const [arr, setArr] = useState<NotificationModel[]>()
@@ -63,6 +63,15 @@ export default function NotificationPopup(props: NotificationPopupProps) {
     if (notification) {
       switch (notification.type) {
         case CREATE_SURVEY:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case CREATE_RECRUITMENT:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case FACULTY_CREATE_SURVEY:
+          navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
+          break
+        case FACULTY_CREATE_NORMAL:
           navigate(`${POST_DETAIL}/${slugify('bai-viet')}-${notification?.dataValue.id}`, { state })
           break
         case SAVE_POST:
@@ -216,7 +225,7 @@ export default function NotificationPopup(props: NotificationPopupProps) {
           <Modal.Title>Thông báo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p >Bài viết của bạn không được duyệt vì: "{log}"</p>
+          <h4 className='text-sm' >Bài viết của bạn không được duyệt vì: "{log}"</h4>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='primary' onClick={handleClose}>

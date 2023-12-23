@@ -7,7 +7,7 @@ import DefaultAvatar from '../common/DefaultAvatar'
 import moment from 'moment'
 import { useTranslation } from 'react-multi-lang'
 import { useAppSelector } from '../../redux/Hook'
-import { ACCEPT_POST, CHANGE_PASSWORD_SUCCESS, CREATE_SURVEY, POST_LOG, REGISTER_SUCCESS, SAVE_POST, UPDATE_POST, USER_APPLY_JOB, USER_CHANGE_LANGUAGE, USER_COMMENT_POST, USER_CONDUCT_SURVEY, USER_CREATE_WATCH_JOB, USER_FOLLOW, USER_LIKE_POST, USER_REPLY_COMMENT, USER_UPDATE, USER_UPDATE_AVATAR } from '../../constants/TypeNotification';
+import { ACCEPT_POST, CHANGE_PASSWORD_SUCCESS, CREATE_RECRUITMENT, CREATE_SURVEY, FACULTY_CREATE_NORMAL, FACULTY_CREATE_SURVEY, POST_LOG, REGISTER_SUCCESS, SAVE_POST, UPDATE_POST, USER_APPLY_JOB, USER_CHANGE_LANGUAGE, USER_COMMENT_POST, USER_CONDUCT_SURVEY, USER_CREATE_WATCH_JOB, USER_FOLLOW, USER_LIKE_POST, USER_REPLY_COMMENT, USER_UPDATE, USER_UPDATE_AVATAR } from '../../constants/TypeNotification';
 import { Button } from 'flowbite-react'
 import { SURVEY_DETAILS_PAGE } from '../../constants/Page'
 import { slugify } from '../../utils/CommonUtls'
@@ -95,6 +95,45 @@ export default function NotificationItem(props: NotificationItemProps) {
                     defaultImage: props.userInteracted.name.length > 0 ? props.userInteracted.name[0] : '',
                     header: props.userInteracted.name,
                     body: t('Notifications.create_survey'),
+                    image: props.userInteracted.image,
+                    group: props.dataValue != null ? props.dataValue.group != null ? props.dataValue.group.name : '' : '',
+                    time: props.createdAt,
+                    canClick: true
+                })
+                break
+            // Doanh nghiep dang tin tuyen dung
+            case CREATE_RECRUITMENT:
+                setValue({
+                    ...value,
+                    defaultImage: props.userInteracted.name.length > 0 ? props.userInteracted.name[0] : '',
+                    header: props.userInteracted.name,
+                    body: t('Notifications.create_recruitment'),
+                    image: props.userInteracted.image,
+                    group: props.dataValue != null ? props.dataValue.group != null ? props.dataValue.group.name : '' : '',
+                    time: props.createdAt,
+                    canClick: true
+                })
+                break
+            // Khoa dang khao sat
+            case FACULTY_CREATE_SURVEY:
+                setValue({
+                    ...value,
+                    defaultImage: props.userInteracted.name.length > 0 ? props.userInteracted.name[0] : '',
+                    header: props.userInteracted.name,
+                    body: t('Notifications.faculty_create_survey'),
+                    image: props.userInteracted.image,
+                    group: props.dataValue != null ? props.dataValue.group != null ? props.dataValue.group.name : '' : '',
+                    time: props.createdAt,
+                    canClick: true
+                })
+                break
+            // Khoa đăng bài viết
+            case FACULTY_CREATE_NORMAL:
+                setValue({
+                    ...value,
+                    defaultImage: props.userInteracted.name.length > 0 ? props.userInteracted.name[0] : '',
+                    header: props.userInteracted.name,
+                    body: t('Notifications.faculty_create_normal'),
                     image: props.userInteracted.image,
                     group: props.dataValue != null ? props.dataValue.group != null ? props.dataValue.group.name : '' : '',
                     time: props.createdAt,
@@ -264,6 +303,7 @@ export default function NotificationItem(props: NotificationItemProps) {
                     time: props.createdAt,
                 })
                 break
+
             default: <></>
                 break
         }
@@ -291,7 +331,7 @@ export default function NotificationItem(props: NotificationItemProps) {
     }
 
     const handleConductNow = (surveyPostId: number, notificationId: number) => {
-        navigate(`${SURVEY_DETAILS_PAGE}/${slugify(props.dataValue.title)}-${surveyPostId}`)
+        // navigate(`${SURVEY_DETAILS_PAGE}/${slugify(props.dataValue.title)}-${surveyPostId}`)
         try {
             axios.put(`${SERVER_ADDRESS}api/notifications/changeStatus`, {
                 id: notificationId,
@@ -310,7 +350,7 @@ export default function NotificationItem(props: NotificationItemProps) {
             key={item.id}
             className='card bg-transparent-card w-100 itemNotification mb-0 border-0 ps-0'
             style={{ background: item.status == '0' ? '#e6e6e6' : '#fff', flexDirection: 'row', padding: 10 }}
-            
+
         >
             <div className='image_item'>
                 {value.image ? (
@@ -331,8 +371,8 @@ export default function NotificationItem(props: NotificationItemProps) {
 
                 )}
             </div>
-            <div className='content_item' 
-            onClick={() => value.canClick == true ? item.handleItem(item.id) : item.handleItemCanNotClick(item.id)}
+            <div className='content_item'
+                onClick={() => value.canClick == true ? item.handleItem(item.id) : item.handleItemCanNotClick(item.id)}
             >
                 <h5 className='text-grey-900 fw-500 font-xsss lh-4 txt_content' >
                     <p className='txt_cnt' style={{ color: item.status == '0' ? '#000' : '#949393' }}>
@@ -341,13 +381,22 @@ export default function NotificationItem(props: NotificationItemProps) {
                         <p className='txt_content_notification'>{value.group != '' ? t('Notifications.in_group') : '.'}</p>
                         <p className='txt_content_notification_hasUser'> {value.group != '' ? (value.group) + '.' : ''}</p>
                         {
-                            props.type == 'create_survey' ?
+                            props.type == 'create_survey' || props.type == 'create_recruitment' || props.type == 'faculty_create_survey'?
+                                (props.type == 'create_survey' || props.type == 'faculty_create_survey'? 
                                 <Button
                                     onClick={() => {
                                         handleConductNow(props.dataValue.id, props.id)
                                     }}>
                                     <a >{t('Notifications.survey_txt')}</a>
-                                </Button>
+                                </Button> 
+                                :
+                                <Button
+                                    onClick={() => {
+                                        handleConductNow(props.dataValue.id, props.id)
+                                    }}>
+                                    <a >{t('Notifications.recruitment_txt')}</a>
+                                </Button> 
+                                )
                                 : null
                         }
                     </p>
@@ -360,26 +409,26 @@ export default function NotificationItem(props: NotificationItemProps) {
             </div>
             <div>
                 <Menu
-                menuButton={
-                    <MenuButton className='menu_btn '>
-                        <div style={{paddingLeft: 10, zIndex: 99}}>
-                            <FaEllipsisV />
-                        </div>
-                    </MenuButton>
-                }
-                transition
-            >
-                <MenuItem onClick={() => item.handleIsNotRead(item.id)}>
-                    <FaBullhorn className='icon_option' />
-                    {t('NotificationsComponent.unReadNotification')}
-                </MenuItem>
-                <MenuItem onClick={() => item.handleDelNotification(item.id)}>
-                    <FaTimes className='icon_option' />
-                    {t('NotificationsComponent.deleteNotification')}
-                </MenuItem>
-            </Menu>
+                    menuButton={
+                        <MenuButton className='menu_btn '>
+                            <div style={{ paddingLeft: 10, zIndex: 99 }}>
+                                <FaEllipsisV />
+                            </div>
+                        </MenuButton>
+                    }
+                    transition
+                >
+                    <MenuItem onClick={() => item.handleIsNotRead(item.id)}>
+                        <FaBullhorn className='icon_option' />
+                        {t('NotificationsComponent.unReadNotification')}
+                    </MenuItem>
+                    <MenuItem onClick={() => item.handleDelNotification(item.id)}>
+                        <FaTimes className='icon_option' />
+                        {t('NotificationsComponent.deleteNotification')}
+                    </MenuItem>
+                </Menu>
             </div>
-            
-        </div>
+
+        </div >
     )
 }

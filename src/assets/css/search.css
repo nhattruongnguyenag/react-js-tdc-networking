@@ -58,3 +58,16 @@
     background-color: #16a9bd;
     border-width: 2px;
 }
+.loadingSearch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    /* top: 10px; */
+    /* background-color: red; */
+}
+.txt_no_result {
+    font-weight: bold;
+}

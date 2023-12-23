@@ -15,4 +15,7 @@ export const USER_CHANGE_LANGUAGE =  'user_change_language'
 export const USER_APPLY_JOB =  'user_apply_job'
 export const USER_CREATE_WATCH_JOB =  'user_create_watch_job'
 export const USER_UPDATE_AVATAR =  'user_update_avatar'
+export const CREATE_RECRUITMENT =  'create_recruitment'
+export const FACULTY_CREATE_SURVEY =  'faculty_create_survey'
+export const FACULTY_CREATE_NORMAL =  'faculty_create_normal'
 
