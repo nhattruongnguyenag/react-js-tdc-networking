@@ -18,6 +18,7 @@ import { CVURL, PROFILE_ID } from '../constants/KeyValue'
 import { t } from 'react-multi-lang'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
+let md5 = require('md5')
 
 export default function ManagementJobApplyPage() {
   const dataType = [
@@ -99,7 +100,7 @@ export default function ManagementJobApplyPage() {
                     {data?.data.map(
                       (item, index) =>
                         item.status === value && (
-                          <div className='manage-item-job-apply theme-dark-bg' key={index}>
+                          <div className='manage-item-job-apply theme-dark-bg' key={md5(index + item.id)}>
                             <div className='tam'>
                               <div className='img-job-apply'>
                                 {item.companyAvatar == null ? (
